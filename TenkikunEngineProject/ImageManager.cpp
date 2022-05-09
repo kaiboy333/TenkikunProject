@@ -1,0 +1,57 @@
+#include "ImageManager.h"
+#include "DxLib.h"
+#include "Image.h"
+#include <sstream>
+
+ImageManager::ImageManager() {
+
+}
+
+int* ImageManager::LoadAndGetImage(std::string path)
+{
+	//もし、既に画像が読み込まれていたなら
+	if (ghs.count(path.c_str())) {
+		return ghs[path.c_str()];	//それを返す
+	}
+
+	//画像を新しく読み込む
+	int* gh = new int;		//GraphicHandle
+	*gh = LoadGraph(path.c_str());
+	//画像が読み込めなかったら
+	if (*gh == -1) {
+		std::stringstream ss;
+		ss << "画像ファイルが読み込めないよ: " << path << "\n";
+		OutputDebugString(ss.str().c_str());
+		delete(gh);
+		gh = nullptr;
+		return nullptr;
+	}
+	ghs[path] = gh;	//読み込めたらghsに追加
+	//それを返す
+	return gh;
+}
+
+std::vector<int*> ImageManager::LoadAndGetImages(std::vector<std::string> pathes)
+{
+	std::vector<int*> ghs;
+	for (std::string path : pathes) {
+		ghs.emplace_back(LoadAndGetImage(path));
+	}
+	return ghs;
+}
+
+ImageManager* ImageManager::Instance()
+{
+	if (instance == nullptr) {
+		instance = new ImageManager();
+	}
+	return instance;
+}
+
+void ImageManager::Destroy()
+{
+	delete instance;
+	instance = nullptr;
+}
+
+ImageManager* ImageManager::instance;

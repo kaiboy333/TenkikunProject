@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TenkikunEngineProject", "TenkikunEngineProject.vcxproj", "{098174F0-0E84-4217-911B-D247DAD50BEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Debug|x64.ActiveCfg = Debug|x64
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Debug|x64.Build.0 = Debug|x64
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Debug|x86.ActiveCfg = Debug|Win32
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Debug|x86.Build.0 = Debug|Win32
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Release|x64.ActiveCfg = Release|x64
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Release|x64.Build.0 = Release|x64
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Release|x86.ActiveCfg = Release|Win32
+		{098174F0-0E84-4217-911B-D247DAD50BEB}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A21110B5-DDE2-4728-B769-CB92E50531A0}
+	EndGlobalSection
+EndGlobal

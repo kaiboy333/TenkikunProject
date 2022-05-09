@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="image">
+      <UniqueIdentifier>{61b0b7de-2bca-4b1c-a9ec-2e56ac21027c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\component">
+      <UniqueIdentifier>{d045932d-5a6a-4704-8ba2-a30cd4e3c63e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\animation">
+      <UniqueIdentifier>{e97f76e3-63ea-40b7-87f6-37e5ee56ebde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\main">
+      <UniqueIdentifier>{d7bafc83-7209-4e75-acb3-e813dd557649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\main\window">
+      <UniqueIdentifier>{3ba230fb-cc10-4a83-b6d8-385fc3e1a91b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\script">
+      <UniqueIdentifier>{a145f6ee-ac5d-4458-a3fa-6cec5d243fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\input">
+      <UniqueIdentifier>{c3264134-3e7d-48a9-8b32-e91e69c1b989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\math">
+      <UniqueIdentifier>{665b37b9-6bd3-4687-a06c-b11bd7603a66}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Transform.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageRenderer.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatorController.cpp">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationState.cpp">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTransition.cpp">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\main</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>ソース ファイル\main</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ソース ファイル\main</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
+    <ClCompile Include="Script.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>ソース ファイル\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyState.cpp">
+      <Filter>ソース ファイル\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMath.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Animation.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatorController.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="BoolCondition.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Condition.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatCondition.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="IntCondition.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationState.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationTransition.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageRenderer.h">
+      <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ソース ファイル\main</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\main</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ソース ファイル\main</Filter>
+    </ClInclude>
+    <ClInclude Include="Script.h">
+      <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>ソース ファイル\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyState.h">
+      <Filter>ソース ファイル\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>ソース ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>ソース ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMath.h">
+      <Filter>ソース ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>ソース ファイル\math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\square.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\BG_02.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Block_0.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Block_1.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Block_2.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Block_3.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Coin_Spin0.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Coin_Spin1.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Coin_Spin2.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\Tenkikun.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Down0.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Down1.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\unityChan_idle0.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\unityChan_Idle1.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\unityChan_Idle2.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\unityChan_JumpDown0.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\unityChan_JumpDown1.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_JumpDown2.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_JumpDown3.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_JumpDown4.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_JumpUp0.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_JumpUp1.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run0.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run1.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run2.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run3.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run4.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run5.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run6.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\UnityChan_Run7.png">
+      <Filter>image</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
