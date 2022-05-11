@@ -15,18 +15,28 @@ Matrix Matrix::operator*(const Matrix& other) const
 	return matrix;
 }
 
-Vector4 Matrix::operator*(const Vector4& other) const
+Vector3 Matrix::operator*(const Vector3& other) const
 {
-	Vector4 vec = Vector4();
+	Vector4 vec4 = Vector4();
 
-	vec.x = m[0][0] * other.x + m[0][1] * other.y + m[0][2] * other.z + m[0][3] * other.w;
-	vec.y = m[1][0] * other.x + m[1][1] * other.y + m[1][2] * other.z + m[1][3] * other.w;
-	vec.z = m[2][0] * other.x + m[2][1] * other.y + m[2][2] * other.z + m[2][3] * other.w;
-	vec.w = m[3][0] * other.x + m[3][1] * other.y + m[3][2] * other.z + m[3][3] * other.w;
+	vec4.x = m[0][0] * other.x + m[0][1] * other.y + m[0][2] * other.z + m[0][3] * 1.0f;
+	vec4.y = m[1][0] * other.x + m[1][1] * other.y + m[1][2] * other.z + m[1][3] * 1.0f;
+	vec4.z = m[2][0] * other.x + m[2][1] * other.y + m[2][2] * other.z + m[2][3] * 1.0f;
+	vec4.w = m[3][0] * other.x + m[3][1] * other.y + m[3][2] * other.z + m[3][3] * 1.0f;
 
-	return vec;
+	return Vector3(vec4.x, vec4.y, vec4.z);
 }
 
+Matrix Matrix::GetUnit()
+{
+	Matrix matrix = Matrix();
+
+	for (int i = 0; i < 4; i++) {
+		matrix.m[i][i] = 1.0f;
+	}
+
+	return matrix;
+}
 
 Matrix Matrix::GetMRoteX(float angleX)
 {
@@ -38,20 +48,9 @@ Matrix Matrix::GetMRoteX(float angleX)
 	matrix.m[0][0] = 1.0f;
 	matrix.m[1][1] = Cos;
 	matrix.m[1][2] = -Sin;
-	matrix.m[2][0] = Sin;
-	matrix.m[2][1] = Cos;
+	matrix.m[2][1] = Sin;
+	matrix.m[2][2] = Cos;
 	matrix.m[3][3] = 1.0f;
-
-	return matrix;
-}
-
-Matrix Matrix::GetUnit()
-{
-	Matrix matrix = Matrix();
-
-	for (int i = 0; i < 4; i++) {
-		matrix.m[i][i] = 1.0f;
-	}
 
 	return matrix;
 }
@@ -81,10 +80,10 @@ Matrix Matrix::GetMRoteZ(float angleZ)
 	float Sin = sinf(MyMath::EulerToRad(angleZ));
 
 	matrix.m[0][0] = Cos;
-	matrix.m[0][2] = Sin;
-	matrix.m[1][1] = 1.0f;
-	matrix.m[2][0] = -Sin;
-	matrix.m[2][1] = Cos;
+	matrix.m[0][1] = -Sin;
+	matrix.m[1][0] = Sin;
+	matrix.m[1][1] = Cos;
+	matrix.m[2][2] = 1.0f;
 	matrix.m[3][3] = 1.0f;
 
 	return matrix;
@@ -92,7 +91,16 @@ Matrix Matrix::GetMRoteZ(float angleZ)
 
 Matrix Matrix::GetMRote(Vector3 angleVec)
 {
-	return GetMRoteZ(angleVec.z) * GetMRoteX(angleVec.x) * GetMRoteY(angleVec.y);
+	return GetMRoteY(angleVec.y) * GetMRoteZ(angleVec.z) * GetMRoteX(angleVec.x);
+}
+
+Matrix Matrix::GetMRote(Vector3 centerPoint, Vector3 angleVec)
+{
+	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
+	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
+	Matrix mRotate = Matrix::GetMRote(angleVec);	//原点中心に回転
+
+	return mTransBack * mRotate * mTrans;
 }
 
 Matrix Matrix::GetMScale(Vector3 scaleVec)
@@ -105,6 +113,15 @@ Matrix Matrix::GetMScale(Vector3 scaleVec)
 	matrix.m[3][3] = 1.0f;
 
 	return matrix;
+}
+
+Matrix Matrix::GetMScale(Vector3 point, Vector3 scaleVec)
+{
+	Matrix mTrans = Matrix::GetMRote(-point);	//原点に移動
+	Matrix mTransBack = Matrix::GetMRote(point);	//元に戻す
+	Matrix mScale = Matrix::GetMScale(scaleVec);	//原点中心に拡大
+
+	return mTransBack * mScale * mTrans;
 }
 
 Matrix Matrix::GetMMatrix(Vector3 transVec, Vector3 roteVec, Vector3 scaleVec)

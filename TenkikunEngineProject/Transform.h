@@ -24,10 +24,27 @@ class Transform : public Component
 
 		void SetParent(Transform* newParent);	//親オブジェクトをセットする
 
-	private:
 		std::vector<Transform*> children;	//子のTransformたち
 
-		Vector3 GetLocalToWorldPos();	//親のワールド座標と今のローカル座標で今のワールド座標を求める
-		Vector3 GetLocalToWorldRote();	//親のワールド回転と今のローカル回転で今のワールド回転を求める
-		Vector3 GetLocalToWorldScale();	//親のワールド縮尺と今のローカル縮尺で今のワールド縮尺を求める
+	private:
+		//前回のワールド
+		Vector3 beforePosition;	//位置
+		Vector3 beforeRotation;	//回転角度(オイラー角)
+		Vector3 beforeScale = Vector3::One();	//大きさ
+
+		//前回のローカル
+		Vector3 beforeLocalPosition;
+		Vector3 beforeLocalRotation;
+		Vector3 beforeLocalScale = Vector3::One();
+
+		//動いた分(ワールドとローカル合わせて)
+		Vector3 deltaPosition;
+		Vector3 deltaRotation;
+		Vector3 deltaScale;
+
+		void RivisionUpdate();	//ローカルとワールドでずれた分を修正する
+
+		void TransUpdate();	//親のワールド座標と今のローカル座標で今のワールド座標を求める
+		void RotateUpdate();	//親のワールド回転と今のローカル回転で今のワールド回転を求める
+		void ScaleUpdate();	//親のワールド縮尺と今のローカル縮尺で今のワールド縮尺を求める
 };

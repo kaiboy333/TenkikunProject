@@ -78,14 +78,17 @@ inline void Init() {
 	Scene* scene = SceneManager::GetNowScene();	//シーンを取得
 
 	GameObject* player = scene->CreateEmpty();	//プレイヤーオブジェクトを作成
+	player->transform->position = Vector3(-200, 0, 0);
 	player->name = "Player";
 	PlayerScript* script = player->AddComponent<PlayerScript>();	//プレイヤースクリプト作成
 
 	GameObject* square = GameObject::Find("Square");
-	if (square != nullptr) {
-		square->transform->SetParent(player->transform);
-		square->transform->localPosition = Vector3(50, 0, 0);
-	}
+	square->transform->SetParent(player->transform);
+	square->transform->position = Vector3(50, 0, 0);
+
+	GameObject* square2 = scene->CreateSquare();
+	square2->transform->SetParent(square->transform);
+	square2->transform->position = Vector3(100, 0, 0);
 }
 
 inline void CulculateFPS() {

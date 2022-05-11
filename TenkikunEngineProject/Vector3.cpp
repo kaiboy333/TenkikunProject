@@ -124,12 +124,12 @@ const Vector3 Vector3::Left()
 
 const Vector3 Vector3::Up()
 {
-    return Vector3(0, -1, 0);
+    return Vector3(0, 1, 0);
 }
 
 const Vector3 Vector3::Down()
 {
-    return Vector3(0, 1, 0);
+    return Vector3(0, -1, 0);
 }
 
 const Vector3 Vector3::Forward()

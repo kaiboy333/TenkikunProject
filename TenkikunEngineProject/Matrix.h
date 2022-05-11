@@ -10,19 +10,22 @@ class Matrix
 		float m[4][4] = {};
 
 		Matrix operator*(const Matrix& other) const;	//行列の掛け算
-		Vector4 operator*(const Vector4& other) const;	//行列とベクトルの掛け算
-
+		Vector3 operator*(const Vector3& other) const;	//行列とVector3の掛け算
 		static Matrix GetUnit();	//単位行列を返す
 
 		static Matrix GetMRoteX(float angleX);
 		static Matrix GetMRoteY(float angleY);
 		static Matrix GetMRoteZ(float angleZ);
-		static Matrix GetMRote(Vector3 angleVec);
+		static Matrix GetMRote(Vector3 angleVec);	//原点を中心に自身を回転した行列
 
-		static Matrix GetMScale(Vector3 scaleVec);
+		static Matrix GetMScale(Vector3 scaleVec);	//原点を中心に自身を拡大した行列
 
-		static Matrix GetMTrans(Vector3 transVec);
+		static Matrix GetMTrans(Vector3 transVec);	//自身を移動した行列
 
 		static Matrix GetMMatrix(Vector3 transVec, Vector3 roteVec, Vector3 scaleVec);
+
+		static Matrix GetMRote(Vector3 point, Vector3 angleVec);	//pointを中心に自身を回転した行列
+
+		static Matrix GetMScale(Vector3 point, Vector3 angleVec);	//pointを中心に自身を拡大した行列
 };
 

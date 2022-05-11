@@ -3,7 +3,7 @@
 Input::Input()
 {
 	//キー状態の初期化
-	for (int keyCode = KeyCode::A; keyCode <= KeyCode::DOWN; keyCode++) {
+	for (int keyCode = 0; keyCode < 256; keyCode++) {
 		keys.insert(std::make_pair(keyCode, new KeyState()));	//キー状態の作成
 	}
 }

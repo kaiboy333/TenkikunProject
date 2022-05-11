@@ -13,17 +13,17 @@ void ImageRenderer::Draw(Window* window, Camera* camera)
 	if (image != nullptr) {
 		if (image->GetGH() != nullptr) {
 			float startDrawX = 0, startDrawY = 0;
-			float drawWidth = (float)window->width;
-			float drawHeight = (float)window->height;
+			float drawWidth = (float)camera->width;
+			float drawHeight = (float)camera->height;
 
 			//Window‚Ì•û‚ªƒJƒƒ‰‚Ì•`‰æ”ÍˆÍ‚æ‚è‘å‚«‚¢‚È‚ç
 			if (camera->width < window->width) {
 				startDrawX = (window->width - camera->width) / 2.0f;
-				drawWidth = (float)camera->width;
+				//drawWidth = (float)camera->width;
 			}
 			if (camera->height < window->height) {
 				startDrawY = (window->height - camera->height) / 2.0f;
-				drawHeight = (float)camera->height;
+				//drawHeight = (float)camera->height;
 			}
 			//•`‰æ”ÍˆÍ§ŒÀ
 

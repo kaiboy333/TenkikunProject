@@ -12,8 +12,11 @@ void Scene::Init()
 
 void Scene::Update()
 {
-	for (GameObject* gameObject : gameobjects) {
-		gameObject->Update();	//ゲームオブジェクトの更新
+	for (GameObject* gameobject : gameobjects) {
+		gameobject->Update();	//ゲームオブジェクトの更新
+		//for (Transform* child : gameobject->transform->children) {
+		//	child->Update();
+		//}
 	}
 }
 
@@ -44,6 +47,11 @@ GameObject* Scene::CreateCamera()
 	Camera* camera = gameobject->AddComponent<Camera>();	//Cameraコンポーネント作成
 	Scene* scene = SceneManager::GetNowScene();	//Sceneを取得
 	return gameobject;
+}
+
+void Scene::RemoveGameObject(GameObject* gameobject)
+{
+	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), gameobject));
 }
 
 //void Scene::DestroyGameObject(GameObject* gameobject)

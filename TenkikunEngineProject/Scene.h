@@ -30,6 +30,8 @@ class Scene
 
 		//void DestroyGameObject(GameObject* gameobject);	//指定のGameObjectを削除
 
+		void RemoveGameObject(GameObject* gameobject);	//指定のGameObjectをリストから削除
+
 
 };
 

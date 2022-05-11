@@ -18,5 +18,8 @@ void Camera::Update()
 	 Scene* scene = SceneManager::GetNowScene();
 	 for (GameObject* gameobject : scene->gameobjects) {
 		 gameobject->Draw(window, this);
+		 //for (Transform* child : gameobject->transform->children) {
+			// child->gameobject->Draw(window, this);
+		 //}
 	 }
  }
