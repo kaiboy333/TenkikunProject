@@ -86,9 +86,9 @@ inline void Init() {
 	square->transform->SetParent(player->transform);
 	square->transform->position = Vector3(50, 0, 0);
 
-	GameObject* square2 = scene->CreateSquare();
+	GameObject* square2 = GameObject::Find("Square2");
 	square2->transform->SetParent(square->transform);
-	square2->transform->position = Vector3(100, 0, 0);
+	square2->transform->position = Vector3(150, 0, 0);
 }
 
 inline void CulculateFPS() {

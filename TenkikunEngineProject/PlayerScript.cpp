@@ -56,12 +56,12 @@ void PlayerScript::ScriptUpdate()
 	AnimatorController* ac = animator->GetAnimatorController();
 
 	if (Input::GetKey(Input::KeyCode::D)) {
-		gameobject->transform->localPosition += Vector3::Right() * speed;
+		gameobject->transform->position += Vector3::Right() * speed;
 		ac->AddFloatParamater("isSpeed", speed);
 		imageRenderer->isFlipX = false;
 	}
 	else if (Input::GetKey(Input::KeyCode::A)) {
-		gameobject->transform->localPosition += Vector3::Left() * speed;
+		gameobject->transform->position += Vector3::Left() * speed;
 		ac->AddFloatParamater("isSpeed", speed);
 		imageRenderer->isFlipX = true;
 	}
@@ -69,21 +69,21 @@ void PlayerScript::ScriptUpdate()
 		ac->AddFloatParamater("isSpeed", 0.0f);
 	}
 
-	//if (Input::GetKey(Input::KeyCode::R)) {
-		gameobject->transform->localRotation += Vector3::Forward() * 1.0f;
-	//}
+	if (Input::GetKey(Input::KeyCode::R)) {
+		gameobject->transform->rotation += Vector3::Forward() * 1.0f;
+	}
 
 	if (Input::GetKey(Input::KeyCode::RIGHT)) {
-		gameobject->transform->localScale += Vector3::Right() * 0.01f;
+		gameobject->transform->scale += Vector3::Right() * 0.01f;
 	}
 	else if (Input::GetKey(Input::KeyCode::LEFT)) {
-		gameobject->transform->localScale += Vector3::Left() * 0.01f;
+		gameobject->transform->scale += Vector3::Left() * 0.01f;
 	}
 	else if (Input::GetKey(Input::KeyCode::UP)) {
-		gameobject->transform->localScale += Vector3::Up() * 0.01f;
+		gameobject->transform->scale += Vector3::Up() * 0.01f;
 	}
 	else if (Input::GetKey(Input::KeyCode::DOWN)) {
-		gameobject->transform->localScale += Vector3::Down() * 0.01f;
+		gameobject->transform->scale += Vector3::Down() * 0.01f;
 	}
 }
 

@@ -8,6 +8,8 @@ void Scene::Init()
 	CreateCamera();	//ƒJƒƒ‰¶¬
 
 	CreateSquare();	//ŽlŠp‚¢‰æ‘œ‚ð¶¬
+	GameObject* s2 = CreateSquare();	//ŽlŠp‚¢‰æ‘œ‚ð¶¬
+	s2->name = "Square2";
 }
 
 void Scene::Update()

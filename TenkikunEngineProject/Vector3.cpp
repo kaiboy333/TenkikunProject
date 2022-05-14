@@ -96,9 +96,9 @@ Vector3& Vector3::operator/=(const float& other)
 Vector3 Vector3::operator-() const
 {
     Vector3 vec;
-    vec.x = x;
-    vec.y = y;
-    vec.z = z;
+    vec.x = -x;
+    vec.y = -y;
+    vec.z = -z;
     return vec;
 }
 

@@ -91,7 +91,7 @@ Matrix Matrix::GetMRoteZ(float angleZ)
 
 Matrix Matrix::GetMRote(Vector3 angleVec)
 {
-	return GetMRoteY(angleVec.y) * GetMRoteZ(angleVec.z) * GetMRoteX(angleVec.x);
+	return GetMRoteY(angleVec.y) * GetMRoteX(angleVec.x) * GetMRoteZ(angleVec.z);
 }
 
 Matrix Matrix::GetMRote(Vector3 centerPoint, Vector3 angleVec)
@@ -117,8 +117,8 @@ Matrix Matrix::GetMScale(Vector3 scaleVec)
 
 Matrix Matrix::GetMScale(Vector3 point, Vector3 scaleVec)
 {
-	Matrix mTrans = Matrix::GetMRote(-point);	//原点に移動
-	Matrix mTransBack = Matrix::GetMRote(point);	//元に戻す
+	Matrix mTrans = Matrix::GetMTrans(-point);	//原点に移動
+	Matrix mTransBack = Matrix::GetMTrans(point);	//元に戻す
 	Matrix mScale = Matrix::GetMScale(scaleVec);	//原点中心に拡大
 
 	return mTransBack * mScale * mTrans;

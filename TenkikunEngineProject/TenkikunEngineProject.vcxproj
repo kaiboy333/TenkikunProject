@@ -157,6 +157,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="Property.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Script.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MyMath.h" />
+    <ClInclude Include="Property.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Script.h" />
