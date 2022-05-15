@@ -69,7 +69,10 @@ void PlayerScript::ScriptUpdate()
 		ac->AddFloatParamater("isSpeed", 0.0f);
 	}
 
-	if (Input::GetKey(Input::KeyCode::R)) {
+	if (Input::GetKey(Input::R) && Input::GetKey(Input::LEFT_SHIFT)) {
+		gameobject->transform->rotation += Vector3::Back() * 1.0f;
+	}
+	else if (Input::GetKey(Input::R) && !Input::GetKey(Input::LEFT_SHIFT)) {
 		gameobject->transform->rotation += Vector3::Forward() * 1.0f;
 	}
 

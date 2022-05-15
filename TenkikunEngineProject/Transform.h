@@ -81,12 +81,6 @@ class Transform : public Component
 		Vector3 localRotation_t;
 		Vector3 localScale_t = Vector3::One();
 
-		//void RivisionUpdate();	//ローカルとワールドでずれた分を修正する
-
-		//void TransUpdate();	//親のワールド座標と今のローカル座標で今のワールド座標を求める
-		//void RotateUpdate();	//親のワールド回転と今のローカル回転で今のワールド回転を求める
-		//void ScaleUpdate();	//親のワールド縮尺と今のローカル縮尺で今のワールド縮尺を求める
-
 		void ChangedWorldPos(Vector3 pos);	//ワールド位置が変更されたら呼び出す
 		void ChangedLocalPos(Vector3 localPos);	//ローカル位置が変更されたら呼び出す
 

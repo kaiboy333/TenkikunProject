@@ -10,6 +10,7 @@
 #include "Script.h"
 #include "PlayerScript.h"
 #include "Input.h"
+#include "Rotate.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -78,17 +79,19 @@ inline void Init() {
 	Scene* scene = SceneManager::GetNowScene();	//シーンを取得
 
 	GameObject* player = scene->CreateEmpty();	//プレイヤーオブジェクトを作成
-	player->transform->position = Vector3(-200, 0, 0);
+	player->transform->position = Vector3(0, 0, 0);
 	player->name = "Player";
 	PlayerScript* script = player->AddComponent<PlayerScript>();	//プレイヤースクリプト作成
 
 	GameObject* square = GameObject::Find("Square");
 	square->transform->SetParent(player->transform);
 	square->transform->position = Vector3(50, 0, 0);
+	square->AddComponent<Rotate>();
 
 	GameObject* square2 = GameObject::Find("Square2");
 	square2->transform->SetParent(square->transform);
 	square2->transform->position = Vector3(150, 0, 0);
+	square2->transform->scale = Vector3(0.5f, 0.5f, 1);
 }
 
 inline void CulculateFPS() {
