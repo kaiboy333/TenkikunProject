@@ -11,8 +11,5 @@ class GameWindow :  public Window
 	public:
 		GameWindow(int width, int height);
 		void Draw() override;	//Sceneã‚ÌGameObject‚ğ•`‰æ
-
-	private:
-		int drawCameraNo = 0;
 };
 

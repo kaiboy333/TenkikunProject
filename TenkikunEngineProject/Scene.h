@@ -24,6 +24,8 @@ class Scene
 
 		void Update();
 
+		void Draw(Window* window);
+
 		GameObject* CreateEmpty();	//空のゲームオブジェクトを作成
 		GameObject* CreateSquare();	//四角い画像のゲームオブジェクトを作成
 		GameObject* CreateCamera();	//カメラゲームオブジェクトを作成
@@ -32,6 +34,9 @@ class Scene
 
 		void RemoveGameObject(GameObject* gameobject);	//指定のGameObjectをリストから削除
 
+		Camera* GetNowCamera();
 
+	private:
+		int drawCameraNo = 0;
 };
 

@@ -15,6 +15,8 @@ class Camera : public Component
 
         void Update() override;
 
-        void Draw(Window* window);  //SceneにあるGameObjectを描画
+        static Vector3 ScreenToWorldPoint(Vector3 screenPosition);  //スクリーン座標からワールド座標に変換する
+
+        static Vector3 WorldToScreenPoint(Vector3 worldPosition);
 };
 

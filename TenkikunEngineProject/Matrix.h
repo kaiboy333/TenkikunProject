@@ -2,7 +2,6 @@
 #include "Vector3.h"
 #include <math.h>
 #include "MyMath.h"
-#include "Vector4.h"
 
 class Matrix
 {

@@ -34,13 +34,13 @@ void ImageRenderer::Draw(Window* window, Camera* camera)
 			float drawX = pos.x + startDrawX + window->width / 2.0f;
 			float drawY = pos.y + startDrawY + window->height / 2.0f;
 
-			//ƒJƒƒ‰‚É‚æ‚Á‚Ä“®‚­‚Ì‚È‚ç
-			if (this->isCameraAffected) {
+			////ƒJƒƒ‰‚É‚æ‚Á‚Ä“®‚­‚Ì‚È‚ç
+			//if (this->isCameraAffected) {
 				Vector3 cameraPos = camera->gameobject->transform->position;
 
 				drawX = (drawX - cameraPos.x) * camera->zoom;
 				drawY = (drawY - cameraPos.y) * camera->zoom;
-			}
+			//}
 
 			DrawRotaGraph3F(drawX, drawY, image->GetWidth() / 2, image->GetHeight() / 2, scale.x, scale.y, MyMath::EulerToRad(rota.z), *image->GetGH(), true, isFlipX, isFlipY);	//•`‰æ
 		}

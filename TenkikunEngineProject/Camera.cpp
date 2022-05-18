@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include "SceneManager.h"
+#include "GameWindow.h"
+#include "WindowManager.h"
 
 Camera::Camera()
 {
@@ -13,13 +15,26 @@ void Camera::Update()
 {
 }
 
- void Camera::Draw(Window* window)
+ Vector3 Camera::ScreenToWorldPoint(Vector3 screenPosition)
+ {
+	 GameWindow gameWindow = WindowManager::gameWindow;
+
+	 Scene* scene = SceneManager::GetNowScene();
+	 Camera* camera = scene->GetNowCamera();
+	 GameWindow* window = &(WindowManager::gameWindow);
+	 Vector3 cameraPos = camera->gameobject->transform->position;
+
+	 return Vector3(screenPosition.x / camera->zoom - window->width / 2.0f + cameraPos.x, screenPosition.y / camera->zoom - window->height / 2.0f + cameraPos.y, screenPosition.z);
+ }
+
+ Vector3 Camera::WorldToScreenPoint(Vector3 worldPosition)
  {
 	 Scene* scene = SceneManager::GetNowScene();
-	 for (GameObject* gameobject : scene->gameobjects) {
-		 gameobject->Draw(window, this);
-		 //for (Transform* child : gameobject->transform->children) {
-			// child->gameobject->Draw(window, this);
-		 //}
-	 }
+	 Camera* camera = scene->GetNowCamera();
+	 GameWindow* window = &(WindowManager::gameWindow);
+	 Vector3 cameraPos = camera->gameobject->transform->position;
+
+	 return Vector3((worldPosition.x + window->width / 2.0f - cameraPos.x) * camera->zoom, (worldPosition.y + window->height / 2.0f - cameraPos.y) * camera->zoom, worldPosition.z);
  }
+
+

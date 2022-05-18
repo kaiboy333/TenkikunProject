@@ -88,5 +88,10 @@ void PlayerScript::ScriptUpdate()
 	else if (Input::GetKey(Input::KeyCode::DOWN)) {
 		gameobject->transform->scale += Vector3::Down() * 0.01f;
 	}
+
+	if (Input::GetMouseButton(Input::Mouse_Left)) {
+		Vector3 mousePos = Input::GetMousePosition();
+		gameobject->transform->position = Camera::ScreenToWorldPoint(mousePos);
+	}
 }
 

@@ -11,6 +11,7 @@
 #include "PlayerScript.h"
 #include "Input.h"
 #include "Rotate.h"
+#include "WindowManager.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -22,8 +23,6 @@ const float MIN_FRAME_TIME = 1.0f / 60;
 LARGE_INTEGER timeStart;
 LARGE_INTEGER timeEnd;
 LARGE_INTEGER timeFreq;
-
-GameWindow* gameWindow = nullptr;	//ゲーム画面
 
 void Init();
 void CulculateFPS();
@@ -73,7 +72,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 inline void Init() {
 	SceneManager();	//シーンマネージャーの初期化
-	gameWindow = new GameWindow(700, 500);	//ゲーム画面の初期化
+	WindowManager();	//ゲーム画面の初期化
 	Input();	//入力の初期化
 
 	Scene* scene = SceneManager::GetNowScene();	//シーンを取得
@@ -128,5 +127,5 @@ inline void Draw() {
 	//画面全体を黒で描画
 	DrawBoxAA(0, 0, WIDTH, HEIGHT, GetColor(0, 0, 0), TRUE);
 
-	gameWindow->Draw();	//ゲーム画面を描画
+	WindowManager::Draw();	//ウィンドウ画面を描画
 }

@@ -22,6 +22,14 @@ void Scene::Update()
 	}
 }
 
+void Scene::Draw(Window* window)
+{
+	Camera* camera = cameras[this->drawCameraNo];   //現在の対象のCameraを描画
+	for (GameObject* gameobject : gameobjects) {
+		gameobject->Draw(window, camera);	//ゲームオブジェクトの描画
+	}
+}
+
 GameObject* Scene::CreateEmpty()
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
@@ -54,6 +62,11 @@ GameObject* Scene::CreateCamera()
 void Scene::RemoveGameObject(GameObject* gameobject)
 {
 	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), gameobject));
+}
+
+Camera* Scene::GetNowCamera()
+{
+	return cameras[drawCameraNo];
 }
 
 //void Scene::DestroyGameObject(GameObject* gameobject)

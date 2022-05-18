@@ -10,8 +10,6 @@ void GameWindow::Draw()
 {
     Scene* scene = SceneManager::GetNowScene();
     if (scene != nullptr) {
-        if(scene->cameras.size() != 0){
-            scene->cameras[this->drawCameraNo]->Draw(this);   //Œ»Ý‚Ì‘ÎÛ‚ÌCamera‚ð•`‰æ
-        }
+        scene->Draw(this);
     }
 }

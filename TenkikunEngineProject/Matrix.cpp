@@ -17,14 +17,13 @@ Matrix Matrix::operator*(const Matrix& other) const
 
 Vector3 Matrix::operator*(const Vector3& other) const
 {
-	Vector4 vec4 = Vector4();
+	Vector3 vec;
 
-	vec4.x = m[0][0] * other.x + m[0][1] * other.y + m[0][2] * other.z + m[0][3] * 1.0f;
-	vec4.y = m[1][0] * other.x + m[1][1] * other.y + m[1][2] * other.z + m[1][3] * 1.0f;
-	vec4.z = m[2][0] * other.x + m[2][1] * other.y + m[2][2] * other.z + m[2][3] * 1.0f;
-	vec4.w = m[3][0] * other.x + m[3][1] * other.y + m[3][2] * other.z + m[3][3] * 1.0f;
+	vec.x = m[0][0] * other.x + m[0][1] * other.y + m[0][2] * other.z + m[0][3] * 1.0f;
+	vec.y = m[1][0] * other.x + m[1][1] * other.y + m[1][2] * other.z + m[1][3] * 1.0f;
+	vec.z = m[2][0] * other.x + m[2][1] * other.y + m[2][2] * other.z + m[2][3] * 1.0f;
 
-	return Vector3(vec4.x, vec4.y, vec4.z);
+	return vec;
 }
 
 Matrix Matrix::GetUnit()

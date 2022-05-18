@@ -3,6 +3,8 @@
 #include "DxLib.h"
 #include <unordered_map>
 #include "KeyState.h"
+#include "Vector3.h"
+#include "Property.h"
 
 class KeyState;
 class Input
@@ -47,16 +49,32 @@ class Input
 			RIGHT = KEY_INPUT_RIGHT,
 			UP = KEY_INPUT_UP,
 			DOWN = KEY_INPUT_DOWN,
+		};
 
+		enum MouseCode {
+			Mouse_Left = MOUSE_INPUT_LEFT,
+			Mouse_Right = MOUSE_INPUT_RIGHT,
+			Mouse_Wheel = MOUSE_INPUT_MIDDLE,
 		};
 
 		static std::unordered_map<int, KeyState*> keys;
+		static std::unordered_map<int, KeyState*> mouses;
 
 		Input();
 
 		static void Update();	//入力の状態更新
 
+		//キーボードの入力状態を取得
 		static bool GetKey(KeyCode keyCode);	//押されているか
 		static bool GetKeyDown(KeyCode keyCode);	//押した瞬間か
 		static bool GetKeyUp(KeyCode keyCode);	//離した瞬間か
+
+		//マウスの入力状態を取得
+		static bool GetMouseButton(MouseCode mouseCode);
+		static bool GetMouseButtonDown(MouseCode mouseCode);
+		static bool GetMouseButtonUp(MouseCode mouseCode);
+
+		//マウスのスクリーン座標を取得
+		static Vector3 GetMousePosition();
+
 };
