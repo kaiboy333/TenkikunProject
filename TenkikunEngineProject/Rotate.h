@@ -13,6 +13,6 @@ class Rotate : public Script
 	private:
 		float rotateSpeed = 1.0f;
 
-		Transform* firstParent;
+		Transform* firstParent = nullptr;
 };
 

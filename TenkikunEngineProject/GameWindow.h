@@ -9,7 +9,7 @@ class Camera;
 class GameWindow :  public Window
 {
 	public:
-		GameWindow(int width, int height);
+		GameWindow();
 		void Draw() override;	//Sceneã‚ÌGameObject‚ğ•`‰æ
 };
 

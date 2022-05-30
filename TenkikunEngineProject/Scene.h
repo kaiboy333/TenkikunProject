@@ -5,7 +5,14 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "ImageRenderer.h"
+#include "WindowManager.h"
+#include "TreeList.h"
+#include "Window.h"
 
+class Window;
+class HierarchyWindow;
+class WindowManager;
+class TreeList;
 class Scene
 {
 	public:
@@ -20,6 +27,10 @@ class Scene
 		std::vector<GameObject*> gameobjects;	//GameObjectたち
 		std::vector<Camera*> cameras;	//Cameraたち
 
+		TreeList* treeList = nullptr;
+
+		int generateNum = 0;
+
 		void Init();
 
 		void Update();
@@ -30,9 +41,9 @@ class Scene
 		GameObject* CreateSquare();	//四角い画像のゲームオブジェクトを作成
 		GameObject* CreateCamera();	//カメラゲームオブジェクトを作成
 
-		//void DestroyGameObject(GameObject* gameobject);	//指定のGameObjectを削除
+		void Destroy(GameObject* gameobject);	//指定のGameObjectを削除
 
-		void RemoveGameObject(GameObject* gameobject);	//指定のGameObjectをリストから削除
+		//void RemoveGameObject(GameObject* gameobject);	//指定のGameObjectをリストから削除
 
 		Camera* GetNowCamera();
 

@@ -30,6 +30,8 @@ class GameObject
 
 		void Draw(Window* window, Camera* camera);	//GameObjectの描画Componentを描画
 
+		void Rename(std::string name);
+
 		static GameObject* Find(std::string name);	//名前からオブジェクトを取得する
 
 	private:

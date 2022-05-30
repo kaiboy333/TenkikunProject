@@ -5,11 +5,13 @@
 
 void Scene::Init()
 {
+	treeList = new TreeList(WindowManager::hierarchyWindow);
+
 	CreateCamera();	//カメラ生成
 
 	CreateSquare();	//四角い画像を生成
-	GameObject* s2 = CreateSquare();	//四角い画像を生成
-	s2->name = "Square2";
+	GameObject* s2 = CreateSquare();	//四角い画像2を生成
+	s2->name = "Square2";	//名前変更
 }
 
 void Scene::Update()
@@ -34,6 +36,9 @@ GameObject* Scene::CreateEmpty()
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobjects.emplace_back(gameobject);	//リストに追加
+	generateNum++;	//生成回数加算
+	gameobject->name = gameobject->name + std::to_string(generateNum);	//名前変更
+	treeList->Add(gameobject->name, treeList->FindNode("root"));	//TreeNodeにも追加
 	return gameobject;
 }
 
@@ -59,15 +64,27 @@ GameObject* Scene::CreateCamera()
 	return gameobject;
 }
 
-void Scene::RemoveGameObject(GameObject* gameobject)
+void Scene::Destroy(GameObject* gameobject)
 {
+	//親にある自身を削除
+	std::vector<Transform*> children = gameobject->transform->parent->children;
+	children.erase(std::remove(children.begin(), children.end(), gameobject->transform));
+
+	//シーンから自身を削除
+	std::vector<GameObject*> gameobjects = SceneManager::GetNowScene()->gameobjects;
 	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), gameobject));
 }
+
+//void Scene::RemoveGameObject(GameObject* gameobject)
+//{
+//	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), gameobject));
+//}
 
 Camera* Scene::GetNowCamera()
 {
 	return cameras[drawCameraNo];
 }
+
 
 //void Scene::DestroyGameObject(GameObject* gameobject)
 //{

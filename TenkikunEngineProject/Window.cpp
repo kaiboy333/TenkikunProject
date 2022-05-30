@@ -7,3 +7,14 @@ Window::Window(int width, int height, float startX, float startY)
 	this->startX = startX;
 	this->startY = startY;
 }
+
+void Window::Draw()
+{
+	//•`‰æ”ÍˆÍ§ŒÀ
+	SetDrawArea(startX, startY, startX + width, startY + height);
+	//”’‚¢lŠp‚ğ•`‰æ
+	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(255, 255, 255), TRUE);
+	//˜gü‚ğ•`‰æ
+	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);
+
+}

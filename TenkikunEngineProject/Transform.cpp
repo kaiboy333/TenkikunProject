@@ -30,6 +30,10 @@ void Transform::SetParent(Transform* newParent)
 		//親に自身を追加
 		newParent->children.push_back(this);
 	}
+
+	//TreeListから古い親を使って自身の名前削除
+	//TreeListから新しい親を使って自身の名前追加
+
 	//親にセット
 	parent = newParent;
 

@@ -1,8 +1,11 @@
 #include "WindowManager.h"
 
-GameWindow WindowManager::gameWindow = GameWindow(700, 500);
-
 void WindowManager::Draw()
 {
-	gameWindow.Draw();	//ゲーム画面の描画
+	gameWindow->Draw();	//ゲーム画面の描画
+	hierarchyWindow->Draw();	//ヒエラルキーウィンドウの描画
 }
+
+GameWindow* WindowManager::gameWindow = new GameWindow();
+HierarchyWindow* WindowManager::hierarchyWindow = new HierarchyWindow();
+

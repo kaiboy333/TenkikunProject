@@ -15,8 +15,8 @@
 
 #pragma comment(lib,"winmm.lib")
 
-#define WIDTH 600
-#define HEIGHT 500
+#define WIDTH 1300
+#define HEIGHT 800
 
 // 本当はグローバルにしない方が良い
 const float MIN_FRAME_TIME = 1.0f / 60;

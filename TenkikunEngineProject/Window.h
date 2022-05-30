@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DxLib.h"
+
 class Window
 {
 	public:
@@ -8,6 +10,6 @@ class Window
 
 		Window(int width, int height, float startX, float startY);
 
-		virtual void Draw() = 0;	//•`‰æ
+		virtual void Draw();	//•`‰æ
 };
 

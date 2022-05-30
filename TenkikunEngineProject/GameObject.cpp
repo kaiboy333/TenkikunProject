@@ -25,6 +25,11 @@ void GameObject::Draw(Window* window, Camera* camera)
 	}
 }
 
+void GameObject::Rename(std::string name)
+{
+	//TreeList‚Ì–¼‘O‚à•Ï‚¦‚é
+}
+
 GameObject* GameObject::Find(std::string name)
 {
 	Scene* scene = SceneManager::GetNowScene();
