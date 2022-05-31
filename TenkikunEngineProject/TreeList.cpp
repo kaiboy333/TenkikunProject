@@ -10,28 +10,35 @@ TreeList::TreeList(Window* window, bool drawRoot, std::string e)
 	this->drawRoot = drawRoot;
 }
 
-void TreeList::Add(std::string e, TreeNode* parentNode)
+void TreeList::Add(TreeNode* targetNode, TreeNode* parentNode)
 {
+	if (!targetNode)
+		return;
+
 	//親が指定されたなら
-	if (parentNode) {
-		//ノードを作成
-		TreeNode* node = new TreeNode(e, parentNode->stairNo + 1);
+	if (parentNode) {			
 		//親にある子のリストを追加
-		parentNode->childNodes.push_back(node);
+		parentNode->childNodes.push_back(targetNode);
 		//子に親を指定
-		node->parentNode = parentNode;
+		targetNode->parentNode = parentNode;
+		//指定のノードの階層を更新
+		targetNode->UpdateStairNo();
 	}
 }
 
-void TreeList::Delete(std::string e)
+TreeNode* TreeList::Delete(std::string e)
 {
 	TreeNode* node = FindNode(e);
 	if (node) {
 		//親のノードからリストを取得
-		std::vector<TreeNode*> childNodes = node->parentNode->childNodes;
+		std::vector<TreeNode*>* childNodes = &node->parentNode->childNodes;
 		//指定のノードを削除
-		childNodes.erase(remove(childNodes.begin(), childNodes.end(), node));
+		childNodes->erase(remove(childNodes->begin(), childNodes->end(), node));
+		//親の参照を削除
+		node->parentNode = nullptr;
 	}
+	//ノードを返す
+	return node;
 }
 
 TreeNode* TreeList::FindNode(std::string e)
@@ -74,9 +81,11 @@ void TreeList::Draw()
 			//文字の高さ取得
 			float stringHeight = GetFontLineSpace();
 
-			float startX = window->startX + iconWidth * (node->stairNo + 1) + tabSpace * (node->stairNo);
+			float startX = window->startX + iconWidth * (node->GetStairNo() + 1) + tabSpace * (node->GetStairNo());
 			float startY = window->startY + stringHeight * i;
 
+			//アイコンの描画
+			DrawBoxAA(startX - iconWidth, startY, startX - 1, startY + stringHeight - 1, GetColor(0, 0, 0), TRUE);
 			//四角の描画
 			DrawBoxAA(startX, startY, startX + stringWidth - 1, startY + stringHeight - 1, GetColor(0, 0, 0), FALSE);
 			//文字の描画(黒)
@@ -92,4 +101,9 @@ void TreeList::Draw()
 
 		}
 	}
+}
+
+TreeNode* TreeList::GetRoot()
+{
+	return root;
 }

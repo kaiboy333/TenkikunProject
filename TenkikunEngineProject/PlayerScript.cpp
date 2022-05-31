@@ -89,6 +89,13 @@ void PlayerScript::ScriptUpdate()
 		gameobject->transform->scale += Vector3::Down() * 0.01f;
 	}
 
+	//if (Input::GetKey(Input::Q) && !Input::GetKey(Input::LEFT_SHIFT)) {
+	//	SceneManager::GetNowScene()->Destroy(gameobject);
+	//}
+	//else if (Input::GetKey(Input::Q) && Input::GetKey(Input::LEFT_SHIFT)) {
+	//	SceneManager::GetNowScene()->Destroy(gameobject->transform->children[0]->gameobject);
+	//}
+
 	if (Input::GetMouseButton(Input::Mouse_Left)) {
 		Vector3 mousePos = Input::GetMousePosition();
 		gameobject->transform->position = Camera::ScreenToWorldPoint(mousePos);

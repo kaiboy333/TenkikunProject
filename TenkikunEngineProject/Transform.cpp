@@ -21,18 +21,25 @@ void Transform::SetParent(Transform* newParent)
 	if (newParent != nullptr && parent != nullptr) {
 		SetParent(nullptr);	//一旦親をなくす
 	}
+
+	TreeList* treeList = SceneManager::GetNowScene()->treeList;
+
+	//TreeListから自身の名前削除
+	TreeNode* node = treeList->Delete(gameobject->name);
+
 	//nullptrで親を消すなら
 	if (newParent == nullptr) {
 		//親に自身を削除
 		parent->children.erase(std::remove(parent->children.begin(), parent->children.end(), this));
+		//TreeListからルートを使って自身の名前追加
+		treeList->Add(node, treeList->GetRoot());
 	}
 	else {
 		//親に自身を追加
 		newParent->children.push_back(this);
+		//TreeListから新しい親を使って自身の名前追加
+		treeList->Add(node, treeList->FindNode(newParent->gameobject->name));
 	}
-
-	//TreeListから古い親を使って自身の名前削除
-	//TreeListから新しい親を使って自身の名前追加
 
 	//親にセット
 	parent = newParent;

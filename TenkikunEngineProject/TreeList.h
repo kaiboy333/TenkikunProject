@@ -17,8 +17,9 @@ public:
 	TreeList(Window* window, bool drawRoot = true, std::string e = "root");
 
 	//指定の親にノードを追加
-	void Add(std::string e, TreeNode* parentNode);
-	void Delete(std::string e);
+	void Add(TreeNode* targetNode, TreeNode* parentNode);
+
+	TreeNode* Delete(std::string e);
 
 	TreeNode* FindNode(std::string e);
 
@@ -26,15 +27,16 @@ public:
 
 	void Draw();
 
+	TreeNode* GetRoot();	//ルートを取得
 
 private:
 	TreeNode* root = nullptr;
 
 	//親から子の余白
-	float tabSpace = 5;
+	float tabSpace = 18;
 
 	//アイコンの幅
-	float iconWidth = 5;
+	float iconWidth = 18;
 
 	bool drawRoot;
 

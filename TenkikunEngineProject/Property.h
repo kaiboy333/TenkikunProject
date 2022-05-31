@@ -63,5 +63,29 @@ class Property
 				r /= v;
 			}
 		}
+
+		bool operator ==(const T v) {
+			return r == v;
+		}
+
+		bool operator !=(const T v) {
+			return r != v;
+		}
+
+		T operator +(const T v) {
+			return r + v;
+		}
+
+		T operator -(const T v) {
+			return r - v;
+		}
+
+		T operator *(const T v) {
+			return r * v;
+		}
+
+		T operator /(const T v) {
+			return r / v;
+		}
 };
 

@@ -36,9 +36,9 @@ GameObject* Scene::CreateEmpty()
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobjects.emplace_back(gameobject);	//リストに追加
-	generateNum++;	//生成回数加算
 	gameobject->name = gameobject->name + std::to_string(generateNum);	//名前変更
-	treeList->Add(gameobject->name, treeList->FindNode("root"));	//TreeNodeにも追加
+	generateNum++;	//生成回数加算
+	treeList->Add(new TreeNode(gameobject->name), treeList->GetRoot());	//TreeNodeにも追加
 	return gameobject;
 }
 
@@ -66,13 +66,31 @@ GameObject* Scene::CreateCamera()
 
 void Scene::Destroy(GameObject* gameobject)
 {
-	//親にある自身を削除
-	std::vector<Transform*> children = gameobject->transform->parent->children;
-	children.erase(std::remove(children.begin(), children.end(), gameobject->transform));
+	std::vector<Transform*> transforms;
+	transforms.push_back(gameobject->transform);
 
-	//シーンから自身を削除
-	std::vector<GameObject*> gameobjects = SceneManager::GetNowScene()->gameobjects;
-	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), gameobject));
+	while (transforms.size() != 0) {
+
+		//リストの先頭の要素を取得、削除
+		Transform* transform = transforms[0];
+		transforms.erase(transforms.begin());
+
+		if (transform->parent) {
+			//親にある自身を削除
+			std::vector<Transform*>* children = &transform->parent->children;
+			children->erase(std::remove(children->begin(), children->end(), transform));
+		}
+
+		//シーンから自身を削除
+		std::vector<GameObject*>* gameobjects = &SceneManager::GetNowScene()->gameobjects;
+		gameobjects->erase(std::remove(gameobjects->begin(), gameobjects->end(), gameobject));
+
+		//子らを追加
+		transforms.insert(transforms.end(), transform->children.begin(), transform->children.end());
+	}
+
+	//TreeListの要素も削除
+	treeList->Delete(gameobject->name);
 }
 
 //void Scene::RemoveGameObject(GameObject* gameobject)

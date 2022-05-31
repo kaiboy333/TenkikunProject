@@ -8,14 +8,32 @@
 #include "Scene.h"
 #include <typeinfo>
 #include "SceneManager.h"
+#include "Property.h"
 
 class Scene;
 class Camera;
 class GameObject
 {
+	private:
+		std::string name_ = "Game Object";
+
+		std::vector<Component*> components;	//Componentたち
+
+		void Rename(std::string name);	//名前変更
+
+		void InternalAddComponent(Component* component);	//実際に追加する関数
+
 	public:
 
-		std::string name = "Game Object";	//名前
+		//std::string name = "Game Object";	//名前
+		Property<std::string> name{
+			name_
+				, [this](std::string v) {
+					Rename(v);
+				}
+				, nullptr
+		};
+
 		Transform* transform = nullptr;	//位置などの情報
 
 		GameObject();
@@ -30,14 +48,7 @@ class GameObject
 
 		void Draw(Window* window, Camera* camera);	//GameObjectの描画Componentを描画
 
-		void Rename(std::string name);
-
 		static GameObject* Find(std::string name);	//名前からオブジェクトを取得する
-
-	private:
-		std::vector<Component*> components;	//Componentたち
-
-		void InternalAddComponent(Component* component);	//実際に追加する関数
 };
 
 inline void GameObject::InternalAddComponent(Component* component)

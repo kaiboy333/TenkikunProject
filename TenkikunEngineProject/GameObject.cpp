@@ -27,7 +27,15 @@ void GameObject::Draw(Window* window, Camera* camera)
 
 void GameObject::Rename(std::string name)
 {
-	//TreeListの名前も変える
+	//TreeListの名前を変える
+	TreeList* treeList = SceneManager::GetNowScene()->treeList;
+	//名前セット
+	TreeNode* node = treeList->FindNode(name_);
+	if (node) {
+		node->element = name;
+	}
+
+	name_ = name;	//実際に名前セット
 }
 
 GameObject* GameObject::Find(std::string name)

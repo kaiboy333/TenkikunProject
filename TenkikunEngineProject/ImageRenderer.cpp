@@ -29,9 +29,6 @@ void ImageRenderer::Draw(Window* window, Camera* camera)
 
 			GameWindow* gameWindow = WindowManager::gameWindow;
 
-			////•`‰æ”ÍˆÍ§ŒÀ
-			//SetDrawArea(gameWindow->startX, gameWindow->startY, gameWindow->startX + gameWindow->width, gameWindow->startY + gameWindow->height);
-
 			Vector3 pos = this->gameobject->transform->position;
 			Vector3 scale = this->gameobject->transform->scale;
 			Vector3 rota = this->gameobject->transform->rotation;
