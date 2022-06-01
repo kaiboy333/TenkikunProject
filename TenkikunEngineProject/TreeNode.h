@@ -2,55 +2,46 @@
 
 #include <iostream>
 #include <vector>
+#include "TriggerRect.h"
+#include "TreeList.h"
 
-class TreeNode
+class TreeList;
+class TreeNode : public TriggerRect
 {
 public:
 	std::vector<TreeNode*> childNodes;
 	TreeNode* parentNode = nullptr;
 
-	std::string element;
-
 	bool isOpen = true;
 
-	TreeNode(std::string e, int stairNo = 0);
+	TreeList* treeList = nullptr;
 
-	void UpdateStairNo();	//ŠK‘w‚ðXV
+	//e‚©‚çŽq‚Ì—]”’
+	float tabSpace = 18;
+
+	//ƒAƒCƒRƒ“‚Ì•
+	float iconWidth = 18;
+
+	TreeNode(std::string e, TreeList* treeList);
 
 	int GetStairNo();	//ŠK‘w‚ðŽæ“¾
+	void SetStairNo(int stairNo);	//ŠK‘w‚ðƒZƒbƒg
+
+	int GetRow();	//s”‚ðŽæ“¾
+
+	void SetRow(int row);	//s”‚ðƒZƒbƒg
+
+	void SetElement(std::string element);
+	std::string GetElement();
+
+	void Draw();
 
 	private:
 		//ŠK‘w‚Ì[‚³
 		int stairNo = 0;
+
+		//‰½s–Ú‚©
+		int row = 0;
+
+		std::string element;
 };
-
-inline TreeNode::TreeNode(std::string e, int stairNo)
-{
-	element = e;
-	this->stairNo = stairNo;
-}
-
-inline void TreeNode::UpdateStairNo()
-{
-	std::vector<TreeNode*> nodes;
-	nodes.push_back(this);
-
-	while (nodes.size() != 0) {
-
-		//ƒŠƒXƒg‚Ìæ“ª‚Ì—v‘f‚ðŽæ“¾Aíœ
-		TreeNode* node = nodes[0];
-		nodes.erase(nodes.begin());
-
-		//ŠK‘w‚ðƒZƒbƒg
-		node->stairNo = node->parentNode ? node->parentNode->stairNo + 1 : 0;
-
-		//Žq‚ç‚ð’Ç‰Á
-		nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
-	}
-}
-
-inline int TreeNode::GetStairNo()
-{
-	return stairNo;
-}
-

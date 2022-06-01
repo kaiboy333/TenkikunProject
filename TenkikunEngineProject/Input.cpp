@@ -85,7 +85,7 @@ Vector3 Input::GetMousePosition()
 {
 	int x, y;
 	GetMousePoint(&x, &y);
-	return Vector3(x, y, 0.0f);
+	return Vector3((float)x, (float)y, 0.0f);
 }
 
 std::unordered_map<int, KeyState*> Input::keys;

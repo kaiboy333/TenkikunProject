@@ -1,14 +1,14 @@
 #pragma once
 
 #include "DxLib.h"
+#include "TriggerRect.h"
+#include <vector>
 
-class Window
+class TriggerRect;
+class Window : public TriggerRect
 {
 	public:
-		int width, height;
-		float startX = 0, startY = 0;
-
-		Window(int width, int height, float startX, float startY);
+		Window(float startX, float startY, float width, float height);
 
 		virtual void Draw();	//•`‰æ
 };

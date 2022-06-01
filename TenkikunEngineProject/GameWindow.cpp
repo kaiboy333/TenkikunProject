@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 #include "SceneManager.h"
 
-GameWindow::GameWindow() : Window(700, 500, 300, 0)
+GameWindow::GameWindow() : Window(300, 0, 700, 500)
 {
 
 }

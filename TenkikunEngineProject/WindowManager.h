@@ -11,6 +11,15 @@ class WindowManager
 	public:
 		static GameWindow* gameWindow;
 		static HierarchyWindow* hierarchyWindow;
+
+		static std::vector<TriggerRect*> triggerRects;	//反応する四角たち
+
+		static void Update();	//画面のマウスチェック
 		static void Draw();
+
+		static void SetSelectedTriggerRect(TriggerRect* selectedTriggerRect);
+
+	private:
+		static TriggerRect* selectedTriggerRect;	//選択中のTriggerRect
 };
 

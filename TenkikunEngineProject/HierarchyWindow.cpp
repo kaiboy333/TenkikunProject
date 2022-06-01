@@ -1,6 +1,6 @@
 #include "HierarchyWindow.h"
 
-HierarchyWindow::HierarchyWindow() : Window(300, 500, 0, 0)
+HierarchyWindow::HierarchyWindow() : Window(0, 0, 300, 500)
 {
 
 }

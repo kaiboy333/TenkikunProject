@@ -104,14 +104,20 @@
     <ClCompile Include="WindowManager.cpp">
       <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
-    <ClCompile Include="TriggerRect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="HierarchyWindow.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
     <ClCompile Include="TreeList.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerRect.cpp">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeNode.cpp">
+      <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +214,18 @@
     <ClInclude Include="TriggerRect.h">
       <Filter>ソース ファイル\main\window</Filter>
     </ClInclude>
-    <ClInclude Include="HierarchyWindow.h" />
-    <ClInclude Include="TreeList.h" />
-    <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="HierarchyWindow.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeList.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeNode.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">

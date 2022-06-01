@@ -32,7 +32,7 @@ void GameObject::Rename(std::string name)
 	//名前セット
 	TreeNode* node = treeList->FindNode(name_);
 	if (node) {
-		node->element = name;
+		node->SetElement(name);
 	}
 
 	name_ = name;	//実際に名前セット

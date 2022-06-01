@@ -6,12 +6,8 @@
 #include "Camera.h"
 #include "ImageRenderer.h"
 #include "WindowManager.h"
-#include "TreeList.h"
 #include "Window.h"
 
-class Window;
-class HierarchyWindow;
-class WindowManager;
 class TreeList;
 class Scene
 {

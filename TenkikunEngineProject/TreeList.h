@@ -29,6 +29,8 @@ public:
 
 	TreeNode* GetRoot();	//ルートを取得
 
+	void UpdateNodes();	//階層を更新
+
 private:
 	TreeNode* root = nullptr;
 

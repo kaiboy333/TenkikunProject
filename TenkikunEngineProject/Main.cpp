@@ -118,6 +118,7 @@ inline void CulculateFPS() {
 }
 
 inline void Update() {
+	WindowManager::Update();	//Windowの更新
 	Scene* scene = SceneManager::GetNowScene();
 	scene->Update();	//現在のシーンの更新
 	Input::Update();	//キーの更新

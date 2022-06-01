@@ -1,29 +1,36 @@
 #pragma once
 
-#include "Window.h"
 #include "Vector3.h"
 #include "Input.h"
 #include <functional>
 #include <vector>
+#include "Rect.h"
 
 
-class TriggerRect
+class TriggerRect : public Rect
 {
 	public:
-		TriggerRect(float x, float y, float width, float height, Window* window);
+		bool isOn = false;	//マウスが乗るときにtrue
+
+		bool isActive = true;	//反応するか
+
+		bool isSelected = false;	//選択されているか
+
+		TriggerRect(float startX, float startY, float width, float height);
 
 		void CheckInput();
 
 		std::vector<std::function<void()>> mouseClickEvents;
 		std::vector<std::function<void()>> mouseDoubleClickEvents;
 		std::vector<std::function<void()>> mouseRightClickEvents;
+		std::vector<std::function<void()>> mouseOnEvents;
+		std::vector<std::function<void()>> mouseExitEvents;
 
 	private :
-		float x, y;
-		float width, height;
-
 		void MouseClickEvent();
 		void MouseDoubleClickEvent();
 		void MouseRightClickEvent();
+		void MouseOnEvent();
+		void MouseExitEvent();
 };
 

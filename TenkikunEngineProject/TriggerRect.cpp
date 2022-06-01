@@ -1,34 +1,46 @@
 #include "TriggerRect.h"
+#include "WindowManager.h"
 
-TriggerRect::TriggerRect(float x, float y, float width, float height, Window* window)
+TriggerRect::TriggerRect(float startX, float startY, float width, float height) : Rect(startX, startY, width, height)
 {
-	this->x = x;
-	this->y = y;
-	this->width = width;
-	this->height = height;
+	WindowManager::triggerRects.push_back(this);
 }
 
 void TriggerRect::CheckInput()
 {
+	//反応させないなら終わり
+	if (!isActive)
+		return;
+
 	Vector3 mousePos = Input::GetMousePosition();
 
-	float leftTopX = x - width / 2;
-	float leftTopY = y - height / 2;
-
 	//マウスが反応する場所にあるなら
-	if (leftTopX <= mousePos.x && leftTopX + width >= mousePos.x
-		&& leftTopY <= mousePos.y && leftTopY + height >= mousePos.y) 
-	{
+	if (startX <= mousePos.x && startX + width >= mousePos.x
+		&& startY <= mousePos.y && startY + height >= mousePos.y) {
+		//左クリックなら
 		if (Input::GetMouseButtonDown(Input::Mouse_Left)) {
 			MouseClickEvent();
 		}
+		//右クリックなら
 		else if (Input::GetMouseButtonDown(Input::Mouse_Right)) {
 			MouseRightClickEvent();
 		}
+		//マウスが乗ってるだけなら
+		else {
+			MouseOnEvent();
+		}
+		//乗っている判定にする
+		isOn = true;
 	}
 	//ないなら
-	//イベントを起こさない
-	return;
+	else {
+		//前回マウスが乗っていたら
+		if (isOn) {
+			MouseExitEvent();
+		}
+		//乗っていない判定にする
+		isOn = false;
+	}
 }
 
 void TriggerRect::MouseClickEvent()
@@ -48,6 +60,20 @@ void TriggerRect::MouseDoubleClickEvent()
 void TriggerRect::MouseRightClickEvent()
 {
 	for (std::function<void()> func : mouseRightClickEvents) {
+		func();
+	}
+}
+
+void TriggerRect::MouseOnEvent()
+{
+	for (std::function<void()> func : mouseOnEvents) {
+		func();
+	}
+}
+
+void TriggerRect::MouseExitEvent()
+{
+	for (std::function<void()> func : mouseExitEvents) {
 		func();
 	}
 }
