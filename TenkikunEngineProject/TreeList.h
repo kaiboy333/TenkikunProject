@@ -13,6 +13,14 @@ class TreeNode;
 class TreeList
 {
 public:
+	//ボタン画像(開いていないのと開いているとき)
+	Image* images[2];
+
+	//親から子の余白
+	float tabSpace = 18;
+
+	//ボタン画像の幅
+	float buttonWidth = 18;
 
 	TreeList(Window* window, bool drawRoot = true, std::string e = "root");
 
@@ -33,12 +41,6 @@ public:
 
 private:
 	TreeNode* root = nullptr;
-
-	//親から子の余白
-	float tabSpace = 18;
-
-	//アイコンの幅
-	float iconWidth = 18;
 
 	bool drawRoot;
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include "TriggerRect.h"
 #include "TreeList.h"
+#include "WindowButton.h"
 
 class TreeList;
 class TreeNode : public TriggerRect
@@ -15,12 +16,7 @@ public:
 	bool isOpen = true;
 
 	TreeList* treeList = nullptr;
-
-	//親から子の余白
-	float tabSpace = 18;
-
-	//アイコンの幅
-	float iconWidth = 18;
+	WindowButton* button = nullptr;	//ボタン
 
 	TreeNode(std::string e, TreeList* treeList);
 

@@ -2,6 +2,10 @@
 
 TreeList::TreeList(Window* window, bool drawRoot, std::string e)
 {
+	//ノードのボタン画像セット
+	images[0] = new Image("image/rightArrow.png");
+	images[1] = new Image("image/downArrow.png");
+
 	//windowセット
 	this->window = window;
 	this->drawRoot = drawRoot;
@@ -132,8 +136,13 @@ void TreeList::UpdateNodes()
 		//行数をセット
 		node->SetRow(i);
 		//開始位置セット
-		node->startX = window->startX + node->tabSpace * (node->GetStairNo() + 1) + node->iconWidth * node->GetStairNo();
+		node->startX = window->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
 		node->startY = window->startY + node->GetRow() * node->height;
+
+		node->button->startX = node->startX - buttonWidth;
+		node->button->startY = node->startY;
+		//子ノードがいないならボタンを無効化
+		node->button->isActive = ((int)node->childNodes.size() != 0);
 		i++;
 
 		//子らを追加

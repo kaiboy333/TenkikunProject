@@ -153,6 +153,7 @@
     <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InspectorWindow.cpp" />
     <ClCompile Include="KeyState.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="TriggerRect.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +191,7 @@
     <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="InspectorWindow.h" />
     <ClInclude Include="IntCondition.h" />
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Matrix.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="WindowButton.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +223,8 @@
     <Image Include="image\Coin_Spin0.png" />
     <Image Include="image\Coin_Spin1.png" />
     <Image Include="image\Coin_Spin2.png" />
+    <Image Include="image\downArrow.png" />
+    <Image Include="image\rightArrow.png" />
     <Image Include="image\square.png" />
     <Image Include="image\Tenkikun.png" />
     <Image Include="image\UnityChan_Down0.png" />

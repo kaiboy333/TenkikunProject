@@ -17,9 +17,13 @@ void TriggerRect::CheckInput()
 	//マウスが反応する場所にあるなら
 	if (startX <= mousePos.x && startX + width >= mousePos.x
 		&& startY <= mousePos.y && startY + height >= mousePos.y) {
-		//左クリックなら
+		//左クリックを押した瞬間なら
 		if (Input::GetMouseButtonDown(Input::Mouse_Left)) {
-			MouseClickEvent();
+			MouseClickDownEvent();
+		}
+		//左クリックを離した瞬間なら
+		else if (Input::GetMouseButtonUp(Input::Mouse_Left)) {
+			MouseClickUpEvent();
 		}
 		//右クリックなら
 		else if (Input::GetMouseButtonDown(Input::Mouse_Right)) {
@@ -43,9 +47,16 @@ void TriggerRect::CheckInput()
 	}
 }
 
-void TriggerRect::MouseClickEvent()
+void TriggerRect::MouseClickDownEvent()
 {
-	for (std::function<void()> func : mouseClickEvents) {
+	for (std::function<void()> func : mouseClickDownEvents) {
+		func();
+	}
+}
+
+void TriggerRect::MouseClickUpEvent()
+{
+	for (std::function<void()> func : mouseClickUpEvents) {
 		func();
 	}
 }

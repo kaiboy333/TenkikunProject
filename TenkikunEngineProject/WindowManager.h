@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "GameWindow.h"
 #include "HierarchyWindow.h"
+#include "InspectorWindow.h"
 
 class GameWindow;
 class HierarchyWindow;
@@ -11,6 +12,7 @@ class WindowManager
 	public:
 		static GameWindow* gameWindow;
 		static HierarchyWindow* hierarchyWindow;
+		static InspectorWindow* inspectorWindow;
 
 		static std::vector<TriggerRect*> triggerRects;	//”½‰ž‚·‚éŽlŠp‚½‚¿
 

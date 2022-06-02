@@ -119,6 +119,12 @@
     <ClCompile Include="TreeNode.cpp">
       <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
+    <ClCompile Include="WindowButton.cpp">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectorWindow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -226,6 +232,10 @@
     <ClInclude Include="Rect.h">
       <Filter>ソース ファイル\main\window</Filter>
     </ClInclude>
+    <ClInclude Include="WindowButton.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
@@ -316,6 +326,12 @@
       <Filter>image</Filter>
     </Image>
     <Image Include="image\UnityChan_Run7.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\downArrow.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\rightArrow.png">
       <Filter>image</Filter>
     </Image>
   </ItemGroup>

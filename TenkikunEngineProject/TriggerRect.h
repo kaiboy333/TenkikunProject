@@ -20,14 +20,16 @@ class TriggerRect : public Rect
 
 		void CheckInput();
 
-		std::vector<std::function<void()>> mouseClickEvents;
+		std::vector<std::function<void()>> mouseClickDownEvents;
+		std::vector<std::function<void()>> mouseClickUpEvents;
 		std::vector<std::function<void()>> mouseDoubleClickEvents;
 		std::vector<std::function<void()>> mouseRightClickEvents;
 		std::vector<std::function<void()>> mouseOnEvents;
 		std::vector<std::function<void()>> mouseExitEvents;
 
 	private :
-		void MouseClickEvent();
+		void MouseClickDownEvent();
+		void MouseClickUpEvent();
 		void MouseDoubleClickEvent();
 		void MouseRightClickEvent();
 		void MouseOnEvent();

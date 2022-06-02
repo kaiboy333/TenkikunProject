@@ -4,6 +4,7 @@ void WindowManager::Draw()
 {
 	gameWindow->Draw();	//ゲーム画面の描画
 	hierarchyWindow->Draw();	//ヒエラルキーウィンドウの描画
+	inspectorWindow->Draw();	//インスペクターウィンドウの描画
 }
 
 void WindowManager::Update()
@@ -34,4 +35,5 @@ TriggerRect* WindowManager::selectedTriggerRect;
 
 GameWindow* WindowManager::gameWindow = new GameWindow();
 HierarchyWindow* WindowManager::hierarchyWindow = new HierarchyWindow();
+InspectorWindow* WindowManager::inspectorWindow = new InspectorWindow();
 

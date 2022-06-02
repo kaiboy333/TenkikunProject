@@ -26,7 +26,9 @@ inline Image::Image(std::string path)
 {
 	this->path = path;	//パスを入れる
 	this->gh = ImageManager::Instance()->LoadAndGetImage(path);	//画像読み込み
-	GetGraphSizeF(*gh, &width, &height);	//画像サイズ取得
+	if (gh) {
+		GetGraphSizeF(*gh, &width, &height);	//画像サイズ取得
+	}
 }
 
 inline int* Image::GetGH()

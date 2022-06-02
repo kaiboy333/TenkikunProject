@@ -1,14 +1,26 @@
 #include "TreeNode.h"
 
-TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->window->startX + iconWidth, treeList->window->startY, (float)GetDrawStringWidth(e.c_str(), (float)((int)e.length())), (float)GetFontLineSpace())
+TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->window->startX + treeList->buttonWidth, treeList->window->startY, (float)GetDrawStringWidth(e.c_str(), (float)((int)e.length())), (float)GetFontLineSpace())
 {
 	element = e;
 	this->treeList = treeList;
 
 	//クリックしたときに自身を選択中にする
-	mouseClickEvents.push_back([this]() {
+	mouseClickDownEvents.push_back([this]() {
 		WindowManager::SetSelectedTriggerRect(this);
-		});
+	});
+
+	button = new WindowButton(startX - treeList->buttonWidth, startY, treeList->buttonWidth, treeList->buttonWidth);	//ボタン作成
+	//画像セット
+	button->image = treeList->images[isOpen];
+
+	//ボタンをクリックしたら
+	button->onClickEvents.push_back([this, treeList]() {
+		//開いているかの判定を反転させる
+		isOpen = !isOpen;
+		//画像セット
+		button->image = treeList->images[isOpen];
+	});
 }
 
 int TreeNode::GetStairNo()
@@ -47,8 +59,6 @@ std::string TreeNode::GetElement()
 
 void TreeNode::Draw()
 {
-	//アイコンの描画
-	DrawBoxAA(startX - iconWidth, startY, startX - 1, startY + height - 1, GetColor(0, 0, 0), TRUE);
 	//選択されているなら
 	if (isSelected) {
 		//四角の描画
@@ -64,4 +74,7 @@ void TreeNode::Draw()
 	}
 	//文字の描画(黒)
 	DrawStringF(startX, startY, element.c_str(), GetColor(0, 0, 0));
+
+	//ボタンの描画
+	button->Draw();
 }
