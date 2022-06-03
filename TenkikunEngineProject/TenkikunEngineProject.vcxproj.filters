@@ -123,7 +123,7 @@
       <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
     <ClCompile Include="InspectorWindow.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +235,9 @@
     <ClInclude Include="WindowButton.h">
       <Filter>ソース ファイル\main\window</Filter>
     </ClInclude>
-    <ClInclude Include="InspectorWindow.h" />
+    <ClInclude Include="InspectorWindow.h">
+      <Filter>ソース ファイル\main\window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
