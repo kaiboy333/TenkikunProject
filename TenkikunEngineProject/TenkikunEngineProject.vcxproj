@@ -147,6 +147,8 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ComponentRect.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="AnimationTransition.cpp" />
+    <ClCompile Include="TransformRect.cpp" />
     <ClCompile Include="TreeList.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="TriggerRect.cpp" />
@@ -182,7 +185,9 @@
     <ClInclude Include="BoolCondition.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentRect.h" />
     <ClInclude Include="Condition.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="FloatCondition.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
@@ -205,6 +210,7 @@
     <ClInclude Include="AnimationState.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="AnimationTransition.h" />
+    <ClInclude Include="TransformRect.h" />
     <ClInclude Include="TreeList.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="TriggerRect.h" />

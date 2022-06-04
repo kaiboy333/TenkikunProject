@@ -17,8 +17,6 @@ class GameObject
 	private:
 		std::string name_ = "Game Object";
 
-		std::vector<Component*> components;	//Component‚½‚¿
-
 		void Rename(std::string name);	//–¼‘O•ÏX
 
 		void InternalAddComponent(Component* component);	//ÀÛ‚É’Ç‰Á‚·‚éŠÖ”
@@ -35,6 +33,8 @@ class GameObject
 		};
 
 		Transform* transform = nullptr;	//ˆÊ’u‚È‚Ç‚Ìî•ñ
+
+		std::vector<Component*> components;	//Component‚½‚¿
 
 		GameObject();
 

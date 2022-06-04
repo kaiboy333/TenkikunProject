@@ -33,6 +33,15 @@
     <Filter Include="ソース ファイル\math">
       <UniqueIdentifier>{665b37b9-6bd3-4687-a06c-b11bd7603a66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\main\window\inspector">
+      <UniqueIdentifier>{6e768024-3c0b-45c4-a7c8-25d0e2ab999f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\main\window\game">
+      <UniqueIdentifier>{7363c13a-7d91-4bce-9acf-4f99bd5c98c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\debug">
+      <UniqueIdentifier>{5b35c03e-53fd-455f-85d2-37ec6ad9e493}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -67,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>ソース ファイル\main</Filter>
-    </ClCompile>
-    <ClCompile Include="GameWindow.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>ソース ファイル\main\window</Filter>
@@ -123,7 +129,19 @@
       <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
     <ClCompile Include="InspectorWindow.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\main\window\inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>ソース ファイル\main\window\game</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>ソース ファイル\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformRect.cpp">
+      <Filter>ソース ファイル\main\window\inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentRect.cpp">
+      <Filter>ソース ファイル\main\window\inspector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +189,6 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>ソース ファイル\component</Filter>
-    </ClInclude>
-    <ClInclude Include="GameWindow.h">
-      <Filter>ソース ファイル\main\window</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>ソース ファイル\main\window</Filter>
@@ -235,7 +250,21 @@
     <ClInclude Include="WindowButton.h">
       <Filter>ソース ファイル\main\window</Filter>
     </ClInclude>
-    <ClInclude Include="InspectorWindow.h" />
+    <ClInclude Include="InspectorWindow.h">
+      <Filter>ソース ファイル\main\window\inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.h">
+      <Filter>ソース ファイル\main\window\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>ソース ファイル\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentRect.h">
+      <Filter>ソース ファイル\main\window\inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformRect.h">
+      <Filter>ソース ファイル\main\window\inspector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
