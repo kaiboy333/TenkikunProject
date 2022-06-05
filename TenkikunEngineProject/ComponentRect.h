@@ -14,11 +14,11 @@ class ComponentRect : public Rect
 		virtual void Draw();
 
 	protected:
-		const float rightStartDrawX = startX + width * 2 / 3;	//右側の部分の描画開始位置X
+		float rightStartDrawX = startX + width * 2 / 5;	//右側の部分の描画開始位置X
 
 		const float mojiHeight = (float)GetFontLineSpace();	//文字の高さ
 
-		const float lineSpace = 5;	//行間
+		static const float lineSpace;	//行間
 
 		int lineNum;	//追加で描画する行の数
 

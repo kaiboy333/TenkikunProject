@@ -11,7 +11,7 @@ void Scene::Init()
 
 	CreateSquare();	//四角い画像を生成
 	GameObject* s2 = CreateSquare();	//四角い画像2を生成
-	s2->name = "Square2";	//名前変更
+	s2->SetName("Square2");	//名前変更
 }
 
 void Scene::Update()
@@ -36,16 +36,16 @@ GameObject* Scene::CreateEmpty()
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobjects.emplace_back(gameobject);	//リストに追加
-	gameobject->name = gameobject->name + std::to_string(generateNum);	//名前変更
+	gameobject->SetName(gameobject->GetName() + std::to_string(generateNum));	//名前変更
 	generateNum++;	//生成回数加算
-	treeList->Add(new TreeNode(gameobject->name, treeList), treeList->GetRoot());	//TreeNodeにも追加
+	treeList->Add(new TreeNode(gameobject->GetName(), treeList), treeList->GetRoot());	//TreeNodeにも追加
 	return gameobject;
 }
 
 GameObject* Scene::CreateSquare()
 {
 	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->name = "Square";	//名前変更
+	gameobject->SetName("Square");	//名前変更
 
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
 	std::string path = "image/square.png";	//画像のパス
@@ -57,7 +57,7 @@ GameObject* Scene::CreateSquare()
 GameObject* Scene::CreateCamera() 
 {
 	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->name = "Main Camera";	//名前変更
+	gameobject->SetName("Main Camera");	//名前変更
 
 	Camera* camera = gameobject->AddComponent<Camera>();	//Cameraコンポーネント作成
 	Scene* scene = SceneManager::GetNowScene();	//Sceneを取得
@@ -90,7 +90,7 @@ void Scene::Destroy(GameObject* gameobject)
 	}
 
 	//TreeListの要素も削除
-	treeList->Delete(gameobject->name);
+	treeList->Delete(gameobject->GetName());
 }
 
 //void Scene::RemoveGameObject(GameObject* gameobject)

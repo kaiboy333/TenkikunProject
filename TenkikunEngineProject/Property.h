@@ -7,13 +7,15 @@ template<class T>
 class Property
 {
 	public:
-		Property(T& r, std::function<void(T v)> set = nullptr, std::function<T()> get = nullptr);
+		T& r;
+		std::function<void(T v)> set = nullptr;
+		std::function<T()> get = nullptr;
 
 		operator T() {
 			return get ? this->get() : this->r;
 		}
 
-		T* operator ->() {
+		T operator ->() {
 			return get ? this->get() : this->r;
 		}
 
@@ -26,17 +28,29 @@ class Property
 			}
 		}
 
+		T operator +(const T v) {
+			return this->r + v;
+		}
 
-	private:
-		T& r;
-		std::function<void(T v)> set = nullptr;
-		std::function<T()> get = nullptr;
+		T operator -(const T v) {
+			return this->r - v;
+		}
+
+		void operator +=(const T v) {
+			if (set) {
+				this->set(r + v);
+			}
+			else {
+				this->r += v;
+			}
+		}
+
+		void operator -=(const T v) {
+			if (set) {
+				this->set(r - v);
+			}
+			else {
+				this->r -= v;
+			}
+		}
 };
-
-template<class T>
-inline Property<T>::Property(T& r, std::function<void(T v)> set, std::function<T()> get)
-{
-	this->r = r;
-	this->set = set;
-	this->get = get;
-}

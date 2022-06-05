@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Vector3.h"
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -21,7 +22,8 @@ void TransformRect::Draw()
 
 		//Position
 		DrawStringF(startX, startDrawY, "Position", GetColor(0, 0, 0));	//ç∂ÇÃï`âÊ
-		ss << "x:" << to_string(transform->position->x) << " y:" << to_string(transform->position->y).c_str() << " z:" << to_string(transform->position->z).c_str();
+		Vector3 position = transform->position;
+		ss << std::fixed << std::setprecision(2) << "x:" << position.x << " y:" << position.y << " z:" << position.z;
 		DrawStringF(rightStartDrawX, startDrawY, ss.str().c_str(), GetColor(0, 0, 0));	//âEÇÃï`âÊ
 
 		StartNewLine();	//â¸çs
@@ -29,7 +31,8 @@ void TransformRect::Draw()
 
 		//Rotation
 		DrawStringF(startX, startDrawY, "Rotation", GetColor(0, 0, 0));	//ç∂ÇÃï`âÊ
-		ss << "x:" << to_string(transform->rotation->x) << " y:" << to_string(transform->rotation->y).c_str() << " z:" << to_string(transform->rotation->z).c_str();
+		Vector3 rotation = transform->rotation;
+		ss << std::fixed << std::setprecision(2) << "x:" << rotation.x << " y:" <<rotation.y << " z:" << rotation.z;
 		DrawStringF(rightStartDrawX, startDrawY, ss.str().c_str(), GetColor(0, 0, 0));	//âEÇÃï`âÊ
 
 		StartNewLine();	//â¸çs
@@ -37,7 +40,8 @@ void TransformRect::Draw()
 
 		//Scale
 		DrawStringF(startX, startDrawY, "Scale", GetColor(0, 0, 0));	//ç∂ÇÃï`âÊ
-		ss << "x:" << to_string(transform->scale->x) << " y:" << to_string(transform->scale->y).c_str() << " z:" << to_string(transform->scale->z).c_str();
+		Vector3 scale = transform->scale;
+		ss << std::fixed << std::setprecision(2) << "x:" << scale.x << " y:" << scale.y << " z:" << scale.z;
 		DrawStringF(rightStartDrawX, startDrawY, ss.str().c_str(), GetColor(0, 0, 0));	//âEÇÃï`âÊ
 
 	}

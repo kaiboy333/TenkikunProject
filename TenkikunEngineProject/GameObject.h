@@ -15,23 +15,13 @@ class Camera;
 class GameObject
 {
 	private:
-		std::string name_ = "Game Object";
+		std::string name = "Game Object";
 
-		void Rename(std::string name);	//名前変更
+		void SetTreeNodeName(std::string name);	//名前変更
 
 		void InternalAddComponent(Component* component);	//実際に追加する関数
 
 	public:
-
-		//std::string name = "Game Object";	//名前
-		Property<std::string> name{
-			name_
-				, [this](std::string v) {
-					Rename(v);
-				}
-				, nullptr
-		};
-
 		Transform* transform = nullptr;	//位置などの情報
 
 		std::vector<Component*> components;	//Componentたち
@@ -49,6 +39,9 @@ class GameObject
 		void Draw(Window* window, Camera* camera);	//GameObjectの描画Componentを描画
 
 		static GameObject* Find(std::string name);	//名前からオブジェクトを取得する
+
+		void SetName(std::string name);
+		std::string GetName();
 };
 
 inline void GameObject::InternalAddComponent(Component* component)

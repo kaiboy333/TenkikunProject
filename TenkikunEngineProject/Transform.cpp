@@ -25,7 +25,7 @@ void Transform::SetParent(Transform* newParent)
 	TreeList* treeList = SceneManager::GetNowScene()->treeList;
 
 	//TreeListから自身の名前削除
-	TreeNode* node = treeList->Delete(gameobject->name);
+	TreeNode* node = treeList->Delete(gameobject->GetName());
 
 	//nullptrで親を消すなら
 	if (newParent == nullptr) {
@@ -38,7 +38,7 @@ void Transform::SetParent(Transform* newParent)
 		//親に自身を追加
 		newParent->children.push_back(this);
 		//TreeListから新しい親を使って自身の名前追加
-		treeList->Add(node, treeList->FindNode(newParent->gameobject->name));
+		treeList->Add(node, treeList->FindNode(newParent->gameobject->GetName()));
 	}
 
 	//親にセット
@@ -152,30 +152,6 @@ void Transform::ChangedWorldRote(Vector3 rote)
 
 		transforms = tmp;	//中身を移動
 	}
-
-
-
-	////親の位置を取得
-	//Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
-
-	////回転による位置更新(子が回転するため)
-	//transforms = children;	//最初に自身の子たちを追加
-
-	////すべての子が終わるまで繰り返す
-	//while (transforms.size() != 0) {
-	//	std::vector<Transform*> tmp;	//仮のリスト
-
-	//	for (Transform* transform : transforms) {
-	//		//ワールド位置が動く
-	//		transform->position_t = Matrix::GetMRote(position_t, deltaRote) * transform->position_t;
-	//		//自身のローカルを動いた分修正
-	//		transform->localPosition_t = transform->position_t - transform->parent->position_t;
-
-	//		tmp.insert(tmp.end(), transform->children.begin(), transform->children.end());		//子を追加
-	//	}
-
-	//	transforms = tmp;	//中身を移動
-	//}
 }
 
 void Transform::ChangedLocalRote(Vector3 localRote)
@@ -212,30 +188,6 @@ void Transform::ChangedLocalRote(Vector3 localRote)
 
 		transforms = tmp;	//中身を移動
 	}
-
-
-
-	////親の位置を取得
-	//Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
-
-	////回転による位置更新(子が回転するため)
-	//transforms = children;	//最初に自身の子たちを追加
-
-	////すべての子が終わるまで繰り返す
-	//while (transforms.size() != 0) {
-	//	std::vector<Transform*> tmp;	//仮のリスト
-
-	//	for (Transform* transform : transforms) {
-	//		//ワールド位置が動く
-	//		transform->position_t = Matrix::GetMRote(position_t, deltaRote) * transform->position_t;
-	//		//自身のローカルを動いた分修正
-	//		transform->localPosition_t = transform->position_t - transform->parent->position_t;
-
-	//		tmp.insert(tmp.end(), transform->children.begin(), transform->children.end());		//子を追加
-	//	}
-
-	//	transforms = tmp;	//中身を移動
-	//}
 }
 
 void Transform::ChangedWorldScale(Vector3 scal)
@@ -278,31 +230,6 @@ void Transform::ChangedWorldScale(Vector3 scal)
 
 		transforms = tmp;	//中身を移動
 	}
-
-
-
-
-	////親の位置を取得
-	//Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
-
-	////大きさによる位置更新(子が大きくなるため)
-	//transforms = children;	//最初に自身の子たちを追加
-
-	////すべての子が終わるまで繰り返す
-	//while (transforms.size() != 0) {
-	//	std::vector<Transform*> tmp;	//仮のリスト
-
-	//	for (Transform* transform : transforms) {
-	//		//ワールド位置が動く
-	//		transform->position_t = Matrix::GetMScale(position_t, deltaScal) * transform->position_t;
-	//		//自身のローカルを動いた分修正
-	//		transform->localPosition_t = transform->position_t - transform->parent->position_t;
-
-	//		tmp.insert(tmp.end(), transform->children.begin(), transform->children.end());		//子を追加
-	//	}
-
-	//	transforms = tmp;	//中身を移動
-	//}
 }
 
 void Transform::ChangedLocalScale(Vector3 localScal)
@@ -343,29 +270,4 @@ void Transform::ChangedLocalScale(Vector3 localScal)
 
 		transforms = tmp;	//中身を移動
 	}
-
-
-
-
-	////親の位置を取得
-	//Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
-
-	////大きさによる位置更新(子が大きくなるため)
-	//transforms = children;	//最初に自身の子たちを追加
-
-	////すべての子が終わるまで繰り返す
-	//while (transforms.size() != 0) {
-	//	std::vector<Transform*> tmp;	//仮のリスト
-
-	//	for (Transform* transform : transforms) {
-	//		//ワールド位置が動く
-	//		transform->position_t = Matrix::GetMScale(position_t, deltaScal) * transform->position_t;
-	//		//自身のローカルを動いた分修正
-	//		transform->localPosition_t = transform->position_t - transform->parent->position_t;
-
-	//		tmp.insert(tmp.end(), transform->children.begin(), transform->children.end());		//子を追加
-	//	}
-
-	//	transforms = tmp;	//中身を移動
-	//}
 }

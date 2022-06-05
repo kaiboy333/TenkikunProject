@@ -22,6 +22,10 @@ class Transform : public Component
 		Property<Vector3> rotation{
 			rotation_t
 				, [this](Vector3 v) {
+					//360“x’´‚¦‚½‚ç0‚É‚È‚é‚æ‚¤‚É‚·‚é
+					v.x = fmodf(v.x, 360);
+					v.y = fmodf(v.y, 360);
+					v.z = fmodf(v.z, 360);
 					ChangedWorldRote(v);
 				}
 				, nullptr
@@ -49,6 +53,10 @@ class Transform : public Component
 		Property<Vector3> localRotation{
 			localRotation_t
 				, [this](Vector3 v) {
+					//360“x’´‚¦‚½‚ç0‚É‚È‚é‚æ‚¤‚É‚·‚é
+					v.x = fmodf(v.x, 360);
+					v.y = fmodf(v.y, 360);
+					v.z = fmodf(v.z, 360);
 					ChangedLocalRote(v);
 				}
 				, nullptr

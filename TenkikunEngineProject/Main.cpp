@@ -79,7 +79,7 @@ inline void Init() {
 
 	GameObject* player = scene->CreateEmpty();	//プレイヤーオブジェクトを作成
 	player->transform->position = Vector3(0, 0, 0);
-	player->name = "Player";
+	player->SetName("Player");
 	PlayerScript* script = player->AddComponent<PlayerScript>();	//プレイヤースクリプト作成
 
 	GameObject* square = GameObject::Find("Square");

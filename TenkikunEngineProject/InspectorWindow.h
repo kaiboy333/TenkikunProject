@@ -18,6 +18,7 @@ class InspectorWindow : public Window
 
 	private:
 		GameObject* gameobject = nullptr;
+
 		vector<ComponentRect*> componentRects;
 
 		void Init();

@@ -42,6 +42,18 @@
     <Filter Include="ソース ファイル\debug">
       <UniqueIdentifier>{5b35c03e-53fd-455f-85d2-37ec6ad9e493}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\main\window\hierarchy">
+      <UniqueIdentifier>{6e46d69f-8d96-4d62-ac49-707a5cd525df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\main\window\treeList">
+      <UniqueIdentifier>{b648b4e7-e458-4b98-9de0-f4341913b5a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\main\window\rect">
+      <UniqueIdentifier>{9ce1022c-822f-476b-a39f-20818cc384c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\main\window\button">
+      <UniqueIdentifier>{c73c154d-65d2-4344-9dba-463b7792fb47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -110,24 +122,6 @@
     <ClCompile Include="WindowManager.cpp">
       <Filter>ソース ファイル\main\window</Filter>
     </ClCompile>
-    <ClCompile Include="HierarchyWindow.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClCompile>
-    <ClCompile Include="TreeList.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClCompile>
-    <ClCompile Include="TriggerRect.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClCompile>
-    <ClCompile Include="Rect.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClCompile>
-    <ClCompile Include="TreeNode.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowButton.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClCompile>
     <ClCompile Include="InspectorWindow.cpp">
       <Filter>ソース ファイル\main\window\inspector</Filter>
     </ClCompile>
@@ -142,6 +136,24 @@
     </ClCompile>
     <ClCompile Include="ComponentRect.cpp">
       <Filter>ソース ファイル\main\window\inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="HierarchyWindow.cpp">
+      <Filter>ソース ファイル\main\window\hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeList.cpp">
+      <Filter>ソース ファイル\main\window\treeList</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeNode.cpp">
+      <Filter>ソース ファイル\main\window\treeList</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerRect.cpp">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowButton.cpp">
+      <Filter>ソース ファイル\main\window\button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,24 +244,6 @@
     <ClInclude Include="WindowManager.h">
       <Filter>ソース ファイル\main\window</Filter>
     </ClInclude>
-    <ClInclude Include="TriggerRect.h">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClInclude>
-    <ClInclude Include="HierarchyWindow.h">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeList.h">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeNode.h">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClInclude>
-    <ClInclude Include="Rect.h">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowButton.h">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClInclude>
     <ClInclude Include="InspectorWindow.h">
       <Filter>ソース ファイル\main\window\inspector</Filter>
     </ClInclude>
@@ -264,6 +258,24 @@
     </ClInclude>
     <ClInclude Include="TransformRect.h">
       <Filter>ソース ファイル\main\window\inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="HierarchyWindow.h">
+      <Filter>ソース ファイル\main\window\hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeList.h">
+      <Filter>ソース ファイル\main\window\treeList</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeNode.h">
+      <Filter>ソース ファイル\main\window\treeList</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerRect.h">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowButton.h">
+      <Filter>ソース ファイル\main\window\button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

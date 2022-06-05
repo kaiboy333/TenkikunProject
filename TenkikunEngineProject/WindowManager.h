@@ -7,6 +7,7 @@
 
 class GameWindow;
 class HierarchyWindow;
+class InspectorWindow;
 class WindowManager
 {
 	public:
@@ -20,6 +21,7 @@ class WindowManager
 		static void Draw();
 
 		static void SetSelectedTriggerRect(TriggerRect* selectedTriggerRect);
+		static TriggerRect* GetSelectedTriggerRect();
 
 	private:
 		static TriggerRect* selectedTriggerRect;	//‘I‘ð’†‚ÌTriggerRect

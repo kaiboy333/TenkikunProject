@@ -1,13 +1,19 @@
 #include "TreeNode.h"
+#include "SceneManager.h"
 
-TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->window->startX + treeList->buttonWidth, treeList->window->startY, (float)GetDrawStringWidth(e.c_str(), (float)((int)e.length())), (float)GetFontLineSpace())
+TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->window->startX + treeList->buttonWidth, treeList->window->startY, (float)GetDrawStringWidth(e.c_str(), (int)(e.length())), (float)GetFontLineSpace())
 {
 	element = e;
 	this->treeList = treeList;
 
-	//クリックしたときに自身を選択中にする
 	mouseClickDownEvents.push_back([this]() {
+		//クリックしたときに自身を選択中にする
 		WindowManager::SetSelectedTriggerRect(this);
+		GameObject* gameobject = GameObject::Find(this->GetElement());	//このノードの名前からからゲームオブジェクト取得
+		//見つかったなら
+		if (gameobject) {
+			WindowManager::inspectorWindow->SetGameObject(gameobject);	//ゲームオブジェクトの情報をヒエラルキーにセット
+		}
 	});
 
 	button = new WindowButton(startX - treeList->buttonWidth, startY, treeList->buttonWidth, treeList->buttonWidth);	//ボタン作成

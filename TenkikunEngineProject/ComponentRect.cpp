@@ -4,7 +4,7 @@
 
 using namespace std;
 
-ComponentRect::ComponentRect(float startX, float startY, Component* component, int lineNum) : Rect(startX, startY, WindowManager::inspectorWindow->width, (lineNum + 2) * lineSpace + (lineNum + 1) * mojiHeight)
+ComponentRect::ComponentRect(float startX, float startY, Component* component, int lineNum) : Rect(startX, startY, WindowManager::inspectorWindow->width, (lineNum + 2) * lineSpace + (lineNum + 1) * (float)GetFontLineSpace())
 {
 	this->component = component;
 	this->lineNum = lineNum;
@@ -12,6 +12,8 @@ ComponentRect::ComponentRect(float startX, float startY, Component* component, i
 
 void ComponentRect::Draw()
 {
+	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);	//˜g‚Ì•`‰æ
+
 	startDrawY = startY + lineSpace;	//•`‰æŠJnˆÊ’u‰Šú‰»
 
 	if (component) {
@@ -27,3 +29,5 @@ void ComponentRect::StartNewLine()
 {
 	startDrawY += mojiHeight + lineSpace;	//•¶š‚Ì‘å‚«‚³‚ÆsŠÔ•ª‘«‚·
 }
+
+const float ComponentRect::lineSpace = 5;

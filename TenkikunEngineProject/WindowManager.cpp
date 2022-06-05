@@ -30,6 +30,11 @@ void WindowManager::SetSelectedTriggerRect(TriggerRect* selectedTriggerRect)
 	WindowManager::selectedTriggerRect = selectedTriggerRect;
 }
 
+TriggerRect* WindowManager::GetSelectedTriggerRect()
+{
+	return selectedTriggerRect;
+}
+
 std::vector<TriggerRect*> WindowManager::triggerRects;
 TriggerRect* WindowManager::selectedTriggerRect;
 

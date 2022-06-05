@@ -25,17 +25,15 @@ void GameObject::Draw(Window* window, Camera* camera)
 	}
 }
 
-void GameObject::Rename(std::string name)
+void GameObject::SetTreeNodeName(std::string name)
 {
 	//TreeListの名前を変える
 	TreeList* treeList = SceneManager::GetNowScene()->treeList;
 	//名前セット
-	TreeNode* node = treeList->FindNode(name_);
+	TreeNode* node = treeList->FindNode(this->name);
 	if (node) {
 		node->SetElement(name);
 	}
-
-	name_ = name;	//実際に名前セット
 }
 
 GameObject* GameObject::Find(std::string name)
@@ -48,4 +46,15 @@ GameObject* GameObject::Find(std::string name)
 		}
 	}
 	return nullptr;
+}
+
+void GameObject::SetName(std::string name)
+{
+	SetTreeNodeName(name);	//TreeNodeの名前を変えて
+	this->name = name;	//実際に変える
+}
+
+std::string GameObject::GetName()
+{
+	return name;
 }
