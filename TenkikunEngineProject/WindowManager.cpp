@@ -9,10 +9,22 @@ void WindowManager::Draw()
 
 void WindowManager::Update()
 {
+	gameWindow->Update();	//ゲーム画面の更新
+	hierarchyWindow->Update();	//ヒエラルキーウィンドウの更新
+	inspectorWindow->Update();	//インスペクターウィンドウの更新
+
 	//TriggerRectのイベント発生
 	for (TriggerRect* triggerRect : triggerRects) {
-		triggerRect->CheckInput();
+		triggerRect->CheckInput();	//イベントチェック
 	}
+	for (TriggerRect* removeTriggerRect : removeTriggerRects) {
+		triggerRects.erase(remove(triggerRects.begin(), triggerRects.end(), removeTriggerRect));	//実際に削除
+	}
+	removeTriggerRects.clear();	//削除リストを初期化
+	for (TriggerRect* addTriggerRect : addTriggerRects) {
+		triggerRects.push_back(addTriggerRect);	//実際に追加
+	}
+	addTriggerRects.clear();	//追加リストを初期化
 }
 
 void WindowManager::SetSelectedTriggerRect(TriggerRect* selectedTriggerRect)
@@ -35,7 +47,18 @@ TriggerRect* WindowManager::GetSelectedTriggerRect()
 	return selectedTriggerRect;
 }
 
+void WindowManager::AddTriggerRect(TriggerRect* triggerRect) {
+	WindowManager::addTriggerRects.push_back(triggerRect);	//追加するリストにいれる
+}
+
+void WindowManager::RemoveTriggerRect(TriggerRect* triggerRect) {
+	WindowManager::removeTriggerRects.push_back(triggerRect);	//消すリストにいれる
+}
+
 std::vector<TriggerRect*> WindowManager::triggerRects;
+std::vector<TriggerRect*> WindowManager::removeTriggerRects;
+std::vector<TriggerRect*> WindowManager::addTriggerRects;
+
 TriggerRect* WindowManager::selectedTriggerRect;
 
 GameWindow* WindowManager::gameWindow = new GameWindow();

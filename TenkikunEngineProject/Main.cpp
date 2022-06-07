@@ -15,8 +15,8 @@
 
 #pragma comment(lib,"winmm.lib")
 
-#define WIDTH 1300
-#define HEIGHT 800
+constexpr auto WIDTH = 1300;
+constexpr auto HEIGHT = 800;
 
 // 本当はグローバルにしない方が良い
 const float MIN_FRAME_TIME = 1.0f / 60;
@@ -119,8 +119,6 @@ inline void CulculateFPS() {
 
 inline void Update() {
 	WindowManager::Update();	//Windowの更新
-	Scene* scene = SceneManager::GetNowScene();
-	scene->Update();	//現在のシーンの更新
 	Input::Update();	//キーの更新
 }
 

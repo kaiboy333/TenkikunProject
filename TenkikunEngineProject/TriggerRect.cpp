@@ -3,7 +3,7 @@
 
 TriggerRect::TriggerRect(float startX, float startY, float width, float height) : Rect(startX, startY, width, height)
 {
-	WindowManager::triggerRects.push_back(this);
+	WindowManager::AddTriggerRect(this);
 }
 
 void TriggerRect::CheckInput()
@@ -45,6 +45,11 @@ void TriggerRect::CheckInput()
 		//æ‚Á‚Ä‚¢‚È‚¢”»’è‚É‚·‚é
 		isOn = false;
 	}
+
+	//ƒGƒ“ƒ^[‚ğ‰Ÿ‚µ‚½‚È‚ç
+	if (Input::GetKeyDown(Input::ENTER)) {
+		PushEnterEvent();
+	}
 }
 
 void TriggerRect::MouseClickDownEvent()
@@ -85,6 +90,13 @@ void TriggerRect::MouseOnEvent()
 void TriggerRect::MouseExitEvent()
 {
 	for (std::function<void()> func : mouseExitEvents) {
+		func();
+	}
+}
+
+void TriggerRect::PushEnterEvent()
+{
+	for (std::function<void()> func : pushEnterEvents) {
 		func();
 	}
 }

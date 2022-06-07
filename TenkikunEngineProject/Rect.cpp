@@ -7,3 +7,7 @@ Rect::Rect(float startX, float startY, float width, float height)
 	this->width = width;
 	this->height = height;
 }
+
+void Rect::Draw()
+{
+}

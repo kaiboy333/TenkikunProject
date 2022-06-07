@@ -27,6 +27,8 @@ class TriggerRect : public Rect
 		std::vector<std::function<void()>> mouseOnEvents;
 		std::vector<std::function<void()>> mouseExitEvents;
 
+		std::vector<std::function<void()>> pushEnterEvents;
+
 	private :
 		void MouseClickDownEvent();
 		void MouseClickUpEvent();
@@ -34,5 +36,7 @@ class TriggerRect : public Rect
 		void MouseRightClickEvent();
 		void MouseOnEvent();
 		void MouseExitEvent();
+
+		void PushEnterEvent();
 };
 

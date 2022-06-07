@@ -6,6 +6,14 @@ InspectorWindow::InspectorWindow() : Window(1000, 0, 300, 800)
 	
 }
 
+void InspectorWindow::Update()
+{
+	//ComponentRectの更新
+	for (ComponentRect* componentRect : componentRects) {
+		componentRect->Update();
+	}
+}
+
 void InspectorWindow::Draw()
 {
 	//裏の画面描画
@@ -24,6 +32,11 @@ void InspectorWindow::SetGameObject(GameObject* gameobject)
 	this->gameobject = gameobject;	//ゲームオブジェクトセット
 	componentRects.clear();	//リスト初期化
 	Init();	//リストセット
+}
+
+GameObject* InspectorWindow::GetGameObject()
+{
+	return gameobject;
 }
 
 void InspectorWindow::Init()

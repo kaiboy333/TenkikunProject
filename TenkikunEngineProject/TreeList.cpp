@@ -86,23 +86,6 @@ void TreeList::Draw()
 
 			node->Draw();
 
-			////•¶Žš‚Ì•Žæ“¾
-			//float stringWidth = GetDrawStringWidth(node->element.c_str(), node->element.length());
-			////•¶Žš‚Ì‚‚³Žæ“¾
-			//float stringHeight = GetFontLineSpace();
-
-			//float startX = window->startX + iconWidth * (node->GetStairNo() + 1) + tabSpace * (node->GetStairNo());
-			//float startY = window->startY + stringHeight * i;
-
-			////ƒAƒCƒRƒ“‚Ì•`‰æ
-			//DrawBoxAA(startX - iconWidth, startY, startX - 1, startY + stringHeight - 1, GetColor(0, 0, 0), TRUE);
-			////ŽlŠp‚Ì•`‰æ
-			//DrawBoxAA(startX, startY, startX + stringWidth - 1, startY + stringHeight - 1, GetColor(0, 0, 0), FALSE);
-			////•¶Žš‚Ì•`‰æ(•)
-			//DrawStringF(startX, startY, node->element.c_str(), GetColor(0, 0, 0));
-			//ŽŸ‚Ö
-			//i++;
-
 			//ŠJ‚¢‚Ä‚¢‚éó‘Ô‚È‚ç
 			if (node->isOpen) {
 				//Žq‚ç‚ð’Ç‰Á

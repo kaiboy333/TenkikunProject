@@ -167,6 +167,8 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="AnimationState.cpp" />
+    <ClCompile Include="TextRect.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="AnimationTransition.cpp" />
     <ClCompile Include="TransformRect.cpp" />
@@ -208,6 +210,8 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="AnimationState.h" />
+    <ClInclude Include="TextRect.h" />
+    <ClInclude Include="TextBox.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="AnimationTransition.h" />
     <ClInclude Include="TransformRect.h" />

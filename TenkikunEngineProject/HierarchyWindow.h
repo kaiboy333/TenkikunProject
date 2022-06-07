@@ -8,6 +8,7 @@ class HierarchyWindow :  public Window
 	public:
 		HierarchyWindow();
 
-		void Draw() override;
+		virtual void Update() override;
+		virtual void Draw() override;
 };
 

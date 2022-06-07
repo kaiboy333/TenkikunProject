@@ -10,6 +10,8 @@ class GameWindow :  public Window
 {
 	public:
 		GameWindow();
-		void Draw() override;	//Sceneã‚ÌGameObject‚ğ•`‰æ
+
+		virtual void Update() override;	//SceneXV
+		virtual void Draw() override;	//Sceneã‚ÌGameObject‚ğ•`‰æ
 };
 

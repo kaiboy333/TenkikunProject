@@ -5,6 +5,11 @@ HierarchyWindow::HierarchyWindow() : Window(0, 0, 300, 500)
 
 }
 
+void HierarchyWindow::Update()
+{
+
+}
+
 void HierarchyWindow::Draw()
 {
 	//ƒoƒbƒN‚Ì•`‰æ

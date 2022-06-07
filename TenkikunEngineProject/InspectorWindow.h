@@ -7,14 +7,18 @@
 
 using namespace std;
 
+class ComponentRect;
 class InspectorWindow : public Window
 {
 	public:
 		InspectorWindow();
 
+		virtual void Update() override;
+
 		virtual void Draw() override;
 
 		void SetGameObject(GameObject* gameobject);
+		GameObject* GetGameObject();
 
 	private:
 		GameObject* gameobject = nullptr;

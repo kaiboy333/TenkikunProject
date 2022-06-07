@@ -6,6 +6,15 @@ GameWindow::GameWindow() : Window(300, 0, 700, 500)
 
 }
 
+void GameWindow::Update()
+{
+    //シーンの更新
+    Scene* scene = SceneManager::GetNowScene();
+    if (scene != nullptr) {
+        scene->Update();
+    }
+}
+
 void GameWindow::Draw()
 {
     //バックの描画

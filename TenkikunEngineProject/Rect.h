@@ -6,5 +6,7 @@ class Rect
 		float width, height;
 
 		Rect(float startX, float startY, float width, float height);
+
+		virtual void Draw();
 };
 

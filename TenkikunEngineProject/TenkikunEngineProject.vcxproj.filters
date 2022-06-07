@@ -54,6 +54,9 @@
     <Filter Include="ソース ファイル\main\window\button">
       <UniqueIdentifier>{c73c154d-65d2-4344-9dba-463b7792fb47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\scene">
+      <UniqueIdentifier>{f6c4de37-19f1-4b23-8f1d-7c76c1f4e6c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -76,12 +79,6 @@
     </ClCompile>
     <ClCompile Include="AnimationTransition.cpp">
       <Filter>ソース ファイル\animation</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>ソース ファイル\main</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>ソース ファイル\main</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>ソース ファイル\main</Filter>
@@ -155,6 +152,18 @@
     <ClCompile Include="WindowButton.cpp">
       <Filter>ソース ファイル\main\window\button</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -206,12 +215,6 @@
       <Filter>ソース ファイル\main\window</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>ソース ファイル\main</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>ソース ファイル\main</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\main</Filter>
     </ClInclude>
     <ClInclude Include="Script.h">
@@ -277,6 +280,16 @@
     <ClInclude Include="WindowButton.h">
       <Filter>ソース ファイル\main\window\button</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBox.h">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRect.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
