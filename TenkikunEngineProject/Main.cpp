@@ -31,7 +31,7 @@ void Draw();
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	SetMainWindowText("Practice");
+	SetMainWindowText("Tenkikun Engine");
 	ChangeWindowMode(TRUE); //ウィンドウモードで起動
 	SetGraphMode(WIDTH, HEIGHT, 32); //画面の解像度指定
 	SetWindowSizeChangeEnableFlag(FALSE); //画面サイズ変更不可
@@ -85,7 +85,7 @@ inline void Init() {
 	GameObject* square = GameObject::Find("Square");
 	square->transform->SetParent(player->transform);
 	square->transform->position = Vector3(50, 0, 0);
-	square->AddComponent<Rotate>();
+	//square->AddComponent<Rotate>();
 
 	GameObject* square2 = GameObject::Find("Square2");
 	square2->transform->SetParent(square->transform);

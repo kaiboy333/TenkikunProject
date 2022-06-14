@@ -8,7 +8,7 @@ TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->wi
 
 	mouseClickDownEvents.push_back([this]() {
 		//クリックしたときに自身を選択中にする
-		WindowManager::SetSelectedTriggerRect(this);
+		this->parentWindow->SetSelectedTriggerRect(this);
 		GameObject* gameobject = GameObject::Find(this->GetElement());	//このノードの名前からからゲームオブジェクト取得
 		//見つかったなら
 		if (gameobject) {

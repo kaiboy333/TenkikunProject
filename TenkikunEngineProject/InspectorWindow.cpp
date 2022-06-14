@@ -30,6 +30,9 @@ void InspectorWindow::Draw()
 void InspectorWindow::SetGameObject(GameObject* gameobject)
 {
 	this->gameobject = gameobject;	//ゲームオブジェクトセット
+	for (ComponentRect* componentRect : componentRects) {
+		componentRect->RemoveTriggerRects();	//ComponentRectで作成したTriggerを削除
+	}
 	componentRects.clear();	//リスト初期化
 	Init();	//リストセット
 }

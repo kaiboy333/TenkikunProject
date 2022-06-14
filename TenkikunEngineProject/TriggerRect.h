@@ -7,9 +7,12 @@
 #include "Rect.h"
 
 
+class Window;
 class TriggerRect : public Rect
 {
 	public:
+		Window* parentWindow = nullptr;	//登録するウィンドウ
+
 		bool isOn = false;	//マウスが乗るときにtrue
 
 		bool isActive = true;	//反応するか

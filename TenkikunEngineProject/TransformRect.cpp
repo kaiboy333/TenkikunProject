@@ -14,11 +14,11 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 	textRects.push_back(new TextRect(startX, startDrawY, "Position"));
 
 	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "x:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "y:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "z:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 
 	StartNewLine();	//改行
 
@@ -26,11 +26,11 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 	textRects.push_back(new TextRect(startX, startDrawY, "Rotation"));
 
 	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "x:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "y:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "z:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 
 	StartNewLine();	//改行
 
@@ -38,43 +38,50 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 	textRects.push_back(new TextRect(startX, startDrawY, "Scale"));
 
 	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "x:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "y:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "z:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace()));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, (float)GetFontLineSpace(), TextBox::InputType::Number));
 
 	Transform* transform = static_cast<Transform*>(component);
-	textBoxes[0]->pushEnterEvents.push_back([this, transform]() {
-		transform->position = Vector3(stof(textBoxes[0]->GetText()), stof(textBoxes[1]->GetText()), stof(textBoxes[2]->GetText()));
-		});
-	textBoxes[1]->pushEnterEvents.push_back([this, transform]() {
-		transform->position = Vector3(stof(textBoxes[0]->GetText()), stof(textBoxes[1]->GetText()), stof(textBoxes[2]->GetText()));
-		});
-	textBoxes[2]->pushEnterEvents.push_back([this, transform]() {
-		transform->position = Vector3(stof(textBoxes[0]->GetText()), stof(textBoxes[1]->GetText()), stof(textBoxes[2]->GetText()));
-		});
-	textBoxes[3]->pushEnterEvents.push_back([this, transform]() {
-		transform->rotation = Vector3(stof(textBoxes[3]->GetText()), stof(textBoxes[4]->GetText()), stof(textBoxes[5]->GetText()));
-		});
-	textBoxes[4]->pushEnterEvents.push_back([this, transform]() {
-		transform->rotation = Vector3(stof(textBoxes[3]->GetText()), stof(textBoxes[4]->GetText()), stof(textBoxes[5]->GetText()));
-		});
-	textBoxes[5]->pushEnterEvents.push_back([this, transform]() {
-		transform->rotation = Vector3(stof(textBoxes[3]->GetText()), stof(textBoxes[4]->GetText()), stof(textBoxes[5]->GetText()));
-		});
-	textBoxes[6]->pushEnterEvents.push_back([this, transform]() {
-		transform->scale = Vector3(stof(textBoxes[6]->GetText()), stof(textBoxes[7]->GetText()), stof(textBoxes[8]->GetText()));
-		});
-	textBoxes[7]->pushEnterEvents.push_back([this, transform]() {
-		transform->scale = Vector3(stof(textBoxes[6]->GetText()), stof(textBoxes[7]->GetText()), stof(textBoxes[8]->GetText()));
-		});
-	textBoxes[8]->pushEnterEvents.push_back([this, transform]() {
-		transform->scale = Vector3(stof(textBoxes[6]->GetText()), stof(textBoxes[7]->GetText()), stof(textBoxes[8]->GetText()));
-		});
-	//catch (const invalid_argument& e) {
-
-	//}
+	for (int i = 0; i < 9; i++) {
+		int j = i / 3;
+		switch (j) {
+			case 0:
+				textBoxes[i]->pushEnterEvents.push_back([this, transform, j]() {
+					try {
+						transform->localPosition = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
+					}
+					catch (const std::invalid_argument& e) {
+						cout << "数字ではありません。" << endl;
+					}
+				});
+				break;
+			case 1:
+				textBoxes[i]->pushEnterEvents.push_back([this, transform, j]() {
+					try {
+						transform->localRotation = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
+					}
+					catch (const std::invalid_argument& e) {
+						cout << "数字ではありません。" << endl;
+					}
+				});
+				break;
+			case 2:
+				textBoxes[i]->pushEnterEvents.push_back([this, transform, j]() {
+					try {
+						transform->localScale = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
+					}
+					catch (const std::invalid_argument& e) {
+						cout << "数字ではありません。" << endl;
+					}
+				});
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void TransformRect::Update()
@@ -84,15 +91,15 @@ void TransformRect::Update()
 	stringstream ss;
 
 	float value[9] = {};
-	Vector3 position = transform->position;
+	Vector3 position = transform->localPosition;
 	value[0] = position.x;
 	value[1] = position.y;
 	value[2] = position.z;
-	Vector3 rotation = transform->rotation;
+	Vector3 rotation = transform->localRotation;
 	value[3] = rotation.x;
 	value[4] = rotation.y;
 	value[5] = rotation.z;
-	Vector3 scale = transform->scale;
+	Vector3 scale = transform->localScale;
 	value[6] = scale.x;
 	value[7] = scale.y;
 	value[8] = scale.z;
@@ -115,5 +122,13 @@ void TransformRect::Draw()
 	//テキストボックス描画
 	for (TextBox* textBox : textBoxes) {
 		textBox->Draw();
+	}
+}
+
+void TransformRect::RemoveTriggerRects()
+{
+	//テキストボックス削除
+	for (TextBox* textBox : textBoxes) {
+		textBox->parentWindow->RemoveTriggerRect(textBox);
 	}
 }

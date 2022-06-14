@@ -23,8 +23,8 @@ class Matrix
 
 		static Matrix GetMMatrix(Vector3 transVec, Vector3 roteVec, Vector3 scaleVec);
 
-		static Matrix GetMRote(Vector3 point, Vector3 angleVec);	//pointを中心に自身を回転した行列
+		static Matrix GetMRote(Vector3 centerPoint, Vector3 angleVec);	//pointを中心に自身を回転した行列
 
-		static Matrix GetMScale(Vector3 point, Vector3 angleVec);	//pointを中心に自身を拡大した行列
+		static Matrix GetMScale(Vector3 centerPoint, Vector3 angleVec);	//pointを中心に自身を拡大した行列
 };
 

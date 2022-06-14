@@ -148,6 +148,7 @@
     <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ComponentRect.cpp" />
+    <ClCompile Include="ComponentRectManager.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentRect.h" />
+    <ClInclude Include="ComponentRectManager.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="FloatCondition.h" />

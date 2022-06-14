@@ -3,7 +3,25 @@
 
 TriggerRect::TriggerRect(float startX, float startY, float width, float height) : Rect(startX, startY, width, height)
 {
-	WindowManager::AddTriggerRect(this);
+	//自身がWindowではないなら
+	const type_info& a = typeid(this);
+	const type_info& b = typeid(*this);
+	const type_info& c = typeid(Window);
+
+	vector<Window*> windows = WindowManager::GetWindows();
+
+	if (windows.size() != 0) {
+		for (Window* window : windows) {
+			//ウィンドウ内にあるなら
+			if (window->IsPointIn(startX, startY)) {
+				//ウィンドウに自身を追加
+				window->AddTriggerRect(this);
+				break;
+			}
+		}
+	}
+
+
 }
 
 void TriggerRect::CheckInput()
@@ -15,8 +33,7 @@ void TriggerRect::CheckInput()
 	Vector3 mousePos = Input::GetMousePosition();
 
 	//マウスが反応する場所にあるなら
-	if (startX <= mousePos.x && startX + width >= mousePos.x
-		&& startY <= mousePos.y && startY + height >= mousePos.y) {
+	if (IsPointIn(mousePos.x, mousePos.y)) {
 		//左クリックを押した瞬間なら
 		if (Input::GetMouseButtonDown(Input::Mouse_Left)) {
 			MouseClickDownEvent();

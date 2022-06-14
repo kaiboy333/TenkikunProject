@@ -20,4 +20,6 @@ class PlayerScript : public Script {
 
 	private:
 		float speed = 3.0f;
+
+		Transform* firstChild = nullptr;
 };

@@ -46,6 +46,9 @@ void PlayerScript::ScriptStart()
 	AnimationTransition* runToIdle = runState->AddTransition(idleState);
 	runToIdle->AddFloatCondition("isSpeed");
 	runToIdle->ChangeFloatCondition("isSpeed", 1.0, 1);
+
+
+	firstChild = gameobject->transform->children[0];
 }
 
 void PlayerScript::ScriptUpdate()
@@ -99,6 +102,18 @@ void PlayerScript::ScriptUpdate()
 	if (Input::GetMouseButton(Input::Mouse_Left)) {
 		Vector3 mousePos = Input::GetMousePosition();
 		gameobject->transform->position = Camera::ScreenToWorldPoint(mousePos);
+	}
+
+	if (Input::GetKeyDown(Input::KeyCode::P)) {
+		//子がいるなら
+		if (gameobject->transform->children.size() != 0) {
+			//外す
+			firstChild->SetParent(nullptr);
+		}
+		else {
+			//セット
+			firstChild->SetParent(gameobject->transform);
+		}
 	}
 }
 

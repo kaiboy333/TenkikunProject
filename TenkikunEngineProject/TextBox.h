@@ -7,7 +7,14 @@ using namespace std;
 class TextBox : public TriggerRect
 {
 	public:
-		TextBox(float startX, float startY, float width, float height, string text = "");
+		enum class InputType {
+			String,
+			Number,
+		};
+
+		InputType inputType;
+
+		TextBox(float startX, float startY, float width, float height, InputType inputType = InputType::String, string text = "");
 
 		virtual void Draw();	//•`‰æ
 
@@ -20,7 +27,5 @@ class TextBox : public TriggerRect
 		static const int MAX_LEN = 30;	//Å‘å“ü—Í•¶š
 
 		string text = "";	//•¶š
-
-		bool isInputing = false;
 };
 

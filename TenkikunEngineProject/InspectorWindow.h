@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <vector>
 #include "ComponentRect.h"
+#include "ComponentRectManager.h"
 
 using namespace std;
 
