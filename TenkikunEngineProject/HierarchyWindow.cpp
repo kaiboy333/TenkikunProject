@@ -7,7 +7,7 @@ HierarchyWindow::HierarchyWindow() : Window(0, 0, 300, 500)
 
 void HierarchyWindow::Update()
 {
-
+	Window::Update();
 }
 
 void HierarchyWindow::Draw()

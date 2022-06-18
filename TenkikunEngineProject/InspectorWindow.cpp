@@ -8,6 +8,8 @@ InspectorWindow::InspectorWindow() : Window(1000, 0, 300, 800)
 
 void InspectorWindow::Update()
 {
+	Window::Update();
+
 	//ComponentRect‚ÌXV
 	for (ComponentRect* componentRect : componentRects) {
 		componentRect->Update();

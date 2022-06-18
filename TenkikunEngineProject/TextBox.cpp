@@ -1,4 +1,5 @@
 #include "TextBox.h"
+//#include "Window.h"
 
 TextBox::TextBox(float startX, float startY, float width, float height, InputType inputType, string text) : TriggerRect(startX, startY, width, height)
 {
@@ -8,20 +9,20 @@ TextBox::TextBox(float startX, float startY, float width, float height, InputTyp
 	//クリックしたら
 	mouseClickDownEvents.push_back([this] {
 		//入力中ではないなら
-		if (!isSelected) {
+		if (!GetIsSelected()) {
 			bool isTypeNum = (this->inputType == InputType::Number);
 
 			ih = MakeKeyInput(MAX_LEN, FALSE, FALSE, FALSE);	//InputHandle作成
 			SetActiveKeyInput(ih);	//入力を可能にする
 			SetKeyInputString(this->text.c_str(), ih);	//入力中の文字の中に既にあるtextをいれる
-			isSelected = true;	//入力状態フラグオン
+			parentWindow->SetSelectedTriggerRect(this);	//自身を選択対象にする
 		}
 	});
 
 	//エンターを押したら
 	pushEnterEvents.push_back([this]() {
 		//入力中だったなら
-		if (isSelected) {
+		if (GetIsSelected()) {
 			TCHAR strBuf[MAX_LEN + 1] = {};
 			GetKeyInputString(strBuf, ih);
 			//空白ではないなら
@@ -29,7 +30,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, InputTyp
 				this->text = string(strBuf);	//入力した文字をセット
 			}
 
-			isSelected = false;	//入力状態フラグオフ
+			parentWindow->SetSelectedTriggerRect(nullptr);	//自身を選択対象から外す
 			DxLib::DeleteKeyInput(ih);	//InputHandle削除
 		}
 	});
@@ -37,6 +38,12 @@ TextBox::TextBox(float startX, float startY, float width, float height, InputTyp
 
 void TextBox::Draw()
 {
+	SetDrawArea(parentWindow->startX, parentWindow->startY, parentWindow->startX + parentWindow->width - 1, parentWindow->startY + parentWindow->height - 1);
+
+	//マウスが乗っていたら
+	if (isOn) {
+		DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(220, 220, 220), TRUE);
+	}
 	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);	//枠の描画
 
 	SetKeyInputStringColor(GetColor(0, 0, 0), GetColor(50, 0, 0), GetColor(200, 200, 200), GetColor(0, 0, 50), GetColor(100, 0, 0)
@@ -48,9 +55,9 @@ void TextBox::Draw()
 
 	TCHAR strBuf[MAX_LEN + 1] = "";
 	GetKeyInputString(strBuf, ih);
-	//SetDrawArea(startX, startY, startX + width - 1, startY + height - 1);
 	//入力中ではないなら
-	if (!isSelected) {
+	if (!GetIsSelected()) {
+		SetDrawArea(startX, startY, startX + width - 1, startY + height - 1);
 		DrawStringF(startX, startY, text.c_str(), GetColor(0, 0, 0));	//変換後の文字列描画
 	}
 	else {

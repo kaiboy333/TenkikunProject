@@ -8,6 +8,8 @@ GameWindow::GameWindow() : Window(300, 0, 700, 500)
 
 void GameWindow::Update()
 {
+    Window::Update();
+
     //シーンの更新
     Scene* scene = SceneManager::GetNowScene();
     if (scene != nullptr) {

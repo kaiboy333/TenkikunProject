@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "WindowManager.h"
 
 Input::Input()
 {
@@ -45,40 +46,40 @@ void Input::Update()
 	}
 }
 
-bool Input::GetKey(KeyCode keyCode)
+bool Input::GetKey(KeyCode keyCode, bool canUseGameWnd)
 {
 	KeyState* keyState = keys[keyCode];
-	return keyState->GetIsPush();
+	return keyState->GetIsPush() && !(canUseGameWnd ^ WindowManager::canUseGameWnd);
 }
 
-bool Input::GetKeyDown(KeyCode keyCode)
+bool Input::GetKeyDown(KeyCode keyCode, bool canUseGameWnd)
 {
 	KeyState* keyState = keys[keyCode];
-	return keyState->GetIsPush() && keyState->GetIsFirst();
+	return keyState->GetIsPush() && keyState->GetIsFirst() && !(canUseGameWnd ^ WindowManager::canUseGameWnd);
 }
 
-bool Input::GetKeyUp(KeyCode keyCode)
+bool Input::GetKeyUp(KeyCode keyCode, bool canUseGameWnd)
 {
 	KeyState* keyState = keys[keyCode];
-	return !keyState->GetIsPush() && keyState->GetIsFirst();
+	return !keyState->GetIsPush() && keyState->GetIsFirst() && !(canUseGameWnd ^ WindowManager::canUseGameWnd);
 }
 
-bool Input::GetMouseButton(MouseCode mouseCode)
+bool Input::GetMouseButton(MouseCode mouseCode, bool canUseGameWnd)
 {
 	KeyState* keyState = mouses[mouseCode];
-	return keyState->GetIsPush();
+	return keyState->GetIsPush() && !(canUseGameWnd ^ WindowManager::canUseGameWnd);
 }
 
-bool Input::GetMouseButtonDown(MouseCode mouseCode)
+bool Input::GetMouseButtonDown(MouseCode mouseCode, bool canUseGameWnd)
 {
 	KeyState* keyState = mouses[mouseCode];
-	return keyState->GetIsPush() && keyState->GetIsFirst();
+	return keyState->GetIsPush() && keyState->GetIsFirst() && !(canUseGameWnd ^ WindowManager::canUseGameWnd);
 }
 
-bool Input::GetMouseButtonUp(MouseCode mouseCode)
+bool Input::GetMouseButtonUp(MouseCode mouseCode, bool canUseGameWnd)
 {
 	KeyState* keyState = mouses[mouseCode];
-	return !keyState->GetIsPush() && keyState->GetIsFirst();
+	return !keyState->GetIsPush() && keyState->GetIsFirst() && !(canUseGameWnd ^ WindowManager::canUseGameWnd);
 }
 
 Vector3 Input::GetMousePosition()

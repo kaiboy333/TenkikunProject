@@ -1,14 +1,16 @@
 #pragma once
 
 #include "DxLib.h"
-#include "TriggerRect.h"
 #include <vector>
+#include "TriggerRect.h"
 
 class TriggerRect;
-class Window : public TriggerRect
+class Window : public Rect
 {
 	public:
-		void SetSelectedTriggerRect(TriggerRect* selectedTriggerRect);
+		void SetSelectedTriggerRect(TriggerRect* selectedTriggerRect);	//指定のTriggerRectを選択された状態にする(前のは解除)
+		void ClearSelectedTriggerRect();	//すべての選択された状態のTriggerRectを解除する
+
 		TriggerRect* GetSelectedTriggerRect();
 
 		void RemoveTriggerRect(TriggerRect* triggerRect);
@@ -16,9 +18,9 @@ class Window : public TriggerRect
 
 		Window(float startX, float startY, float width, float height);
 
-		virtual void Update() = 0;
+		virtual void Update();
 
-		void EventUpdate();	//イベントトリガーチェック
+		bool EventCheck();	//イベントトリガーチェック
 
 		virtual void Draw();	//描画
 

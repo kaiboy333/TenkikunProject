@@ -5,7 +5,7 @@
 #include <functional>
 #include <vector>
 #include "Rect.h"
-
+#include "Window.h"
 
 class Window;
 class TriggerRect : public Rect
@@ -17,11 +17,13 @@ class TriggerRect : public Rect
 
 		bool isActive = true;	//”½‰ž‚·‚é‚©
 
-		bool isSelected = false;	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©
+		//bool isSelected = false;	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©
 
 		TriggerRect(float startX, float startY, float width, float height);
 
-		void CheckInput();
+		bool CheckInput();
+
+		bool GetIsSelected();	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©
 
 		std::vector<std::function<void()>> mouseClickDownEvents;
 		std::vector<std::function<void()>> mouseClickUpEvents;

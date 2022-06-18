@@ -84,14 +84,15 @@ void TreeList::Draw()
 			TreeNode* node = nodes[0];
 			nodes.erase(nodes.begin());
 
-			node->Draw();
-
-			//開いている状態なら
-			if (node->isOpen) {
-				//子らを追加
-				nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
+			if (node->isActive) {
+				node->Draw();
 			}
 
+			////開いている状態なら
+			//if (node->isOpen) {
+				//子らを追加
+				nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
+			//}
 		}
 	}
 }
@@ -121,6 +122,20 @@ void TreeList::UpdateNodes()
 		//開始位置セット
 		node->startX = window->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
 		node->startY = window->startY + node->GetRow() * node->height;
+
+		//親ノードがいるなら
+		if (node->parentNode) {
+			//親が無効化されているのならでないなら
+			if (!node->parentNode->isActive) {
+				//自身を無効化
+				node->isActive = false;
+			}
+			//親が有効化されているのなら
+			else {
+				//親のノードが開いている状態で有効か決まる
+				node->isActive = node->parentNode->isOpen;
+			}
+		}
 
 		node->button->startX = node->startX - buttonWidth;
 		node->button->startY = node->startY;

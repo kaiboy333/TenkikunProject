@@ -65,14 +65,14 @@ class Input
 		static void Update();	//入力の状態更新
 
 		//キーボードの入力状態を取得
-		static bool GetKey(KeyCode keyCode);	//押されているか
-		static bool GetKeyDown(KeyCode keyCode);	//押した瞬間か
-		static bool GetKeyUp(KeyCode keyCode);	//離した瞬間か
+		static bool GetKey(KeyCode keyCode, bool canUseGameWnd = true);	//押されているか
+		static bool GetKeyDown(KeyCode keyCode, bool canUseGameWnd = true);	//押した瞬間か
+		static bool GetKeyUp(KeyCode keyCode, bool canUseGameWnd = true);	//離した瞬間か
 
 		//マウスの入力状態を取得
-		static bool GetMouseButton(MouseCode mouseCode);
-		static bool GetMouseButtonDown(MouseCode mouseCode);
-		static bool GetMouseButtonUp(MouseCode mouseCode);
+		static bool GetMouseButton(MouseCode mouseCode, bool canUseGameWnd = true);
+		static bool GetMouseButtonDown(MouseCode mouseCode, bool canUseGameWnd = true);
+		static bool GetMouseButtonUp(MouseCode mouseCode, bool canUseGameWnd = true);
 
 		//マウスのスクリーン座標を取得
 		static Vector3 GetMousePosition();

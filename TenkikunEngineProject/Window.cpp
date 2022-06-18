@@ -3,17 +3,22 @@
 
 void Window::SetSelectedTriggerRect(TriggerRect* selectedTriggerRect)
 {
-	if (this->selectedTriggerRect) {
-		//前回の選択中のTriggerRectを選択しないようにして
-		this->selectedTriggerRect->isSelected = false;
-	}
-	if (selectedTriggerRect) {
-		//今回の選択中のTriggerRectを選択するようにする
-		selectedTriggerRect->isSelected = true;
-	}
+	//if (this->selectedTriggerRect) {
+	//	//前回の選択中のTriggerRectを選択しないようにして
+	//	this->selectedTriggerRect->isSelected = false;
+	//}
+	//if (selectedTriggerRect) {
+	//	//今回の選択中のTriggerRectを選択するようにする
+	//	selectedTriggerRect->isSelected = true;
+	//}
 
 	//新しいのをセット
 	this->selectedTriggerRect = selectedTriggerRect;
+}
+
+void Window::ClearSelectedTriggerRect()
+{
+	selectedTriggerRect = nullptr;
 }
 
 TriggerRect* Window::GetSelectedTriggerRect()
@@ -31,21 +36,13 @@ void Window::AddTriggerRect(TriggerRect* triggerRect)
 	addTriggerRects.push_back(triggerRect);	//追加するリストにいれる
 }
 
-Window::Window(float startX, float startY, float width, float height) : TriggerRect(startX, startY, width, height)
+Window::Window(float startX, float startY, float width, float height) : Rect(startX, startY, width, height)
 {
-	//クリックしたら
-	this->mouseClickDownEvents.push_back([this]() {
-		WindowManager::activeTrigggerWindow = this;	//自身に入れてあるイベントトリガーで反応するようにする
-	});
+
 }
 
-void Window::EventUpdate()
+void Window::Update()
 {
-	//TriggerRectのイベント発生
-	for (TriggerRect* triggerRect : triggerRects) {
-		triggerRect->CheckInput();	//イベントチェック
-	}
-
 	for (TriggerRect* removeTriggerRect : removeTriggerRects) {
 		triggerRects.erase(remove(triggerRects.begin(), triggerRects.end(), removeTriggerRect));	//実際に削除
 		removeTriggerRect->parentWindow = nullptr;	//TriggerRectから参照できないように
@@ -57,6 +54,18 @@ void Window::EventUpdate()
 		addTriggerRect->parentWindow = this;	//TriggerRectから参照できるように
 	}
 	addTriggerRects.clear();	//追加リストを初期化
+}
+
+bool Window::EventCheck()
+{
+	bool isEvent = false;	//イベントが起きたか
+
+	//TriggerRectのイベント発生
+	for (TriggerRect* triggerRect : triggerRects) {
+		isEvent |= triggerRect->CheckInput();	//イベントチェック
+	}
+
+	return isEvent;
 }
 
 void Window::Draw()

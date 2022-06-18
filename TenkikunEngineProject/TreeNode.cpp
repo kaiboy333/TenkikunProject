@@ -26,6 +26,8 @@ TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->wi
 		isOpen = !isOpen;
 		//画像セット
 		button->image = treeList->images[isOpen];
+		//ツリーリスト更新
+		treeList->UpdateNodes();
 	});
 }
 
@@ -66,7 +68,7 @@ std::string TreeNode::GetElement()
 void TreeNode::Draw()
 {
 	//選択されているなら
-	if (isSelected) {
+	if (GetIsSelected()) {
 		//四角の描画
 		DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(30, 144, 255), TRUE);
 	}

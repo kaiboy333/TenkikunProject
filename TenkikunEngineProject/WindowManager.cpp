@@ -2,17 +2,43 @@
 
 void WindowManager::Draw()
 {
-	gameWindow->Draw();	//ゲーム画面の描画
-	hierarchyWindow->Draw();	//ヒエラルキーウィンドウの描画
-	inspectorWindow->Draw();	//インスペクターウィンドウの描画
+	for (Window* window : GetWindows()) {
+		window->Draw();
+	}
 }
 
 void WindowManager::Update()
 {
 	for (Window* window : GetWindows()) {
-		window->Update();
+		//マウスがウィンドウの枠内にあるなら
+		if (window->IsPointIn(Input::GetMousePosition().x, Input::GetMousePosition().y)) {
+			//それをトリガー対象ウィンドウに設定
+			activeWindow = window;
 
-		window->EventUpdate();
+
+			//クリックしたとき
+			if (Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, canUseGameWnd)) {
+				//ひとまずすべてのウィンドウの選択を解除
+				for (Window* targetWindow : GetWindows()) {
+					targetWindow->ClearSelectedTriggerRect();
+				}
+
+				//ウィンドウグループが前のウィンドウグループとは違うなら
+				if ((typeid(*window) == typeid(GameWindow)) != canUseGameWnd) {
+					//ウィンドウがゲーム画面ならゲーム画面のみ使える
+					canUseGameWnd = (typeid(*window) == typeid(GameWindow));
+				}
+			}
+		}
+	}
+
+	if (typeid(*activeWindow) == typeid(GameWindow) && canUseGameWnd || !(typeid(*activeWindow) == typeid(GameWindow)) && !canUseGameWnd) {
+		//イベントチェック
+		activeWindow->EventCheck();
+	}
+
+	for (Window* window : GetWindows()) {
+		window->Update();
 	}
 }
 
@@ -29,43 +55,11 @@ vector<Window*> WindowManager::GetWindows()
 	return windows;
 }
 
-//void WindowManager::SetSelectedTriggerRect(TriggerRect* selectedTriggerRect)
-//{
-//	if (WindowManager::selectedTriggerRect) {
-//		//前回の選択中のTriggerRectを選択しないようにして
-//		WindowManager::selectedTriggerRect->isSelected = false;
-//	}
-//	if (selectedTriggerRect) {
-//		//今回の選択中のTriggerRectを選択するようにする
-//		selectedTriggerRect->isSelected = true;
-//	}
-//
-//	//新しいのをセット
-//	WindowManager::selectedTriggerRect = selectedTriggerRect;
-//}
-
-//TriggerRect* WindowManager::GetSelectedTriggerRect()
-//{
-//	return selectedTriggerRect;
-//}
-//
-//void WindowManager::AddTriggerRect(TriggerRect* triggerRect) {
-//	WindowManager::addTriggerRects.push_back(triggerRect);	//追加するリストにいれる
-//}
-//
-//void WindowManager::RemoveTriggerRect(TriggerRect* triggerRect) {
-//	WindowManager::removeTriggerRects.push_back(triggerRect);	//消すリストにいれる
-//}
-//
-//std::vector<TriggerRect*> WindowManager::triggerRects;
-//std::vector<TriggerRect*> WindowManager::removeTriggerRects;
-//std::vector<TriggerRect*> WindowManager::addTriggerRects;
-//
-//TriggerRect* WindowManager::selectedTriggerRect;
-
 GameWindow* WindowManager::gameWindow = new GameWindow();
 HierarchyWindow* WindowManager::hierarchyWindow = new HierarchyWindow();
 InspectorWindow* WindowManager::inspectorWindow = new InspectorWindow();
 
-Window* WindowManager::activeTrigggerWindow = WindowManager::gameWindow;	//初期はゲーム画面
+Window* WindowManager::activeWindow = WindowManager::gameWindow;	//初期はゲーム画面
+
+bool WindowManager::canUseGameWnd = true;	//最初は使える
 

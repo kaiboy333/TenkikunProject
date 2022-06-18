@@ -57,6 +57,9 @@
     <Filter Include="ソース ファイル\scene">
       <UniqueIdentifier>{f6c4de37-19f1-4b23-8f1d-7c76c1f4e6c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\main\window\rect\textBox">
+      <UniqueIdentifier>{0c9516c2-4ff5-4530-b5f5-35da0e47c491}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -158,14 +161,14 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="TextBox.cpp">
-      <Filter>ソース ファイル\main\window\rect</Filter>
-    </ClCompile>
     <ClCompile Include="TextRect.cpp">
       <Filter>ソース ファイル\main\window\rect</Filter>
     </ClCompile>
     <ClCompile Include="ComponentRectManager.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>ソース ファイル\main\window\rect\textBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,13 +292,13 @@
     <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="TextBox.h">
-      <Filter>ソース ファイル\main\window\rect</Filter>
-    </ClInclude>
     <ClInclude Include="TextRect.h">
       <Filter>ソース ファイル\main\window\rect</Filter>
     </ClInclude>
     <ClInclude Include="ComponentRectManager.h" />
+    <ClInclude Include="TextBox.h">
+      <Filter>ソース ファイル\main\window\rect\textBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
