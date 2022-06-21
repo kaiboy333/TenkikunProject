@@ -27,6 +27,8 @@ class Scene
 
 		int generateNum = 0;
 
+		Scene();
+
 		void Init();
 
 		void Update();

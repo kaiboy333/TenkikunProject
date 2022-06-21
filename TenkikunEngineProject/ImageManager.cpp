@@ -40,18 +40,4 @@ std::vector<int*> ImageManager::LoadAndGetImages(std::vector<std::string> pathes
 	return ghs;
 }
 
-ImageManager* ImageManager::Instance()
-{
-	if (instance == nullptr) {
-		instance = new ImageManager();
-	}
-	return instance;
-}
-
-void ImageManager::Destroy()
-{
-	delete instance;
-	instance = nullptr;
-}
-
-ImageManager* ImageManager::instance;
+std::unordered_map<std::string, int*> ImageManager::ghs;

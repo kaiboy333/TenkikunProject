@@ -11,7 +11,7 @@
 #include "PlayerScript.h"
 #include "Input.h"
 #include "Rotate.h"
-#include "WindowManager.h"
+#include "ImageManager.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -71,8 +71,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 }
 
 inline void Init() {
-	SceneManager();	//シーンマネージャーの初期化
+	ImageManager();	//イメージマネージャーの初期化
 	WindowManager();	//ゲーム画面の初期化
+	SceneManager();	//シーンマネージャーの初期化
 	Input();	//入力の初期化
 
 	Scene* scene = SceneManager::GetNowScene();	//シーンを取得

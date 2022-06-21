@@ -162,6 +162,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="ProjectWindow.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MyMath.h" />
+    <ClInclude Include="ProjectWindow.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Rotate.h" />

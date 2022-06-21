@@ -50,16 +50,28 @@ vector<Window*> WindowManager::GetWindows()
 		windows.push_back(gameWindow);
 		windows.push_back(hierarchyWindow);
 		windows.push_back(inspectorWindow);
+		windows.push_back(projectWindow);
 	}
 
 	return windows;
 }
 
-GameWindow* WindowManager::gameWindow = new GameWindow();
-HierarchyWindow* WindowManager::hierarchyWindow = new HierarchyWindow();
-InspectorWindow* WindowManager::inspectorWindow = new InspectorWindow();
+WindowManager::WindowManager()
+{
+	gameWindow = new GameWindow();
+	hierarchyWindow = new HierarchyWindow();
+	inspectorWindow = new InspectorWindow();
+	projectWindow = new ProjectWindow();
 
-Window* WindowManager::activeWindow = WindowManager::gameWindow;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
+	activeWindow = gameWindow;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
+}
+
+GameWindow* WindowManager::gameWindow = nullptr;
+HierarchyWindow* WindowManager::hierarchyWindow = nullptr;
+InspectorWindow* WindowManager::inspectorWindow = nullptr;
+ProjectWindow* WindowManager::projectWindow = nullptr;
+
+Window* WindowManager::activeWindow = nullptr;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
 
 bool WindowManager::canUseGameWnd = true;	//Å‰‚Íg‚¦‚é
 

@@ -46,9 +46,9 @@ void TextBox::Draw()
 	}
 	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);	//ògÇÃï`âÊ
 
-	SetKeyInputStringColor(GetColor(0, 0, 0), GetColor(50, 0, 0), GetColor(200, 200, 200), GetColor(0, 0, 50), GetColor(100, 0, 0)
-		, GetColor(200, 200, 200), GetColor(0, 0, 100), GetColor(0, 0, 0), GetColor(200, 200, 200), GetColor(150, 0, 0), GetColor(150, 0, 0)
-		, GetColor(200, 0, 0), GetColor(0, 0, 0), GetColor(0, 0, 200), GetColor(100, 100, 0), GetColor(0, 0, 0), GetColor(0, 0, 0)
+	SetKeyInputStringColor(GetColor(0, 0, 0), GetColor(50, 0, 0), GetColor(200, 200, 200), GetColor(0, 0, 50), GetColor(0, 0, 0)
+		, GetColor(0, 0, 255), GetColor(0, 0, 100), GetColor(0, 0, 0), GetColor(0, 0, 0), GetColor(0, 0, 0), GetColor(0, 0, 0)
+		, GetColor(200, 200, 200), GetColor(0, 0, 0), GetColor(0, 0, 200), GetColor(100, 100, 0), GetColor(0, 0, 0), GetColor(0, 0, 0)
 	);
 
 	//DrawKeyInputModeString(0, 0);	//ì¸óÕÉÇÅ[ÉhÇÃï`âÊ

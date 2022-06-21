@@ -60,6 +60,9 @@
     <Filter Include="ソース ファイル\main\window\rect\textBox">
       <UniqueIdentifier>{0c9516c2-4ff5-4530-b5f5-35da0e47c491}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\main\window\project">
+      <UniqueIdentifier>{0d26e3cc-356f-4f56-9c07-7fb867aecd4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -169,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="TextBox.cpp">
       <Filter>ソース ファイル\main\window\rect\textBox</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectWindow.cpp">
+      <Filter>ソース ファイル\main\window\project</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +304,9 @@
     <ClInclude Include="ComponentRectManager.h" />
     <ClInclude Include="TextBox.h">
       <Filter>ソース ファイル\main\window\rect\textBox</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectWindow.h">
+      <Filter>ソース ファイル\main\window\project</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

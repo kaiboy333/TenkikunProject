@@ -3,9 +3,13 @@
 #include "ImageRenderer.h"
 #include "Animator.h"
 
+Scene::Scene()
+{
+}
+
 void Scene::Init()
 {
-	treeList = new TreeList(WindowManager::hierarchyWindow);
+	treeList = new TreeList(WindowManager::hierarchyWindow, true, this->sceneName);
 
 	CreateCamera();	//ƒJƒƒ‰¶¬
 
