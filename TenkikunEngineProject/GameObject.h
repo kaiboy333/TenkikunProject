@@ -15,7 +15,7 @@ class Camera;
 class GameObject
 {
 	private:
-		std::string name = "Game Object";
+		std::string name = "";
 
 		void SetTreeNodeName(std::string name);	//–¼‘O•ÏX
 

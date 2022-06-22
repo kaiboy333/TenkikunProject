@@ -36,8 +36,7 @@ GameObject* Scene::CreateEmpty()
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobjects.emplace_back(gameobject);	//リストに追加
-	gameobject->SetName(gameobject->GetName() + std::to_string(generateNum));	//名前変更
-	generateNum++;	//生成回数加算
+	gameobject->SetName("GameObject");	//名前変更(初期の名前)
 	treeList->Add(new TreeNode(gameobject->GetName(), treeList), treeList->GetRoot());	//TreeNodeにも追加
 	return gameobject;
 }

@@ -96,6 +96,11 @@ inline void Init() {
 	GameObject* square3 = scene->CreateSquare();
 	square3->transform->position = Vector3(-50, 0, 0);
 	square3->transform->scale = Vector3(2, 2, 1);
+
+	scene->CreateEmpty();
+	scene->CreateEmpty();
+	scene->CreateEmpty();
+
 }
 
 inline void CulculateFPS() {
