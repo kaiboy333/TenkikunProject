@@ -56,16 +56,12 @@ void Window::Update()
 	addTriggerRects.clear();	//追加リストを初期化
 }
 
-bool Window::EventCheck()
+void Window::EventCheck()
 {
-	bool isEvent = false;	//イベントが起きたか
-
 	//TriggerRectのイベント発生
 	for (TriggerRect* triggerRect : triggerRects) {
-		isEvent |= triggerRect->CheckInput();	//イベントチェック
+		triggerRect->CheckInput();	//イベントチェック
 	}
-
-	return isEvent;
 }
 
 void Window::Draw()

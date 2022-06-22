@@ -62,6 +62,7 @@ WindowManager::WindowManager()
 	hierarchyWindow = new HierarchyWindow();
 	inspectorWindow = new InspectorWindow();
 	projectWindow = new ProjectWindow();
+	projectWindow->Init();
 
 	activeWindow = gameWindow;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
 }

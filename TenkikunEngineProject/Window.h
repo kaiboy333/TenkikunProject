@@ -20,7 +20,7 @@ class Window : public Rect
 
 		virtual void Update();
 
-		bool EventCheck();	//イベントトリガーチェック
+		void EventCheck();	//イベントトリガーチェック
 
 		virtual void Draw();	//描画
 

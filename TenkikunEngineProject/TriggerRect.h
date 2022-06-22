@@ -19,9 +19,9 @@ class TriggerRect : public Rect
 
 		//bool isSelected = false;	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©
 
-		TriggerRect(float startX, float startY, float width, float height);
+		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow);
 
-		bool CheckInput();
+		virtual void CheckInput();
 
 		bool GetIsSelected();	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©
 
@@ -34,6 +34,8 @@ class TriggerRect : public Rect
 
 		std::vector<std::function<void()>> pushEnterEvents;
 
+		std::vector<std::function<void()>> fileDropEvents;
+
 	private :
 		void MouseClickDownEvent();
 		void MouseClickUpEvent();
@@ -43,5 +45,7 @@ class TriggerRect : public Rect
 		void MouseExitEvent();
 
 		void PushEnterEvent();
+
+		void FileDropEvents();
 };
 

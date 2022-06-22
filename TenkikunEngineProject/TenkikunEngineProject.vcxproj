@@ -117,6 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>"C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用"</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,6 +151,7 @@
     <ClCompile Include="ComponentRect.cpp" />
     <ClCompile Include="ComponentRectManager.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="ProjectFileManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
@@ -193,6 +195,7 @@
     <ClInclude Include="ComponentRectManager.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="ProjectFileManager.h" />
     <ClInclude Include="FloatCondition.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />

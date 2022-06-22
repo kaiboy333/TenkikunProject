@@ -12,10 +12,6 @@ void Scene::Init()
 	treeList = new TreeList(WindowManager::hierarchyWindow, true, this->sceneName);
 
 	CreateCamera();	//カメラ生成
-
-	CreateSquare();	//四角い画像を生成
-	GameObject* s2 = CreateSquare();	//四角い画像2を生成
-	s2->SetName("Square2");	//名前変更
 }
 
 void Scene::Update()
@@ -52,8 +48,8 @@ GameObject* Scene::CreateSquare()
 	gameobject->SetName("Square");	//名前変更
 
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
-	std::string path = "image/square.png";	//画像のパス
-	Image* image = new Image(path);		//画像を読み込み
+	std::string currentPath = "image/square.png";	//画像のパス
+	Image* image = new Image(currentPath);		//画像を読み込み
 	imageRenderer->image = image;	//imageをセット
 	return gameobject;
 }

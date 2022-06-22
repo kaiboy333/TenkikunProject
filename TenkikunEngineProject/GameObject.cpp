@@ -29,9 +29,9 @@ void GameObject::SetTreeNodeName(std::string name)
 {
 	//TreeListの名前を変える
 	TreeList* treeList = SceneManager::GetNowScene()->treeList;
-	//名前セット
-	TreeNode* node = treeList->FindNode(this->name);
+	TreeNode* node = treeList->FindNode(this->name);	//元の名前で探す
 	if (node) {
+		//名前セット
 		node->SetElement(name);
 	}
 }
@@ -50,6 +50,13 @@ GameObject* GameObject::Find(std::string name)
 
 void GameObject::SetName(std::string name)
 {
+	int no = 1;	//被り防止用番号
+	string newName = name;	//新しい候補の名前
+	//被らなくなるまで繰り返す
+	while (GameObject::Find(newName)) {
+		newName = name + "(" + std::to_string(no++) + ")";	//新しい候補の名前を作成
+	}
+	name = newName;	//nameを新しい名前に
 	SetTreeNodeName(name);	//TreeNodeの名前を変えて
 	this->name = name;	//実際に変える
 }

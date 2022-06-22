@@ -14,7 +14,7 @@ class WindowButton : public TriggerRect
 
 		Image* image = nullptr;	//‰æ‘œ
 
-		WindowButton(float startX, float startY, float width, float height);
+		WindowButton(float startX, float startY, float width, float height, Window* parentWindow);
 
 		void Draw();
 

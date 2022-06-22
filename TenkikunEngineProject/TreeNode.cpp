@@ -1,7 +1,7 @@
 #include "TreeNode.h"
 #include "SceneManager.h"
 
-TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->window->startX + treeList->buttonWidth, treeList->window->startY, (float)GetDrawStringWidth(e.c_str(), (int)(e.length())), (float)GetFontLineSpace())
+TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->window->startX + treeList->buttonWidth, treeList->window->startY, (float)GetDrawStringWidth(e.c_str(), (int)(e.length())), (float)GetFontLineSpace(), treeList->window)
 {
 	element = e;
 	this->treeList = treeList;
@@ -16,7 +16,7 @@ TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->wi
 		}
 	});
 
-	button = new WindowButton(startX - treeList->buttonWidth, startY, treeList->buttonWidth, treeList->buttonWidth);	//ボタン作成
+	button = new WindowButton(startX - treeList->buttonWidth, startY, treeList->buttonWidth, treeList->buttonWidth, treeList->window);	//ボタン作成
 	//画像セット
 	button->image = treeList->images[isOpen];
 

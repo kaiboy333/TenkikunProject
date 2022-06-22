@@ -83,15 +83,19 @@ inline void Init() {
 	player->SetName("Player");
 	PlayerScript* script = player->AddComponent<PlayerScript>();	//プレイヤースクリプト作成
 
-	GameObject* square = GameObject::Find("Square");
+	GameObject* square = scene->CreateSquare();
 	square->transform->SetParent(player->transform);
 	square->transform->position = Vector3(50, 0, 0);
 	//square->AddComponent<Rotate>();
 
-	GameObject* square2 = GameObject::Find("Square2");
+	GameObject* square2 = scene->CreateSquare();
 	square2->transform->SetParent(square->transform);
 	square2->transform->position = Vector3(150, 0, 0);
 	square2->transform->scale = Vector3(0.5f, 0.5f, 1);
+
+	GameObject* square3 = scene->CreateSquare();
+	square3->transform->position = Vector3(-50, 0, 0);
+	square3->transform->scale = Vector3(2, 2, 1);
 }
 
 inline void CulculateFPS() {

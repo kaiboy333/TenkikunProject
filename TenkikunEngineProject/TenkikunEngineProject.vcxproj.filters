@@ -176,6 +176,9 @@
     <ClCompile Include="ProjectWindow.cpp">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectFileManager.cpp">
+      <Filter>ソース ファイル\main\window\project</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -306,6 +309,9 @@
       <Filter>ソース ファイル\main\window\rect\textBox</Filter>
     </ClInclude>
     <ClInclude Include="ProjectWindow.h">
+      <Filter>ソース ファイル\main\window\project</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectFileManager.h">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClInclude>
   </ItemGroup>

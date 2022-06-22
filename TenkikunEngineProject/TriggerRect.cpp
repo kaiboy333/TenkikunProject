@@ -1,30 +1,17 @@
 #include "TriggerRect.h"
 #include "WindowManager.h"
 
-TriggerRect::TriggerRect(float startX, float startY, float width, float height) : Rect(startX, startY, width, height)
+TriggerRect::TriggerRect(float startX, float startY, float width, float height, Window* parentWindow) : Rect(startX, startY, width, height)
 {
-	vector<Window*> windows = WindowManager::GetWindows();
-
-	if (windows.size() != 0) {
-		for (Window* window : windows) {
-			//ウィンドウ内にあるなら
-			if (window->IsPointIn(startX, startY)) {
-				//ウィンドウに自身を追加
-				window->AddTriggerRect(this);
-				this->parentWindow = window;	//親ウィンドウに設定
-				break;
-			}
-		}
-	}
+	this->parentWindow = parentWindow;	//親ウィンドウに設定
+	this->parentWindow->AddTriggerRect(this);	//ウィンドウに自身を追加
 }
 
-bool TriggerRect::CheckInput()
+void TriggerRect::CheckInput()
 {
-	bool isEvent = false;	//イベントが起きたか
-
 	//反応させないなら終わり
 	if (!isActive)
-		return false;
+		return;
 
 	Vector3 mousePos = Input::GetMousePosition();
 
@@ -33,22 +20,18 @@ bool TriggerRect::CheckInput()
 		//左クリックを押した瞬間なら
 		if (Input::GetMouseButtonDown(Input::Mouse_Left, false)) {
 			MouseClickDownEvent();
-			isEvent = true;
 		}
 		//左クリックを離した瞬間なら
 		else if (Input::GetMouseButtonUp(Input::Mouse_Left, false)) {
 			MouseClickUpEvent();
-			isEvent = true;
 		}
 		//右クリックなら
 		else if (Input::GetMouseButtonDown(Input::Mouse_Right, false)) {
 			MouseRightClickEvent();
-			isEvent = true;
 		}
 		//マウスが乗ってるだけなら
 		else {
 			MouseOnEvent();
-			isEvent = true;
 		}
 		//乗っている判定にする
 		isOn = true;
@@ -58,7 +41,6 @@ bool TriggerRect::CheckInput()
 		//前回マウスが乗っていたら
 		if (isOn) {
 			MouseExitEvent();
-			isEvent = true;
 		}
 		//乗っていない判定にする
 		isOn = false;
@@ -67,10 +49,12 @@ bool TriggerRect::CheckInput()
 	//エンターを押したなら
 	if (Input::GetKeyDown(Input::ENTER, false)) {
 		PushEnterEvent();
-		isEvent = true;
 	}
 
-	return isEvent;
+	//ファイルがドロップされたら
+	if (GetDragFileNum() != 0) {
+		FileDropEvents();
+	}
 }
 
 bool TriggerRect::GetIsSelected()
@@ -123,6 +107,13 @@ void TriggerRect::MouseExitEvent()
 void TriggerRect::PushEnterEvent()
 {
 	for (std::function<void()> func : pushEnterEvents) {
+		func();
+	}
+}
+
+void TriggerRect::FileDropEvents()
+{
+	for (std::function<void()> func : fileDropEvents) {
 		func();
 	}
 }

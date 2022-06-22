@@ -1,7 +1,7 @@
 #include "TextBox.h"
 //#include "Window.h"
 
-TextBox::TextBox(float startX, float startY, float width, float height, InputType inputType, string text) : TriggerRect(startX, startY, width, height)
+TextBox::TextBox(float startX, float startY, float width, float height, Window* parentWindow, InputType inputType, string text) : TriggerRect(startX, startY, width, height, parentWindow)
 {
 	this->text = text;	//テキストセット
 	this->inputType = inputType;	//入力タイプセット
@@ -15,7 +15,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, InputTyp
 			ih = MakeKeyInput(MAX_LEN, FALSE, FALSE, FALSE);	//InputHandle作成
 			SetActiveKeyInput(ih);	//入力を可能にする
 			SetKeyInputString(this->text.c_str(), ih);	//入力中の文字の中に既にあるtextをいれる
-			parentWindow->SetSelectedTriggerRect(this);	//自身を選択対象にする
+			this->parentWindow->SetSelectedTriggerRect(this);	//自身を選択対象にする
 		}
 	});
 
@@ -27,10 +27,10 @@ TextBox::TextBox(float startX, float startY, float width, float height, InputTyp
 			GetKeyInputString(strBuf, ih);
 			//空白ではないなら
 			if (strBuf != "") {
-				this->text = string(strBuf);	//入力した文字をセット
+				this->text = strBuf;	//入力した文字をセット
 			}
 
-			parentWindow->SetSelectedTriggerRect(nullptr);	//自身を選択対象から外す
+			this->parentWindow->SetSelectedTriggerRect(nullptr);	//自身を選択対象から外す
 			DxLib::DeleteKeyInput(ih);	//InputHandle削除
 		}
 	});
