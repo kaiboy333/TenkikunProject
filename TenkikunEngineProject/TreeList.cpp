@@ -104,59 +104,11 @@ TreeNode* TreeList::GetRoot()
 
 void TreeList::UpdateNodes()
 {
-	//std::vector<TreeNode*> nodes;
-	//nodes.push_back(root);
-
-	//int i = 0;
-
-	//while (nodes.size() != 0) {
-
-	//	//リストの先頭の要素を取得、削除
-	//	TreeNode* node = nodes[0];
-	//	nodes.erase(nodes.begin());
-
-	//	//階層をセット
-	//	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
-	//	//行数をセット
-	//	node->SetRow(i);
-	//	//開始位置セット
-	//	node->startX = window->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
-	//	node->startY = window->startY + node->GetRow() * node->height;
-
-	//	//親ノードがいるなら
-	//	if (node->parentNode) {
-	//		//親が無効化されているのならでないなら
-	//		if (!node->parentNode->isActive) {
-	//			//自身を無効化
-	//			node->isActive = false;
-	//		}
-	//		//親が有効化されているのなら
-	//		else {
-	//			//親のノードが開いている状態で有効か決まる
-	//			node->isActive = node->parentNode->isOpen;
-	//		}
-	//	}
-
-	//	node->button->startX = node->startX - buttonWidth;
-	//	node->button->startY = node->startY;
-	//	//子ノードがいないならボタンを無効化
-	//	node->button->isActive = ((int)node->childNodes.size() != 0);
-	//	i++;
-
-	//	//子らを追加
-	//	nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
-	//}
-
-
 	UpdateNodeAndChildrenNodes(root, 0);
 }
 
 int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 {
-	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
-	//開始位置セット
-	node->startX = window->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
-	node->startY = window->startY + node->GetRow() * node->height;
 	//親ノードがいるなら
 	if (node->parentNode) {
 		//親が無効化されているのなら
@@ -171,7 +123,12 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 		}
 	}
 
-	node->SetRow(node->isActive ? ++row : row);
+	node->SetRow(node->isActive ? row++ : row);
+	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
+
+	//開始位置セット
+	node->startX = window->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
+	node->startY = window->startY + node->GetRow() * node->height;
 
 	node->button->startX = node->startX - buttonWidth;
 	node->button->startY = node->startY;

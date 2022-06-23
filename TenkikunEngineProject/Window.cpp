@@ -3,15 +3,6 @@
 
 void Window::SetSelectedTriggerRect(TriggerRect* selectedTriggerRect)
 {
-	//if (this->selectedTriggerRect) {
-	//	//前回の選択中のTriggerRectを選択しないようにして
-	//	this->selectedTriggerRect->isSelected = false;
-	//}
-	//if (selectedTriggerRect) {
-	//	//今回の選択中のTriggerRectを選択するようにする
-	//	selectedTriggerRect->isSelected = true;
-	//}
-
 	//新しいのをセット
 	this->selectedTriggerRect = selectedTriggerRect;
 }

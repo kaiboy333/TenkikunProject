@@ -12,6 +12,7 @@
 #include "Input.h"
 #include "Rotate.h"
 #include "ImageManager.h"
+#include "resource.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -36,6 +37,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetGraphMode(WIDTH, HEIGHT, 32); //画面の解像度指定
 	SetWindowSizeChangeEnableFlag(FALSE); //画面サイズ変更不可
 	SetDrawScreen(DX_SCREEN_BACK);	//裏画面で描画
+	SetWindowIconID(IDI_TENKIKUN);
+
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{

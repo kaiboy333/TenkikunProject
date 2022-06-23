@@ -314,6 +314,9 @@
     <ClInclude Include="ProjectFileManager.h">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
@@ -412,5 +415,13 @@
     <Image Include="image\rightArrow.png">
       <Filter>image</Filter>
     </Image>
+    <Image Include="tenkikun.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TenkikunEngineProject.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

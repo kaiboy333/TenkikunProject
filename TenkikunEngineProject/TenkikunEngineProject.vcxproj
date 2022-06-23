@@ -212,6 +212,7 @@
     <ClInclude Include="ProjectWindow.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -264,6 +265,10 @@
     <Image Include="image\UnityChan_Run5.png" />
     <Image Include="image\UnityChan_Run6.png" />
     <Image Include="image\UnityChan_Run7.png" />
+    <Image Include="tenkikun.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TenkikunEngineProject.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
