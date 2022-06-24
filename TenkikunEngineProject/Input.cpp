@@ -44,6 +44,9 @@ void Input::Update()
 			keyState->Release();
 		}
 	}
+
+	//マウスホイール回転値更新
+	mouseWheelRoteValue = GetMouseWheelRotVol();
 }
 
 bool Input::GetKey(KeyCode keyCode, bool canUseGameWnd)
@@ -89,5 +92,12 @@ Vector3 Input::GetMousePosition()
 	return Vector3((float)x, (float)y, 0.0f);
 }
 
+float Input::GetMouseWheelRoteValue()
+{
+	return mouseWheelRoteValue;
+}
+
 std::unordered_map<int, KeyState*> Input::keys;
 std::unordered_map<int, KeyState*> Input::mouses;
+
+float Input::mouseWheelRoteValue = 0;

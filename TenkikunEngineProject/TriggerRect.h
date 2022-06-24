@@ -17,11 +17,9 @@ class TriggerRect : public Rect
 
 		bool isActive = true;	//”½‰ž‚·‚é‚©
 
-		//bool isSelected = false;	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©
-
 		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow);
 
-		virtual void CheckInput();
+		void CheckInput();
 
 		bool GetIsSelected();	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©
 
@@ -31,6 +29,7 @@ class TriggerRect : public Rect
 		std::vector<std::function<void()>> mouseRightClickEvents;
 		std::vector<std::function<void()>> mouseOnEvents;
 		std::vector<std::function<void()>> mouseExitEvents;
+		std::vector<std::function<void()>> mouseWheelEvents;
 
 		std::vector<std::function<void()>> pushEnterEvents;
 
@@ -43,6 +42,7 @@ class TriggerRect : public Rect
 		void MouseRightClickEvent();
 		void MouseOnEvent();
 		void MouseExitEvent();
+		void MouseWheelEvent();
 
 		void PushEnterEvent();
 

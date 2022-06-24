@@ -29,10 +29,12 @@ void TriggerRect::CheckInput()
 		else if (Input::GetMouseButtonDown(Input::Mouse_Right, false)) {
 			MouseRightClickEvent();
 		}
-		//マウスが乗ってるだけなら
-		else {
-			MouseOnEvent();
+		//マウスホイールが動いたなら
+		else if(Input::GetMouseWheelRoteValue() != 0) {
+			MouseWheelEvent();
 		}
+		//マウスが乗ってるだけなら
+		MouseOnEvent();
 		//乗っている判定にする
 		isOn = true;
 	}
@@ -100,6 +102,13 @@ void TriggerRect::MouseOnEvent()
 void TriggerRect::MouseExitEvent()
 {
 	for (std::function<void()> func : mouseExitEvents) {
+		func();
+	}
+}
+
+void TriggerRect::MouseWheelEvent()
+{
+	for (std::function<void()> func : mouseWheelEvents) {
 		func();
 	}
 }

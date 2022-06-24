@@ -1,6 +1,7 @@
 #include "Debug.h"
+#include <debugapi.h>
 
-void Debug::Log(stringstream ss)
+void Debug::Log(string string)
 {
-	//OutputDebugString(ss.str().c_str());
+	OutputDebugString(string.c_str());
 }

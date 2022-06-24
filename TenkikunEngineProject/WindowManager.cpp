@@ -75,4 +75,3 @@ ProjectWindow* WindowManager::projectWindow = nullptr;
 Window* WindowManager::activeWindow = nullptr;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
 
 bool WindowManager::canUseGameWnd = true;	//Å‰‚Íg‚¦‚é
-

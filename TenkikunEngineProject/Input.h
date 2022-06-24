@@ -77,4 +77,9 @@ class Input
 		//マウスのスクリーン座標を取得
 		static Vector3 GetMousePosition();
 
+		//マウスの回転量を取得
+		static float GetMouseWheelRoteValue();
+
+	private:
+		static float mouseWheelRoteValue;	//マウスホイールの回転値
 };
