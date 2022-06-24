@@ -17,6 +17,8 @@ class TriggerRect : public Rect
 
 		bool isActive = true;	//”½‰ž‚·‚é‚©
 
+		bool isOut = false;	//‚ ‚é˜g‚©‚çŠO‚ê‚Ä‚¢‚é‚©
+
 		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow);
 
 		void CheckInput();

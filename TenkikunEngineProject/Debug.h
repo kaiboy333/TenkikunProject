@@ -1,12 +1,11 @@
 #pragma once
-
-#include <sstream>
-
-using namespace std;
+#include <string>
+#include <Windows.h>
+#include <debugapi.h>
 
 class Debug
 {
 	public:
-		static void Log(string string);
+		static void Log(std::string string);
 };
 

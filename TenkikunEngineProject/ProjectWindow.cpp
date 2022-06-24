@@ -9,7 +9,7 @@ ProjectWindow::ProjectWindow() : Window(0, 500, 1000, 300)
 
 void ProjectWindow::Init()
 {
-	treeList = new TreeList(this, true, filesystem::current_path().filename().string());
+	treeList = new TreeList(startX, startY, width, height, this, true, filesystem::current_path().filename().string());
 
 	vector<filesystem::path> pathes;
 
@@ -25,7 +25,7 @@ void ProjectWindow::Init()
 		//ディレクトリだったら
 		if (filesystem::is_directory(path)) {
 			//子ディレクトリをリストに追加
-			for (auto childPath : filesystem::directory_iterator(path)) {
+			for (filesystem::path childPath : filesystem::directory_iterator(path)) {
 				pathes.push_back(childPath);
 			}
 		}

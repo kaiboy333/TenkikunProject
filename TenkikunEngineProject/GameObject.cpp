@@ -15,13 +15,13 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::Draw(Window* window, Camera* camera)
+void GameObject::Draw(Window* parentWindow, Camera* camera)
 {
 	Component* component = nullptr;
 	//ImageComponent‚ª‚ ‚é‚È‚ç
 	if ((component = this->GetComponent<ImageRenderer>()) != nullptr) {
 		ImageRenderer* image = static_cast<ImageRenderer*>(component);
-		image->Draw(window, camera);	//•`‰æ
+		image->Draw(parentWindow, camera);	//•`‰æ
 	}
 }
 

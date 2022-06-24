@@ -1,19 +1,20 @@
 #include "TreeList.h"
 
-TreeList::TreeList(Window* window, bool drawRoot, std::string e)
+TreeList::TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
 {
 	//ノードのボタン画像セット
 	images[0] = new Image("image/rightArrow.png");
 	images[1] = new Image("image/downArrow.png");
 
-	//windowセット
-	this->window = window;
 	this->drawRoot = drawRoot;
 
 	//root作成
 	root = new TreeNode(e, this);
 	//ノードの階層を更新
 	UpdateNodes();
+	//ScrollRectのリストに追加(&更新)
+	AddToScrollRect(root);
+	AddToScrollRect(root->button);	//ボタンも
 }
 
 void TreeList::Add(TreeNode* targetNode, TreeNode* parentNode)
@@ -29,24 +30,30 @@ void TreeList::Add(TreeNode* targetNode, TreeNode* parentNode)
 		targetNode->parentNode = parentNode;
 		//ノードの階層を更新
 		UpdateNodes();
+		//ScrollRectのリストに追加(&更新)
+		AddToScrollRect(targetNode);
+		AddToScrollRect(targetNode->button);	//ボタンも
 	}
 }
 
 TreeNode* TreeList::Delete(std::string e)
 {
-	TreeNode* node = FindNode(e);
-	if (node) {
+	TreeNode* targetNode = FindNode(e);
+	if (targetNode) {
 		//親のノードからリストを取得
-		std::vector<TreeNode*>* childNodes = &node->parentNode->childNodes;
+		std::vector<TreeNode*>* childNodes = &targetNode->parentNode->childNodes;
 		//指定のノードを削除
-		childNodes->erase(remove(childNodes->begin(), childNodes->end(), node));
+		childNodes->erase(remove(childNodes->begin(), childNodes->end(), targetNode));
 		//親の参照を削除
-		node->parentNode = nullptr;
+		targetNode->parentNode = nullptr;
+		//ScrollRectのリストから削除
+		RemoveToScrollRect(targetNode);
+		RemoveToScrollRect(targetNode->button);	//ボタンも
 		//ノードの階層を更新
 		UpdateNodes();
 	}
 	//ノードを返す
-	return node;
+	return targetNode;
 }
 
 TreeNode* TreeList::FindNode(std::string e)
@@ -71,7 +78,7 @@ TreeNode* TreeList::FindNode(std::string e)
 
 void TreeList::Draw()
 {
-	if (this->window) {
+	if (this->parentWindow) {
 		//何列目の描画か
 		//int i = 0;
 
@@ -88,11 +95,8 @@ void TreeList::Draw()
 				node->Draw();
 			}
 
-			////開いている状態なら
-			//if (node->isOpen) {
-				//子らを追加
-				nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
-			//}
+			//子らを追加
+			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
 		}
 	}
 }
@@ -104,7 +108,8 @@ TreeNode* TreeList::GetRoot()
 
 void TreeList::UpdateNodes()
 {
-	UpdateNodeAndChildrenNodes(root, 0);
+	//スクロールの高さはノードの数とノードの高さを掛けた数
+	scrollHeight = UpdateNodeAndChildrenNodes(root, 0) * root->height;
 }
 
 int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
@@ -127,8 +132,8 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
 
 	//開始位置セット
-	node->startX = window->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
-	node->startY = window->startY + node->GetRow() * node->height;
+	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
+	node->startY = parentWindow->startY + node->GetRow() * node->height;
 
 	node->button->startX = node->startX - buttonWidth;
 	node->button->startY = node->startY;

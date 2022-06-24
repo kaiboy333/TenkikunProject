@@ -46,7 +46,7 @@ void Input::Update()
 	}
 
 	//マウスホイール回転値更新
-	mouseWheelRoteValue = GetMouseWheelRotVol();
+	mouseWheelRoteValue = GetMouseWheelRotVolF();
 }
 
 bool Input::GetKey(KeyCode keyCode, bool canUseGameWnd)

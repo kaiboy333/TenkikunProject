@@ -33,7 +33,7 @@ class Scene
 
 		void Update();
 
-		void Draw(Window* window);
+		void Draw(Window* parentWindow);
 
 		GameObject* CreateEmpty();	//空のゲームオブジェクトを作成
 		GameObject* CreateSquare();	//四角い画像のゲームオブジェクトを作成

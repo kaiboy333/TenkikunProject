@@ -1,12 +1,12 @@
 #include "TextRect.h"
 #include "DxLib.h"
 
-TextRect::TextRect(float startX, float startY, string text) : Rect(startX, startY, (float)GetDrawStringWidth(text.c_str(), (int)(text.length())), (float)GetFontLineSpace())
+TextRect::TextRect(float startX, float startY, std::string text) : Rect(startX, startY, (float)GetDrawStringWidth(text.c_str(), (int)(text.length())), (float)GetFontLineSpace())
 {
 	this->text = text;
 }
 
-void TextRect::SetText(string text)
+void TextRect::SetText(std::string text)
 {
 	//名前セット
 	this->text = text;
@@ -15,7 +15,7 @@ void TextRect::SetText(string text)
 	height = (float)GetFontLineSpace();
 }
 
-string TextRect::GetText()
+std::string TextRect::GetText()
 {
 	return text;
 }

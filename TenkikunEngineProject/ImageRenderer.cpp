@@ -9,7 +9,7 @@ void ImageRenderer::Update()
 
 }
 
-void ImageRenderer::Draw(Window* window, Camera* camera)
+void ImageRenderer::Draw(Window* parentWindow, Camera* camera)
 {
 	if (image != nullptr) {
 		if (image->GetGH() != nullptr) {
@@ -18,12 +18,12 @@ void ImageRenderer::Draw(Window* window, Camera* camera)
 			float drawHeight = (float)camera->height;
 
 			//Window‚Ì•û‚ªƒJƒƒ‰‚Ì•`‰æ”ÍˆÍ‚æ‚è‘å‚«‚¢‚È‚ç
-			if (camera->width < window->width) {
-				startDrawX = (window->width - camera->width) / 2.0f;
+			if (camera->width < parentWindow->width) {
+				startDrawX = (parentWindow->width - camera->width) / 2.0f;
 				//drawWidth = (float)camera->width;
 			}
-			if (camera->height < window->height) {
-				startDrawY = (window->height - camera->height) / 2.0f;
+			if (camera->height < parentWindow->height) {
+				startDrawY = (parentWindow->height - camera->height) / 2.0f;
 				//drawHeight = (float)camera->height;
 			}
 
@@ -33,8 +33,8 @@ void ImageRenderer::Draw(Window* window, Camera* camera)
 			Vector3 scale = this->gameobject->transform->scale;
 			Vector3 rota = this->gameobject->transform->rotation;
 
-			float drawX = pos.x + startDrawX + window->width / 2.0f;
-			float drawY = pos.y + startDrawY + window->height / 2.0f;
+			float drawX = pos.x + startDrawX + parentWindow->width / 2.0f;
+			float drawY = pos.y + startDrawY + parentWindow->height / 2.0f;
 
 			////ƒJƒƒ‰‚É‚æ‚Á‚Ä“®‚­‚Ì‚È‚ç
 			//if (this->isCameraAffected) {

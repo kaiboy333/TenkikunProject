@@ -2,18 +2,18 @@
 
 void WindowManager::Draw()
 {
-	for (Window* window : GetWindows()) {
-		window->Draw();
+	for (Window* parentWindow : GetWindows()) {
+		parentWindow->Draw();
 	}
 }
 
 void WindowManager::Update()
 {
-	for (Window* window : GetWindows()) {
+	for (Window* parentWindow : GetWindows()) {
 		//マウスがウィンドウの枠内にあるなら
-		if (window->IsPointIn(Input::GetMousePosition().x, Input::GetMousePosition().y)) {
+		if (parentWindow->IsPointIn(Input::GetMousePosition().x, Input::GetMousePosition().y)) {
 			//それをトリガー対象ウィンドウに設定
-			activeWindow = window;
+			activeWindow = parentWindow;
 
 
 			//クリックしたとき
@@ -24,9 +24,9 @@ void WindowManager::Update()
 				}
 
 				//ウィンドウグループが前のウィンドウグループとは違うなら
-				if ((typeid(*window) == typeid(GameWindow)) != canUseGameWnd) {
+				if ((typeid(*parentWindow) == typeid(GameWindow)) != canUseGameWnd) {
 					//ウィンドウがゲーム画面ならゲーム画面のみ使える
-					canUseGameWnd = (typeid(*window) == typeid(GameWindow));
+					canUseGameWnd = (typeid(*parentWindow) == typeid(GameWindow));
 				}
 			}
 		}
@@ -37,8 +37,8 @@ void WindowManager::Update()
 		activeWindow->EventCheck();
 	}
 
-	for (Window* window : GetWindows()) {
-		window->Update();
+	for (Window* parentWindow : GetWindows()) {
+		parentWindow->Update();
 	}
 }
 

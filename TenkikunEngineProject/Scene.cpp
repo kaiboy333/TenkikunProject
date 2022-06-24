@@ -9,7 +9,8 @@ Scene::Scene()
 
 void Scene::Init()
 {
-	treeList = new TreeList(WindowManager::hierarchyWindow, true, this->sceneName);
+	Window* window = WindowManager::hierarchyWindow;
+	treeList = new TreeList(window->startX, window->startY, window->width, window->height, window, true, this->sceneName);
 
 	CreateCamera();	//カメラ生成
 }
@@ -24,11 +25,11 @@ void Scene::Update()
 	}
 }
 
-void Scene::Draw(Window* window)
+void Scene::Draw(Window* parentWindow)
 {
 	Camera* camera = cameras[this->drawCameraNo];   //現在の対象のCameraを描画
 	for (GameObject* gameobject : gameobjects) {
-		gameobject->Draw(window, camera);	//ゲームオブジェクトの描画
+		gameobject->Draw(parentWindow, camera);	//ゲームオブジェクトの描画
 	}
 }
 

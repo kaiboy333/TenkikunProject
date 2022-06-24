@@ -38,7 +38,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, Window* 
 
 void TextBox::Draw()
 {
-	SetDrawArea(parentWindow->startX, parentWindow->startY, parentWindow->startX + parentWindow->width - 1, parentWindow->startY + parentWindow->height - 1);
+	SetDrawArea((int)parentWindow->startX, (int)parentWindow->startY, (int)(parentWindow->startX + parentWindow->width - 1), (int)(parentWindow->startY + parentWindow->height - 1));
 
 	//ƒ}ƒEƒX‚ªæ‚Á‚Ä‚¢‚½‚ç
 	if (isOn) {

@@ -6,7 +6,16 @@ class ScrollRect : public TriggerRect
 	public:
 		ScrollRect(float startX, float startY, float width, float height, float scrollWidth, float scrollHeight, Window* parentWindow);
 
-		float startScrollX, startScrollY;
+		//float deltaScrollX, deltaScrollY;	//いままで動かしたマウスホイールの回転値
 		float scrollWidth, scrollHeight;
+		float startScrollX, startScrollY;
+
+		float scrollSpeed = 10;
+
+		void AddToScrollRect(TriggerRect* triggerRect);	//リストに追加
+		void RemoveToScrollRect(TriggerRect* triggerRect);	//リストから削除
+
+	private:
+		std::vector<TriggerRect*> triggerRects;	//スクロールで動かすTriggerRect
 };
 

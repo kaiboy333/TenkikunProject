@@ -36,7 +36,7 @@ class GameObject
 
 		void Update();	//Componentの更新
 
-		void Draw(Window* window, Camera* camera);	//GameObjectの描画Componentを描画
+		void Draw(Window* parentWindow, Camera* camera);	//GameObjectの描画Componentを描画
 
 		static GameObject* Find(std::string name);	//名前からオブジェクトを取得する
 

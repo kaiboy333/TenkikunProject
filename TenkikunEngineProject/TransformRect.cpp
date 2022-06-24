@@ -125,7 +125,7 @@ void TransformRect::Draw()
 	}
 }
 
-void TransformRect::RemoveTriggerRects()
+void TransformRect::RemoveAllTriggerRect()
 {
 	//テキストボックス削除
 	for (TextBox* textBox : textBoxes) {

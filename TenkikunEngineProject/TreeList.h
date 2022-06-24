@@ -8,9 +8,10 @@
 #include <string>
 #include "Property.h"
 #include "TreeNode.h"
+#include "ScrollRect.h"
 
 class TreeNode;
-class TreeList
+class TreeList : public ScrollRect
 {
 public:
 	//ボタン画像(開いていないのと開いているとき)
@@ -22,7 +23,7 @@ public:
 	//ボタン画像の幅
 	float buttonWidth = 18;
 
-	TreeList(Window* window, bool drawRoot = true, std::string e = "root");
+	TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool drawRoot = true, std::string e = "root");
 
 	//指定の親にノードを追加
 	void Add(TreeNode* targetNode, TreeNode* parentNode);
@@ -30,8 +31,6 @@ public:
 	TreeNode* Delete(std::string e);
 
 	TreeNode* FindNode(std::string e);
-
-	Window* window = nullptr;
 
 	void Draw();
 

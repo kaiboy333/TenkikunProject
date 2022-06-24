@@ -21,20 +21,20 @@ void Camera::Update()
 
 	 Scene* scene = SceneManager::GetNowScene();
 	 Camera* camera = scene->GetNowCamera();
-	 GameWindow* window = WindowManager::gameWindow;
+	 GameWindow* parentWindow = WindowManager::gameWindow;
 	 Vector3 cameraPos = camera->gameobject->transform->position;
 
-	 return Vector3(screenPosition.x / camera->zoom - window->width / 2.0f + cameraPos.x - window->startX, screenPosition.y / camera->zoom - window->height / 2.0f + cameraPos.y - window->startY, screenPosition.z);
+	 return Vector3(screenPosition.x / camera->zoom - parentWindow->width / 2.0f + cameraPos.x - parentWindow->startX, screenPosition.y / camera->zoom - parentWindow->height / 2.0f + cameraPos.y - parentWindow->startY, screenPosition.z);
  }
 
  Vector3 Camera::WorldToScreenPoint(Vector3 worldPosition)
  {
 	 Scene* scene = SceneManager::GetNowScene();
 	 Camera* camera = scene->GetNowCamera();
-	 GameWindow* window = WindowManager::gameWindow;
+	 GameWindow* parentWindow = WindowManager::gameWindow;
 	 Vector3 cameraPos = camera->gameobject->transform->position;
 
-	 return Vector3((worldPosition.x + window->width / 2.0f - cameraPos.x + window->startX) * camera->zoom, (worldPosition.y + window->height / 2.0f - cameraPos.y + window->startY) * camera->zoom, worldPosition.z);
+	 return Vector3((worldPosition.x + parentWindow->width / 2.0f - cameraPos.x + parentWindow->startX) * camera->zoom, (worldPosition.y + parentWindow->height / 2.0f - cameraPos.y + parentWindow->startY) * camera->zoom, worldPosition.z);
  }
 
 

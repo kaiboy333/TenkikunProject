@@ -10,7 +10,8 @@ TriggerRect::TriggerRect(float startX, float startY, float width, float height, 
 void TriggerRect::CheckInput()
 {
 	//”½‰‚³‚¹‚È‚¢‚È‚çI‚í‚è
-	if (!isActive)
+	//˜g‚©‚ç‚Í‚İo‚Ä‚¢‚½‚çI‚í‚è
+	if (!isActive || isOut)
 		return;
 
 	Vector3 mousePos = Input::GetMousePosition();

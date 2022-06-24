@@ -13,7 +13,7 @@ class TransformRect : public ComponentRect
 
 		virtual void Draw() override;
 
-		virtual void RemoveTriggerRects() override;
+		virtual void RemoveAllTriggerRect() override;
 
 	private:
 		vector<TextBox*> textBoxes;

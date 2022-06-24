@@ -18,6 +18,6 @@ class ImageRenderer :  public Component
 
 		void Update() override;
 
-		void Draw(Window* window, Camera* camera);	//‰æ‘œ‚ð•`‰æ
+		void Draw(Window* parentWindow, Camera* camera);	//‰æ‘œ‚ð•`‰æ
 };
 
