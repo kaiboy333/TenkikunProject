@@ -1,10 +1,11 @@
 #include "TreeNode.h"
 #include "SceneManager.h"
 
-TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->parentWindow->startX + treeList->buttonWidth, treeList->parentWindow->startY, (float)GetDrawStringWidth(e.c_str(), (int)(e.length())), (float)GetFontLineSpace(), treeList->parentWindow)
+TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->parentWindow->startX + treeList->buttonWidth, treeList->parentWindow->startY, (float)GetDrawStringWidth(e.c_str(), (int)(e.length())), (float)GetFontLineSpace(), treeList->parentWindow)
 {
 	element = e;
 	this->treeList = treeList;
+	this->isOpen = isOpen;
 
 	mouseClickDownEvents.push_back([this]() {
 		//クリックしたときに自身を選択中にする
@@ -23,9 +24,9 @@ TreeNode::TreeNode(std::string e, TreeList* treeList) : TriggerRect(treeList->pa
 	//ボタンをクリックしたら
 	button->onClickEvents.push_back([this, treeList]() {
 		//開いているかの判定を反転させる
-		isOpen = !isOpen;
+		this->isOpen = !this->isOpen;
 		//画像セット
-		button->image = treeList->images[isOpen];
+		button->image = treeList->images[this->isOpen];
 		//ツリーリスト更新
 		treeList->UpdateNodes();
 	});

@@ -1,6 +1,6 @@
 #include "TreeList.h"
 
-TreeList::TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
+TreeList::TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool isFirstOpen, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
 {
 	//ノードのボタン画像セット
 	images[0] = new Image("image/rightArrow.png");
@@ -8,8 +8,10 @@ TreeList::TreeList(float startX, float startY, float width, float height, Window
 
 	this->drawRoot = drawRoot;
 
+	this->isFirstOpen = isFirstOpen;
+
 	//root作成
-	root = new TreeNode(e, this);
+	root = new TreeNode(e, this, isFirstOpen);
 	//ノードの階層を更新
 	UpdateNodes();
 	//ScrollRectのリストに追加(&更新)
@@ -132,8 +134,8 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
 
 	//開始位置セット
-	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo();
-	node->startY = parentWindow->startY + node->GetRow() * node->height;
+	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo() - (startScrollX - startX);
+	node->startY = parentWindow->startY + node->GetRow() * node->height - (startScrollY - startY);
 
 	node->button->startX = node->startX - buttonWidth;
 	node->button->startY = node->startY;

@@ -9,7 +9,7 @@ ProjectWindow::ProjectWindow() : Window(0, 500, 1000, 300)
 
 void ProjectWindow::Init()
 {
-	treeList = new TreeList(startX, startY, width, height, this, true, filesystem::current_path().filename().string());
+	treeList = new TreeList(startX, startY, width, height, this, false, true, filesystem::current_path().filename().string());
 
 	vector<filesystem::path> pathes;
 
@@ -20,7 +20,7 @@ void ProjectWindow::Init()
 		pathes.erase(pathes.begin());
 
 		//親ディレクトリの名前があるノードに新しくノードを追加
-		treeList->Add(new TreeNode(path.filename().string(), treeList), treeList->FindNode(path.parent_path().filename().string()));
+		treeList->Add(new TreeNode(path.filename().string(), treeList, treeList->isFirstOpen), treeList->FindNode(path.parent_path().filename().string()));
 
 		//ディレクトリだったら
 		if (filesystem::is_directory(path)) {

@@ -13,12 +13,12 @@ public:
 	std::vector<TreeNode*> childNodes;
 	TreeNode* parentNode = nullptr;
 
-	bool isOpen = true;
+	bool isOpen;
 
 	TreeList* treeList = nullptr;
 	WindowButton* button = nullptr;	//ƒ{ƒ^ƒ“
 
-	TreeNode(std::string e, TreeList* treeList);
+	TreeNode(std::string e, TreeList* treeList, bool isOpen);
 
 	int GetStairNo();	//ŠK‘w‚ðŽæ“¾
 	void SetStairNo(int stairNo);	//ŠK‘w‚ðƒZƒbƒg

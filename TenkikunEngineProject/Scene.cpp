@@ -10,7 +10,7 @@ Scene::Scene()
 void Scene::Init()
 {
 	Window* window = WindowManager::hierarchyWindow;
-	treeList = new TreeList(window->startX, window->startY, window->width, window->height, window, true, this->sceneName);
+	treeList = new TreeList(window->startX, window->startY, window->width, window->height, window, true, true, this->sceneName);
 
 	CreateCamera();	//カメラ生成
 }
@@ -38,7 +38,7 @@ GameObject* Scene::CreateEmpty()
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobjects.emplace_back(gameobject);	//リストに追加
 	gameobject->SetName("GameObject");	//名前変更(初期の名前)
-	treeList->Add(new TreeNode(gameobject->GetName(), treeList), treeList->GetRoot());	//TreeNodeにも追加
+	treeList->Add(new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen), treeList->GetRoot());	//TreeNodeにも追加
 	return gameobject;
 }
 

@@ -13,28 +13,31 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 
 	//マウスホイールで動かしたら
 	this->mouseWheelEvents.push_back([this]() {
-		//マウスホイールの回転値を取得
-		float mouseWheelRote = Input::GetMouseWheelRoteValue();
-		//OutputDebugString((std::to_string(mouseWheelRote) + std::string("\n")).c_str());
+		//スクロールの高さが表示可能高さよりも大きいなら
+		if (this->scrollHeight > this->height) {
+			//マウスホイールの回転値を取得
+			float mouseWheelRote = Input::GetMouseWheelRoteValue();
+			//OutputDebugString((std::to_string(mouseWheelRote) + std::string("\n")).c_str());
 
-		//今のうちに前のスクロール位置を記憶
-		float beforeStartScrollY = startScrollY;
+			//今のうちに前のスクロール位置を記憶
+			float beforeStartScrollY = startScrollY;
 
-		//指標になるスクロール座標をずらす
-		startScrollY -= mouseWheelRote * scrollSpeed;
+			//指標になるスクロール座標をずらす
+			startScrollY -= mouseWheelRote * scrollSpeed;
 
-		//範囲からはみ出さないように調整
-		MyMath::Clamp(startScrollY, this->startY, this->startY + this->scrollHeight);
+			//範囲からはみ出さないように調整
+			MyMath::Clamp(startScrollY, this->startY, this->startY + this->scrollHeight - this->height);
 
-		//今回の移動分を計算
-		float deltaScrollY = startScrollY - beforeStartScrollY;
+			//今回の移動分を計算
+			float deltaScrollY = startScrollY - beforeStartScrollY;
 
-		for (TriggerRect* triggerRect : triggerRects) {
-			//実際にY座標をずらす
-			triggerRect->startY -= deltaScrollY;
+			for (TriggerRect* triggerRect : triggerRects) {
+				//実際にY座標をずらす
+				triggerRect->startY -= deltaScrollY;
 
-			//右端の位置がスクロールの枠から外れてるかでisOutを変える
-			triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);
+				//右端の位置がスクロールの枠から外れてるかでisOutを変える
+				triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);
+			}
 		}
 	});
 }
