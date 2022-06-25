@@ -23,17 +23,17 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 			float beforeStartScrollY = startScrollY;
 
 			//指標になるスクロール座標をずらす
-			startScrollY -= mouseWheelRote * scrollSpeed;
+			startScrollY += mouseWheelRote * scrollSpeed;
 
 			//範囲からはみ出さないように調整
-			MyMath::Clamp(startScrollY, this->startY, this->startY + this->scrollHeight - this->height);
+			MyMath::Clamp(startScrollY, this->startY - (this->scrollHeight - this->height), this->startY);
 
 			//今回の移動分を計算
 			float deltaScrollY = startScrollY - beforeStartScrollY;
 
 			for (TriggerRect* triggerRect : triggerRects) {
 				//実際にY座標をずらす
-				triggerRect->startY -= deltaScrollY;
+				triggerRect->startY += deltaScrollY;
 
 				//右端の位置がスクロールの枠から外れてるかでisOutを変える
 				triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);
@@ -45,8 +45,8 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 void ScrollRect::AddToScrollRect(TriggerRect* triggerRect)
 {
 	//実際に座標をずらす
-	triggerRect->startX -= startScrollX - startX;
-	triggerRect->startY -= startScrollY - startY;
+	triggerRect->startX += startScrollX - startX;
+	triggerRect->startY += startScrollY - startY;
 
 	//右端の位置がスクロールの枠から外れてるかでisOutを変える
 	triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);

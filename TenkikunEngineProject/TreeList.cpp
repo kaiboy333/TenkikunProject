@@ -30,11 +30,11 @@ void TreeList::Add(TreeNode* targetNode, TreeNode* parentNode)
 		parentNode->childNodes.push_back(targetNode);
 		//子に親を指定
 		targetNode->parentNode = parentNode;
-		//ノードの階層を更新
-		UpdateNodes();
 		//ScrollRectのリストに追加(&更新)
 		AddToScrollRect(targetNode);
 		AddToScrollRect(targetNode->button);	//ボタンも
+		//ノードの階層を更新
+		UpdateNodes();
 	}
 }
 
@@ -81,9 +81,6 @@ TreeNode* TreeList::FindNode(std::string e)
 void TreeList::Draw()
 {
 	if (this->parentWindow) {
-		//何列目の描画か
-		//int i = 0;
-
 		//リストの先頭の要素を取得、削除
 		std::vector<TreeNode*> nodes;
 		nodes.push_back(root);
@@ -112,6 +109,29 @@ void TreeList::UpdateNodes()
 {
 	//スクロールの高さはノードの数とノードの高さを掛けた数
 	scrollHeight = UpdateNodeAndChildrenNodes(root, 0) * root->height;
+	////スクロールの高さが表示可能高さよりも大きいなら
+	//if (this->scrollHeight > this->height) {
+	//	//範囲からはみ出さないように調整
+	//	MyMath::Clamp(startScrollY, this->startY - (this->scrollHeight - this->height), this->startY);
+	//}
+	
+	//スクロールの高さが表示可能高さよりも大きいなら
+	if (this->scrollHeight > this->height) {
+		float deltaY = startY + height - (startScrollY + scrollHeight);
+		//スクロールの底に空白ができてしまっていたら埋まるように下にずらす
+		if (deltaY > 0) {
+			//スクロール位置を変える
+			startScrollY += deltaY;
+
+			for (TriggerRect* triggerRect : triggerRects) {
+				//実際にY座標をずらす
+				triggerRect->startY += deltaY;
+
+				//右端の位置がスクロールの枠から外れてるかでisOutを変える
+				triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);
+			}
+		}
+	}
 }
 
 int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
@@ -134,8 +154,8 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
 
 	//開始位置セット
-	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo() - (startScrollX - startX);
-	node->startY = parentWindow->startY + node->GetRow() * node->height - (startScrollY - startY);
+	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo() + (startScrollX - startX);
+	node->startY = parentWindow->startY + node->GetRow() * node->height + (startScrollY - startY);
 
 	node->button->startX = node->startX - buttonWidth;
 	node->button->startY = node->startY;

@@ -1,6 +1,7 @@
 #include "ProjectWindow.h"
 #include "TreeNode.h"
 #include <filesystem>
+#include "Debug.h"
 
 ProjectWindow::ProjectWindow() : Window(0, 500, 1000, 300)
 {
@@ -22,11 +23,20 @@ void ProjectWindow::Init()
 		//親ディレクトリの名前があるノードに新しくノードを追加
 		treeList->Add(new TreeNode(path.filename().string(), treeList, treeList->isFirstOpen), treeList->FindNode(path.parent_path().filename().string()));
 
+		if (path.parent_path().filename().string() == ".vs") {
+			Debug::Log("aaa\n");
+		}
+
 		//ディレクトリだったら
 		if (filesystem::is_directory(path)) {
-			//子ディレクトリをリストに追加
+			//子をリストに追加
 			for (filesystem::path childPath : filesystem::directory_iterator(path)) {
-				pathes.push_back(childPath);
+				if (filesystem::is_directory(childPath)) {
+					pathes.insert(pathes.begin(), childPath);
+				}
+				else {
+					pathes.push_back(childPath);
+				}
 			}
 		}
 	}
