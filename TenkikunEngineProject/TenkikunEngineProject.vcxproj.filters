@@ -176,10 +176,16 @@
     <ClCompile Include="ProjectWindow.cpp">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectFileManager.cpp">
+    <ClCompile Include="FilePrintRect.cpp">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClCompile>
     <ClCompile Include="ScrollRect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectFileManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MyString.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -314,13 +320,15 @@
     <ClInclude Include="ProjectWindow.h">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectFileManager.h">
+    <ClInclude Include="FilePrintRect.h">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ScrollRect.h" />
+    <ClInclude Include="ProjectFileManager.h" />
+    <ClInclude Include="MyString.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">

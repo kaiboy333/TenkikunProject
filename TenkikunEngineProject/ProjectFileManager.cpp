@@ -1,26 +1,22 @@
 #include "ProjectFileManager.h"
 
-ProjectFileManager::ProjectFileManager(float startX, float startY, float width, float height, Window* parentWindow) : TriggerRect(startX, startY, width, height, parentWindow)
+ProjectFileManager::ProjectFileManager()
 {
-	DragFileInfoClear();	//ドロップファイル情報の初期化
-	SetAlwaysRunFlag(true);		//バックグラウンドでも動作を継続
-	SetDragFileValidFlag(true);		//ドラッグアンドドロップを許可
-
-	//ファイルがドロップされたら
-	fileDropEvents.push_back([this]() {
-		TCHAR currentPath[100] = {};
-		//ファイルが読み込めたら
-		if (GetDragFilePath(currentPath) != -1) {
-			//this->currentPath = currentPath;	//パスを記憶
-		}
-		else {
-			//this->currentPath = "";
-		}
-	});
-
+	//アセットのパスを作成
+	assetFilePath = std::filesystem::current_path().string() + "\\Asset";
+	//アセットの親の絶対パスにバックスラッシュ追加
+	assetParentPathName = assetFilePath.parent_path().string() + "\\";
+	//アセットフォルダが存在しないなら
+	if (!std::filesystem::exists(assetFilePath)) {
+		//フォルダを作成
+		std::filesystem::create_directory(assetFilePath);
+	}
+	//初期の現在パスはアセットフォルダにする
+	currentPath = assetFilePath;
 }
 
-void ProjectFileManager::Draw()
-{
-	//DrawStringF(startX, startY + height / 2, currentPath.filename().string().c_str(), GetColor(0, 0, 0));
-}
+std::filesystem::path ProjectFileManager::currentPath;
+
+std::filesystem::path ProjectFileManager::assetFilePath;
+
+std::string ProjectFileManager::assetParentPathName = "";

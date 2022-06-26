@@ -54,7 +54,7 @@ void GameObject::SetName(std::string name)
 	string newName = name;	//新しい候補の名前
 	//被らなくなるまで繰り返す
 	while (GameObject::Find(newName)) {
-		newName = name + "(" + std::to_string(no++) + ")";	//新しい候補の名前を作成
+		newName = name + " (" + std::to_string(no++) + ")";	//新しい候補の名前を作成
 	}
 	name = newName;	//nameを新しい名前に
 	SetTreeNodeName(name);	//TreeNodeの名前を変えて

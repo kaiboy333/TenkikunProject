@@ -5,59 +5,67 @@ TriggerRect::TriggerRect(float startX, float startY, float width, float height, 
 {
 	this->parentWindow = parentWindow;	//親ウィンドウに設定
 	this->parentWindow->AddTriggerRect(this);	//ウィンドウに自身を追加
+	activeRect = new Rect(startX, startY, width, height);
 }
 
 void TriggerRect::CheckInput()
 {
 	//反応させないなら終わり
-	//枠からはみ出ていたら終わり
-	if (!isActive || isOut)
+	if (!isActive)
 		return;
 
-	Vector3 mousePos = Input::GetMousePosition();
+	//有効である領域がnullでないなら
+	if (activeRect) {
+		//幅か高さがないなら
+		if (activeRect->width == 0 || activeRect->height == 0)
+			//終わり
+			return;
 
-	//マウスが反応する場所にあるなら
-	if (IsPointIn(mousePos.x, mousePos.y)) {
-		//左クリックを押した瞬間なら
-		if (Input::GetMouseButtonDown(Input::Mouse_Left, false)) {
-			MouseClickDownEvent();
-		}
-		//左クリックを離した瞬間なら
-		else if (Input::GetMouseButtonUp(Input::Mouse_Left, false)) {
-			MouseClickUpEvent();
-		}
-		//右クリックなら
-		else if (Input::GetMouseButtonDown(Input::Mouse_Right, false)) {
-			MouseRightClickEvent();
-		}
-		//マウスホイールが動いたなら
-		else if(Input::GetMouseWheelRoteValue() != 0) {
-			MouseWheelEvent();
-		}
-		//マウスが乗ってるだけなら
-		MouseOnEvent();
-		//乗っている判定にする
-		isOn = true;
-	}
-	//ないなら
-	else {
-		//前回マウスが乗っていたら
-		if (isOn) {
-			MouseExitEvent();
-		}
-		//乗っていない判定にする
-		isOn = false;
-	}
+		Vector3 mousePos = Input::GetMousePosition();
 
-	//エンターを押したなら
-	if (Input::GetKeyDown(Input::ENTER, false)) {
-		PushEnterEvent();
-	}
+		//マウスが反応する場所にあるなら
+		if (activeRect->IsPointIn(mousePos.x, mousePos.y)) {
+			//左クリックを押した瞬間なら
+			if (Input::GetMouseButtonDown(Input::Mouse_Left, false)) {
+				MouseClickDownEvent();
+			}
+				//左クリックを離した瞬間なら
+			else if (Input::GetMouseButtonUp(Input::Mouse_Left, false)) {
+				MouseClickUpEvent();
+			}
+			//右クリックなら
+			else if (Input::GetMouseButtonDown(Input::Mouse_Right, false)) {
+				MouseRightClickEvent();
+			}
+			//マウスホイールが動いたなら
+			else if (Input::GetMouseWheelRoteValue() != 0) {
+				MouseWheelEvent();
+			}
+			//マウスが乗ってるだけなら
+			MouseOnEvent();
+			//乗っている判定にする
+			isOn = true;
+		}
+		//ないなら
+		else {
+			//前回マウスが乗っていたら
+			if (isOn) {
+				MouseExitEvent();
+			}
+			//乗っていない判定にする
+			isOn = false;
+		}
 
-	//ファイルがドロップされたら
-	if (GetDragFileNum() != 0) {
-		FileDropEvents();
-	}
+		//エンターを押したなら
+		if (Input::GetKeyDown(Input::ENTER, false)) {
+			PushEnterEvent();
+		}
+
+		//ファイルがドロップされたら
+		if (GetDragFileNum() != 0) {
+			FileDropEvents();
+		}
+	}	
 }
 
 bool TriggerRect::GetIsSelected()

@@ -13,6 +13,7 @@
 #include "Rotate.h"
 #include "ImageManager.h"
 #include "resource.h"
+#include "ProjectFileManager.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -74,6 +75,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 }
 
 inline void Init() {
+	ProjectFileManager();	//ファイルマネージャーの初期化
 	ImageManager();	//イメージマネージャーの初期化
 	WindowManager();	//ゲーム画面の初期化
 	SceneManager();	//シーンマネージャーの初期化

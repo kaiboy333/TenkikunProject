@@ -35,8 +35,8 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 				//実際にY座標をずらす
 				triggerRect->startY += deltaScrollY;
 
-				//右端の位置がスクロールの枠から外れてるかでisOutを変える
-				triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);
+				//TriggerRectの有効範囲はスクロールのかぶる範囲である
+				triggerRect->activeRect = Rect::GetCrossRect(triggerRect, this);
 			}
 		}
 	});
@@ -48,8 +48,8 @@ void ScrollRect::AddToScrollRect(TriggerRect* triggerRect)
 	triggerRect->startX += startScrollX - startX;
 	triggerRect->startY += startScrollY - startY;
 
-	//右端の位置がスクロールの枠から外れてるかでisOutを変える
-	triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);
+	//TriggerRectの有効範囲はスクロールのかぶる範囲である
+	triggerRect->activeRect = Rect::GetCrossRect(triggerRect, this);
 
 	//リストに追加
 	triggerRects.push_back(triggerRect);

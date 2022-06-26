@@ -78,8 +78,43 @@ TreeNode* TreeList::FindNode(std::string e)
 	return nullptr;
 }
 
+TreeNode* TreeList::FindNode(std::vector<std::string> pathes)
+{
+	//リストの先頭の要素を取得、削除
+	std::vector<TreeNode*> nodes;
+	nodes.push_back(root);
+
+	int i = 0;
+
+	while (nodes.size() != 0) {
+
+		TreeNode* node = nodes[0];
+		nodes.erase(nodes.begin());
+
+		if (node->GetElement() == pathes[i]) {
+			//次のstringへ
+			i++;
+			//ノードリセット
+			nodes.clear();
+			//最後までたどり着いたら(見つかったら)
+			if (pathes.size() == i) {
+				//見つかったのを返す
+				return node;
+			}
+			//子らを追加
+			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
+		}
+	}
+
+	//見つからなかったらnullを返す
+	return nullptr;
+}
+
 void TreeList::Draw()
 {
+	//描画範囲制限
+	SetDrawArea((int)startX, (int)startY, (int)(startX + width - 1), (int)(startY + height - 1));
+
 	if (this->parentWindow) {
 		//リストの先頭の要素を取得、削除
 		std::vector<TreeNode*> nodes;
@@ -98,6 +133,8 @@ void TreeList::Draw()
 			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
 		}
 	}
+
+	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);
 }
 
 TreeNode* TreeList::GetRoot()
@@ -109,11 +146,6 @@ void TreeList::UpdateNodes()
 {
 	//スクロールの高さはノードの数とノードの高さを掛けた数
 	scrollHeight = UpdateNodeAndChildrenNodes(root, 0) * root->height;
-	////スクロールの高さが表示可能高さよりも大きいなら
-	//if (this->scrollHeight > this->height) {
-	//	//範囲からはみ出さないように調整
-	//	MyMath::Clamp(startScrollY, this->startY - (this->scrollHeight - this->height), this->startY);
-	//}
 	
 	//スクロールの高さが表示可能高さよりも大きいなら
 	if (this->scrollHeight > this->height) {
@@ -126,11 +158,13 @@ void TreeList::UpdateNodes()
 			for (TriggerRect* triggerRect : triggerRects) {
 				//実際にY座標をずらす
 				triggerRect->startY += deltaY;
-
-				//右端の位置がスクロールの枠から外れてるかでisOutを変える
-				triggerRect->isOut = !IsPointIn(triggerRect->startX, triggerRect->startY);
 			}
 		}
+	}
+
+	for (TriggerRect* triggerRect : triggerRects) {
+		//TriggerRectの有効範囲はスクロールのかぶる範囲である
+		triggerRect->activeRect = Rect::GetCrossRect(triggerRect, this);
 	}
 }
 

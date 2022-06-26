@@ -151,7 +151,7 @@
     <ClCompile Include="ComponentRect.cpp" />
     <ClCompile Include="ComponentRectManager.cpp" />
     <ClCompile Include="Debug.cpp" />
-    <ClCompile Include="ProjectFileManager.cpp" />
+    <ClCompile Include="FilePrintRect.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
@@ -163,7 +163,9 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="MyString.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="ProjectFileManager.cpp" />
     <ClCompile Include="ProjectWindow.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Rotate.cpp" />
@@ -196,7 +198,7 @@
     <ClInclude Include="ComponentRectManager.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Debug.h" />
-    <ClInclude Include="ProjectFileManager.h" />
+    <ClInclude Include="FilePrintRect.h" />
     <ClInclude Include="FloatCondition.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
@@ -210,6 +212,8 @@
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MyMath.h" />
+    <ClInclude Include="MyString.h" />
+    <ClInclude Include="ProjectFileManager.h" />
     <ClInclude Include="ProjectWindow.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="Rect.h" />

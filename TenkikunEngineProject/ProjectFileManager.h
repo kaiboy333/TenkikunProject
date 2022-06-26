@@ -1,14 +1,17 @@
 #pragma once
-#include "TriggerRect.h"
+
 #include <filesystem>
 
-class ProjectFileManager :  public TriggerRect
+class ProjectFileManager
 {
 	public:
-		ProjectFileManager(float startX, float startY, float width, float height, Window* parentWindow);
+		static std::filesystem::path currentPath;
 
-		std::filesystem::path currentPath = std::filesystem::current_path();	//現在見ているパス
+		static std::filesystem::path assetFilePath;
 
-		void Draw();
+		//アセットの絶対パスのファイル名だけ除いたもの
+		static std::string assetParentPathName;
+
+		ProjectFileManager();
 };
 

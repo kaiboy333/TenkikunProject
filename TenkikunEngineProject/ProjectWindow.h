@@ -2,15 +2,16 @@
 
 #include "Window.h"
 #include "TreeList.h"
-#include "ProjectFileManager.h"
+#include "FilePrintRect.h"
 
 class TreeList;
+class FilePrintRect;
 class ProjectWindow : public Window
 {
 	public:
 		TreeList* treeList = nullptr;
 
-		ProjectFileManager* projectFileManager = nullptr;
+		FilePrintRect* filePrintRect = nullptr;
 
 		ProjectWindow();
 
