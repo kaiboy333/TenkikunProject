@@ -151,6 +151,7 @@
     <ClCompile Include="ComponentRect.cpp" />
     <ClCompile Include="ComponentRectManager.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="FileIcon.cpp" />
     <ClCompile Include="FilePrintRect.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="ComponentRectManager.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="FileIcon.h" />
     <ClInclude Include="FilePrintRect.h" />
     <ClInclude Include="FloatCondition.h" />
     <ClInclude Include="GameObject.h" />

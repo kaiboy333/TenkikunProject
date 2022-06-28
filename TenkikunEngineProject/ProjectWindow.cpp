@@ -22,7 +22,7 @@ void ProjectWindow::Init()
 		filesystem::path path = pathes[0];
 		pathes.erase(pathes.begin());
 
-		//ディレクトリだったら
+		//パスがディレクトリだったら
 		if (filesystem::is_directory(path)) {
 			//パスがアセットフォルダじゃないなら
 			if (path != ProjectFileManager::assetFilePath) {
@@ -34,18 +34,13 @@ void ProjectWindow::Init()
 
 			//子をリストに追加
 			for (filesystem::path childPath : filesystem::directory_iterator(path)) {
-				////子がディレクトリなら
-				//if (filesystem::is_directory(childPath)) {
-				//	pathes.insert(pathes.begin(), childPath);
-				//}
-				//else {
-					pathes.push_back(childPath);
-				//}
+				pathes.push_back(childPath);
 			}
 		}
+
 	}
 
-	filePrintRect = new FilePrintRect(this->startX, this->startY, this->width, this->height, this);
+	filePrintRect = new FilePrintRect(WindowManager::hierarchyWindow->width, this->startY, this->width - WindowManager::hierarchyWindow->width, this->height, this);
 }
 
 void ProjectWindow::Update()

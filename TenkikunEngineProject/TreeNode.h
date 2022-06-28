@@ -24,11 +24,12 @@ public:
 	void SetStairNo(int stairNo);	//階層をセット
 
 	int GetRow();	//行数を取得
-
 	void SetRow(int row);	//行数をセット
 
 	void SetElement(std::string element);
 	std::string GetElement();
+
+	vector<string> GetPathes();	//rootから自身までのパスを取得
 
 	void Draw();
 

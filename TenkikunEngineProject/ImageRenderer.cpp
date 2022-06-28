@@ -12,7 +12,7 @@ void ImageRenderer::Update()
 void ImageRenderer::Draw(Window* parentWindow, Camera* camera)
 {
 	if (image != nullptr) {
-		if (image->GetGH() != nullptr) {
+		if (image->GetGH() != -1) {
 			float startDrawX = 0, startDrawY = 0;
 			float drawWidth = (float)camera->width;
 			float drawHeight = (float)camera->height;
@@ -44,7 +44,7 @@ void ImageRenderer::Draw(Window* parentWindow, Camera* camera)
 				drawY = (drawY - cameraPos.y) * camera->zoom;
 			//}
 
-			DrawRotaGraph3F(gameWindow->startX + drawX, gameWindow->startY + drawY, image->GetWidth() / 2, image->GetHeight() / 2, scale.x, scale.y, MyMath::EulerToRad(rota.z), *image->GetGH(), true, isFlipX, isFlipY);	//•`‰æ
+			DrawRotaGraph3F(gameWindow->startX + drawX, gameWindow->startY + drawY, image->GetWidth() / 2, image->GetHeight() / 2, scale.x, scale.y, MyMath::EulerToRad(rota.z), image->GetGH(), true, isFlipX, isFlipY);	//•`‰æ
 		}
 	}
 }

@@ -3,35 +3,35 @@
 #include <iostream>
 #include "ImageManager.h"
 #include <DxLib.h>
+#include "FileIcon.h"
 
 class Image
 {
 	public:
 		Image(std::string path);
 
-		int* GetGH();	//グラフィックハンドル取得(Stateで使う)
+		int GetGH();	//グラフィックハンドル取得(Stateで使う)
 
 		float GetWidth();	//横幅取得
 		float GetHeight();	//縦幅取得
 
 	private:
-		int* gh = nullptr;
+		int gh = -1;
 
 		float width, height;	//横幅、縦幅
 
 		std::string path;	//画像のパス
 };
 
-inline Image::Image(std::string path)
-{
+inline Image::Image(std::string path) {
 	this->path = path;	//パスを入れる
 	this->gh = ImageManager::LoadAndGetImage(path);	//画像読み込み
 	if (gh) {
-		GetGraphSizeF(*gh, &width, &height);	//画像サイズ取得
+		GetGraphSizeF(gh, &width, &height);	//画像サイズ取得
 	}
 }
 
-inline int* Image::GetGH()
+inline int Image::GetGH()
 {
 	return gh;
 }

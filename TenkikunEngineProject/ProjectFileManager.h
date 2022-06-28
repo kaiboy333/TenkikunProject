@@ -12,6 +12,11 @@ class ProjectFileManager
 		//アセットの絶対パスのファイル名だけ除いたもの
 		static std::string assetParentPathName;
 
+		//ドラッグされたファイルのパスたち
+		static std::vector<std::filesystem::path> dragFilePathes;
+
 		ProjectFileManager();
+
+		static void Update();
 };
 

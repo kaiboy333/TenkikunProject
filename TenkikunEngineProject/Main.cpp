@@ -133,6 +133,7 @@ inline void CulculateFPS() {
 }
 
 inline void Update() {
+	ProjectFileManager::Update(); //ProjectFileManagerの更新
 	WindowManager::Update();	//Windowの更新
 	Input::Update();	//キーの更新
 }

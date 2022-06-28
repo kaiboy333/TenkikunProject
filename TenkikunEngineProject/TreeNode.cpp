@@ -66,6 +66,20 @@ std::string TreeNode::GetElement()
 	return element;
 }
 
+vector<string> TreeNode::GetPathes()
+{
+	TreeNode* node = this;
+	vector<string> pathes;
+
+	//ノードがnullになるまで(ルートの親がnullなのでそこまで)
+	while (node) {
+		//ノードの名前を追加
+		pathes.insert(pathes.begin(), node->element);
+	}
+
+	return pathes;
+}
+
 void TreeNode::Draw()
 {
 	//選択されているなら

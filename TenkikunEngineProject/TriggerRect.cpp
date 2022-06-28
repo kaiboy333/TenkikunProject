@@ -1,5 +1,6 @@
 #include "TriggerRect.h"
 #include "WindowManager.h"
+#include "ProjectFileManager.h"
 
 TriggerRect::TriggerRect(float startX, float startY, float width, float height, Window* parentWindow) : Rect(startX, startY, width, height)
 {
@@ -41,8 +42,14 @@ void TriggerRect::CheckInput()
 			else if (Input::GetMouseWheelRoteValue() != 0) {
 				MouseWheelEvent();
 			}
+
 			//マウスが乗ってるだけなら
 			MouseOnEvent();
+
+			//ファイルがドロップされたら
+			if (ProjectFileManager::dragFilePathes.size() != 0) {
+				FileDropEvents();
+			}
 			//乗っている判定にする
 			isOn = true;
 		}
@@ -59,11 +66,6 @@ void TriggerRect::CheckInput()
 		//エンターを押したなら
 		if (Input::GetKeyDown(Input::ENTER, false)) {
 			PushEnterEvent();
-		}
-
-		//ファイルがドロップされたら
-		if (GetDragFileNum() != 0) {
-			FileDropEvents();
 		}
 	}	
 }

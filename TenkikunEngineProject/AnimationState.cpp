@@ -26,7 +26,7 @@ void AnimationState::Update()
 			//見つかったら
 			if (iter != animation->frameAndImages.end()) {
 				Image* image = iter->second;
-				int* gh = image->GetGH();
+				int gh = image->GetGH();
 				ir->image = image;	//新しい画像をセット
 			}
 			//無かったら

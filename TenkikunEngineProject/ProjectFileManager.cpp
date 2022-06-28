@@ -1,4 +1,5 @@
 #include "ProjectFileManager.h"
+#include "DxLib.h"
 
 ProjectFileManager::ProjectFileManager()
 {
@@ -15,8 +16,29 @@ ProjectFileManager::ProjectFileManager()
 	currentPath = assetFilePath;
 }
 
+void ProjectFileManager::Update()
+{
+	//ドラッグファイルリストのリセット
+	dragFilePathes.clear();
+	//ドラッグされているファイルがあるなら
+	if (GetDragFileNum != 0) {
+		for (int i = 0; i < GetDragFileNum(); i++) {
+			TCHAR currentPath[100] = {};
+			//読み込めたら
+			if (GetDragFilePath(currentPath) != -1) {
+				//ドラッグされたファイルのパスを作成
+				std::filesystem::path path = std::filesystem::path(std::string(currentPath));
+				//リストに追加
+				dragFilePathes.push_back(path);
+			}
+		}
+	}
+}
+
 std::filesystem::path ProjectFileManager::currentPath;
 
 std::filesystem::path ProjectFileManager::assetFilePath;
 
 std::string ProjectFileManager::assetParentPathName = "";
+
+std::vector<std::filesystem::path> ProjectFileManager::dragFilePathes;

@@ -63,6 +63,9 @@
     <Filter Include="ソース ファイル\main\window\project">
       <UniqueIdentifier>{0d26e3cc-356f-4f56-9c07-7fb867aecd4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\main\window\text">
+      <UniqueIdentifier>{e7ee46b4-9b29-4586-8746-235e1b3e87f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -164,9 +167,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="TextRect.cpp">
-      <Filter>ソース ファイル\main\window\rect</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentRectManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -179,14 +179,20 @@
     <ClCompile Include="FilePrintRect.cpp">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClCompile>
-    <ClCompile Include="ScrollRect.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="MyString.cpp">
+      <Filter>ソース ファイル\main\window\text</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRect.cpp">
+      <Filter>ソース ファイル\main\window\text</Filter>
     </ClCompile>
     <ClCompile Include="ProjectFileManager.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\main\window\project</Filter>
     </ClCompile>
-    <ClCompile Include="MyString.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="ScrollRect.cpp">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIcon.cpp">
+      <Filter>ソース ファイル\main\window\text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -310,9 +316,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="TextRect.h">
-      <Filter>ソース ファイル\main\window\rect</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentRectManager.h" />
     <ClInclude Include="TextBox.h">
       <Filter>ソース ファイル\main\window\rect\textBox</Filter>
@@ -326,9 +329,19 @@
     <ClInclude Include="resource.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ScrollRect.h" />
-    <ClInclude Include="ProjectFileManager.h" />
-    <ClInclude Include="MyString.h" />
+    <ClInclude Include="MyString.h">
+      <Filter>ソース ファイル\main\window\text</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRect.h">
+      <Filter>ソース ファイル\main\window\text</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectFileManager.h">
+      <Filter>ソース ファイル\main\window\project</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollRect.h">
+      <Filter>ソース ファイル\main\window\rect</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIcon.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
