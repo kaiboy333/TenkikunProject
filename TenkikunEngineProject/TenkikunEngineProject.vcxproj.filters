@@ -341,7 +341,9 @@
     <ClInclude Include="ScrollRect.h">
       <Filter>ソース ファイル\main\window\rect</Filter>
     </ClInclude>
-    <ClInclude Include="FileIcon.h" />
+    <ClInclude Include="FileIcon.h">
+      <Filter>ソース ファイル\main\window\project</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">
@@ -442,6 +444,12 @@
     </Image>
     <Image Include="tenkikun.ico">
       <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="image\folder.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\script.png">
+      <Filter>image</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

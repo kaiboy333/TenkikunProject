@@ -1,5 +1,6 @@
 #include "TreeNode.h"
 #include "SceneManager.h"
+#include "Debug.h"
 
 TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->parentWindow->startX + treeList->buttonWidth, treeList->parentWindow->startY, (float)GetDrawStringWidth(e.c_str(), (int)(e.length())), (float)GetFontLineSpace(), treeList->parentWindow)
 {
@@ -66,18 +67,25 @@ std::string TreeNode::GetElement()
 	return element;
 }
 
-vector<string> TreeNode::GetPathes()
+string TreeNode::GetPath()
 {
 	TreeNode* node = this;
-	vector<string> pathes;
+	string path = "";
 
 	//ノードがnullになるまで(ルートの親がnullなのでそこまで)
-	while (node) {
+	for (int i = 0; node; i++) {
+		//最初以外は
+		if (i != 0) {
+			//\\を追加
+			path = "\\" + path;
+		}
 		//ノードの名前を追加
-		pathes.insert(pathes.begin(), node->element);
+		path = node->element + path;
+		//ノードの親を参照するようにする
+		node = node->parentNode;
 	}
 
-	return pathes;
+	return path;
 }
 
 void TreeNode::Draw()
@@ -85,14 +93,14 @@ void TreeNode::Draw()
 	//選択されているなら
 	if (GetIsSelected()) {
 		//四角の描画
-		DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(30, 144, 255), TRUE);
+		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(30, 144, 255), TRUE);
 	}
 	//選択されていないなら
 	else {
 		//マウスが乗っていたら
 		if (isOn) {
 			//四角の描画
-			DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(200, 200, 200), TRUE);
+			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
 		}
 	}
 	//文字の描画(黒)
@@ -100,4 +108,26 @@ void TreeNode::Draw()
 
 	//ボタンの描画
 	button->Draw();
+}
+
+vector<TreeNode*> TreeNode::GetAllLowStairChildren()
+{
+	std::vector<TreeNode*> nodes;
+
+	std::vector<TreeNode*> tmp;
+	tmp.push_back(this);
+
+	while (tmp.size() != 0) {
+
+		TreeNode* node = tmp[0];
+		tmp.erase(tmp.begin());
+
+		//リストに追加
+		nodes.push_back(node);
+
+		//子らを追加
+		tmp.insert(tmp.end(), node->childNodes.begin(), node->childNodes.end());
+	}
+
+	return nodes;
 }

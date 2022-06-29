@@ -12,8 +12,7 @@ ProjectFileManager::ProjectFileManager()
 		//フォルダを作成
 		std::filesystem::create_directory(assetFilePath);
 	}
-	//初期の現在パスはアセットフォルダにする
-	currentPath = assetFilePath;
+	currentPath = assetFilePath;	//初期はアセットパス
 }
 
 void ProjectFileManager::Update()
@@ -35,9 +34,35 @@ void ProjectFileManager::Update()
 	}
 }
 
-std::filesystem::path ProjectFileManager::currentPath;
+ProjectFileManager::FileType ProjectFileManager::GetFileType(std::filesystem::path path) {
+	//パスの拡張子を取得
+	std::string extensionName = path.extension().string();
+
+	//初期化
+	FileType targetFileType = FileType::None;
+
+	//パスがディレクトリだったら
+	if (std::filesystem::is_directory(path)) {
+		targetFileType = FileType::Folder;
+	}
+	else {
+		//画像だったら
+		if (extensionName == ".png" || extensionName == ".jpg") {
+			targetFileType = FileType::Image;
+		}
+		//スクリプトだったら
+		else if (extensionName == ".cpp" || extensionName == ".h" || extensionName == ".hpp") {
+			targetFileType = FileType::Script;
+		}
+	}
+
+	//タイプを返す
+	return targetFileType;
+}
 
 std::filesystem::path ProjectFileManager::assetFilePath;
+
+std::filesystem::path ProjectFileManager::currentPath;
 
 std::string ProjectFileManager::assetParentPathName = "";
 

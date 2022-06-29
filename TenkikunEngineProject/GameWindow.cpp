@@ -23,7 +23,7 @@ void GameWindow::Draw()
     Window::Draw();
 
     //ŠDF‚ÌlŠp‚ğ•`‰æ
-    DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(169, 169, 169), TRUE);
+    DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(169, 169, 169), TRUE);
 
     //ƒV[ƒ“‚Ì•`‰æ
     Scene* scene = SceneManager::GetNowScene();

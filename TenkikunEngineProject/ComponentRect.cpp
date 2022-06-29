@@ -19,7 +19,7 @@ ComponentRect::ComponentRect(float startX, float startY, Component* component, i
 
 void ComponentRect::Draw()
 {
-	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);	//枠の描画
+	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);	//枠の描画
 
 	nameRect->Draw();	//コンポーネントの名前描画
 }

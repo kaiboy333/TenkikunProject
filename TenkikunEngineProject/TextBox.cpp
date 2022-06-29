@@ -38,13 +38,13 @@ TextBox::TextBox(float startX, float startY, float width, float height, Window* 
 
 void TextBox::Draw()
 {
-	SetDrawArea((int)parentWindow->startX, (int)parentWindow->startY, (int)(parentWindow->startX + parentWindow->width - 1), (int)(parentWindow->startY + parentWindow->height - 1));
+	SetDrawArea((int)parentWindow->startX, (int)parentWindow->startY, (int)(parentWindow->startX + parentWindow->width), (int)(parentWindow->startY + parentWindow->height));
 
 	//ƒ}ƒEƒX‚ªæ‚Á‚Ä‚¢‚½‚ç
 	if (isOn) {
-		DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(220, 220, 220), TRUE);
+		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(220, 220, 220), TRUE);
 	}
-	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);	//˜g‚Ì•`‰æ
+	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);	//˜g‚Ì•`‰æ
 
 	SetKeyInputStringColor(GetColor(0, 0, 0), GetColor(50, 0, 0), GetColor(200, 200, 200), GetColor(0, 0, 50), GetColor(0, 0, 0)
 		, GetColor(0, 0, 255), GetColor(0, 0, 100), GetColor(0, 0, 0), GetColor(0, 0, 0), GetColor(0, 0, 0), GetColor(0, 0, 0)
@@ -57,7 +57,7 @@ void TextBox::Draw()
 	GetKeyInputString(strBuf, ih);
 	//“ü—Í’†‚Å‚Í‚È‚¢‚È‚ç
 	if (!GetIsSelected()) {
-		SetDrawArea(startX, startY, startX + width - 1, startY + height - 1);
+		SetDrawArea(startX, startY, startX + width, startY + height);
 		DrawStringF(startX, startY, text.c_str(), GetColor(0, 0, 0));	//•ÏŠ·Œã‚Ì•¶š—ñ•`‰æ
 	}
 	else {

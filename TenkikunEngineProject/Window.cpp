@@ -58,10 +58,10 @@ void Window::EventCheck()
 void Window::Draw()
 {
 	//•`‰æ”ÍˆÍ§ŒÀ
-	SetDrawArea((int)startX, (int)startY, (int)(startX + width - 1), (int)(startY + height - 1));
+	SetDrawArea((int)startX, (int)startY, (int)(startX + width), (int)(startY + height));
 	//”’‚¢lŠp‚ğ•`‰æ
-	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(255, 255, 255), TRUE);
+	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(255, 255, 255), TRUE);
 	//˜gü‚ğ•`‰æ
-	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);
+	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 
 }

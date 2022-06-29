@@ -39,6 +39,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	SetWindowSizeChangeEnableFlag(FALSE); //画面サイズ変更不可
 	SetDrawScreen(DX_SCREEN_BACK);	//裏画面で描画
 	SetWindowIconID(IDI_TENKIKUN);	//ウィンドウアイコン設定
+	DragFileInfoClear();	//ドロップファイル情報の初期化
+	SetAlwaysRunFlag(true);		//バックグラウンドでも動作を継続
+	SetDragFileValidFlag(true);		//ドラッグアンドドロップを許可
 
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理

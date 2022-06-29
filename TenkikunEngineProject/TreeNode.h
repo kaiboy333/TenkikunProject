@@ -29,9 +29,11 @@ public:
 	void SetElement(std::string element);
 	std::string GetElement();
 
-	vector<string> GetPathes();	//rootから自身までのパスを取得
+	string GetPath();	//rootから自身までのパスを取得
 
 	void Draw();
+
+	vector<TreeNode*> GetAllLowStairChildren();	//自分以下の階層ノードすべてを取得
 
 	private:
 		//階層の深さ

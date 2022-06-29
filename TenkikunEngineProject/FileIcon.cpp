@@ -10,7 +10,7 @@ FileIcon::FileIcon(float startX, float startY, float width, float height, Window
 void FileIcon::IconDraw()
 {
 	if (iconGH) {
-		DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(200, 200, 200), TRUE);
+		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
 
 		int imageWidth, imageHeight;
 		GetGraphSize(iconGH, &imageWidth, &imageHeight);

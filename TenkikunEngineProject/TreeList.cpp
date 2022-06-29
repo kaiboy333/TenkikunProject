@@ -113,7 +113,7 @@ TreeNode* TreeList::FindNode(std::vector<std::string> pathes)
 void TreeList::Draw()
 {
 	//描画範囲制限
-	SetDrawArea((int)startX, (int)startY, (int)(startX + width - 1), (int)(startY + height - 1));
+	SetDrawArea((int)startX, (int)startY, (int)(startX + width), (int)(startY + height));
 
 	if (this->parentWindow) {
 		//リストの先頭の要素を取得、削除
@@ -134,7 +134,7 @@ void TreeList::Draw()
 		}
 	}
 
-	DrawBoxAA(startX, startY, startX + width - 1, startY + height - 1, GetColor(0, 0, 0), FALSE);
+	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 }
 
 TreeNode* TreeList::GetRoot()

@@ -2,6 +2,7 @@
 #include "TriggerRect.h"
 #include <filesystem>
 #include "FileIcon.h"
+#include <string>
 
 class FilePrintRect :  public TriggerRect
 {
@@ -16,6 +17,9 @@ class FilePrintRect :  public TriggerRect
 
 		void Draw();
 
-		void DropFileCheck(std::filesystem::path path);	//ドロップされたファイルの種類によって動作を変える
+		void LoadFoler();	//現在ののパスを読み込み中身を更新
+
+	private:
+		void MakeDuplicatedFile(std::filesystem::path copyPath);	//ドロップされたファイルを指定パス作成
 };
 

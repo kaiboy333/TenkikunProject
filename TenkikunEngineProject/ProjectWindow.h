@@ -20,5 +20,7 @@ class ProjectWindow : public Window
 		virtual void Update() override;
 
 		virtual void Draw() override;
+
+		void SetFileChildrenToTreeList(std::filesystem::path addPath);	//指定のパス以下をすべてツリーリストに追加
 };
 
