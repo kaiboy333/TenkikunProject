@@ -4,9 +4,13 @@
 #include "MyString.h"
 #include "Debug.h"
 
-FilePrintRect::FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow) : TriggerRect(startX, startY, width, height, parentWindow)
+FilePrintRect::FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
 {
+	//アイコン同士の空白幅を計算する
 	iconBetweenWidth = (parentWindow->width - iconWidthHeight * maxFileNumInRow) / (maxFileNumInRow + 1);
+
+	//現在のパスの名前をセット
+	pathNameRect = new TextRect(startX, startY, ProjectFileManager::currentPath.string());
 
 	//ファイルがドロップされたら
 	fileDropEvents.push_back([this]() {
@@ -21,14 +25,11 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 
 void FilePrintRect::Draw()
 {
-	//描画範囲制限
-	SetDrawArea(startX, startY, startX + width, startY + height);
-
 	//枠描画
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 
 	//現在のファイルパス描画
-	DrawStringF(startX, startY, ProjectFileManager::currentPath.string().c_str(), GetColor(0, 0, 0));
+	pathNameRect->Draw();
 
 	//ファイルアイコンの描画
 	for (FileIcon* fileIcon : fileIcons) {
@@ -62,9 +63,16 @@ void FilePrintRect::LoadFoler()
 	for (FileIcon* fileIcon : fileIcons) {
 		//parentWindowから削除
 		parentWindow->RemoveTriggerRect(fileIcon);
+		//スクロールのリストからも削除
+		RemoveToScrollRect(fileIcon);
+		//アイコンにあるTextBoxも削除
+		RemoveToScrollRect(fileIcon->fileNameRect);
 	}
 	//リストをリセット
 	fileIcons.clear();
+
+	//現在のパスの名前をセット
+	pathNameRect->SetText(ProjectFileManager::currentPath.string());
 
 	//パスがディレクトリだったら
 	if (filesystem::is_directory(ProjectFileManager::currentPath)) {
@@ -101,6 +109,10 @@ void FilePrintRect::LoadFoler()
 			if (fileIcon) {
 				//リストに追加
 				fileIcons.push_back(fileIcon);
+				//Scrollのリストにアイコンを追加(&更新)
+				AddToScrollRect(fileIcon);
+				//アイコンにあるTextBoxも登録
+				AddToScrollRect(fileIcon->fileNameRect);
 				//次の番号へ
 				iconNum++;
 			}

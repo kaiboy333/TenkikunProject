@@ -1,8 +1,9 @@
 #include "TreeNode.h"
 #include "SceneManager.h"
 #include "Debug.h"
+#include "FontManager.h"
 
-TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->parentWindow->startX + treeList->buttonWidth, treeList->parentWindow->startY, (float)GetDrawStringWidth(e.c_str(), (int)(e.length())), (float)GetFontLineSpace(), treeList->parentWindow)
+TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->parentWindow->startX + FontManager::systemFont->GetFontHeight(), treeList->parentWindow->startY, FontManager::systemFont->GetFontWidth(e), FontManager::systemFont->GetFontHeight(), treeList->parentWindow)
 {
 	element = e;
 	this->treeList = treeList;
@@ -18,7 +19,7 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 		}
 	});
 
-	button = new WindowButton(startX - treeList->buttonWidth, startY, treeList->buttonWidth, treeList->buttonWidth, treeList->parentWindow);	//ボタン作成
+	button = new WindowButton(startX - height, startY, height, height, treeList->parentWindow);	//ボタン作成
 	//画像セット
 	button->image = treeList->images[isOpen];
 
@@ -58,8 +59,8 @@ void TreeNode::SetElement(std::string element)
 	//名前セット
 	this->element = element;
 	//それによる幅、高さ更新
-	width = (float)GetDrawStringWidth(element.c_str(), (int)element.length());
-	height = (float)GetFontLineSpace();
+	width = FontManager::systemFont->GetFontWidth(element);
+	height = FontManager::systemFont->GetFontHeight();
 }
 
 std::string TreeNode::GetElement()
@@ -104,7 +105,7 @@ void TreeNode::Draw()
 		}
 	}
 	//文字の描画(黒)
-	DrawStringF(startX, startY, element.c_str(), GetColor(0, 0, 0));
+	DrawStringFToHandle(startX, startY, element.c_str(), GetColor(0, 0, 0), FontManager::systemFont->GetFH());
 
 	//ボタンの描画
 	button->Draw();

@@ -11,7 +11,7 @@ void WindowManager::Update()
 {
 	for (Window* parentWindow : GetWindows()) {
 		//マウスがウィンドウの枠内にあるなら
-		if (parentWindow->IsPointIn(Input::GetMousePosition().x, Input::GetMousePosition().y)) {
+		if (parentWindow->IsPointIn2(Input::GetMousePosition().x, Input::GetMousePosition().y)) {
 			//それをトリガー対象ウィンドウに設定
 			activeWindow = parentWindow;
 

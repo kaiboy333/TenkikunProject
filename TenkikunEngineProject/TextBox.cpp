@@ -1,7 +1,9 @@
 #include "TextBox.h"
+#include "FontManager.h"
+#include "Debug.h"
 //#include "Window.h"
 
-TextBox::TextBox(float startX, float startY, float width, float height, Window* parentWindow, InputType inputType, string text) : TriggerRect(startX, startY, width, height, parentWindow)
+TextBox::TextBox(float startX, float startY, float width, float height, Window* parentWindow, string text, InputType inputType) : TriggerRect(startX, startY, width, height, parentWindow)
 {
 	this->text = text;	//テキストセット
 	this->inputType = inputType;	//入力タイプセット
@@ -38,7 +40,9 @@ TextBox::TextBox(float startX, float startY, float width, float height, Window* 
 
 void TextBox::Draw()
 {
-	SetDrawArea((int)parentWindow->startX, (int)parentWindow->startY, (int)(parentWindow->startX + parentWindow->width), (int)(parentWindow->startY + parentWindow->height));
+	RECT beforeDrawRect;
+	//描画領域を記憶
+	GetDrawArea(&beforeDrawRect);
 
 	//マウスが乗っていたら
 	if (isOn) {
@@ -57,12 +61,22 @@ void TextBox::Draw()
 	GetKeyInputString(strBuf, ih);
 	//入力中ではないなら
 	if (!GetIsSelected()) {
-		SetDrawArea(startX, startY, startX + width, startY + height);
-		DrawStringF(startX, startY, text.c_str(), GetColor(0, 0, 0));	//変換後の文字列描画
+		//有効化範囲内なら
+		if (activeRect) {
+			//描画制限
+			SetDrawArea(activeRect->startX, activeRect->startY, activeRect->startX + activeRect->width, activeRect->startY + activeRect->height);
+			//変換後の文字列描画
+			DrawStringFToHandle(startX, startY, text.c_str(), GetColor(0, 0, 0), FontManager::systemFont->GetFH());
+			//前回の描画領域に戻す
+			SetDrawArea(beforeDrawRect.left, beforeDrawRect.top, beforeDrawRect.right, beforeDrawRect.bottom);
+		}
+		else {
+			Debug::Log("");
+		}
 	}
 	else {
-		DrawBoxAA(startX, startY, startX + (float)GetDrawStringWidth(strBuf, strlen(strBuf)), startY + (float)GetFontLineSpace(), GetColor(200, 200, 200), TRUE);
-		DrawKeyInputString((int)startX, (int)startY, ih);	//入力中の文字列の描画
+		DrawBoxAA(startX, startY, startX + FontManager::systemFont->GetFontWidth(strBuf), startY + FontManager::systemFont->GetFontHeight(), GetColor(200, 200, 200), TRUE);
+		DrawStringFToHandle(startX, startY, strBuf, GetColor(0, 0, 0), FontManager::systemFont->GetFH());	//入力中の文字列の描画
 	}
 }
 

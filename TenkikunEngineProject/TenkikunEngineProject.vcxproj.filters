@@ -66,6 +66,9 @@
     <Filter Include="ソース ファイル\main\window\text">
       <UniqueIdentifier>{e7ee46b4-9b29-4586-8746-235e1b3e87f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\string">
+      <UniqueIdentifier>{d1557e71-2d1a-4e69-9b79-975d6d7b7498}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -179,9 +182,6 @@
     <ClCompile Include="FilePrintRect.cpp">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClCompile>
-    <ClCompile Include="MyString.cpp">
-      <Filter>ソース ファイル\main\window\text</Filter>
-    </ClCompile>
     <ClCompile Include="TextRect.cpp">
       <Filter>ソース ファイル\main\window\text</Filter>
     </ClCompile>
@@ -193,6 +193,15 @@
     </ClCompile>
     <ClCompile Include="FileIcon.cpp">
       <Filter>ソース ファイル\main\window\text</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>ソース ファイル\string</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MyString.cpp">
+      <Filter>ソース ファイル\string</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,9 +338,6 @@
     <ClInclude Include="resource.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MyString.h">
-      <Filter>ソース ファイル\main\window\text</Filter>
-    </ClInclude>
     <ClInclude Include="TextRect.h">
       <Filter>ソース ファイル\main\window\text</Filter>
     </ClInclude>
@@ -344,6 +350,13 @@
     <ClInclude Include="FileIcon.h">
       <Filter>ソース ファイル\main\window\project</Filter>
     </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>ソース ファイル\string</Filter>
+    </ClInclude>
+    <ClInclude Include="MyString.h">
+      <Filter>ソース ファイル\string</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">

@@ -3,7 +3,7 @@
 
 InspectorWindow::InspectorWindow() : Window(1000, 0, 300, 800)
 {
-	
+	nameRect = new TextRect(startX, startY, "");
 }
 
 void InspectorWindow::Update()
@@ -22,7 +22,7 @@ void InspectorWindow::Draw()
 	Window::Draw();
 
 	if (gameobject) {
-		DrawStringF(startX, startY, gameobject->GetName().c_str(), GetColor(0, 0, 0));	//ゲームオブジェクトの名前描画
+		nameRect->Draw();	//ゲームオブジェクトの名前描画
 		for (ComponentRect* componentRect : componentRects) {
 			componentRect->Draw();
 		}
@@ -37,6 +37,7 @@ void InspectorWindow::SetGameObject(GameObject* gameobject)
 	}
 	componentRects.clear();	//リスト初期化
 	Init();	//リストセット
+	nameRect->SetText(gameobject->GetName());	//TextRectに名前セット
 }
 
 GameObject* InspectorWindow::GetGameObject()
@@ -49,7 +50,7 @@ void InspectorWindow::Init()
 	if (gameobject) {
 		float startRectY = startY;	//Rectの位置Y
 
-		startRectY += (float)GetFontLineSpace();	//名前描画したの高さ分ずらす
+		startRectY += FontManager::systemFont->GetFontHeight();	//名前描画したの高さ分ずらす
 
 		for (Component* component : gameobject->components) {
 			const std::type_info& type = typeid(*component);

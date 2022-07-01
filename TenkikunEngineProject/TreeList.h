@@ -20,9 +20,6 @@ public:
 	//親から子の余白
 	float tabSpace = 18;
 
-	//ボタン画像の幅
-	float buttonWidth = 18;
-
 	bool isFirstOpen;	//ノード追加時に開けた状態で追加するか
 
 	TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool isFirstOpen, bool drawRoot = true, std::string e = "root");

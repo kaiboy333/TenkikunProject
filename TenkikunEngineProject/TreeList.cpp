@@ -112,6 +112,10 @@ TreeNode* TreeList::FindNode(std::vector<std::string> pathes)
 
 void TreeList::Draw()
 {
+	RECT beforeDrawRect;
+	//描画領域を記憶
+	GetDrawArea(&beforeDrawRect);
+
 	//描画範囲制限
 	SetDrawArea((int)startX, (int)startY, (int)(startX + width), (int)(startY + height));
 
@@ -135,6 +139,9 @@ void TreeList::Draw()
 	}
 
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
+
+	//前回の描画領域に戻す
+	SetDrawArea(beforeDrawRect.left, beforeDrawRect.top, beforeDrawRect.right, beforeDrawRect.bottom);
 }
 
 TreeNode* TreeList::GetRoot()
@@ -162,10 +169,7 @@ void TreeList::UpdateNodes()
 		}
 	}
 
-	for (TriggerRect* triggerRect : triggerRects) {
-		//TriggerRectの有効範囲はスクロールのかぶる範囲である
-		triggerRect->activeRect = Rect::GetCrossRect(triggerRect, this);
-	}
+	TriggerRectsActiveUpdate();	//有効化更新
 }
 
 int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
@@ -188,10 +192,10 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
 
 	//開始位置セット
-	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + buttonWidth * node->GetStairNo() + (startScrollX - startX);
+	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + node->button->width * node->GetStairNo() + (startScrollX - startX);
 	node->startY = parentWindow->startY + node->GetRow() * node->height + (startScrollY - startY);
 
-	node->button->startX = node->startX - buttonWidth;
+	node->button->startX = node->startX - node->button->width;
 	node->button->startY = node->startY;
 	//子ノードがいないならボタンを無効化
 	node->button->isActive = ((int)node->childNodes.size() != 0);

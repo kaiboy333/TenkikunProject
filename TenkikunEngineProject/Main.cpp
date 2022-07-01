@@ -14,6 +14,7 @@
 #include "ImageManager.h"
 #include "resource.h"
 #include "ProjectFileManager.h"
+#include "FontManager.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -80,6 +81,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 inline void Init() {
 	ProjectFileManager();	//ファイルマネージャーの初期化
 	ImageManager();	//イメージマネージャーの初期化
+	FontManager();	//フォントマネージャーの初期化
 	WindowManager();	//ゲーム画面の初期化
 	SceneManager();	//シーンマネージャーの初期化
 	Input();	//入力の初期化
@@ -102,8 +104,8 @@ inline void Init() {
 	square2->transform->scale = Vector3(0.5f, 0.5f, 1);
 
 	GameObject* square3 = scene->CreateSquare();
-	square3->transform->position = Vector3(-50, 0, 0);
-	square3->transform->scale = Vector3(2, 2, 1);
+	square3->transform->position = Vector3(-100, 0, 0);
+	square3->transform->scale = Vector3(1, 1, 1);
 
 	scene->CreateEmpty();
 	scene->CreateEmpty();

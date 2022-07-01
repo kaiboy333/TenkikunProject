@@ -17,8 +17,6 @@ class TriggerRect : public Rect
 
 		bool isActive = true;	//”½‰ž‚·‚é‚©
 
-		//bool isOut = false;	//‚ ‚é˜g‚©‚çŠO‚ê‚Ä‚¢‚é‚©
-
 		Rect* activeRect = nullptr;	//—LŒø‰»‚³‚ê‚Ä‚¢‚é—Ìˆæ
 
 		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow);

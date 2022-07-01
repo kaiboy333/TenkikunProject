@@ -6,6 +6,7 @@ TriggerRect::TriggerRect(float startX, float startY, float width, float height, 
 {
 	this->parentWindow = parentWindow;	//親ウィンドウに設定
 	this->parentWindow->AddTriggerRect(this);	//ウィンドウに自身を追加
+
 	activeRect = new Rect(startX, startY, width, height);
 }
 
@@ -25,7 +26,7 @@ void TriggerRect::CheckInput()
 		Vector3 mousePos = Input::GetMousePosition();
 
 		//マウスが反応する場所にあるなら
-		if (activeRect->IsPointIn(mousePos.x, mousePos.y)) {
+		if (activeRect->IsPointIn2(mousePos.x, mousePos.y)) {
 			//左クリックを押した瞬間なら
 			if (Input::GetMouseButtonDown(Input::Mouse_Left, false)) {
 				MouseClickDownEvent();

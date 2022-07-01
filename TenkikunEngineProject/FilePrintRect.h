@@ -1,17 +1,20 @@
 #pragma once
-#include "TriggerRect.h"
+#include "ScrollRect.h"
 #include <filesystem>
 #include "FileIcon.h"
 #include <string>
 
-class FilePrintRect :  public TriggerRect
+class TextRect;
+class FilePrintRect :  public ScrollRect
 {
 	public:
 		float iconWidthHeight = 50;	//表示するアイコンの幅、高さ
-		int maxFileNumInRow = 10;	//行に表示できる最大のファイルの数
+		const int maxFileNumInRow = 7;	//行に表示できる最大のファイルの数
 		float iconBetweenWidth;	//アイコン同士の空白の幅
 
 		std::vector<FileIcon*> fileIcons;	//ファイルアイコンたち
+
+		TextRect* pathNameRect = nullptr;	//現在のパスの名前のTextRect
 
 		FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow);
 

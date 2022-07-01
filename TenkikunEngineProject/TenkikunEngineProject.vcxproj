@@ -153,6 +153,8 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="FileIcon.cpp" />
     <ClCompile Include="FilePrintRect.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
@@ -202,6 +204,8 @@
     <ClInclude Include="FileIcon.h" />
     <ClInclude Include="FilePrintRect.h" />
     <ClInclude Include="FloatCondition.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="HierarchyWindow.h" />

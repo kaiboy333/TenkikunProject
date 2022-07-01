@@ -8,8 +8,6 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 	this->scrollHeight = scrollHeight;
 	startScrollX = startX;
 	startScrollY = startY;
-	//deltaScrollX = 0;
-	//deltaScrollY = 0;
 
 	//マウスホイールで動かしたら
 	this->mouseWheelEvents.push_back([this]() {
@@ -34,10 +32,8 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 			for (TriggerRect* triggerRect : triggerRects) {
 				//実際にY座標をずらす
 				triggerRect->startY += deltaScrollY;
-
-				//TriggerRectの有効範囲はスクロールのかぶる範囲である
-				triggerRect->activeRect = Rect::GetCrossRect(triggerRect, this);
 			}
+			TriggerRectsActiveUpdate();	//有効化更新
 		}
 	});
 }
@@ -59,4 +55,14 @@ void ScrollRect::RemoveToScrollRect(TriggerRect* triggerRect)
 {
 	//リストから削除
 	triggerRects.erase(remove(triggerRects.begin(), triggerRects.end(), triggerRect));
+
+	triggerRect->activeRect = nullptr;	//無効化
+}
+
+void ScrollRect::TriggerRectsActiveUpdate()
+{
+	for (TriggerRect* triggerRect : triggerRects) {
+		//TriggerRectの有効範囲はスクロールのかぶる範囲である
+		triggerRect->activeRect = Rect::GetCrossRect(triggerRect, this);
+	}
 }

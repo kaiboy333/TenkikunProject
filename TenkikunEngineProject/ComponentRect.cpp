@@ -5,7 +5,7 @@
 
 using namespace std;
 
-ComponentRect::ComponentRect(float startX, float startY, Component* component, int lineNum) : Rect(startX, startY, WindowManager::inspectorWindow->width, (lineNum + 2) * lineSpace + (lineNum + 1) * (float)GetFontLineSpace())
+ComponentRect::ComponentRect(float startX, float startY, Component* component, int lineNum) : Rect(startX, startY, WindowManager::inspectorWindow->width, (lineNum + 2) * lineSpace + (lineNum + 1) * FontManager::systemFont->GetFontHeight())
 {
 	this->component = component;
 	this->lineNum = lineNum;

@@ -17,6 +17,11 @@ void Rect::Draw()
 
 bool Rect::IsPointIn(float x, float y)
 {
+	return startX <= x && startX + width >= x && startY <= y && startY + height >= y;
+}
+
+bool Rect::IsPointIn2(float x, float y)
+{
 	return startX <= x && startX + width > x && startY <= y && startY + height > y;
 }
 
@@ -44,12 +49,12 @@ Rect* Rect::GetCrossRect(Rect* r1, Rect* r2)
 
 	//四角の頂点がもう一方の四角内にあるならリストに追加
 	for (Vector3 point : r1->GetPoints()) {
-		if (r2->IsPointIn(point.x, point.y)) {
+		if (r2->IsPointIn2(point.x, point.y)) {
 			crossPoints.push_back(point);
 		}
 	}
 	for (Vector3 point : r2->GetPoints()) {
-		if (r1->IsPointIn(point.x, point.y)) {
+		if (r1->IsPointIn2(point.x, point.y)) {
 			crossPoints.push_back(point);
 		}
 	}

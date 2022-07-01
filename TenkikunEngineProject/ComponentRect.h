@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "DxLib.h"
 #include "WindowManager.h"
+#include "FontManager.h"
 
 class TextRect;
 class ComponentRect : public Rect
@@ -24,7 +25,7 @@ class ComponentRect : public Rect
 	protected:
 		float rightStartDrawX = startX + width * 2 / 5;	//右側の部分の描画開始位置X
 
-		const float mojiHeight = (float)GetFontLineSpace();	//文字の高さ
+		const float mojiHeight = FontManager::systemFont->GetFontHeight();	//文字の高さ
 
 		static const float lineSpace;	//行間
 

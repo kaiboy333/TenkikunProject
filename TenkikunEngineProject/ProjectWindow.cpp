@@ -13,7 +13,7 @@ ProjectWindow::ProjectWindow() : Window(0, 500, 1000, 300)
 void ProjectWindow::Init()
 {
 	//ツリーリスト作成
-	treeList = new TreeList(startX, startY, WindowManager::hierarchyWindow->width, 200, this, false, true, ProjectFileManager::assetFilePath.filename().string());
+	treeList = new TreeList(startX, startY, WindowManager::hierarchyWindow->width, height, this, false, true, ProjectFileManager::assetFilePath.filename().string());
 
 	vector<filesystem::path> pathes;
 
@@ -22,19 +22,7 @@ void ProjectWindow::Init()
 	//ツリーリストにアセットのパスを追加
 	SetFileChildrenToTreeList(ProjectFileManager::assetFilePath);
 
-	////ツリーリストのすべてのノードにイベントを追加
-	//for (TreeNode* node : treeList->GetRoot()->GetAllLowStairChildren()) {
-	//	node->mouseClickDownEvents.push_back([this, node]() {
-	//		//クリックしたノードから絶対パスを求める
-	//		std::filesystem::path path = std::filesystem::path(ProjectFileManager::assetParentPathName + node->GetPath());
-	//		//現在のパスにさっきのパスを入れる
-	//		ProjectFileManager::currentPath = path;
-	//		//パス内のフォルダ更新
-	//		filePrintRect->LoadFoler();
-	//		});
-	//}
-
-	filePrintRect = new FilePrintRect(WindowManager::hierarchyWindow->width, this->startY, this->width - WindowManager::hierarchyWindow->width, 200, this);
+	filePrintRect = new FilePrintRect(WindowManager::hierarchyWindow->width, startY, width - WindowManager::hierarchyWindow->width, height, this);
 }
 
 void ProjectWindow::Update()
@@ -66,21 +54,23 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path addPath)
 
 		//パスがディレクトリだったら
 		if (filesystem::is_directory(path)) {
+			//ノード作成
+			TreeNode* node = new TreeNode(path.filename().string(), treeList, treeList->isFirstOpen);
+
+			//イベントを追加
+			node->mouseClickDownEvents.push_back([this, node]() {
+				//クリックしたノードから絶対パスを求める
+				std::filesystem::path path = std::filesystem::path(ProjectFileManager::assetParentPathName + node->GetPath());
+				//現在のパスにさっきのパスを入れる
+				ProjectFileManager::currentPath = path;
+				//パス内のフォルダ更新
+				filePrintRect->LoadFoler();
+			});
+
 			//パスがアセットフォルダじゃないなら
 			if (path != ProjectFileManager::assetFilePath) {
 				//親のパスからアセットの上の部分を除いたものを取得
 				string parentPathName = path.parent_path().string().substr(ProjectFileManager::assetParentPathName.length());
-				//ノード作成
-				TreeNode* node = new TreeNode(path.filename().string(), treeList, treeList->isFirstOpen);
-				//イベントを追加
-				node->mouseClickDownEvents.push_back([this, node]() {
-					//クリックしたノードから絶対パスを求める
-					std::filesystem::path path = std::filesystem::path(ProjectFileManager::assetParentPathName + node->GetPath());
-					//現在のパスにさっきのパスを入れる
-					ProjectFileManager::currentPath = path;
-					//パス内のフォルダ更新
-					filePrintRect->LoadFoler();
-				});
 				//親ディレクトリの名前があるノードに新しくノードを追加
 				treeList->Add(node, treeList->FindNode(MyString::Split(parentPathName, '\\')));
 			}

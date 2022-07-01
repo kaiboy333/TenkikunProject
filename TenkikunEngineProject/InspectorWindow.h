@@ -5,6 +5,7 @@
 #include <vector>
 #include "ComponentRect.h"
 #include "ComponentRectManager.h"
+#include "TextRect.h"
 
 using namespace std;
 
@@ -23,6 +24,8 @@ class InspectorWindow : public Window
 
 	private:
 		GameObject* gameobject = nullptr;
+
+		TextRect* nameRect = nullptr;	//ゲームオブジェクトの名前のTextRect
 
 		vector<ComponentRect*> componentRects;
 

@@ -15,6 +15,8 @@ class ScrollRect : public TriggerRect
 		void AddToScrollRect(TriggerRect* triggerRect);	//リストに追加
 		void RemoveToScrollRect(TriggerRect* triggerRect);	//リストから削除
 
+		void TriggerRectsActiveUpdate();	//TriggerRectsの有効化部分更新
+
 	protected:
 		std::vector<TriggerRect*> triggerRects;	//スクロールで動かすTriggerRect
 };

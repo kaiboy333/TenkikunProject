@@ -14,7 +14,9 @@ class TextBox : public TriggerRect
 
 		InputType inputType;
 
-		TextBox(float startX, float startY, float width, float height, Window* parentWindow, InputType inputType = InputType::String, string text = "");
+		bool canChange = true;	//•ÏX‰Â”\‚©
+
+		TextBox(float startX, float startY, float width, float height, Window* parentWindow, string text = "", InputType inputType = InputType::String);
 
 		virtual void Draw();	//•`‰æ
 
