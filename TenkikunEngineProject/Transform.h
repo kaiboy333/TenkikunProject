@@ -80,6 +80,8 @@ class Transform : public Component
 
 		std::vector<Transform*> children;	//q‚ÌTransform‚½‚¿
 
+		static float maxValue;	//Å‘å‚Ì’l
+
 	private:
 		Vector3 position_t;
 		Vector3 rotation_t;

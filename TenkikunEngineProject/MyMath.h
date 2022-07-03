@@ -10,6 +10,6 @@ class MyMath
 		static float RadToEuler(float rad);	//ラジアンからオイラーへ
 		static float EulerToRad(float deg);
 
-		static void Clamp(float& value, float min, float max);
+		static float Clamp(float value, float min, float max);
 };
 

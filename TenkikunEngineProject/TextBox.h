@@ -16,7 +16,7 @@ class TextBox : public TriggerRect
 
 		bool canChange = true;	//変更可能か
 
-		TextBox(float startX, float startY, float width, float height, Window* parentWindow, string text = "", InputType inputType = InputType::String);
+		TextBox(float startX, float startY, float width, float height, Window* parentWindow, bool canChange, string text = "", InputType inputType = InputType::String);
 
 		virtual void Draw();	//描画
 
@@ -26,7 +26,7 @@ class TextBox : public TriggerRect
 	private:
 		int ih;	//インプットハンドル
 
-		static const int MAX_LEN = 30;	//最大入力文字
+		static const int MAX_LEN = 100;	//最大入力文字
 
 		string text = "";	//文字
 };

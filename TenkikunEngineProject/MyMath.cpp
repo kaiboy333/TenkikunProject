@@ -10,7 +10,7 @@ float MyMath::EulerToRad(float deg)
     return static_cast<float>(deg * M_PI / 180.0f);
 }
 
-void MyMath::Clamp(float& value, float min, float max)
+float MyMath::Clamp(float value, float min, float max)
 {
     if (value < min) {
         value = min;
@@ -18,4 +18,6 @@ void MyMath::Clamp(float& value, float min, float max)
     else if (value > max) {
         value = max;
     }
+
+    return value;
 }

@@ -3,21 +3,25 @@
 #include "Debug.h"
 //#include "Window.h"
 
-TextBox::TextBox(float startX, float startY, float width, float height, Window* parentWindow, string text, InputType inputType) : TriggerRect(startX, startY, width, height, parentWindow)
+TextBox::TextBox(float startX, float startY, float width, float height, Window* parentWindow, bool canChange, string text, InputType inputType) : TriggerRect(startX, startY, width, height, parentWindow)
 {
 	this->text = text;	//テキストセット
 	this->inputType = inputType;	//入力タイプセット
+	this->canChange = canChange;	//初期は変えられるか
 
 	//クリックしたら
 	mouseClickDownEvents.push_back([this] {
-		//入力中ではないなら
-		if (!GetIsSelected()) {
-			bool isTypeNum = (this->inputType == InputType::Number);
+		//変更可能なら
+		if (this->canChange) {
+			//入力中ではないなら
+			if (!GetIsSelected()) {
+				bool isTypeNum = (this->inputType == InputType::Number);
 
-			ih = MakeKeyInput(MAX_LEN, FALSE, FALSE, FALSE);	//InputHandle作成
-			SetActiveKeyInput(ih);	//入力を可能にする
-			SetKeyInputString(this->text.c_str(), ih);	//入力中の文字の中に既にあるtextをいれる
-			this->parentWindow->SetSelectedTriggerRect(this);	//自身を選択対象にする
+				ih = MakeKeyInput(MAX_LEN, FALSE, FALSE, FALSE);	//InputHandle作成
+				SetActiveKeyInput(ih);	//入力を可能にする
+				SetKeyInputString(this->text.c_str(), ih);	//入力中の文字の中に既にあるtextをいれる
+				this->parentWindow->SetSelectedTriggerRect(this);	//自身を選択対象にする
+			}
 		}
 	});
 
@@ -44,11 +48,13 @@ void TextBox::Draw()
 	//描画領域を記憶
 	GetDrawArea(&beforeDrawRect);
 
-	//マウスが乗っていたら
-	if (isOn) {
-		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(220, 220, 220), TRUE);
+	if (canChange) {
+		//マウスが乗っていたら
+		if (isOn) {
+			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(220, 220, 220), TRUE);
+		}
+		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);	//枠の描画
 	}
-	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);	//枠の描画
 
 	SetKeyInputStringColor(GetColor(0, 0, 0), GetColor(50, 0, 0), GetColor(200, 200, 200), GetColor(0, 0, 50), GetColor(0, 0, 0)
 		, GetColor(0, 0, 255), GetColor(0, 0, 100), GetColor(0, 0, 0), GetColor(0, 0, 0), GetColor(0, 0, 0), GetColor(0, 0, 0)
@@ -70,12 +76,11 @@ void TextBox::Draw()
 			//前回の描画領域に戻す
 			SetDrawArea(beforeDrawRect.left, beforeDrawRect.top, beforeDrawRect.right, beforeDrawRect.bottom);
 		}
-		else {
-			Debug::Log("");
-		}
 	}
 	else {
-		DrawBoxAA(startX, startY, startX + FontManager::systemFont->GetFontWidth(strBuf), startY + FontManager::systemFont->GetFontHeight(), GetColor(200, 200, 200), TRUE);
+		if (canChange) {
+			DrawBoxAA(startX, startY, startX + FontManager::systemFont->GetFontWidth(strBuf), startY + FontManager::systemFont->GetFontHeight(), GetColor(200, 200, 200), TRUE);
+		}
 		DrawStringFToHandle(startX, startY, strBuf, GetColor(0, 0, 0), FontManager::systemFont->GetFH());	//入力中の文字列の描画
 	}
 }

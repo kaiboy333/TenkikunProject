@@ -65,6 +65,11 @@ void Transform::SetParent(Transform* newParent)
 
 void Transform::ChangedWorldPos(Vector3 pos)
 {
+	//最大値調整
+	pos.x = MyMath::Clamp(pos.x, -maxValue, maxValue);
+	pos.y = MyMath::Clamp(pos.y, -maxValue, maxValue);
+	pos.z = MyMath::Clamp(pos.z, -maxValue, maxValue);
+
 	//ワールド位置をセット
 	position_t = pos;
 
@@ -92,6 +97,11 @@ void Transform::ChangedWorldPos(Vector3 pos)
 
 void Transform::ChangedLocalPos(Vector3 localPos)
 {
+	//最大値調整
+	localPos.x = MyMath::Clamp(localPos.x, -maxValue, maxValue);
+	localPos.y = MyMath::Clamp(localPos.y, -maxValue, maxValue);
+	localPos.z = MyMath::Clamp(localPos.z, -maxValue, maxValue);
+
 	//ローカル位置をセット
 	localPosition_t = localPos;
 
@@ -120,6 +130,11 @@ void Transform::ChangedLocalPos(Vector3 localPos)
 
 void Transform::ChangedWorldRote(Vector3 rote)
 {
+	//最大値調整
+	rote.x = MyMath::Clamp(rote.x, -maxValue, maxValue);
+	rote.y = MyMath::Clamp(rote.y, -maxValue, maxValue);
+	rote.z = MyMath::Clamp(rote.z, -maxValue, maxValue);
+
 	//親のワールドをセット
 	Vector3 parentRote = parent != nullptr ? parent->rotation_t : Vector3::Zero();
 
@@ -156,6 +171,11 @@ void Transform::ChangedWorldRote(Vector3 rote)
 
 void Transform::ChangedLocalRote(Vector3 localRote)
 {
+	//最大値調整
+	localRote.x = MyMath::Clamp(localRote.x, -maxValue, maxValue);
+	localRote.y = MyMath::Clamp(localRote.y, -maxValue, maxValue);
+	localRote.z = MyMath::Clamp(localRote.z, -maxValue, maxValue);
+
 	//親のワールドをセット
 	Vector3 parentRote = parent != nullptr ? parent->rotation_t : Vector3::Zero();
 
@@ -192,6 +212,11 @@ void Transform::ChangedLocalRote(Vector3 localRote)
 
 void Transform::ChangedWorldScale(Vector3 scal)
 {
+	//最大値調整
+	scal.x = MyMath::Clamp(scal.x, -maxValue, maxValue);
+	scal.y = MyMath::Clamp(scal.y, -maxValue, maxValue);
+	scal.z = MyMath::Clamp(scal.z, -maxValue, maxValue);
+
 	//親のワールドをセット
 	Vector3 parentScal = parent != nullptr ? parent->scale_t : Vector3::One();
 
@@ -234,6 +259,11 @@ void Transform::ChangedWorldScale(Vector3 scal)
 
 void Transform::ChangedLocalScale(Vector3 localScal)
 {
+	//最大値調整
+	localScal.x = MyMath::Clamp(localScal.x, -maxValue, maxValue);
+	localScal.y = MyMath::Clamp(localScal.y, -maxValue, maxValue);
+	localScal.z = MyMath::Clamp(localScal.z, -maxValue, maxValue);
+
 	//親のワールドをセット
 	Vector3 parentScal = parent != nullptr ? parent->scale_t : Vector3::One();
 	Vector3 deltaScal;
@@ -271,3 +301,5 @@ void Transform::ChangedLocalScale(Vector3 localScal)
 		transforms = tmp;	//中身を移動
 	}
 }
+
+float Transform::maxValue = 1000000;	//最大の値は7桁くらい

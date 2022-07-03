@@ -24,7 +24,7 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 			startScrollY += mouseWheelRote * scrollSpeed;
 
 			//”ÍˆÍ‚©‚ç‚Í‚İo‚³‚È‚¢‚æ‚¤‚É’²®
-			MyMath::Clamp(startScrollY, this->startY - (this->scrollHeight - this->height), this->startY);
+			startScrollY = MyMath::Clamp(startScrollY, this->startY - (this->scrollHeight - this->height), this->startY);
 
 			//¡‰ñ‚ÌˆÚ“®•ª‚ğŒvZ
 			float deltaScrollY = startScrollY - beforeStartScrollY;

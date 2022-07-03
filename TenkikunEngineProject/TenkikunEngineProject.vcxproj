@@ -149,7 +149,6 @@
     <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ComponentRect.cpp" />
-    <ClCompile Include="ComponentRectManager.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="FileIcon.cpp" />
     <ClCompile Include="FilePrintRect.cpp" />
@@ -158,6 +157,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
+    <ClCompile Include="ImageIcon.cpp" />
     <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -198,7 +198,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentRect.h" />
-    <ClInclude Include="ComponentRectManager.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="FileIcon.h" />
@@ -210,6 +209,7 @@
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="HierarchyWindow.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageIcon.h" />
     <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Input.h" />

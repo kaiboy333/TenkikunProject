@@ -6,15 +6,12 @@ FileIcon::FileIcon(float startX, float startY, float width, float height, Window
 {
 	iconGH = ImageManager::LoadAndGetImage(imageFileName);	//画像を取得
 	this->path = path;	//対になるファイルのパスをセット
-	fileNameRect = new TextBox(startX, startY + height, width, FontManager::systemFont->GetFontHeight(), parentWindow, path.filename().string());	//TextBox作成
+	fileNameRect = new TextBox(startX - overWidth / 2, startY + height, width + overWidth, FontManager::systemFont->GetFontHeight(), parentWindow, false, path.filename().string());	//TextBox作成
 }
 
-void FileIcon::IconDraw()
+void FileIcon::Draw()
 {
 	if (iconGH) {
-		//アイコン後ろの四角を描画(アイコン背景)
-		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
-
 		int imageWidth, imageHeight;
 		GetGraphSize(iconGH, &imageWidth, &imageHeight);
 		//画像の描画

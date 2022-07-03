@@ -8,5 +8,7 @@ class FontManager
 		FontManager();
 
 		static Font* systemFont;
+
+		static Font* systemFontMini;
 };
 

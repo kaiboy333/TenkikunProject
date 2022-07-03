@@ -3,14 +3,15 @@
 #include "WindowManager.h"
 #include "MyString.h"
 #include "Debug.h"
+#include "ImageIcon.h"
 
 FilePrintRect::FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
 {
 	//アイコン同士の空白幅を計算する
-	iconBetweenWidth = (parentWindow->width - iconWidthHeight * maxFileNumInRow) / (maxFileNumInRow + 1);
+	iconBetweenWidth = (width - iconWidthHeight * maxFileNumInRow) / (maxFileNumInRow + 1);
 
-	//現在のパスの名前をセット
-	pathNameRect = new TextRect(startX, startY, ProjectFileManager::currentPath.string());
+	string pathName = ProjectFileManager::currentPath.string().substr(ProjectFileManager::assetParentPathName.length());	//親のパスからアセットの上の部分を除いたものを取得
+	pathNameRect = new TextRect(startX, startY, pathName);		//現在のパスの名前をセット
 
 	//ファイルがドロップされたら
 	fileDropEvents.push_back([this]() {
@@ -33,7 +34,7 @@ void FilePrintRect::Draw()
 
 	//ファイルアイコンの描画
 	for (FileIcon* fileIcon : fileIcons) {
-		fileIcon->IconDraw();
+		fileIcon->Draw();
 	}
 }
 
@@ -61,8 +62,10 @@ void FilePrintRect::LoadFoler()
 {
 	//前のアイコンを消去
 	for (FileIcon* fileIcon : fileIcons) {
-		//parentWindowから削除
+		//parentWindowから削除(アイコン)
 		parentWindow->RemoveTriggerRect(fileIcon);
+		//parentWindowから削除(TextBox)
+		parentWindow->RemoveTriggerRect(fileIcon->fileNameRect);
 		//スクロールのリストからも削除
 		RemoveToScrollRect(fileIcon);
 		//アイコンにあるTextBoxも削除
@@ -72,7 +75,8 @@ void FilePrintRect::LoadFoler()
 	fileIcons.clear();
 
 	//現在のパスの名前をセット
-	pathNameRect->SetText(ProjectFileManager::currentPath.string());
+	string pathName = ProjectFileManager::currentPath.string().substr(ProjectFileManager::assetParentPathName.length());	//親のパスからアセットの上の部分を除いたものを取得
+	pathNameRect = new TextRect(startX, startY, pathName);		//現在のパスの名前をセット
 
 	//パスがディレクトリだったら
 	if (filesystem::is_directory(ProjectFileManager::currentPath)) {
@@ -90,7 +94,7 @@ void FilePrintRect::LoadFoler()
 			switch (ProjectFileManager::GetFileType(childPath)) {
 			case ProjectFileManager::FileType::Image:
 				//イメージアイコン作成
-				fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, std::filesystem::relative(childPath).string(), childPath);
+				fileIcon = new ImageIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, std::filesystem::relative(childPath).string(), childPath);
 				break;
 			case ProjectFileManager::FileType::Folder:
 				//フォルダアイコン作成
