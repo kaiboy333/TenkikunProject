@@ -256,7 +256,9 @@
     <Image Include="image\downArrow.png" />
     <Image Include="image\folder.png" />
     <Image Include="image\rightArrow.png" />
-    <Image Include="image\script.png" />
+    <Image Include="image\script_cpp.png" />
+    <Image Include="image\script_h.png" />
+    <Image Include="image\script_hpp.png" />
     <Image Include="image\square.png" />
     <Image Include="image\Tenkikun.png" />
     <Image Include="image\UnityChan_Down0.png" />

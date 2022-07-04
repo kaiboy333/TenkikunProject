@@ -9,7 +9,7 @@ class FilePrintRect :  public ScrollRect
 {
 	public:
 		float iconWidthHeight = 50;	//表示するアイコンの幅、高さ
-		const int maxFileNumInRow = 7;	//行に表示できる最大のファイルの数
+		const int maxFileNumInRow = 8;	//行に表示できる最大のファイルの数
 		float iconBetweenWidth;	//アイコン同士の空白の幅
 
 		std::vector<FileIcon*> fileIcons;	//ファイルアイコンたち

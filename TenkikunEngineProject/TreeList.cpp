@@ -156,22 +156,7 @@ void TreeList::UpdateNodes()
 	//スクロールの高さはノードの数とノードの高さを掛けた数
 	scrollHeight = UpdateNodeAndChildrenNodes(root, 0) * root->height;
 	
-	//スクロールの高さが表示可能高さよりも大きいなら
-	if (this->scrollHeight > this->height) {
-		float deltaY = startY + height - (startScrollY + scrollHeight);
-		//スクロールの底に空白ができてしまっていたら埋まるように下にずらす
-		if (deltaY > 0) {
-			//スクロール位置を変える
-			startScrollY += deltaY;
-
-			for (TriggerRect* triggerRect : triggerRects) {
-				//実際にY座標をずらす
-				triggerRect->startY += deltaY;
-			}
-		}
-	}
-
-	TriggerRectsActiveUpdate();	//有効化更新
+	ScrollUpdate();	//有効化更新
 }
 
 int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)

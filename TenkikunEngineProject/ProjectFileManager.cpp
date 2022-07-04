@@ -1,5 +1,8 @@
 #include "ProjectFileManager.h"
 #include "DxLib.h"
+#include <fstream>
+#include <iostream>
+#include "Debug.h"
 
 ProjectFileManager::ProjectFileManager()
 {
@@ -50,14 +53,41 @@ ProjectFileManager::FileType ProjectFileManager::GetFileType(std::filesystem::pa
 		if (extensionName == ".png" || extensionName == ".jpg") {
 			targetFileType = FileType::Image;
 		}
-		//スクリプトだったら
-		else if (extensionName == ".cpp" || extensionName == ".h" || extensionName == ".hpp") {
-			targetFileType = FileType::Script;
+		//スクリプトだったら(cpp)
+		else if (extensionName == ".cpp") {
+			targetFileType = FileType::Script_cpp;
+		}
+		//スクリプトだったら(hpp)
+		else if (extensionName == ".hpp") {
+			targetFileType = FileType::Script_hpp;
+		}
+		//スクリプトだったら(h)
+		else if (extensionName == ".h") {
+			targetFileType = FileType::Script_h;
 		}
 	}
 
 	//タイプを返す
 	return targetFileType;
+}
+
+void ProjectFileManager::CreateKumoFile(std::filesystem::path path)
+{
+	//雲ファイルパスを作成
+	std::filesystem::path kumoPath = std::filesystem::path(path.string() + ".kumo");
+
+	//ファイルが存在しないなら
+	if (!std::filesystem::exists(kumoPath)) {
+		//ファイルを作成、開く
+		std::ofstream ofs(kumoPath.c_str());
+		//開けたら
+		if (ofs) {
+
+		}
+		else {
+			Debug::Log(kumoPath.string() + "は開けませんでした。\n");
+		}
+	}
 }
 
 std::filesystem::path ProjectFileManager::assetFilePath;

@@ -468,7 +468,13 @@
     <Image Include="image\folder.png">
       <Filter>image</Filter>
     </Image>
-    <Image Include="image\script.png">
+    <Image Include="image\script_cpp.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\script_h.png">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\script_hpp.png">
       <Filter>image</Filter>
     </Image>
   </ItemGroup>

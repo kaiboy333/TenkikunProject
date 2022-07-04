@@ -9,7 +9,9 @@ class ProjectFileManager
 		enum class FileType {
 			Image,
 			Folder,
-			Script,
+			Script_cpp,
+			Script_hpp,
+			Script_h,
 			None,
 		};
 
@@ -28,5 +30,7 @@ class ProjectFileManager
 		static void Update();
 
 		static FileType GetFileType(std::filesystem::path path);	//指定のファイルはそのタイプであるか
+
+		static void CreateKumoFile(std::filesystem::path path);	//ファイル専用のくも(メタ)ファイルを作成する
 };
 

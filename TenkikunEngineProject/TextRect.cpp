@@ -23,7 +23,6 @@ std::string TextRect::GetText()
 
 void TextRect::Draw()
 {
-	//SetDrawArea(startX, startY, startX + width, startY + height);
 	//•¶Žš•`‰æ
 	DrawStringFToHandle(startX, startY, text.c_str(), GetColor(0, 0, 0), FontManager::systemFont->GetFH());
 }

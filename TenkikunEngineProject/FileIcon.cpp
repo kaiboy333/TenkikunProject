@@ -16,6 +16,10 @@ void FileIcon::Draw()
 		GetGraphSize(iconGH, &imageWidth, &imageHeight);
 		//画像のアルファ値設定
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
+		//ファイル名の描画
+		fileNameRect->Draw();
+
 		//画像の描画
 		DrawRotaGraph3F(startX + width / 2, startY + height / 2, imageWidth / 2.0f, imageHeight / 2.0f, width / imageWidth, height / imageHeight, 0, iconGH, TRUE);
 		//選択されていたら
@@ -25,9 +29,9 @@ void FileIcon::Draw()
 			//青色を描画
 			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(173, 216, 230), TRUE);
 		}
-		//ファイル名の描画
-		fileNameRect->Draw();
 		
+		//画像のアルファ値戻す
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	}
 }
 

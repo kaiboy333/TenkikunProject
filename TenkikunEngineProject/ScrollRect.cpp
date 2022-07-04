@@ -33,7 +33,8 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 				//実際にY座標をずらす
 				triggerRect->startY += deltaScrollY;
 			}
-			TriggerRectsActiveUpdate();	//有効化更新
+
+			ScrollUpdate();	//有効化更新
 		}
 	});
 }
@@ -59,10 +60,31 @@ void ScrollRect::RemoveToScrollRect(TriggerRect* triggerRect)
 	triggerRect->activeRect = nullptr;	//無効化
 }
 
-void ScrollRect::TriggerRectsActiveUpdate()
+void ScrollRect::ScrollUpdate()
 {
+	//スクロールの高さが表示可能高さよりも大きいなら
+	if (this->scrollHeight > this->height) {
+		float deltaY = startY + height - (startScrollY + scrollHeight);
+		//スクロールの底に空白ができてしまっていたら埋まるように下にずらす
+		if (deltaY > 0) {
+			//スクロール位置を変える
+			startScrollY += deltaY;
+
+			for (TriggerRect* triggerRect : triggerRects) {
+				//実際にY座標をずらす
+				triggerRect->startY += deltaY;
+			}
+		}
+	}
+
 	for (TriggerRect* triggerRect : triggerRects) {
 		//TriggerRectの有効範囲はスクロールのかぶる範囲である
 		triggerRect->activeRect = Rect::GetCrossRect(triggerRect, this);
 	}
+}
+
+void ScrollRect::InitScrollPos()
+{
+	startScrollX = startX;
+	startScrollY = startY;
 }

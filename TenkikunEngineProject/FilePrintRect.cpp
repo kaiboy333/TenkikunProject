@@ -33,13 +33,18 @@ void FilePrintRect::Draw()
 	//枠描画
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 
-	//現在のファイルパス描画
-	pathNameRect->Draw();
-
 	//ファイルアイコンの描画
 	for (FileIcon* fileIcon : fileIcons) {
 		fileIcon->Draw();
 	}
+
+	//画像のアルファ値設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
+	DrawBoxAA(pathNameRect->startX, pathNameRect->startY, pathNameRect->startX + width, pathNameRect->startY + pathNameRect->height, GetColor(255, 255, 255), TRUE);
+	//現在のファイルパス描画
+	pathNameRect->Draw();
+	DrawBoxAA(pathNameRect->startX, pathNameRect->startY, pathNameRect->startX + width, pathNameRect->startY + pathNameRect->height, GetColor(0, 0, 0), FALSE);
 }
 
 void FilePrintRect::MakeDuplicatedFile(std::filesystem::path copyPath)
@@ -76,6 +81,9 @@ void FilePrintRect::LoadFoler()
 	//リストをリセット
 	fileIcons.clear();
 
+	//スクロールのリセット
+	InitScrollPos();
+
 
 	//現在のパスの名前をセット
 	string pathName = ProjectFileManager::currentPath.string().substr(ProjectFileManager::assetParentPathName.length());	//親のパスからアセットの上の部分を除いたものを取得
@@ -103,9 +111,17 @@ void FilePrintRect::LoadFoler()
 					//フォルダアイコン作成
 					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\folder.png", childPath);
 					break;
-				case ProjectFileManager::FileType::Script:
-					//スクリプトアイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script.png", childPath);
+				case ProjectFileManager::FileType::Script_cpp:
+					//スクリプト(cpp)アイコン作成
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script_cpp.png", childPath);
+					break;
+				case ProjectFileManager::FileType::Script_hpp:
+					//スクリプト(hpp)アイコン作成
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script_hpp.png", childPath);
+					break;
+				case ProjectFileManager::FileType::Script_h:
+					//スクリプト(h)アイコン作成
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script_h.png", childPath);
 					break;
 				case ProjectFileManager::FileType::None:
 					//何もしない
@@ -126,4 +142,11 @@ void FilePrintRect::LoadFoler()
 
 		}
 	}
+
+	int row = fileIcons.size() / maxFileNumInRow;
+	if (fileIcons.size() % maxFileNumInRow != 0) {
+		row++;
+	}
+	scrollHeight = (row + 1) * iconBetweenWidth + row * (iconWidthHeight + FileIcon::overWidth);
+	ScrollUpdate();
 }
