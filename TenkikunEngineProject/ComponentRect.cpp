@@ -19,6 +19,8 @@ ComponentRect::ComponentRect(float startX, float startY, Component* component, i
 
 void ComponentRect::Draw()
 {
+	//画像のアルファ値設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);	//枠の描画
 
 	nameRect->Draw();	//コンポーネントの名前描画

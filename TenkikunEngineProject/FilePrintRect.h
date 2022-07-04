@@ -20,7 +20,7 @@ class FilePrintRect :  public ScrollRect
 
 		void Draw();
 
-		void LoadFoler();	//現在ののパスを読み込み中身を更新
+		void LoadFoler();	//現在のパスを読み込み中身を更新
 
 	private:
 		void MakeDuplicatedFile(std::filesystem::path copyPath);	//ドロップされたファイルを指定パス作成

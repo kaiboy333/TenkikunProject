@@ -14,9 +14,22 @@ void FileIcon::Draw()
 	if (iconGH) {
 		int imageWidth, imageHeight;
 		GetGraphSize(iconGH, &imageWidth, &imageHeight);
+		//画像のアルファ値設定
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 		//画像の描画
 		DrawRotaGraph3F(startX + width / 2, startY + height / 2, imageWidth / 2.0f, imageHeight / 2.0f, width / imageWidth, height / imageHeight, 0, iconGH, TRUE);
+		//選択されていたら
+		if (GetIsSelected()) {
+			//画像のアルファ値設定
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			//青色を描画
+			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(173, 216, 230), TRUE);
+		}
 		//ファイル名の描画
 		fileNameRect->Draw();
+		
 	}
 }
+
+const float FileIcon::blankWidth = 10;
+const float FileIcon::overWidth = 15;

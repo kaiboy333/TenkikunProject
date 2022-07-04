@@ -11,5 +11,7 @@ class MyMath
 		static float EulerToRad(float deg);
 
 		static float Clamp(float value, float min, float max);
+
+		static float Lerp(float min, float max, float t);
 };
 

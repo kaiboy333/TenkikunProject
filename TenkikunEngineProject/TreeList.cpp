@@ -137,6 +137,8 @@ void TreeList::Draw()
 			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
 		}
 	}
+	//画像のアルファ値設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 

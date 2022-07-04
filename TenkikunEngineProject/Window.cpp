@@ -35,8 +35,14 @@ Window::Window(float startX, float startY, float width, float height) : Rect(sta
 void Window::Update()
 {
 	for (TriggerRect* removeTriggerRect : removeTriggerRects) {
-		triggerRects.erase(remove(triggerRects.begin(), triggerRects.end(), removeTriggerRect));	//実際に削除
-		removeTriggerRect->parentWindow = nullptr;	//TriggerRectから参照できないように
+		//何か入っているなら
+		if (triggerRects.size() != 0) {
+			//要素が存在するなら
+			if (*std::find(triggerRects.begin(), triggerRects.end(), removeTriggerRect) == removeTriggerRect) {
+				triggerRects.erase(remove(triggerRects.begin(), triggerRects.end(), removeTriggerRect));	//実際に削除
+				removeTriggerRect->parentWindow = nullptr;	//TriggerRectから参照できないように
+			}
+		}
 	}
 	removeTriggerRects.clear();	//削除リストを初期化
 
@@ -59,6 +65,8 @@ void Window::Draw()
 {
 	//描画範囲制限
 	SetDrawArea((int)startX, (int)startY, (int)(startX + width), (int)(startY + height));
+	//画像のアルファ値設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	//白い四角を描画
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(255, 255, 255), TRUE);
 	//枠線を描画

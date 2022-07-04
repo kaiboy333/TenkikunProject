@@ -21,3 +21,11 @@ float MyMath::Clamp(float value, float min, float max)
 
     return value;
 }
+
+float MyMath::Lerp(float min, float max, float t)
+{
+    //t‚Í0`1‚Ì”ÍˆÍ
+    t = Clamp(t, 0, 1);
+
+    return min + (max - min) * t;
+}

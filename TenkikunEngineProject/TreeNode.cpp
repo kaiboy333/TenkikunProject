@@ -91,6 +91,9 @@ string TreeNode::GetPath()
 
 void TreeNode::Draw()
 {
+	//画像のアルファ値設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 	//選択されているなら
 	if (GetIsSelected()) {
 		//四角の描画

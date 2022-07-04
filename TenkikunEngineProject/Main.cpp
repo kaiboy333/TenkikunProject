@@ -144,6 +144,9 @@ inline void Update() {
 }
 
 inline void Draw() {
+	//画像のアルファ値設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 	//画面全体を黒で描画
 	DrawBoxAA(0, 0, WIDTH, HEIGHT, GetColor(0, 0, 0), TRUE);
 

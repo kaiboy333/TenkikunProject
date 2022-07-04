@@ -49,9 +49,13 @@ void TextBox::Draw()
 	GetDrawArea(&beforeDrawRect);
 
 	if (canChange) {
+		//画像のアルファ値設定
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 		//マウスが乗っていたら
 		if (isOn) {
-			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(220, 220, 220), TRUE);
+			//四角の描画
+			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
 		}
 		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);	//枠の描画
 	}
@@ -78,8 +82,11 @@ void TextBox::Draw()
 		}
 	}
 	else {
+		//画像のアルファ値設定
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 		if (canChange) {
-			DrawBoxAA(startX, startY, startX + FontManager::systemFont->GetFontWidth(strBuf), startY + FontManager::systemFont->GetFontHeight(), GetColor(200, 200, 200), TRUE);
+			DrawBoxAA(startX, startY, startX + FontManager::systemFont->GetFontWidth(strBuf), startY + FontManager::systemFont->GetFontHeight(), GetColor(30, 144, 255), TRUE);
 		}
 		DrawStringFToHandle(startX, startY, strBuf, GetColor(0, 0, 0), FontManager::systemFont->GetFH());	//入力中の文字列の描画
 	}

@@ -18,6 +18,7 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 		for (std::filesystem::path path : ProjectFileManager::dragFilePathes) {
 			MakeDuplicatedFile(path);	//ファイルを複製して指定のパスに置く
 		}
+		LoadFoler();	//フォルダ内表示更新
 	});
 
 	//パスのフォルダ更新
@@ -26,6 +27,9 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 
 void FilePrintRect::Draw()
 {
+	//画像のアルファ値設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 	//枠描画
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 
@@ -51,8 +55,6 @@ void FilePrintRect::MakeDuplicatedFile(std::filesystem::path copyPath)
 			filesystem::copy(copyPath, pastePath);
 			//ツリーリストにフォルダ名を追加
 			WindowManager::projectWindow->SetFileChildrenToTreeList(pastePath);
-			//フォルダ内表示更新
-			LoadFoler();
 		}
 	}
 
@@ -74,6 +76,7 @@ void FilePrintRect::LoadFoler()
 	//リストをリセット
 	fileIcons.clear();
 
+
 	//現在のパスの名前をセット
 	string pathName = ProjectFileManager::currentPath.string().substr(ProjectFileManager::assetParentPathName.length());	//親のパスからアセットの上の部分を除いたものを取得
 	pathNameRect = new TextRect(startX, startY, pathName);		//現在のパスの名前をセット
@@ -92,31 +95,31 @@ void FilePrintRect::LoadFoler()
 			float iconStartX = startX + (col + 1) * iconBetweenWidth + col * iconWidthHeight;
 			float iconStartY = startY + (row + 1) * iconBetweenWidth + row * iconWidthHeight;
 			switch (ProjectFileManager::GetFileType(childPath)) {
-			case ProjectFileManager::FileType::Image:
-				//イメージアイコン作成
-				fileIcon = new ImageIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, std::filesystem::relative(childPath).string(), childPath);
-				break;
-			case ProjectFileManager::FileType::Folder:
-				//フォルダアイコン作成
-				fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\folder.png", childPath);
-				break;
-			case ProjectFileManager::FileType::Script:
-				//スクリプトアイコン作成
-				fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script.png", childPath);
-				break;
-			case ProjectFileManager::FileType::None:
-				//何もしない
-				break;
+				case ProjectFileManager::FileType::Image:
+					//イメージアイコン作成
+					fileIcon = new ImageIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, std::filesystem::relative(childPath).string(), childPath);
+					break;
+				case ProjectFileManager::FileType::Folder:
+					//フォルダアイコン作成
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\folder.png", childPath);
+					break;
+				case ProjectFileManager::FileType::Script:
+					//スクリプトアイコン作成
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script.png", childPath);
+					break;
+				case ProjectFileManager::FileType::None:
+					//何もしない
+					break;
 			}
 
 			//ファイルアイコンが作成されているなら
 			if (fileIcon) {
-				//リストに追加
-				fileIcons.push_back(fileIcon);
 				//Scrollのリストにアイコンを追加(&更新)
 				AddToScrollRect(fileIcon);
 				//アイコンにあるTextBoxも登録
 				AddToScrollRect(fileIcon->fileNameRect);
+				//リストに追加
+				fileIcons.push_back(fileIcon);
 				//次の番号へ
 				iconNum++;
 			}
