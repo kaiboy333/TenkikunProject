@@ -160,6 +160,7 @@
     <ClCompile Include="ImageIcon.cpp" />
     <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="Info.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InspectorWindow.cpp" />
     <ClCompile Include="KeyState.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="ImageIcon.h" />
     <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InspectorWindow.h" />
     <ClInclude Include="IntCondition.h" />

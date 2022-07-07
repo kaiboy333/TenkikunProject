@@ -5,8 +5,9 @@
 #include <DxLib.h>
 #include "FileIcon.h"
 #include "MyMath.h"
+#include "Info.h"
 
-class Image
+class Image : public Info
 {
 	public:
 		Image(std::string path);

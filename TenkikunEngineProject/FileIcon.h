@@ -13,12 +13,17 @@ class FileIcon : public TriggerRect
 
 		TextBox* fileNameRect = nullptr;	//ファイル名のTextBox
 
+		float iconWidth, iconHeight;	//アイコンの幅、高さ
+
 		static const float overWidth;	//アイコンからはみ出すTextBoxの+α幅
 
-		static const float blankWidth;	//枠の幅
+		float blankWidth, blankHeight;	//枠の幅、高さ
 
-		FileIcon(float startX, float startY, float width, float height, Window* parentWindow, std::string imageFileName, std::filesystem::path path);
+		FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, Window* parentWindow, std::string imageFileName, std::filesystem::path path);
 
 		virtual void Draw();	//アイコン描画
+
+	protected:
+		bool isImageIcon = false;
 };
 

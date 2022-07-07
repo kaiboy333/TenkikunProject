@@ -1,6 +1,8 @@
 #pragma once
 
 #include <filesystem>
+#include <unordered_map>
+#include "Info.h"
 
 class ProjectFileManager
 {
@@ -12,6 +14,7 @@ class ProjectFileManager
 			Script_cpp,
 			Script_hpp,
 			Script_h,
+			Kumo,
 			None,
 		};
 
@@ -25,12 +28,21 @@ class ProjectFileManager
 		//ドラッグされたファイルのパスたち
 		static std::vector<std::filesystem::path> dragFilePathes;
 
+		//Infoが入ったもの
+		static std::unordered_map<std::string, Info*> idInfos;
+
 		ProjectFileManager();
 
 		static void Update();
 
 		static FileType GetFileType(std::filesystem::path path);	//指定のファイルはそのタイプであるか
 
-		static void CreateKumoFile(std::filesystem::path path);	//ファイル専用のくも(メタ)ファイルを作成する
+		static void CreateAndLoadKumoFile(std::filesystem::path kumoPath);	//ファイル専用のくも(メタ)ファイルをチェック
+
+	private:
+		static void WriteToKumoFile(std::filesystem::path kumoPath);	//雲ファイルに記述する
+		static void WriteToInfo(std::filesystem::path kumoPath);	//雲ファイルからInfoを作成
+
+		static std::string CreateGUID();	//GUIDを生成する(stringで)
 };
 

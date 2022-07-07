@@ -105,23 +105,23 @@ void FilePrintRect::LoadFoler()
 			switch (ProjectFileManager::GetFileType(childPath)) {
 				case ProjectFileManager::FileType::Image:
 					//イメージアイコン作成
-					fileIcon = new ImageIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, std::filesystem::relative(childPath).string(), childPath);
+					fileIcon = new ImageIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, std::filesystem::relative(childPath).string(), childPath);
 					break;
 				case ProjectFileManager::FileType::Folder:
 					//フォルダアイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\folder.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\folder.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_cpp:
 					//スクリプト(cpp)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script_cpp.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\script_cpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_hpp:
 					//スクリプト(hpp)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script_hpp.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\script_hpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_h:
 					//スクリプト(h)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, parentWindow, "image\\script_h.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\script_h.png", childPath);
 					break;
 				case ProjectFileManager::FileType::None:
 					//何もしない
@@ -144,7 +144,7 @@ void FilePrintRect::LoadFoler()
 	}
 
 	int row = fileIcons.size() / maxFileNumInRow;
-	if (fileIcons.size() % maxFileNumInRow != 0) {
+	if ((int)fileIcons.size() % maxFileNumInRow != 0) {
 		row++;
 	}
 	scrollHeight = (row + 1) * iconBetweenWidth + row * (iconWidthHeight + FileIcon::overWidth);

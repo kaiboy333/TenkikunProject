@@ -206,6 +206,9 @@
     <ClCompile Include="ImageIcon.cpp">
       <Filter>ソース ファイル\main\window\project\icon</Filter>
     </ClCompile>
+    <ClCompile Include="Info.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -364,6 +367,7 @@
     <ClInclude Include="ImageIcon.h">
       <Filter>ソース ファイル\main\window\project\icon</Filter>
     </ClInclude>
+    <ClInclude Include="Info.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">

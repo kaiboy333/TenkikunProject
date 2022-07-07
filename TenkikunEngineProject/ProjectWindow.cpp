@@ -52,6 +52,9 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path addPath)
 		filesystem::path path = pathes[0];
 		pathes.erase(pathes.begin());
 
+		//雲ファイルがなければ作成、読み込み
+		ProjectFileManager::CreateAndLoadKumoFile(path);
+
 		//パスがディレクトリだったら
 		if (filesystem::is_directory(path)) {
 			//ノード作成
