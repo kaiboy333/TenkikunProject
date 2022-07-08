@@ -73,6 +73,10 @@ ProjectFileManager::FileType ProjectFileManager::GetFileType(std::filesystem::pa
 		else if (extensionName == ".kumo") {
 			targetFileType = FileType::Kumo;
 		}
+		//シーンファイルなら
+		else if (extensionName == ".scene") {
+			targetFileType = FileType::Scene;
+		}
 	}
 
 	//タイプを返す
@@ -134,18 +138,21 @@ void ProjectFileManager::WriteToInfo(std::filesystem::path kumoPath)
 
 void ProjectFileManager::WriteToKumoFile(std::filesystem::path kumoPath)
 {
-	//ファイルを作成、開く
-	std::ofstream ofs(kumoPath.c_str());
-	//開けたら
-	if (ofs) {
-		ofs << "guid : " + CreateGUID() << std::endl;	//guidを書き込む
-		switch (GetFileType(kumoPath)) {
+	//雲ファイルなら
+	if (GetFileType(kumoPath) == FileType::Kumo) {
+		//ファイルを作成、開く
+		std::ofstream ofs(kumoPath.c_str());
+		//開けたら
+		if (ofs) {
+			ofs << "guid : " + CreateGUID() << std::endl;	//guidを書き込む
+			switch (GetFileType(kumoPath)) {
 			case FileType::Image:
 				break;
+			}
 		}
-	}
-	else {
-		Debug::Log(kumoPath.string() + "は開けませんでした。\n");
+		else {
+			Debug::Log(kumoPath.string() + "は開けませんでした。\n");
+		}
 	}
 }
 

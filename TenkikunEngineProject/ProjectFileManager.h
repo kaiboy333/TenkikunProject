@@ -15,6 +15,7 @@ class ProjectFileManager
 			Script_hpp,
 			Script_h,
 			Kumo,
+			Scene,
 			None,
 		};
 
@@ -39,8 +40,9 @@ class ProjectFileManager
 
 		static void CreateAndLoadKumoFile(std::filesystem::path kumoPath);	//ファイル専用のくも(メタ)ファイルをチェック
 
-	private:
 		static void WriteToKumoFile(std::filesystem::path kumoPath);	//雲ファイルに記述する
+
+	private:
 		static void WriteToInfo(std::filesystem::path kumoPath);	//雲ファイルからInfoを作成
 
 		static std::string CreateGUID();	//GUIDを生成する(stringで)

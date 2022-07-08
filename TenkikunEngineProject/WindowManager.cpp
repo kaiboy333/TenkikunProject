@@ -1,4 +1,5 @@
 #include "WindowManager.h"
+#include "Debug.h"
 
 void WindowManager::Draw()
 {
@@ -39,6 +40,18 @@ void WindowManager::Update()
 
 	for (Window* parentWindow : GetWindows()) {
 		parentWindow->Update();
+	}
+
+	//Ctrl + Sを押したら
+	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL) && Input::GetKeyDown(Input::KeyCode::S)) {
+		//編集モードなら
+		if (SceneManager::playMode == SceneManager::PlayMode::EDIT) {
+			//現在のシーンをセーブ(シーンファイルに書き込む)
+			SceneManager::GetNowScene()->WriteToSceneFile();
+		}
+		else {
+			Debug::Log("プレイ中はセーブできません。");
+		}
 	}
 }
 

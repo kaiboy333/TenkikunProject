@@ -46,8 +46,8 @@ class GameObject
 
 inline void GameObject::InternalAddComponent(Component* component)
 {
-	component->gameobject = this;	//Component‚ÉGameObject‚ğ•R‚Ã‚¯‚é
-	this->components.emplace_back(component);	//––”ö‚É’Ç‰Á
+	//component->gameobject = this;	//Component‚ÉGameObject‚ğ•R‚Ã‚¯‚é
+	//this->components.emplace_back(component);	//––”ö‚É’Ç‰Á
 }
 
 template<class T>
@@ -62,7 +62,11 @@ inline T* GameObject::AddComponent()
 			return nullptr;	//nullptr‚ğ•Ô‚·
 		}
 	}
-	InternalAddComponent(component);
+	//InternalAddComponent(component);
+
+	component->gameobject = this;	//Component‚ÉGameObject‚ğ•R‚Ã‚¯‚é
+	this->components.emplace_back(component);	//––”ö‚É’Ç‰Á
+
 	return dynamic_cast<T*>(component);	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·
 }
 

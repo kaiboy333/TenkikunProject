@@ -123,6 +123,10 @@ void FilePrintRect::LoadFoler()
 					//スクリプト(h)アイコン作成
 					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\script_h.png", childPath);
 					break;
+				case ProjectFileManager::FileType::Scene:
+					//シーンアイコン作成
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\Tenkikun.png", childPath);
+					break;
 				case ProjectFileManager::FileType::None:
 					//何もしない
 					break;

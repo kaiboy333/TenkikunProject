@@ -1,34 +1,18 @@
 #include "SceneManager.h"
+#include "ProjectFileManager.h"
 
 SceneManager::SceneManager()
 {
 	AddScene();	//シーンを作成
 }
 
-void SceneManager::LoadScene(std::string targetSceneName)
+void SceneManager::LoadScene(std::filesystem::path scenePath)
 {
-	for (Scene* scene : scenes) {
-		//同じ名前だったら
-		if (scene->sceneName == targetSceneName) {
-			//それを現在のシーンに設定
-			nowScene = scene;
-			return;
-		}
-	}
-	std::cout << "Sceneが見つかりません" << std::endl;
-}
+	//シーンファイルを開く
 
-void SceneManager::LoadScene(Scene* targetScene)
-{
-	for (Scene* scene : scenes) {
-		//同じだったら
-		if (scene == targetScene) {
-			//それを現在のシーンに設定
-			nowScene = scene;
-			return;
-		}
-	}
-	std::cout << "Sceneが見つかりません" << std::endl;
+	//シーンファイルから読み込み、シーンを作成
+
+	//今のシーンに登録
 }
 
 Scene* SceneManager::GetNowScene()
@@ -36,17 +20,40 @@ Scene* SceneManager::GetNowScene()
 	return nowScene;
 }
 
-Scene* SceneManager::AddScene()
+//Scene* SceneManager::AddScene()
+//{
+//	Scene* scene = new Scene();
+//	scenes.emplace_back(scene);	//リストに追加
+//	//もし、現在のシーンが登録されていなかったら
+//	if (nowScene == nullptr) {
+//		nowScene = scene;	//登録
+//	}
+//	scene->Init();
+//	return scene;
+//}
+
+Scene* SceneManager::MakeScene()
 {
-	Scene* scene = new Scene();
-	scenes.emplace_back(scene);	//リストに追加
-	//もし、現在のシーンが登録されていなかったら
-	if (nowScene == nullptr) {
-		nowScene = scene;	//登録
+	//今のパスにシーンファイルを設定
+	std::filesystem::path scenePath(ProjectFileManager::currentPath.string() + ".scene");
+
+	std::ofstream ofs(scenePath.c_str());
+	//シーンファイルを作成、開く
+	if (ofs) {
+		//シーンを作成
+		Scene* scene = new Scene();
+		//シーンのパスを設定
+		scene->scenePath = scenePath;
+		//もし、現在のシーンが登録されていなかったら
+		if (nowScene == nullptr) {
+			nowScene = scene;	//登録
+		}
+		scene->Init();	//初期化
+		//雲ファイルも作成、書き込み
+		ProjectFileManager::WriteToKumoFile(std::filesystem::path(scenePath.string() + ".kumo"));
 	}
-	scene->Init();
-	return scene;
+
 }
 
-std::vector<Scene*> SceneManager::scenes;	//シーンたち
-Scene* SceneManager::nowScene;	//現在のScene
+Scene* SceneManager::nowScene = nullptr;	//現在のScene
+SceneManager::PlayMode SceneManager::playMode = PlayMode::EDIT;	//初期は編集モード

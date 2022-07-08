@@ -12,13 +12,6 @@ class TreeList;
 class Scene
 {
 	public:
-		enum SceneState
-		{
-			EDIT,	//エンジンの編集時
-			PLAY,	//Playモード
-			STOP	//Playモードでの一時停止
-		};
-
 		std::string sceneName = "Scene1";	//Sceneの名前
 		std::vector<GameObject*> gameobjects;	//GameObjectたち
 		std::vector<Camera*> cameras;	//Cameraたち
@@ -26,6 +19,8 @@ class Scene
 		TreeList* treeList = nullptr;
 
 		int generateNum = 0;
+
+		std::filesystem::path scenePath;	//シーンファイルパス
 
 		Scene();
 
@@ -44,6 +39,8 @@ class Scene
 		//void RemoveGameObject(GameObject* gameobject);	//指定のGameObjectをリストから削除
 
 		Camera* GetNowCamera();
+
+		void WriteToSceneFile();	//現在のシーンの情報をシーンファイルに書き込む
 
 	private:
 		int drawCameraNo = 0;

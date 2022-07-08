@@ -2,9 +2,11 @@
 #include "SceneManager.h"
 #include "ImageRenderer.h"
 #include "Animator.h"
+#include "ProjectFileManager.h"
 
 Scene::Scene()
 {
+
 }
 
 void Scene::Init()
@@ -93,14 +95,20 @@ void Scene::Destroy(GameObject* gameobject)
 	treeList->Delete(gameobject->GetName());
 }
 
-//void Scene::RemoveGameObject(GameObject* gameobject)
-//{
-//	gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), gameobject));
-//}
-
 Camera* Scene::GetNowCamera()
 {
 	return cameras[drawCameraNo];
+}
+
+void Scene::WriteToSceneFile()
+{
+	for (GameObject* gameobject : gameobjects) {
+		//ゲームオブジェクトの情報を書き込む
+
+		for (Component* component : gameobject->components) {
+			//コンポーネントの情報を書き込む
+		}
+	}
 }
 
 
