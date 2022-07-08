@@ -12,7 +12,7 @@ class ImageRenderer :  public Component
 	public:
 		bool isFlipX = false;	//¶‰E”½“]‚©
 		bool isFlipY = false;	//ã‰º”½“]‚©
-		bool isCameraAffected = true;	//Camera‚ÌˆÚ“®‚ÅŒ©‚¦•û‚ª•Ï‚í‚é‚©
+		//bool isCameraAffected = true;	//Camera‚ÌˆÚ“®‚ÅŒ©‚¦•û‚ª•Ï‚í‚é‚©
 
 		Image* image = nullptr;	//‰æ‘œ
 

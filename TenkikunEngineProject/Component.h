@@ -2,10 +2,10 @@
 
 #include <typeinfo>
 #include <iostream>
-#include "Info.h"
+#include "SceneInfo.h"
 
 class GameObject;
-class Component : public Info
+class Component : public SceneInfo
 {
 	public:
 		GameObject* gameobject = nullptr;	//‚±‚ÌComponent‚ğ‚ÂGameObject

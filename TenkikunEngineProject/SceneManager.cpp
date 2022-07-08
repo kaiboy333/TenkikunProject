@@ -1,18 +1,28 @@
 #include "SceneManager.h"
 #include "ProjectFileManager.h"
+#include "MyString.h"
 
 SceneManager::SceneManager()
 {
-	AddScene();	//シーンを作成
+	MakeScene();	//シーンを作成
 }
 
 void SceneManager::LoadScene(std::filesystem::path scenePath)
 {
-	//シーンファイルを開く
-
-	//シーンファイルから読み込み、シーンを作成
-
-	//今のシーンに登録
+	//シーンファイルだったら
+	if (ProjectFileManager::GetFileType(scenePath) == ProjectFileManager::FileType::Scene) {
+		//シーンファイルを開く
+		std::ifstream ifs(scenePath);
+		//開けたら
+		if (ifs) {
+			//シーンファイルから読み込み、シーンを作成
+			Scene* scene = MakeSceneFromFile(scenePath);
+			//シーンのパスを設定
+			scene->scenePath = scenePath;
+			nowScene = scene;	//登録
+			scene->Init();	//初期化
+		}
+	}
 }
 
 Scene* SceneManager::GetNowScene()
@@ -34,6 +44,8 @@ Scene* SceneManager::GetNowScene()
 
 Scene* SceneManager::MakeScene()
 {
+	Scene* scene = nullptr;
+
 	//今のパスにシーンファイルを設定
 	std::filesystem::path scenePath(ProjectFileManager::currentPath.string() + ".scene");
 
@@ -41,7 +53,7 @@ Scene* SceneManager::MakeScene()
 	//シーンファイルを作成、開く
 	if (ofs) {
 		//シーンを作成
-		Scene* scene = new Scene();
+		scene = new Scene();
 		//シーンのパスを設定
 		scene->scenePath = scenePath;
 		//もし、現在のシーンが登録されていなかったら
@@ -53,6 +65,13 @@ Scene* SceneManager::MakeScene()
 		ProjectFileManager::WriteToKumoFile(std::filesystem::path(scenePath.string() + ".kumo"));
 	}
 
+	return scene;
+}
+
+Scene* SceneManager::MakeSceneFromFile(std::filesystem::path scenePath)
+{
+	//行たちを読み込み
+	std::vector<std::string> lines = MyString::GetLines(scenePath);
 }
 
 Scene* SceneManager::nowScene = nullptr;	//現在のScene

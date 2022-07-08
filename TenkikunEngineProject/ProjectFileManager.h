@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <unordered_map>
 #include "Info.h"
+#include <random>
+#include "Scene.h"
 
 class ProjectFileManager
 {
@@ -18,6 +20,14 @@ class ProjectFileManager
 			Scene,
 			None,
 		};
+
+		//ランダム関連(fileID)
+		static const int MIN = 1;
+		static const int MAX = 100000000;
+
+		static std::random_device rd;
+		static std::default_random_engine eng;
+		static std::uniform_int_distribution<int> distr;
 
 		static std::filesystem::path currentPath;	//現在のパス
 
@@ -42,9 +52,13 @@ class ProjectFileManager
 
 		static void WriteToKumoFile(std::filesystem::path kumoPath);	//雲ファイルに記述する
 
+		static void WriteToSceneFile(Scene* scene);	//現在のシーンの情報をシーンファイルに書き込む
+
 	private:
 		static void WriteToInfo(std::filesystem::path kumoPath);	//雲ファイルからInfoを作成
 
 		static std::string CreateGUID();	//GUIDを生成する(stringで)
+
+		static int CreateFileID();	//fileIDを生成する(intで)
 };
 

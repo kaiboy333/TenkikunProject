@@ -9,10 +9,11 @@
 #include <typeinfo>
 #include "SceneManager.h"
 #include "Property.h"
+#include "SceneInfo.h"
 
 class Scene;
 class Camera;
-class GameObject
+class GameObject : public SceneInfo
 {
 	private:
 		std::string name = "";

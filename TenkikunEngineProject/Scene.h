@@ -40,8 +40,6 @@ class Scene
 
 		Camera* GetNowCamera();
 
-		void WriteToSceneFile();	//現在のシーンの情報をシーンファイルに書き込む
-
 	private:
 		int drawCameraNo = 0;
 };

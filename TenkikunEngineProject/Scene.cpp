@@ -3,6 +3,7 @@
 #include "ImageRenderer.h"
 #include "Animator.h"
 #include "ProjectFileManager.h"
+#include <unordered_map>
 
 Scene::Scene()
 {
@@ -99,18 +100,6 @@ Camera* Scene::GetNowCamera()
 {
 	return cameras[drawCameraNo];
 }
-
-void Scene::WriteToSceneFile()
-{
-	for (GameObject* gameobject : gameobjects) {
-		//ゲームオブジェクトの情報を書き込む
-
-		for (Component* component : gameobject->components) {
-			//コンポーネントの情報を書き込む
-		}
-	}
-}
-
 
 //void Scene::DestroyGameObject(GameObject* gameobject)
 //{

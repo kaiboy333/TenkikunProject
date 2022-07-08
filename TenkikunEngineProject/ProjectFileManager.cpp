@@ -130,6 +130,8 @@ void ProjectFileManager::WriteToInfo(std::filesystem::path kumoPath)
 
 		//作成できたなら
 		if (info) {
+			//Infoにguidをセット
+			info->SetGUID(guidStr);
 			//マップに登録
 			idInfos.insert(std::make_pair(guidStr, info));
 		}
@@ -152,6 +154,83 @@ void ProjectFileManager::WriteToKumoFile(std::filesystem::path kumoPath)
 		}
 		else {
 			Debug::Log(kumoPath.string() + "は開けませんでした。\n");
+		}
+	}
+}
+
+void ProjectFileManager::WriteToSceneFile(Scene* scene)
+{
+	//シーンファイルを開く
+	std::ofstream ofs(scene->scenePath);
+	//開けたら
+	if (ofs) {
+		//クラスとファイルIDのマップを作成
+		std::unordered_map<SceneInfo*, int> fileIDs;
+
+		for (GameObject* gameobject : scene->gameobjects) {
+			//クラス名書き込む
+			ofs << typeid(gameobject).name() << std::endl;
+			//ファイルIDを生成
+			int fileID = CreateFileID();
+			//マップに追加
+			fileIDs.insert(std::make_pair(gameobject, fileID));
+
+			//ファイルIDを書き込む
+			ofs << "fileID : " << fileID << std::endl;
+			//名前を書き込む
+			ofs << gameobject->GetName() << std::endl;
+			//コンポーネントを書き込む
+			ofs << "components :" << std::endl;
+			for (Component* component : gameobject->components) {
+				//コンポーネントのファイルIDが生成されていないなら
+				if (!fileIDs.contains(component)) {
+					//IDを作成
+					fileID++;
+					//マップに追加
+					fileIDs.insert(std::make_pair(component, fileID));
+				}
+				//そのIDを書き込む
+				ofs << " component : {fileID : " << fileIDs[component] << "}" << std::endl;
+			}
+
+			for (Component* component : gameobject->components) {
+				//クラス名書き込む
+				ofs << typeid(component).name() << std::endl;
+				//ファイルIDを書き込む
+				ofs << "fileID : " << fileIDs[component] << std::endl;
+				//ゲームオブジェクトを書き込む
+				ofs << "gameobject : {fileID : " << fileIDs[gameobject] << "}" << std::endl;
+
+				//タイプ取得
+				const std::type_info& type = typeid(*component);
+				//Transformだったら
+				if (type == typeid(Transform)) {
+					Transform* transform = static_cast<Transform*>(component);
+					//localPositionを書き込む
+					Vector3 localPos = transform->localPosition;
+					ofs << "localPosition : {x : " << localPos.x << ", y : " << localPos.y << ", z : " << localPos.z << "}";
+					//localRotationを書き込む
+					Vector3 localRote = transform->localRotation;
+					ofs << "localRotation : {x : " << localRote.x << ", y : " << localRote.y << ", z : " << localRote.z << "}";
+					//localScaleを書き込む
+					Vector3 localScale = transform->localScale;
+					ofs << "localScale : {x : " << localScale.x << ", y : " << localScale.y << ", z : " << localScale.z << "}";
+				}
+				//Cameraなら
+				else if (type == typeid(Camera)) {
+
+				}
+				//ImageRendererなら
+				else if (type == typeid(ImageRenderer)) {
+					ImageRenderer* imageRenderer = static_cast<ImageRenderer*>(component);
+					//isFlipXを書き込む
+					ofs << "isFlipX : " << (int)imageRenderer->isFlipX << std::endl;
+					//isFlipYを書き込む
+					ofs << "isFlipY : " << (int)imageRenderer->isFlipY << std::endl;
+					//imageを書き込む(guid)
+					ofs << "image : {guid : " << imageRenderer->image->GetGUID() << "}" << std::endl;
+				}
+			}
 		}
 	}
 }
@@ -183,6 +262,12 @@ std::string ProjectFileManager::CreateGUID()
 	return guidStr;
 }
 
+int ProjectFileManager::CreateFileID()
+{
+	//ランダムに生成
+	return distr(eng);
+}
+
 std::filesystem::path ProjectFileManager::assetFilePath;
 
 std::filesystem::path ProjectFileManager::currentPath;
@@ -192,3 +277,8 @@ std::string ProjectFileManager::assetParentPathName = "";
 std::vector<std::filesystem::path> ProjectFileManager::dragFilePathes;
 
 std::unordered_map<std::string, Info*> ProjectFileManager::idInfos;
+
+//ランダム生成期の初期化
+std::random_device ProjectFileManager::rd;
+std::default_random_engine ProjectFileManager::eng = std::default_random_engine(rd);
+std::uniform_int_distribution<int> ProjectFileManager::distr = std::uniform_int_distribution<int>(ProjectFileManager::MIN, ProjectFileManager::MAX);

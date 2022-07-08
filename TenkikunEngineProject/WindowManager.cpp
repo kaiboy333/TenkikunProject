@@ -1,5 +1,6 @@
 #include "WindowManager.h"
 #include "Debug.h"
+#include "ProjectFileManager.h"
 
 void WindowManager::Draw()
 {
@@ -47,7 +48,7 @@ void WindowManager::Update()
 		//編集モードなら
 		if (SceneManager::playMode == SceneManager::PlayMode::EDIT) {
 			//現在のシーンをセーブ(シーンファイルに書き込む)
-			SceneManager::GetNowScene()->WriteToSceneFile();
+			ProjectFileManager::WriteToSceneFile(SceneManager::GetNowScene());
 		}
 		else {
 			Debug::Log("プレイ中はセーブできません。");
