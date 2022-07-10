@@ -20,8 +20,6 @@ class GameObject : public SceneInfo
 
 		void SetTreeNodeName(std::string name);	//–¼‘O•ÏX
 
-		void InternalAddComponent(Component* component);	//ŽÀÛ‚É’Ç‰Á‚·‚éŠÖ”
-
 	public:
 		Transform* transform = nullptr;	//ˆÊ’u‚È‚Ç‚Ìî•ñ
 
@@ -44,12 +42,6 @@ class GameObject : public SceneInfo
 		void SetName(std::string name);
 		std::string GetName();
 };
-
-inline void GameObject::InternalAddComponent(Component* component)
-{
-	//component->gameobject = this;	//Component‚ÉGameObject‚ð•R‚Ã‚¯‚é
-	//this->components.emplace_back(component);	//––”ö‚É’Ç‰Á
-}
 
 template<class T>
 inline T* GameObject::AddComponent()

@@ -13,9 +13,8 @@ Scene::Scene()
 void Scene::Init()
 {
 	Window* window = WindowManager::hierarchyWindow;
-	treeList = new TreeList(window->startX, window->startY, window->width, window->height, window, true, true, this->sceneName);
-
-	CreateCamera();	//カメラ生成
+	treeList = new TreeList(window->startX, window->startY, window->width, window->height, window, true, true, this->name);
+	SetName("Scene");	//名前初期化
 }
 
 void Scene::Update()
@@ -99,6 +98,32 @@ void Scene::Destroy(GameObject* gameobject)
 Camera* Scene::GetNowCamera()
 {
 	return cameras[drawCameraNo];
+}
+
+std::string Scene::GetName()
+{
+	return name;
+}
+
+void Scene::SetName(std::string name)
+{
+	int no = 1;	//被り防止用番号
+	//シーンパスのマップを取得
+	std::unordered_map<std::string, std::filesystem::path>& map = SceneManager::scenePathes;
+	//被らなくなるまで繰り返す
+	while (map.contains(name)) {
+		name = name + " (" + std::to_string(no++) + ")";	//新しい候補の名前を作成
+	}
+	//TreeListの名前を変える
+	TreeList* treeList = SceneManager::GetNowScene()->treeList;
+	TreeNode* node = treeList->GetRoot();	//ルートノード取得
+	if (node) {
+		//名前セット
+		node->SetElement(name);
+	}
+	//シーンパスのマップの名前を変える(置き換え)
+	map.insert_or_assign(map.find(this->name), name, map[this->name]);
+	this->name = name;	//実際に変える
 }
 
 //void Scene::DestroyGameObject(GameObject* gameobject)

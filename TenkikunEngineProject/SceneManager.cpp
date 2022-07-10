@@ -1,27 +1,41 @@
 #include "SceneManager.h"
 #include "ProjectFileManager.h"
 #include "MyString.h"
+#include "Debug.h"
 
 SceneManager::SceneManager()
 {
-	MakeScene();	//シーンを作成
+	//シーンが何もないなら
+	if (scenePathes.size() == 0) {
+		MakeScene();	//シーンを作成
+	}
 }
 
-void SceneManager::LoadScene(std::filesystem::path scenePath)
+void SceneManager::LoadScene(std::string sceneName)
 {
-	//シーンファイルだったら
-	if (ProjectFileManager::GetFileType(scenePath) == ProjectFileManager::FileType::Scene) {
-		//シーンファイルを開く
-		std::ifstream ifs(scenePath);
-		//開けたら
-		if (ifs) {
-			//シーンファイルから読み込み、シーンを作成
-			Scene* scene = MakeSceneFromFile(scenePath);
-			//シーンのパスを設定
-			scene->scenePath = scenePath;
-			nowScene = scene;	//登録
-			scene->Init();	//初期化
+	//シーンが存在するなら
+	if (scenePathes.contains(sceneName)) {
+		//シーンパスを取得
+		std::filesystem::path scenePath = scenePathes[sceneName];
+		//シーンファイルだったら
+		if (ProjectFileManager::GetFileType(scenePath) == ProjectFileManager::FileType::Scene) {
+			//シーンファイルを開く
+			std::ifstream ifs(scenePath);
+			//開けたら
+			if (ifs) {
+				//シーンを作成
+				Scene* scene = new Scene();
+				//シーンのパスを設定
+				scene->scenePath = scenePath;
+				nowScene = scene;	//登録
+				scene->Init();	//初期化
+				//シーンファイルから読み込む
+				ProjectFileManager::LoadSceneFromFile(scenePath, scene);
+			}
 		}
+	}
+	else {
+		Debug::Log("そのSceneの名前は存在しません。\n");
 	}
 }
 
@@ -30,19 +44,7 @@ Scene* SceneManager::GetNowScene()
 	return nowScene;
 }
 
-//Scene* SceneManager::AddScene()
-//{
-//	Scene* scene = new Scene();
-//	scenes.emplace_back(scene);	//リストに追加
-//	//もし、現在のシーンが登録されていなかったら
-//	if (nowScene == nullptr) {
-//		nowScene = scene;	//登録
-//	}
-//	scene->Init();
-//	return scene;
-//}
-
-Scene* SceneManager::MakeScene()
+void SceneManager::MakeScene()
 {
 	Scene* scene = nullptr;
 
@@ -61,18 +63,19 @@ Scene* SceneManager::MakeScene()
 			nowScene = scene;	//登録
 		}
 		scene->Init();	//初期化
-		//雲ファイルも作成、書き込み
-		ProjectFileManager::WriteToKumoFile(std::filesystem::path(scenePath.string() + ".kumo"));
+
+		scene->CreateCamera();	//カメラ生成
+		scene->CreateSquare();	//四角生成
+
+
+		//ツリーリストに追加、雲ファイルも作成
+		WindowManager::projectWindow->SetFileChildrenToTreeList(scenePath);
+		//ファイルアイコン更新
+		WindowManager::projectWindow->filePrintRect->LoadFoler();
 	}
-
-	return scene;
-}
-
-Scene* SceneManager::MakeSceneFromFile(std::filesystem::path scenePath)
-{
-	//行たちを読み込み
-	std::vector<std::string> lines = MyString::GetLines(scenePath);
 }
 
 Scene* SceneManager::nowScene = nullptr;	//現在のScene
 SceneManager::PlayMode SceneManager::playMode = PlayMode::EDIT;	//初期は編集モード
+
+std::unordered_map<std::string, std::filesystem::path> SceneManager::scenePathes;

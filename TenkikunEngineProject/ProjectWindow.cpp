@@ -83,5 +83,13 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path addPath)
 				pathes.push_back(childPath);
 			}
 		}
+		else {
+			//ファイルがシーンファイルなら
+			if (ProjectFileManager::GetFileType(path) == ProjectFileManager::FileType::Scene) {
+				std::string sceneName = path.string().substr(0, path.string().length() - path.extension().string().length());
+				//シーンマネージャーのリストに追加
+				SceneManager::scenePathes.insert(std::make_pair(sceneName, path));
+			}
+		}
 	}
 }

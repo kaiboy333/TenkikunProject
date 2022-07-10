@@ -49,6 +49,7 @@ void WindowManager::Update()
 		if (SceneManager::playMode == SceneManager::PlayMode::EDIT) {
 			//現在のシーンをセーブ(シーンファイルに書き込む)
 			ProjectFileManager::WriteToSceneFile(SceneManager::GetNowScene());
+			Debug::Log(SceneManager::GetNowScene()->GetName() + "をセーブしました。\n");
 		}
 		else {
 			Debug::Log("プレイ中はセーブできません。");

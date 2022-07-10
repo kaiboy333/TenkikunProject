@@ -72,6 +72,9 @@
     <Filter Include="ソース ファイル\main\window\project\icon">
       <UniqueIdentifier>{b50cd0ec-2cab-44fe-8563-33dc784f407e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\info">
+      <UniqueIdentifier>{8b5543a8-28d3-4899-8392-f1a67b57d9b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -207,6 +210,12 @@
       <Filter>ソース ファイル\main\window\project\icon</Filter>
     </ClCompile>
     <ClCompile Include="Info.cpp">
+      <Filter>ソース ファイル\info</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneInfo.cpp">
+      <Filter>ソース ファイル\info</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -367,7 +376,12 @@
     <ClInclude Include="ImageIcon.h">
       <Filter>ソース ファイル\main\window\project\icon</Filter>
     </ClInclude>
-    <ClInclude Include="Info.h" />
+    <ClInclude Include="Info.h">
+      <Filter>ソース ファイル\info</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneInfo.h">
+      <Filter>ソース ファイル\info</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="image\square.png">

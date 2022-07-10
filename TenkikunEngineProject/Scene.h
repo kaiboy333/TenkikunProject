@@ -12,7 +12,6 @@ class TreeList;
 class Scene
 {
 	public:
-		std::string sceneName = "Scene1";	//Sceneの名前
 		std::vector<GameObject*> gameobjects;	//GameObjectたち
 		std::vector<Camera*> cameras;	//Cameraたち
 
@@ -36,11 +35,14 @@ class Scene
 
 		void Destroy(GameObject* gameobject);	//指定のGameObjectを削除
 
-		//void RemoveGameObject(GameObject* gameobject);	//指定のGameObjectをリストから削除
-
 		Camera* GetNowCamera();
 
+		std::string GetName();
+		void SetName(std::string name);
+
 	private:
+		std::string name = "";	//Sceneの名前
+
 		int drawCameraNo = 0;
 };
 

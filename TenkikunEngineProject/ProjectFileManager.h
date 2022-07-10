@@ -54,11 +54,31 @@ class ProjectFileManager
 
 		static void WriteToSceneFile(Scene* scene);	//現在のシーンの情報をシーンファイルに書き込む
 
+		static void LoadSceneFromFile(std::filesystem::path scenePath, Scene* scene);	//シーンファイルからシーンを作成
+
 	private:
 		static void WriteToInfo(std::filesystem::path kumoPath);	//雲ファイルからInfoを作成
 
 		static std::string CreateGUID();	//GUIDを生成する(stringで)
 
 		static int CreateFileID();	//fileIDを生成する(intで)
+
+		template <class T, class K>
+		static K GetValue(std::unordered_map<T, K>& map, T key, K value);	//マップのvalueを取得、なかったら新しいvalueを取得
 };
 
+template<class T, class K>
+inline K ProjectFileManager::GetValue(std::unordered_map<T, K>& map, T key, K value)
+{
+	//キーが見つからなかったなら
+	if (!map.contains(key)) {
+		//新しく作る
+		map.insert(std::make_pair(key, value));
+		//その値を返す
+		return value;
+	}
+	else {
+		//既にある値を返す
+		return map[key];
+	}
+}

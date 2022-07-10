@@ -7,6 +7,7 @@
 #include "MyString.h"
 #include "Image.h"
 #include <string>
+#include "Script.h"
 
 ProjectFileManager::ProjectFileManager()
 {
@@ -167,39 +168,43 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 		//クラスとファイルIDのマップを作成
 		std::unordered_map<SceneInfo*, int> fileIDs;
 
+		//シーン名を書き込む
+		ofs << "sceneName: " << scene->GetName() << std::endl;
+
 		for (GameObject* gameobject : scene->gameobjects) {
 			//クラス名書き込む
 			ofs << typeid(gameobject).name() << std::endl;
+
 			//ファイルIDを生成
-			int fileID = CreateFileID();
-			//マップに追加
-			fileIDs.insert(std::make_pair(gameobject, fileID));
+			int fileID = GetValue<SceneInfo*, int>(fileIDs, gameobject, CreateFileID());
 
 			//ファイルIDを書き込む
-			ofs << "fileID : " << fileID << std::endl;
+			ofs << "fileID: " << fileID << std::endl;
+
 			//名前を書き込む
-			ofs << gameobject->GetName() << std::endl;
-			//コンポーネントを書き込む
-			ofs << "components :" << std::endl;
+			ofs << "name: " << gameobject->GetName() << std::endl;
+
+			//コンポーネントの数を書き込む
+			ofs << "components: " << gameobject->components.size() << std::endl;
 			for (Component* component : gameobject->components) {
-				//コンポーネントのファイルIDが生成されていないなら
-				if (!fileIDs.contains(component)) {
-					//IDを作成
-					fileID++;
-					//マップに追加
-					fileIDs.insert(std::make_pair(component, fileID));
-				}
-				//そのIDを書き込む
-				ofs << " component : {fileID : " << fileIDs[component] << "}" << std::endl;
+				//ファイルIDを取得
+				fileID = GetValue<SceneInfo*, int>(fileIDs, component, CreateFileID());
+				//IDを書き込む
+				ofs << " component: {fileID: " << fileID << " }" << std::endl;
 			}
 
 			for (Component* component : gameobject->components) {
 				//クラス名書き込む
 				ofs << typeid(component).name() << std::endl;
-				//ファイルIDを書き込む
-				ofs << "fileID : " << fileIDs[component] << std::endl;
+
+				//ファイルIDを取得
+				fileID = GetValue<SceneInfo*, int>(fileIDs, component, CreateFileID());
+
+				//IDを書き込む
+				ofs << " component: {fileID: " << fileID << " }" << std::endl;
+
 				//ゲームオブジェクトを書き込む
-				ofs << "gameobject : {fileID : " << fileIDs[gameobject] << "}" << std::endl;
+				ofs << "gameobject: {fileID: " << fileIDs[gameobject] << " }" << std::endl;
 
 				//タイプ取得
 				const std::type_info& type = typeid(*component);
@@ -208,13 +213,20 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 					Transform* transform = static_cast<Transform*>(component);
 					//localPositionを書き込む
 					Vector3 localPos = transform->localPosition;
-					ofs << "localPosition : {x : " << localPos.x << ", y : " << localPos.y << ", z : " << localPos.z << "}";
+					ofs << "localPosition: {x: " << localPos.x << " ,y: " << localPos.y << ",z: " << localPos.z << " }";
+
 					//localRotationを書き込む
 					Vector3 localRote = transform->localRotation;
-					ofs << "localRotation : {x : " << localRote.x << ", y : " << localRote.y << ", z : " << localRote.z << "}";
+					ofs << "localRotation: {x: " << localRote.x << " ,y: " << localRote.y << ",z: " << localRote.z << " }";
+
 					//localScaleを書き込む
 					Vector3 localScale = transform->localScale;
-					ofs << "localScale : {x : " << localScale.x << ", y : " << localScale.y << ", z : " << localScale.z << "}";
+					ofs << "localScale: {x: " << localScale.x << " ,y: " << localScale.y << ",z: " << localScale.z << " }";
+
+					//親のTransformのID取得
+					fileID = GetValue<SceneInfo*, int>(fileIDs, transform->parent, CreateFileID());
+					//IDを書き込む
+					ofs << " parent: {fileID: " << fileID << " }" << std::endl;
 				}
 				//Cameraなら
 				else if (type == typeid(Camera)) {
@@ -224,16 +236,141 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 				else if (type == typeid(ImageRenderer)) {
 					ImageRenderer* imageRenderer = static_cast<ImageRenderer*>(component);
 					//isFlipXを書き込む
-					ofs << "isFlipX : " << (int)imageRenderer->isFlipX << std::endl;
+					ofs << "isFlipX: " << (int)imageRenderer->isFlipX << std::endl;
 					//isFlipYを書き込む
-					ofs << "isFlipY : " << (int)imageRenderer->isFlipY << std::endl;
+					ofs << "isFlipY: " << (int)imageRenderer->isFlipY << std::endl;
 					//imageを書き込む(guid)
-					ofs << "image : {guid : " << imageRenderer->image->GetGUID() << "}" << std::endl;
+					ofs << "image: {guid: " << imageRenderer->image->GetGUID() << " }" << std::endl;
 				}
+				////Scriptなら
+				//else if (type == typeid(Script)) {
+
+				//}
 			}
 		}
 	}
 }
+
+void ProjectFileManager::LoadSceneFromFile(std::filesystem::path scenePath, Scene* scene)
+{
+	//行たちを読み込み
+	std::vector<std::string> lines = MyString::GetLines(scenePath);
+	int row = 0;
+	//ファイルIDとクラスマップを作成
+	std::unordered_map<int, SceneInfo*> sceneInfos;
+
+	//シーン名取得
+	scene->SetName(MyString::Split(lines[row++], ' ')[1]);
+
+	//読み込める限り
+	while (sceneInfos.size() > row) {
+		//クラス名を取得
+		std::string className = lines[row++];
+		SceneInfo* sceneInfo = nullptr;
+		int fileID;
+
+		//ファイルIDを取得
+		fileID = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+
+		//GameObjectなら
+		if (className == typeid(GameObject).name()) {
+			//クラス生成
+			GameObject* gameobject = new GameObject();
+			//名前取得
+			gameobject->SetName(MyString::Split(lines[row++], ' ')[1]);
+			//コンポーネントの数取得
+			int componentNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			for (int i = 0; i < componentNum; i++, row++) {
+				//コンポーネントを取得(SceneInfoをを無理やりComponentにしている)
+				Component* component = static_cast<Component*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new SceneInfo()));
+				//ゲームオブジェクトのcomponentsに追加
+				gameobject->components.push_back(component);
+			}
+
+			//シーンにゲームオブジェクトを追加
+			scene->gameobjects.push_back(gameobject);
+		}
+		//Transformなら
+		else if (className == typeid(Transform).name()) {
+			//コンポーネントを取得
+			Component* component = static_cast<Component*>(sceneInfos[fileID]);
+			//Transformを作成
+			Transform transform = Transform();
+
+			//ゲームオブジェクトのファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			//ゲームオブジェクトをセット
+			transform.gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+
+			//localPositionをセット
+			std::vector<std::string> words = MyString::Split(lines[row++], ' ');
+			Vector3 localPos = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			transform.localPosition = localPos;
+
+			//localRotationをセット
+			words = MyString::Split(lines[row++], ' ');
+			Vector3 localRote = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			transform.localRotation = localRote;
+
+			//localScaleをセット
+			words = MyString::Split(lines[row++], ' ');
+			Vector3 localScale = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			transform.localScale = localScale;
+
+			//親をセット
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			Transform* parent = static_cast<Transform*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new Transform()));
+			transform.SetParent(parent);
+
+			//コンポーネントの中身をTransformに変える
+			*(component) = transform;
+		}
+		//Cameraなら
+		else if (className == typeid(Camera).name()) {
+			//コンポーネントを取得
+			Component* component = static_cast<Component*>(sceneInfos[fileID]);
+			//Cameraを作成
+			Camera camera = Camera();
+
+			//ゲームオブジェクトのファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			//ゲームオブジェクトをセット
+			camera.gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+
+			//コンポーネントの中身をCameraに変える
+			*(component) = camera;
+		}
+		//ImageRendererなら
+		else if (className == typeid(ImageRenderer).name()) {
+			//コンポーネントを取得
+			Component* component = static_cast<Component*>(sceneInfos[fileID]);
+			//ImageRendererを作成
+			ImageRenderer imageRenderer = ImageRenderer();
+
+			//ゲームオブジェクトのファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			//ゲームオブジェクトをセット
+			imageRenderer.gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+
+			//isFlipXを取得
+			imageRenderer.isFlipX = (bool)(std::stoi(MyString::Split(lines[row++], ' ')[1]));
+
+			//isFlipYを取得
+			imageRenderer.isFlipY = (bool)(std::stoi(MyString::Split(lines[row++], ' ')[1]));
+
+			//imageを取得
+			imageRenderer.image = static_cast<Image*>(idInfos[MyString::Split(lines[row++], ' ')[2]]);
+
+			//コンポーネントの中身をImageRendererに変える
+			*(component) = imageRenderer;
+		}
+		//else if (className == typeid(Script).name()) {
+
+		//}
+	}
+}
+
+
 
 std::string ProjectFileManager::CreateGUID()
 {
@@ -280,5 +417,5 @@ std::unordered_map<std::string, Info*> ProjectFileManager::idInfos;
 
 //ランダム生成期の初期化
 std::random_device ProjectFileManager::rd;
-std::default_random_engine ProjectFileManager::eng = std::default_random_engine(rd);
-std::uniform_int_distribution<int> ProjectFileManager::distr = std::uniform_int_distribution<int>(ProjectFileManager::MIN, ProjectFileManager::MAX);
+std::default_random_engine ProjectFileManager::eng(ProjectFileManager::rd());
+std::uniform_int_distribution<int> ProjectFileManager::distr(ProjectFileManager::MIN, ProjectFileManager::MAX);

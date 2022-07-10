@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include <filesystem>
 #include <fstream>
+#include <unordered_map>
 
 class Scene;
 class SceneManager
@@ -19,17 +20,17 @@ class SceneManager
 
 		static PlayMode playMode;
 
+		static std::unordered_map<std::string, std::filesystem::path> scenePathes;	//シーン名とそのパス
+
 		SceneManager();
 
-		static void LoadScene(std::filesystem::path scenePath);	//シーンファイルからシーンを作成し、読み込む
+		static void LoadScene(std::string sceneName);	//シーンの名前からシーンを作成し、読み込む
 
 		static Scene* GetNowScene();	//現在のシーン(getter)
 
 		//static Scene* AddScene();	//シーンを作成、登録
 
-		static Scene* MakeScene();	//シーンを作成
-
-		static Scene* MakeSceneFromFile(std::filesystem::path scenePath);	//シーンファイルからシーンを作成
+		static void MakeScene();	//シーンを作成
 
 	private:
 		static Scene* nowScene;	//現在のScene

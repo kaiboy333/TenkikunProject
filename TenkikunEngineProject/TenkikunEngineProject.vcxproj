@@ -148,6 +148,7 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentRect.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="FileIcon.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneInfo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="AnimationState.cpp" />
@@ -228,6 +230,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="AnimationState.h" />

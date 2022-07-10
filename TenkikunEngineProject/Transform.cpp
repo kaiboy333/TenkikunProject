@@ -44,7 +44,6 @@ void Transform::SetParent(Transform* newParent)
 	//親にセット
 	parent = newParent;
 
-
 	//親のワールドをセット
 	Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
 	//ワールド位置と親のワールド位置の差がローカル位置になる

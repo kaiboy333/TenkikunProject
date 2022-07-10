@@ -147,7 +147,7 @@ void FilePrintRect::LoadFoler()
 		}
 	}
 
-	int row = fileIcons.size() / maxFileNumInRow;
+	int row = (int)fileIcons.size() / maxFileNumInRow;
 	if ((int)fileIcons.size() % maxFileNumInRow != 0) {
 		row++;
 	}
