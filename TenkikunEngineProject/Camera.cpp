@@ -7,8 +7,6 @@ Camera::Camera()
 {
 	this->width = 700;
 	this->height = 500;
-	Scene* scene = SceneManager::GetNowScene();
-	scene->cameras.emplace_back(this);	//Scene‚É‚ ‚éCameraƒŠƒXƒg‚É©g‚ğ’Ç‰Á
 }
 
 void Camera::Update()

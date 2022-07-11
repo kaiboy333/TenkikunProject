@@ -109,23 +109,23 @@ void FilePrintRect::LoadFoler()
 					break;
 				case ProjectFileManager::FileType::Folder:
 					//フォルダアイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\folder.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\folder.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_cpp:
 					//スクリプト(cpp)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\script_cpp.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_cpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_hpp:
 					//スクリプト(hpp)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\script_hpp.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_hpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_h:
 					//スクリプト(h)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\script_h.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_h.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Scene:
 					//シーンアイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, "image\\Tenkikun.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\Tenkikun.png", childPath);
 					break;
 				case ProjectFileManager::FileType::None:
 					//何もしない

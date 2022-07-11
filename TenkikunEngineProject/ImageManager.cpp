@@ -1,13 +1,11 @@
 #include "ImageManager.h"
-#include "DxLib.h"
-#include "Image.h"
-#include <sstream>
+#include "Debug.h"
 
 ImageManager::ImageManager() {
 
 }
 
-int ImageManager::LoadAndGetImage(std::string path)
+int ImageManager::LoadAndGetImage(std::filesystem::path path)
 {
 	////もし、既に画像が読み込まれていたなら
 	//if (ghs.count(path.c_str())) {
@@ -16,14 +14,11 @@ int ImageManager::LoadAndGetImage(std::string path)
 
 	//画像を新しく読み込む
 	int gh;		//GraphicHandle
-	gh = LoadGraph(path.c_str());
+	gh = LoadGraph(path.string().c_str());
 	//画像が読み込めなかったら
 	if (gh == -1) {
-		std::stringstream ss;
-		ss << "画像ファイルが読み込めないよ: " << path << "\n";
-		OutputDebugString(ss.str().c_str());
+		Debug::Log("画像ファイルが読み込めないよ: " + path.string() + "\n");
 	}
-	//ghs[path] = gh;	//読み込めたらghsに追加
 	//それを返す
 	return gh;
 }
@@ -36,5 +31,3 @@ std::vector<int> ImageManager::LoadAndGetImages(std::vector<std::string> pathes)
 	}
 	return ghs;
 }
-
-//std::unordered_map<std::string, int*> ImageManager::ghs;

@@ -76,7 +76,7 @@ class Transform : public Component
 
 		void Update() override;	//親の相対によって変える
 
-		void SetParent(Transform* newParent);	//親オブジェクトをセットする
+		void SetParent(Transform* newParent, bool isChangeLocal = true);	//親オブジェクトをセットする(ローカルを変えるか)
 
 		std::vector<Transform*> children;	//子のTransformたち
 

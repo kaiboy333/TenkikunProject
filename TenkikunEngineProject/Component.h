@@ -12,5 +12,5 @@ class Component : public SceneInfo
 
 		bool canPutSameComponent = true;	//“¯‚¶Component‚ð“ü‚ê‚ç‚ê‚é‚©
 
-		virtual void Update() = 0;
+		virtual void Update();
 };

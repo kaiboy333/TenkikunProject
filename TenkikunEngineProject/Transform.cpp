@@ -12,7 +12,7 @@ void Transform::Update()
 
 }
 
-void Transform::SetParent(Transform* newParent)
+void Transform::SetParent(Transform* newParent, bool isChangeLocal)
 {
 	//新しい親が今の親と同じかまたは今の親が自身だったら
 	if (newParent == parent || newParent == this)
@@ -44,22 +44,45 @@ void Transform::SetParent(Transform* newParent)
 	//親にセット
 	parent = newParent;
 
-	//親のワールドをセット
-	Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
-	//ワールド位置と親のワールド位置の差がローカル位置になる
-	localPosition_t = position_t - parentPos;
+	if (isChangeLocal) {
+		//親のワールドをセット
+		Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
 
-	//親のワールドをセット
-	Vector3 parentRote = parent != nullptr ? parent->rotation_t : Vector3::Zero();
-	//ワールド回転と親のワールド回転の差がローカル回転になる
-	localRotation_t = rotation_t - parentRote;
+		//ワールド位置と親のワールド位置の差がローカル位置になる
+		localPosition_t = position_t - parentPos;
 
-	//親のワールドをセット
-	Vector3 parentScal = parent != nullptr ? parent->scale_t : Vector3::One();
-	//ワールド大きさから親のワールド大きさで割ったものがローカル大きさになる
-	localScale_t.x = scale_t.x / parentScal.x;
-	localScale_t.y = scale_t.y / parentScal.y;
-	localScale_t.z = scale_t.z / parentScal.z;
+		//親のワールドをセット
+		Vector3 parentRote = parent != nullptr ? parent->rotation_t : Vector3::Zero();
+		//ワールド回転と親のワールド回転の差がローカル回転になる
+		localRotation_t = rotation_t - parentRote;
+
+		//親のワールドをセット
+		Vector3 parentScal = parent != nullptr ? parent->scale_t : Vector3::One();
+		//ワールド大きさから親のワールド大きさで割ったものがローカル大きさになる
+		localScale_t.x = scale_t.x / parentScal.x;
+		localScale_t.y = scale_t.y / parentScal.y;
+		localScale_t.z = scale_t.z / parentScal.z;
+
+	}
+	else {
+		//親のワールドをセット
+		Vector3 parentPos = parent != nullptr ? parent->position_t : Vector3::Zero();
+
+		//親のワールド位置にローカル位置を足したのがワールド位置になる
+		position_t = parentPos + localPosition_t;
+
+		//親のワールドをセット
+		Vector3 parentRote = parent != nullptr ? parent->rotation_t : Vector3::Zero();
+		//親のワールド回転にローカル回転を足したのがワールド回転になる
+		rotation_t = parentRote + localRotation_t;
+
+		//親のワールドをセット
+		Vector3 parentScal = parent != nullptr ? parent->scale_t : Vector3::One();
+		//親のワールド大きさをローカルで掛けたものがワールド大きさになる
+		scale_t.x = parentScal.x * localScale_t.x;
+		scale_t.y = parentScal.y * localScale_t.y;
+		scale_t.z = parentScal.z * localScale_t.z;
+	}
 }
 
 void Transform::ChangedWorldPos(Vector3 pos)

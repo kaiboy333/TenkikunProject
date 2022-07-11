@@ -28,9 +28,9 @@ class SceneManager
 
 		static Scene* GetNowScene();	//現在のシーン(getter)
 
-		//static Scene* AddScene();	//シーンを作成、登録
-
 		static void MakeScene();	//シーンを作成
+
+		static void SaveScene();	//現在のシーンをセーブ
 
 	private:
 		static Scene* nowScene;	//現在のScene

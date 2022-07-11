@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="image">
-      <UniqueIdentifier>{61b0b7de-2bca-4b1c-a9ec-2e56ac21027c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\component">
       <UniqueIdentifier>{d045932d-5a6a-4704-8ba2-a30cd4e3c63e}</UniqueIdentifier>
     </Filter>
@@ -218,6 +215,9 @@
     <ClCompile Include="Component.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -384,116 +384,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="image\square.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\BG_02.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Block_0.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Block_1.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Block_2.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Block_3.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Coin_Spin0.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Coin_Spin1.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Coin_Spin2.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\Tenkikun.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Down0.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Down1.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\unityChan_idle0.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\unityChan_Idle1.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\unityChan_Idle2.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\unityChan_JumpDown0.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\unityChan_JumpDown1.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_JumpDown2.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_JumpDown3.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_JumpDown4.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_JumpUp0.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_JumpUp1.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run0.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run1.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run2.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run3.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run4.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run5.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run6.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\UnityChan_Run7.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\downArrow.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\rightArrow.png">
-      <Filter>image</Filter>
-    </Image>
     <Image Include="tenkikun.ico">
       <Filter>リソース ファイル</Filter>
-    </Image>
-    <Image Include="image\folder.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\script_cpp.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\script_h.png">
-      <Filter>image</Filter>
-    </Image>
-    <Image Include="image\script_hpp.png">
-      <Filter>image</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

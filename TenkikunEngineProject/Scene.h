@@ -13,11 +13,8 @@ class Scene
 {
 	public:
 		std::vector<GameObject*> gameobjects;	//GameObjectたち
-		std::vector<Camera*> cameras;	//Cameraたち
 
 		TreeList* treeList = nullptr;
-
-		int generateNum = 0;
 
 		std::filesystem::path scenePath;	//シーンファイルパス
 
@@ -35,14 +32,21 @@ class Scene
 
 		void Destroy(GameObject* gameobject);	//指定のGameObjectを削除
 
-		Camera* GetNowCamera();
+		void SetNowCamera(Camera* camera);	//カメラをセット
+		Camera* GetNowCamera();	//カメラを取得
+
+		void AddCamera(Camera* camera);	//カメラを追加
+
+		std::vector<Camera*> GetCameras();
 
 		std::string GetName();
-		void SetName(std::string name);
+		void SetName(std::string name, bool isForce);	//名前を変える(強制でその名前にする)
 
 	private:
 		std::string name = "";	//Sceneの名前
 
-		int drawCameraNo = 0;
+		Camera* nowCamera = nullptr;
+
+		std::vector<Camera*> cameras;	//Cameraたち
 };
 

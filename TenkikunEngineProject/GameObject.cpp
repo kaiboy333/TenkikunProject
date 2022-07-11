@@ -4,8 +4,7 @@
 
 GameObject::GameObject()
 {
-	Transform* transform = this->AddComponent<Transform>();	//Transform‚ð‚Â‚¢‚©
-	this->transform = transform;
+
 }
 
 void GameObject::Update()

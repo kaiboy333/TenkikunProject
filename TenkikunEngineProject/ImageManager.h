@@ -1,15 +1,16 @@
 #pragma once
 
-#include <iostream>
+#include "Image.h"
 #include <unordered_map>
+#include <filesystem>
 
 //画像管理クラス
 class ImageManager
 {
 	public:
-		//static std::unordered_map<std::string, int*> ghs;	//画像ファイルに対応したGraphicHandleを記録したもの
+		//static std::unordered_map<std::filesystem::path, Image*> imagePathes;	//画像ファイルパスたち
 
-		static int LoadAndGetImage(std::string path);	//画像に対応するGraphicHandleを返す、または作成して返す関数
+		static int LoadAndGetImage(std::filesystem::path path);	//画像に対応するGraphicHandleを返す、または作成して返す関数
 
 		static std::vector<int> LoadAndGetImages(std::vector<std::string> pathes);	//画像に対応するGraphicHandleを返す、または作成して返す関数(複数)
 

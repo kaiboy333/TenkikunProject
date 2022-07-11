@@ -44,16 +44,9 @@ void WindowManager::Update()
 	}
 
 	//Ctrl + Sを押したら
-	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL) && Input::GetKeyDown(Input::KeyCode::S)) {
-		//編集モードなら
-		if (SceneManager::playMode == SceneManager::PlayMode::EDIT) {
-			//現在のシーンをセーブ(シーンファイルに書き込む)
-			ProjectFileManager::WriteToSceneFile(SceneManager::GetNowScene());
-			Debug::Log(SceneManager::GetNowScene()->GetName() + "をセーブしました。\n");
-		}
-		else {
-			Debug::Log("プレイ中はセーブできません。");
-		}
+	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL, false) && Input::GetKeyDown(Input::KeyCode::S, false)) {
+		//シーンをセーブ
+		SceneManager::SaveScene();
 	}
 }
 

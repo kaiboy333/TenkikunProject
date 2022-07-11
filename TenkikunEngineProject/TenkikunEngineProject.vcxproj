@@ -158,6 +158,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageIcon.cpp" />
     <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -250,42 +251,6 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="image\BG_02.png" />
-    <Image Include="image\Block_0.png" />
-    <Image Include="image\Block_1.png" />
-    <Image Include="image\Block_2.png" />
-    <Image Include="image\Block_3.png" />
-    <Image Include="image\Coin_Spin0.png" />
-    <Image Include="image\Coin_Spin1.png" />
-    <Image Include="image\Coin_Spin2.png" />
-    <Image Include="image\downArrow.png" />
-    <Image Include="image\folder.png" />
-    <Image Include="image\rightArrow.png" />
-    <Image Include="image\script_cpp.png" />
-    <Image Include="image\script_h.png" />
-    <Image Include="image\script_hpp.png" />
-    <Image Include="image\square.png" />
-    <Image Include="image\Tenkikun.png" />
-    <Image Include="image\UnityChan_Down0.png" />
-    <Image Include="image\UnityChan_Down1.png" />
-    <Image Include="image\unityChan_idle0.png" />
-    <Image Include="image\unityChan_Idle1.png" />
-    <Image Include="image\unityChan_Idle2.png" />
-    <Image Include="image\unityChan_JumpDown0.png" />
-    <Image Include="image\unityChan_JumpDown1.png" />
-    <Image Include="image\UnityChan_JumpDown2.png" />
-    <Image Include="image\UnityChan_JumpDown3.png" />
-    <Image Include="image\UnityChan_JumpDown4.png" />
-    <Image Include="image\UnityChan_JumpUp0.png" />
-    <Image Include="image\UnityChan_JumpUp1.png" />
-    <Image Include="image\UnityChan_Run0.png" />
-    <Image Include="image\UnityChan_Run1.png" />
-    <Image Include="image\UnityChan_Run2.png" />
-    <Image Include="image\UnityChan_Run3.png" />
-    <Image Include="image\UnityChan_Run4.png" />
-    <Image Include="image\UnityChan_Run5.png" />
-    <Image Include="image\UnityChan_Run6.png" />
-    <Image Include="image\UnityChan_Run7.png" />
     <Image Include="tenkikun.ico" />
   </ItemGroup>
   <ItemGroup>

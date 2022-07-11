@@ -9,6 +9,11 @@ SceneManager::SceneManager()
 	if (scenePathes.size() == 0) {
 		MakeScene();	//シーンを作成
 	}
+	//あるなら
+	else {
+		//マップの最初のシーンパスを読み込む
+		LoadScene(scenePathes.begin()->first);
+	}
 }
 
 void SceneManager::LoadScene(std::string sceneName)
@@ -46,32 +51,50 @@ Scene* SceneManager::GetNowScene()
 
 void SceneManager::MakeScene()
 {
-	Scene* scene = nullptr;
+	//シーンを作成
+	Scene* scene = new Scene();
 
-	//今のパスにシーンファイルを設定
-	std::filesystem::path scenePath(ProjectFileManager::currentPath.string() + ".scene");
+	//もし、現在のシーンが登録されていなかったら
+	if (nowScene == nullptr) {
+		nowScene = scene;	//登録
+	}
+	scene->Init();	//初期化
+
+	//今のパスの中ににシーンファイルを設定
+	std::filesystem::path scenePath(ProjectFileManager::currentPath.string() + "\\" + scene->GetName() + ".scene");
+	//シーンのパスを設定
+	scene->scenePath = scenePath;
+
+	//シーンリストに追加
+	scenePathes.insert(std::make_pair(scene->GetName(), scenePath));
 
 	std::ofstream ofs(scenePath.c_str());
 	//シーンファイルを作成、開く
 	if (ofs) {
-		//シーンを作成
-		scene = new Scene();
-		//シーンのパスを設定
-		scene->scenePath = scenePath;
-		//もし、現在のシーンが登録されていなかったら
-		if (nowScene == nullptr) {
-			nowScene = scene;	//登録
-		}
-		scene->Init();	//初期化
+		//ツリーリストに追加、雲ファイルも作成
+		WindowManager::projectWindow->SetFileChildrenToTreeList(scenePath);
+		//ファイルアイコン更新
+		WindowManager::projectWindow->filePrintRect->LoadFoler();
 
 		scene->CreateCamera();	//カメラ生成
 		scene->CreateSquare();	//四角生成
 
 
-		//ツリーリストに追加、雲ファイルも作成
-		WindowManager::projectWindow->SetFileChildrenToTreeList(scenePath);
-		//ファイルアイコン更新
-		WindowManager::projectWindow->filePrintRect->LoadFoler();
+		//シーンをセーブ
+		SaveScene();
+	}
+}
+
+void SceneManager::SaveScene()
+{
+	//編集モードなら
+	if (playMode == PlayMode::EDIT) {
+		//現在のシーンをセーブ(シーンファイルに書き込む)
+		ProjectFileManager::WriteToSceneFile(nowScene);
+		Debug::Log(nowScene->GetName() + "をセーブしました。\n");
+	}
+	else {
+		Debug::Log("プレイ中はセーブできません。\n");
 	}
 }
 

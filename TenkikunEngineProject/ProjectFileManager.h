@@ -32,6 +32,8 @@ class ProjectFileManager
 		static std::filesystem::path currentPath;	//現在のパス
 
 		static std::filesystem::path assetFilePath;	//アセットフォルダがあるパス
+		static std::filesystem::path resourceFilePath;	//リソースフォルダがあるパス
+		static std::filesystem::path imageFilePath;	//エンジンで使う画像が入っているフォルダのパス
 
 		//アセットの絶対パスのファイル名だけ除いたもの
 		static std::string assetParentPathName;
@@ -56,6 +58,9 @@ class ProjectFileManager
 
 		static void LoadSceneFromFile(std::filesystem::path scenePath, Scene* scene);	//シーンファイルからシーンを作成
 
+		template<class T>
+		static std::vector<T*> GetSpecificInfos();	//idInfosにある特定(T)のクラスを取得する
+
 	private:
 		static void WriteToInfo(std::filesystem::path kumoPath);	//雲ファイルからInfoを作成
 
@@ -63,7 +68,7 @@ class ProjectFileManager
 
 		static int CreateFileID();	//fileIDを生成する(intで)
 
-		template <class T, class K>
+		template<class T, class K>
 		static K GetValue(std::unordered_map<T, K>& map, T key, K value);	//マップのvalueを取得、なかったら新しいvalueを取得
 };
 
@@ -81,4 +86,24 @@ inline K ProjectFileManager::GetValue(std::unordered_map<T, K>& map, T key, K va
 		//既にある値を返す
 		return map[key];
 	}
+}
+
+template<class T>
+inline std::vector<T*> ProjectFileManager::GetSpecificInfos()
+{
+	std::vector<T*> infos;
+
+	//回す
+	for (std::pair pair : idInfos) {
+		//このInfoクラスがTクラスであるなら
+		//キャスト変換可能なら
+		if (static_cast<T*>(pair.second) != nullptr) {
+			//キャストしてInfoを取得
+			T* info = static_cast<T*>(pair.second);
+			//リストに追加
+			infos.push_back(info);
+		}
+	}
+
+	return infos;
 }
