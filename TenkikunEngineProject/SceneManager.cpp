@@ -77,7 +77,7 @@ void SceneManager::MakeScene()
 		WindowManager::projectWindow->filePrintRect->LoadFoler();
 
 		scene->CreateCamera();	//カメラ生成
-		scene->CreateSquare();	//四角生成
+		scene->CreateTenkikun();	//天気くん生成
 
 
 		//シーンをセーブ

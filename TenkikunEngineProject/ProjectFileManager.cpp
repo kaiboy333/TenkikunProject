@@ -34,8 +34,14 @@ ProjectFileManager::ProjectFileManager()
 
 	//リソースフォルダ内に入れたい画像をコピー&ペースト
 	//四角の画像パスをコピー&ペースト
-	std::filesystem::path copyPath(imageFilePath.string() + "\\Square.png");
-	std::filesystem::path pastePath(resourceFilePath.string() + "\\" + copyPath.filename().string());
+	std::filesystem::path copyPath = std::filesystem::path(imageFilePath.string() + "\\Square.png");
+	std::filesystem::path pastePath = std::filesystem::path(resourceFilePath.string() + "\\" + copyPath.filename().string());
+	if (!std::filesystem::exists(pastePath)) {
+		filesystem::copy(copyPath, pastePath);
+	}
+	//天気くんの画像パスをコピー&ペースト
+	copyPath = std::filesystem::path(imageFilePath.string() + "\\Tenkikun.png");
+	pastePath = std::filesystem::path(resourceFilePath.string() + "\\" + copyPath.filename().string());
 	if (!std::filesystem::exists(pastePath)) {
 		filesystem::copy(copyPath, pastePath);
 	}
@@ -392,6 +398,8 @@ void ProjectFileManager::LoadSceneFromFile(std::filesystem::path scenePath, Scen
 			camera->gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 			//そのゲームオブジェクトに自身を追加
 			camera->gameobject->components.push_back(camera);
+			//シーンにカメラを追加、設定
+			scene->SetNowCamera(camera);
 
 			////コンポーネントの中身をCameraに変える
 			//*(&component) = camera;

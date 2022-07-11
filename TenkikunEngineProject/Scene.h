@@ -29,6 +29,7 @@ class Scene
 		GameObject* CreateEmpty();	//空のゲームオブジェクトを作成
 		GameObject* CreateSquare();	//四角い画像のゲームオブジェクトを作成
 		GameObject* CreateCamera();	//カメラゲームオブジェクトを作成
+		GameObject* CreateTenkikun();	//天気くんの画像のゲームオブジェクトを作成
 
 		void Destroy(GameObject* gameobject);	//指定のGameObjectを削除
 

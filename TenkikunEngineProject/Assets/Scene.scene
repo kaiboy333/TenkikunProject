@@ -1,38 +1,38 @@
 sceneName: Scene
 class GameObject
-	fileID: 86597393
+	fileID: 83397900
 	name: Main Camera
 	components: 2
-		component: {fileID: 43437542 }
-		component: {fileID: 86248844 }
+		component: {fileID: 60837987 }
+		component: {fileID: 22579636 }
 class Transform
-	fileID: 43437542
-	gameobject: {fileID: 86597393 }
+	fileID: 60837987
+	gameobject: {fileID: 83397900 }
 	localPosition: {x: 0 ,y: 0 ,z: 0 }
 	localRotation: {x: 0 ,y: 0 ,z: 0 }
 	localScale: {x: 1 ,y: 1 ,z: 1 }
 	children: 0
 	parent: {fileID: 0 }
 class Camera
-	fileID: 86248844
-	gameobject: {fileID: 86597393 }
+	fileID: 22579636
+	gameobject: {fileID: 83397900 }
 class GameObject
-	fileID: 24426985
-	name: Square
+	fileID: 44411006
+	name: Tenkikun
 	components: 2
-		component: {fileID: 48188210 }
-		component: {fileID: 92711501 }
+		component: {fileID: 57534375 }
+		component: {fileID: 56864244 }
 class Transform
-	fileID: 48188210
-	gameobject: {fileID: 24426985 }
-	localPosition: {x: 100 ,y: 0 ,z: 0 }
+	fileID: 57534375
+	gameobject: {fileID: 44411006 }
+	localPosition: {x: 30 ,y: 0 ,z: 0 }
 	localRotation: {x: 0 ,y: 0 ,z: 0 }
-	localScale: {x: 10 ,y: 5 ,z: 1 }
+	localScale: {x: 5 ,y: 5 ,z: 1 }
 	children: 0
 	parent: {fileID: 0 }
 class ImageRenderer
-	fileID: 92711501
-	gameobject: {fileID: 24426985 }
+	fileID: 56864244
+	gameobject: {fileID: 44411006 }
 	isFlipX: 0
 	isFlipY: 0
-	image: {guid: EE0E0BC4-9A1B-42F9-B4B4-F85F5C0950D1 }
+	image: {guid: 29C719C7-1C03-47D9-95FA-20C0BDA406AA }

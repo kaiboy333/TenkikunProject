@@ -73,6 +73,23 @@ GameObject* Scene::CreateCamera()
 	return gameobject;
 }
 
+GameObject* Scene::CreateTenkikun()
+{
+	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
+	gameobject->SetName("Tenkikun");	//名前変更
+
+	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
+	Component* component = static_cast<Component*>(imageRenderer);
+	//天気くんの画像を探す
+	for (Image* image : ProjectFileManager::GetSpecificInfos<Image>()) {
+		if (image->GetPath().string() == ProjectFileManager::resourceFilePath.string() + "\\Tenkikun.png") {
+			imageRenderer->image = image;	//imageをセット
+			break;
+		}
+	}
+	return gameobject;
+}
+
 void Scene::Destroy(GameObject* gameobject)
 {
 	std::vector<Transform*> transforms;
