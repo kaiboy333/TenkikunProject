@@ -13,6 +13,8 @@ class Window : public Rect
 
 		TriggerRect* GetSelectedTriggerRect();
 
+		std::vector<std::pair<int, std::function<void()>>> activeEvents;	//実行できるイベント関数
+
 		void RemoveTriggerRect(TriggerRect* triggerRect);
 		void AddTriggerRect(TriggerRect* triggerRect);
 
@@ -28,7 +30,6 @@ class Window : public Rect
 		TriggerRect* selectedTriggerRect = nullptr;	//選択中のTriggerRect
 
 		std::vector<TriggerRect*> triggerRects;	//反応する四角たち
-		std::vector<TriggerRect*> removeTriggerRects;	//反応する四角たち(消すやつ)
-		std::vector<TriggerRect*> addTriggerRects;	//反応する四角たち(追加するやつ)
+		//std::vector<TriggerRect*> removeTriggerRects;	//反応する四角たち(消すやつ)
+		//std::vector<TriggerRect*> addTriggerRects;	//反応する四角たち(追加するやつ)
 };
-

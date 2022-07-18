@@ -1,16 +1,19 @@
 #pragma once
 
 #include "Component.h"
+#include "MonoBehaviour.h"
 
-class Script : public Component
+class Script
 {
-	public:
-		void Update() override;
+	//public:
+	//	void SetMonoBehaviour(MonoBehaviour* mono);
+	//	MonoBehaviour* GetMonoBehaviour();
 
-		virtual void ScriptStart() = 0;
-		virtual void ScriptUpdate() = 0;
+	//	virtual void Update();
 
-	private:
-		bool isFirstUpdate = true;	//Updateが最初に呼ばれたか
+	//private:
+	//	bool isFirstUpdate = true;	//Updateが最初に呼ばれたか
+
+	//	MonoBehaviour* mono = nullptr;	//スクリプトで実際に動かすクラス
 };
 

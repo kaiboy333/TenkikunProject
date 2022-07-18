@@ -22,15 +22,27 @@ AnimationState* AnimatorController::AddAnimation(Animation* animation)
 
 void AnimatorController::AddIntParamater(std::string name, int value = 0)
 {
-	intParamaters.insert_or_assign(name, value);
+	AnimationParamater* animationParamater = new AnimationParamater(name);
+	animationParamater->type = AnimationParamater::Type::Int;
+	animationParamater->intValue = value;
+
+	paramaters.insert_or_assign(name, animationParamater);
 }
 
 void AnimatorController::AddFloatParamater(std::string name, float value = 0.0f)
 {
-	floatParamaters.insert_or_assign(name, value);
+	AnimationParamater* animationParamater = new AnimationParamater(name);
+	animationParamater->type = AnimationParamater::Type::Float;
+	animationParamater->floatValue = value;
+
+	paramaters.insert_or_assign(name, animationParamater);
 }
 
 void AnimatorController::AddBoolParamater(std::string name, bool value = false)
 {
-	boolParamaters.insert_or_assign(name, value);
+	AnimationParamater* animationParamater = new AnimationParamater(name);
+	animationParamater->type = AnimationParamater::Type::Bool;
+	animationParamater->boolValue = value;
+
+	paramaters.insert_or_assign(name, animationParamater);
 }

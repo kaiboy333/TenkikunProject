@@ -18,9 +18,6 @@
     <Filter Include="ソース ファイル\main">
       <UniqueIdentifier>{d7bafc83-7209-4e75-acb3-e813dd557649}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\main\window">
-      <UniqueIdentifier>{3ba230fb-cc10-4a83-b6d8-385fc3e1a91b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\script">
       <UniqueIdentifier>{a145f6ee-ac5d-4458-a3fa-6cec5d243fdb}</UniqueIdentifier>
     </Filter>
@@ -30,47 +27,53 @@
     <Filter Include="ソース ファイル\math">
       <UniqueIdentifier>{665b37b9-6bd3-4687-a06c-b11bd7603a66}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\main\window\inspector">
-      <UniqueIdentifier>{6e768024-3c0b-45c4-a7c8-25d0e2ab999f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\main\window\game">
-      <UniqueIdentifier>{7363c13a-7d91-4bce-9acf-4f99bd5c98c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\debug">
       <UniqueIdentifier>{5b35c03e-53fd-455f-85d2-37ec6ad9e493}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\main\window\hierarchy">
-      <UniqueIdentifier>{6e46d69f-8d96-4d62-ac49-707a5cd525df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\main\window\treeList">
-      <UniqueIdentifier>{b648b4e7-e458-4b98-9de0-f4341913b5a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\main\window\rect">
-      <UniqueIdentifier>{9ce1022c-822f-476b-a39f-20818cc384c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\main\window\button">
-      <UniqueIdentifier>{c73c154d-65d2-4344-9dba-463b7792fb47}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\scene">
       <UniqueIdentifier>{f6c4de37-19f1-4b23-8f1d-7c76c1f4e6c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\main\window\rect\textBox">
-      <UniqueIdentifier>{0c9516c2-4ff5-4530-b5f5-35da0e47c491}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\main\window\project">
-      <UniqueIdentifier>{0d26e3cc-356f-4f56-9c07-7fb867aecd4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\main\window\text">
-      <UniqueIdentifier>{e7ee46b4-9b29-4586-8746-235e1b3e87f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\string">
       <UniqueIdentifier>{d1557e71-2d1a-4e69-9b79-975d6d7b7498}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\main\window\project\icon">
-      <UniqueIdentifier>{b50cd0ec-2cab-44fe-8563-33dc784f407e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\info">
       <UniqueIdentifier>{8b5543a8-28d3-4899-8392-f1a67b57d9b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\image">
+      <UniqueIdentifier>{c63d0ecb-1e44-42c2-90b0-6af4ae3b59bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window">
+      <UniqueIdentifier>{3ba230fb-cc10-4a83-b6d8-385fc3e1a91b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\inspector">
+      <UniqueIdentifier>{6e768024-3c0b-45c4-a7c8-25d0e2ab999f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\game">
+      <UniqueIdentifier>{7363c13a-7d91-4bce-9acf-4f99bd5c98c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\hierarchy">
+      <UniqueIdentifier>{6e46d69f-8d96-4d62-ac49-707a5cd525df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\treeList">
+      <UniqueIdentifier>{b648b4e7-e458-4b98-9de0-f4341913b5a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\rect">
+      <UniqueIdentifier>{9ce1022c-822f-476b-a39f-20818cc384c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\rect\textBox">
+      <UniqueIdentifier>{0c9516c2-4ff5-4530-b5f5-35da0e47c491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\button">
+      <UniqueIdentifier>{c73c154d-65d2-4344-9dba-463b7792fb47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\project">
+      <UniqueIdentifier>{0d26e3cc-356f-4f56-9c07-7fb867aecd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\project\icon">
+      <UniqueIdentifier>{b50cd0ec-2cab-44fe-8563-33dc784f407e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\window\text">
+      <UniqueIdentifier>{e7ee46b4-9b29-4586-8746-235e1b3e87f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +89,6 @@
     <ClCompile Include="AnimatorController.cpp">
       <Filter>ソース ファイル\animation</Filter>
     </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>ソース ファイル\animation</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationState.cpp">
       <Filter>ソース ファイル\animation</Filter>
     </ClCompile>
@@ -98,11 +98,8 @@
     <ClCompile Include="Main.cpp">
       <Filter>ソース ファイル\main</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>ソース ファイル\main</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
+      <Filter>ソース ファイル\window</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>ソース ファイル\component</Filter>
@@ -132,40 +129,40 @@
       <Filter>ソース ファイル\script</Filter>
     </ClCompile>
     <ClCompile Include="WindowManager.cpp">
-      <Filter>ソース ファイル\main\window</Filter>
+      <Filter>ソース ファイル\window</Filter>
     </ClCompile>
     <ClCompile Include="InspectorWindow.cpp">
-      <Filter>ソース ファイル\main\window\inspector</Filter>
+      <Filter>ソース ファイル\window\inspector</Filter>
     </ClCompile>
     <ClCompile Include="GameWindow.cpp">
-      <Filter>ソース ファイル\main\window\game</Filter>
+      <Filter>ソース ファイル\window\game</Filter>
     </ClCompile>
     <ClCompile Include="Debug.cpp">
       <Filter>ソース ファイル\debug</Filter>
     </ClCompile>
     <ClCompile Include="TransformRect.cpp">
-      <Filter>ソース ファイル\main\window\inspector</Filter>
+      <Filter>ソース ファイル\window\inspector</Filter>
     </ClCompile>
     <ClCompile Include="ComponentRect.cpp">
-      <Filter>ソース ファイル\main\window\inspector</Filter>
+      <Filter>ソース ファイル\window\inspector</Filter>
     </ClCompile>
     <ClCompile Include="HierarchyWindow.cpp">
-      <Filter>ソース ファイル\main\window\hierarchy</Filter>
+      <Filter>ソース ファイル\window\hierarchy</Filter>
     </ClCompile>
     <ClCompile Include="TreeList.cpp">
-      <Filter>ソース ファイル\main\window\treeList</Filter>
+      <Filter>ソース ファイル\window\treeList</Filter>
     </ClCompile>
     <ClCompile Include="TreeNode.cpp">
-      <Filter>ソース ファイル\main\window\treeList</Filter>
+      <Filter>ソース ファイル\window\treeList</Filter>
     </ClCompile>
     <ClCompile Include="Rect.cpp">
-      <Filter>ソース ファイル\main\window\rect</Filter>
+      <Filter>ソース ファイル\window\rect</Filter>
     </ClCompile>
     <ClCompile Include="TriggerRect.cpp">
-      <Filter>ソース ファイル\main\window\rect</Filter>
+      <Filter>ソース ファイル\window\rect</Filter>
     </ClCompile>
     <ClCompile Include="WindowButton.cpp">
-      <Filter>ソース ファイル\main\window\button</Filter>
+      <Filter>ソース ファイル\window\button</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\scene</Filter>
@@ -174,25 +171,25 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="TextBox.cpp">
-      <Filter>ソース ファイル\main\window\rect\textBox</Filter>
+      <Filter>ソース ファイル\window\rect\textBox</Filter>
     </ClCompile>
     <ClCompile Include="ProjectWindow.cpp">
-      <Filter>ソース ファイル\main\window\project</Filter>
+      <Filter>ソース ファイル\window\project</Filter>
     </ClCompile>
     <ClCompile Include="FilePrintRect.cpp">
-      <Filter>ソース ファイル\main\window\project</Filter>
+      <Filter>ソース ファイル\window\project</Filter>
     </ClCompile>
     <ClCompile Include="TextRect.cpp">
-      <Filter>ソース ファイル\main\window\text</Filter>
+      <Filter>ソース ファイル\window\text</Filter>
     </ClCompile>
     <ClCompile Include="ProjectFileManager.cpp">
-      <Filter>ソース ファイル\main\window\project</Filter>
+      <Filter>ソース ファイル\window\project</Filter>
     </ClCompile>
     <ClCompile Include="ScrollRect.cpp">
-      <Filter>ソース ファイル\main\window\rect</Filter>
+      <Filter>ソース ファイル\window\rect</Filter>
     </ClCompile>
     <ClCompile Include="FileIcon.cpp">
-      <Filter>ソース ファイル\main\window\text</Filter>
+      <Filter>ソース ファイル\window\text</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>ソース ファイル\string</Filter>
@@ -204,7 +201,7 @@
       <Filter>ソース ファイル\string</Filter>
     </ClCompile>
     <ClCompile Include="ImageIcon.cpp">
-      <Filter>ソース ファイル\main\window\project\icon</Filter>
+      <Filter>ソース ファイル\window\project\icon</Filter>
     </ClCompile>
     <ClCompile Include="Info.cpp">
       <Filter>ソース ファイル\info</Filter>
@@ -212,11 +209,20 @@
     <ClCompile Include="SceneInfo.cpp">
       <Filter>ソース ファイル\info</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Image.cpp">
+      <Filter>ソース ファイル\image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>ソース ファイル\image</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationParamater.cpp">
       <Filter>ソース ファイル\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>ソース ファイル\component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,24 +230,6 @@
       <Filter>ソース ファイル\animation</Filter>
     </ClInclude>
     <ClInclude Include="AnimatorController.h">
-      <Filter>ソース ファイル\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="BoolCondition.h">
-      <Filter>ソース ファイル\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Condition.h">
-      <Filter>ソース ファイル\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="FloatCondition.h">
-      <Filter>ソース ファイル\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>ソース ファイル\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
-      <Filter>ソース ファイル\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="IntCondition.h">
       <Filter>ソース ファイル\animation</Filter>
     </ClInclude>
     <ClInclude Include="AnimationState.h">
@@ -266,10 +254,7 @@
       <Filter>ソース ファイル\component</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>ソース ファイル\main\window</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>ソース ファイル\main</Filter>
+      <Filter>ソース ファイル\window</Filter>
     </ClInclude>
     <ClInclude Include="Script.h">
       <Filter>ソース ファイル\component</Filter>
@@ -299,40 +284,40 @@
       <Filter>ソース ファイル\math</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.h">
-      <Filter>ソース ファイル\main\window</Filter>
+      <Filter>ソース ファイル\window</Filter>
     </ClInclude>
     <ClInclude Include="InspectorWindow.h">
-      <Filter>ソース ファイル\main\window\inspector</Filter>
+      <Filter>ソース ファイル\window\inspector</Filter>
     </ClInclude>
     <ClInclude Include="GameWindow.h">
-      <Filter>ソース ファイル\main\window\game</Filter>
+      <Filter>ソース ファイル\window\game</Filter>
     </ClInclude>
     <ClInclude Include="Debug.h">
       <Filter>ソース ファイル\debug</Filter>
     </ClInclude>
     <ClInclude Include="ComponentRect.h">
-      <Filter>ソース ファイル\main\window\inspector</Filter>
+      <Filter>ソース ファイル\window\inspector</Filter>
     </ClInclude>
     <ClInclude Include="TransformRect.h">
-      <Filter>ソース ファイル\main\window\inspector</Filter>
+      <Filter>ソース ファイル\window\inspector</Filter>
     </ClInclude>
     <ClInclude Include="HierarchyWindow.h">
-      <Filter>ソース ファイル\main\window\hierarchy</Filter>
+      <Filter>ソース ファイル\window\hierarchy</Filter>
     </ClInclude>
     <ClInclude Include="TreeList.h">
-      <Filter>ソース ファイル\main\window\treeList</Filter>
+      <Filter>ソース ファイル\window\treeList</Filter>
     </ClInclude>
     <ClInclude Include="TreeNode.h">
-      <Filter>ソース ファイル\main\window\treeList</Filter>
+      <Filter>ソース ファイル\window\treeList</Filter>
     </ClInclude>
     <ClInclude Include="Rect.h">
-      <Filter>ソース ファイル\main\window\rect</Filter>
+      <Filter>ソース ファイル\window\rect</Filter>
     </ClInclude>
     <ClInclude Include="TriggerRect.h">
-      <Filter>ソース ファイル\main\window\rect</Filter>
+      <Filter>ソース ファイル\window\rect</Filter>
     </ClInclude>
     <ClInclude Include="WindowButton.h">
-      <Filter>ソース ファイル\main\window\button</Filter>
+      <Filter>ソース ファイル\window\button</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>ソース ファイル\scene</Filter>
@@ -341,25 +326,25 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="TextBox.h">
-      <Filter>ソース ファイル\main\window\rect\textBox</Filter>
+      <Filter>ソース ファイル\window\rect\textBox</Filter>
     </ClInclude>
     <ClInclude Include="ProjectWindow.h">
-      <Filter>ソース ファイル\main\window\project</Filter>
+      <Filter>ソース ファイル\window\project</Filter>
     </ClInclude>
     <ClInclude Include="FilePrintRect.h">
-      <Filter>ソース ファイル\main\window\project</Filter>
+      <Filter>ソース ファイル\window\project</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>リソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="TextRect.h">
-      <Filter>ソース ファイル\main\window\text</Filter>
+      <Filter>ソース ファイル\window\text</Filter>
     </ClInclude>
     <ClInclude Include="ProjectFileManager.h">
-      <Filter>ソース ファイル\main\window\project</Filter>
+      <Filter>ソース ファイル\window\project</Filter>
     </ClInclude>
     <ClInclude Include="ScrollRect.h">
-      <Filter>ソース ファイル\main\window\rect</Filter>
+      <Filter>ソース ファイル\window\rect</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>ソース ファイル\string</Filter>
@@ -371,16 +356,31 @@
       <Filter>ソース ファイル\string</Filter>
     </ClInclude>
     <ClInclude Include="FileIcon.h">
-      <Filter>ソース ファイル\main\window\project\icon</Filter>
+      <Filter>ソース ファイル\window\project\icon</Filter>
     </ClInclude>
     <ClInclude Include="ImageIcon.h">
-      <Filter>ソース ファイル\main\window\project\icon</Filter>
+      <Filter>ソース ファイル\window\project\icon</Filter>
     </ClInclude>
     <ClInclude Include="Info.h">
       <Filter>ソース ファイル\info</Filter>
     </ClInclude>
     <ClInclude Include="SceneInfo.h">
       <Filter>ソース ファイル\info</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>ソース ファイル\image</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>ソース ファイル\image</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationCondition.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationParamater.h">
+      <Filter>ソース ファイル\animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

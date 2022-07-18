@@ -2,5 +2,5 @@
 
 void Debug::Log(std::string string)
 {
-	OutputDebugString(string.c_str());
+	OutputDebugString(std::string(string + "\n").c_str());
 }

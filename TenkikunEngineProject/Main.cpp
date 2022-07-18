@@ -15,6 +15,7 @@
 #include "resource.h"
 #include "ProjectFileManager.h"
 #include "FontManager.h"
+#include "Debug.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -130,9 +131,8 @@ inline void CulculateFPS() {
 
 	double fps = 1 / frameTime;
 
-	//OutputDebugString("FPS:");	//FPSを表示
-	//OutputDebugString(std::to_string(fps).c_str());	//FPSを表示
-	//OutputDebugString("\n");	//FPSを表示
+	//Debug::Log("FPS : " + std::to_string(fps));	//FPSを表示
+	Debug::Log("time : " + std::to_string(frameTime));	//FPSを表示
 
 	timeStart = timeEnd; // 入れ替え
 }

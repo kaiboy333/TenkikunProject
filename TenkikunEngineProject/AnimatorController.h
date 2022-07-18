@@ -7,6 +7,7 @@
 #include "ImageRenderer.h"
 #include "Animator.h"
 #include "AnimationState.h"
+#include "AnimationParamater.h"
 
 class Animation;
 class AnimationState;
@@ -25,9 +26,7 @@ class AnimatorController
 		void AddFloatParamater(std::string name, float value);
 		void AddBoolParamater(std::string name, bool value);
 
-		std::unordered_map<std::string, int> intParamaters;
-		std::unordered_map<std::string, float> floatParamaters;
-		std::unordered_map<std::string, bool> boolParamaters;
+		std::unordered_map<std::string, AnimationParamater*> paramaters;
 
 	private:
 		std::vector<AnimationState*> states;

@@ -40,7 +40,7 @@ void SceneManager::LoadScene(std::string sceneName)
 		}
 	}
 	else {
-		Debug::Log("そのSceneの名前は存在しません。\n");
+		Debug::Log("そのSceneの名前は存在しません。");
 	}
 }
 
@@ -91,10 +91,10 @@ void SceneManager::SaveScene()
 	if (playMode == PlayMode::EDIT) {
 		//現在のシーンをセーブ(シーンファイルに書き込む)
 		ProjectFileManager::WriteToSceneFile(nowScene);
-		Debug::Log(nowScene->GetName() + "をセーブしました。\n");
+		Debug::Log(nowScene->GetName() + "をセーブしました。");
 	}
 	else {
-		Debug::Log("プレイ中はセーブできません。\n");
+		Debug::Log("プレイ中はセーブできません。");
 	}
 }
 

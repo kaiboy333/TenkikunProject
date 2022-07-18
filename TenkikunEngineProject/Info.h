@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
+#include "SceneInfo.h"
 
-class Info
+class Info : public SceneInfo
 {
 	public:
 		void SetGUID(std::string guid);

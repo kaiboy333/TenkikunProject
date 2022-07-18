@@ -19,11 +19,13 @@ class TriggerRect : public Rect
 
 		Rect* activeRect = nullptr;	//有効化されている領域
 
-		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow);
+		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow, int eventNo = 0);
 
 		void CheckInput();
 
 		bool GetIsSelected();	//選択されているか
+
+		int GetEventNo();	//イベント番号
 
 		std::vector<std::function<void()>> mouseClickDownEvents;
 		std::vector<std::function<void()>> mouseClickUpEvents;
@@ -38,6 +40,8 @@ class TriggerRect : public Rect
 		std::vector<std::function<void()>> fileDropEvents;
 
 	private :
+		int eventNo;
+
 		void MouseClickDownEvent();
 		void MouseClickUpEvent();
 		void MouseDoubleClickEvent();

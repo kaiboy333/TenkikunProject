@@ -2,10 +2,11 @@
 #include "WindowManager.h"
 #include "ProjectFileManager.h"
 
-TriggerRect::TriggerRect(float startX, float startY, float width, float height, Window* parentWindow) : Rect(startX, startY, width, height)
+TriggerRect::TriggerRect(float startX, float startY, float width, float height, Window* parentWindow, int eventNo) : Rect(startX, startY, width, height)
 {
-	this->parentWindow = parentWindow;	//親ウィンドウに設定
+	this->parentWindow = parentWindow;
 	this->parentWindow->AddTriggerRect(this);	//ウィンドウに自身を追加
+	this->eventNo = eventNo;
 
 	activeRect = new Rect(startX, startY, width, height);
 }
@@ -76,65 +77,88 @@ bool TriggerRect::GetIsSelected()
 	return parentWindow->GetSelectedTriggerRect() == this;
 }
 
+int TriggerRect::GetEventNo()
+{
+	return eventNo;
+}
+
 void TriggerRect::MouseClickDownEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : mouseClickDownEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::MouseClickUpEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : mouseClickUpEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::MouseDoubleClickEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : mouseDoubleClickEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::MouseRightClickEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : mouseRightClickEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::MouseOnEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : mouseOnEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::MouseExitEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : mouseExitEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::MouseWheelEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : mouseWheelEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::PushEnterEvent()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : pushEnterEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }
 
 void TriggerRect::FileDropEvents()
 {
+	//実行可能リストに追加
 	for (std::function<void()> func : fileDropEvents) {
-		func();
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
 	}
 }

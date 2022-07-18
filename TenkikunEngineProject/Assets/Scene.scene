@@ -1,38 +1,38 @@
 sceneName: Scene
 class GameObject
-	fileID: 83397900
-	name: Main Camera
+	fileID: 33034091
+	name: MainCamera
 	components: 2
-		component: {fileID: 60837987 }
-		component: {fileID: 22579636 }
+		component: {fileID: 46674913 }
+		component: {fileID: 86242087 }
 class Transform
-	fileID: 60837987
-	gameobject: {fileID: 83397900 }
+	fileID: 46674913
+	gameobject: {fileID: 33034091 }
 	localPosition: {x: 0 ,y: 0 ,z: 0 }
 	localRotation: {x: 0 ,y: 0 ,z: 0 }
 	localScale: {x: 1 ,y: 1 ,z: 1 }
 	children: 0
 	parent: {fileID: 0 }
 class Camera
-	fileID: 22579636
-	gameobject: {fileID: 83397900 }
+	fileID: 86242087
+	gameobject: {fileID: 33034091 }
 class GameObject
-	fileID: 44411006
+	fileID: 71792277
 	name: Tenkikun
 	components: 2
-		component: {fileID: 57534375 }
-		component: {fileID: 56864244 }
+		component: {fileID: 44753677 }
+		component: {fileID: 31802028 }
 class Transform
-	fileID: 57534375
-	gameobject: {fileID: 44411006 }
-	localPosition: {x: 30 ,y: 0 ,z: 0 }
-	localRotation: {x: 0 ,y: 0 ,z: 0 }
-	localScale: {x: 5 ,y: 5 ,z: 1 }
+	fileID: 44753677
+	gameobject: {fileID: 71792277 }
+	localPosition: {x: 100 ,y: 0 ,z: 0 }
+	localRotation: {x: 0 ,y: 0 ,z: 90 }
+	localScale: {x: 4 ,y: 4 ,z: 1 }
 	children: 0
 	parent: {fileID: 0 }
 class ImageRenderer
-	fileID: 56864244
-	gameobject: {fileID: 44411006 }
+	fileID: 31802028
+	gameobject: {fileID: 71792277 }
 	isFlipX: 0
 	isFlipY: 0
 	image: {guid: 29C719C7-1C03-47D9-95FA-20C0BDA406AA }

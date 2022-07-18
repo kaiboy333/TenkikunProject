@@ -102,6 +102,10 @@ ProjectFileManager::FileType ProjectFileManager::GetFileType(std::filesystem::pa
 		else if (extensionName == ".scene") {
 			targetFileType = FileType::Scene;
 		}
+		//アニメーションファイルなら
+		else if (extensionName == ".anim") {
+			targetFileType = FileType::Anim;
+		}
 	}
 
 	//タイプを返す
@@ -179,7 +183,7 @@ void ProjectFileManager::WriteToKumoFile(std::filesystem::path kumoPath)
 			}
 		}
 		else {
-			Debug::Log(kumoPath.string() + "は開けませんでした。\n");
+			Debug::Log(kumoPath.string() + "は開けませんでした。");
 		}
 	}
 }
@@ -279,14 +283,21 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 					ImageRenderer* imageRenderer = static_cast<ImageRenderer*>(component);
 					//isFlipXを書き込む
 					ofs << "\tisFlipX: " << (int)imageRenderer->isFlipX << std::endl;
+
 					//isFlipYを書き込む
 					ofs << "\tisFlipY: " << (int)imageRenderer->isFlipY << std::endl;
+
 					//imageを書き込む(guid)
 					ofs << "\timage: {guid: " << imageRenderer->image->GetGUID() << " }" << std::endl;
 				}
-				////Scriptなら
-				//else if (type == typeid(Script)) {
-
+				////MonoBehaviourなら
+				//else if (type == typeid(MonoBehaviour)) {
+				//	MonoBehaviour* mono = static_cast<MonoBehaviour*>(component);
+				//	//MonoBehaviourのfileIDを取得
+				//	fileID = GetValue<SceneInfo*, int>(fileIDs, mono, CreateFileID());
+				//	Type
+				//	//ヘッダーとcppのIDを書き込む(fileID, guid)
+				//	ofs << "mono: {fileID: " << fileID  << " ,guid: {header: " << mono->GetGUID() << " ,cpp: " << script->GetMonoBehaviour()->GetCPPGUID() << " }" << " }" << std::endl;
 				//}
 			}
 		}
@@ -317,35 +328,23 @@ void ProjectFileManager::LoadSceneFromFile(std::filesystem::path scenePath, Scen
 		//GameObjectなら
 		if (className == typeid(GameObject).name()) {
 			//クラス生成
-			GameObject* gameobject = static_cast<GameObject*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new GameObject()));
+			GameObject* gameobject = static_cast<GameObject*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, scene->CreateEmpty()));
 			//名前取得
 			gameobject->SetName(MyString::Split(lines[row++], ' ')[1]);
 			//コンポーネントの数取得
 			int componentNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
 			for (int i = 0; i < componentNum; i++, row++) {
-				////コンポーネントを取得(SceneInfoをを無理やりComponentにしている)
-				//fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
-				//Component* component = static_cast<Component*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new Component()));
-				////ゲームオブジェクトのcomponentsに追加
-				//gameobject->components.push_back(component);
+
 			}
-			scene->treeList->Add(new TreeNode(gameobject->GetName(), scene->treeList, scene->treeList->isFirstOpen), scene->treeList->GetRoot());	//TreeNodeにも追加
-			//シーンにゲームオブジェクトを追加
-			scene->gameobjects.push_back(gameobject);
 		}
 		//Transformなら
 		else if (className == typeid(Transform).name()) {
-			//Transformを作成
-			Transform* transform = new Transform();
-
 			//ゲームオブジェクトのファイルIDを取得
 			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
-			//ゲームオブジェクトをセット
-			transform->gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
-			//ゲームオブジェクトに自身を設定
-			transform->gameobject->transform = transform;
-			//そのゲームオブジェクトに自身を追加
-			transform->gameobject->components.push_back(transform);
+			//ゲームオブジェクトを取得
+			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+			//Transformを取得
+			Transform* transform = gameobject->transform;
 
 			//localPositionをセット
 			std::vector<std::string> words = MyString::Split(lines[row++], ' ');
@@ -365,10 +364,7 @@ void ProjectFileManager::LoadSceneFromFile(std::filesystem::path scenePath, Scen
 			//子の数セット
 			int childNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
 			for (int i = 0; i < childNum; i++, row++) {
-				////子を取得
-				//fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
-				//Transform* child = static_cast<Transform*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new Transform()));
-				//Transform->childrenにはまだ追加しない(SetParentで追加するため)
+
 			}
 
 			//親をセット
@@ -381,43 +377,27 @@ void ProjectFileManager::LoadSceneFromFile(std::filesystem::path scenePath, Scen
 				//ローカルを変えずにワールドを変える
 				transform->SetParent(parent, false);
 			}
-
-			////コンポーネントの中身をTransformに変える
-			//*(&component) = transform;
 		}
 		//Cameraなら
 		else if (className == typeid(Camera).name()) {
-			////コンポーネントを取得
-			//Component* component = static_cast<Component*>(sceneInfos[fileID]);
-			//Cameraを作成
-			Camera* camera = new Camera();
-
 			//ゲームオブジェクトのファイルIDを取得
 			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
-			//ゲームオブジェクトをセット
-			camera->gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
-			//そのゲームオブジェクトに自身を追加
-			camera->gameobject->components.push_back(camera);
+			//ゲームオブジェクトを取得
+			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+			//Cameraを作成、取得
+			Camera* camera = gameobject->AddComponent<Camera>();
+
 			//シーンにカメラを追加、設定
 			scene->SetNowCamera(camera);
-
-			////コンポーネントの中身をCameraに変える
-			//*(&component) = camera;
-			//Debug::Log("");
 		}
 		//ImageRendererなら
 		else if (className == typeid(ImageRenderer).name()) {
-			////コンポーネントを取得
-			//Component* component = static_cast<Component*>(sceneInfos[fileID]);
-			//ImageRendererを作成
-			ImageRenderer* imageRenderer = new ImageRenderer();
-
 			//ゲームオブジェクトのファイルIDを取得
 			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
-			//ゲームオブジェクトをセット
-			imageRenderer->gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
-			//そのゲームオブジェクトに自身を追加
-			imageRenderer->gameobject->components.push_back(imageRenderer);
+			//ゲームオブジェクトを取得
+			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+			//ImageRendererを作成、取得
+			ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();
 
 			//isFlipXを取得
 			imageRenderer->isFlipX = (bool)(std::stoi(MyString::Split(lines[row++], ' ')[1]));
@@ -427,18 +407,27 @@ void ProjectFileManager::LoadSceneFromFile(std::filesystem::path scenePath, Scen
 
 			//imageを取得
 			imageRenderer->image = static_cast<Image*>(idInfos[MyString::Split(lines[row++], ' ')[2]]);
-
-			////コンポーネントの中身をImageRendererに変える
-			//*(&component) = imageRenderer;
-			//Debug::Log("");
 		}
-		//else if (className == typeid(Script).name()) {
-
+		//else if (className == typeid(MonoBehaviour).name()) {
+		//	//ゲームオブジェクトのファイルIDを取得
+		//	fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+		//	//ゲームオブジェクトを取得
+		//	GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+		//	//MonoBehaviourを作成、取得
+		//	MonoBehaviour* mono = gameobject->AddComponent<>();
 		//}
 	}
 }
 
+void ProjectFileManager::WriteToAnimFile(AnimatorController* ac)
+{
 
+}
+
+void ProjectFileManager::LoadAnimFromFile(std::filesystem::path scenePath, AnimatorController* ac)
+{
+
+}
 
 std::string ProjectFileManager::CreateGUID()
 {

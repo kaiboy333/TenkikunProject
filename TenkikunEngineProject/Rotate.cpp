@@ -2,11 +2,11 @@
 #include "GameObject.h"
 #include "Input.h"
 
-void Rotate::ScriptStart()
+void Rotate::MonoStart()
 {
 }
 
-void Rotate::ScriptUpdate()
+void Rotate::MonoUpdate()
 {
 	gameobject->transform->rotation += Vector3::Forward() * rotateSpeed;
 }

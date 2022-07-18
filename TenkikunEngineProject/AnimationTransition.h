@@ -2,12 +2,9 @@
 
 #include "AnimationState.h"
 #include <iostream>
-#include "IntCondition.h"
-#include "FloatCondition.h"
-#include "BoolCondition.h"
-#include "Condition.h"
 #include <vector>
 #include "AnimatorController.h"
+#include "AnimationCondition.h"
 
 class AnimatorController;
 class AnimationState;
@@ -21,20 +18,10 @@ class AnimationTransition
 		AnimationState* toState = nullptr;	//‚Ç‚±‚ÖˆÚ‚é
 
 		//Condition‚½‚¿
-		std::vector<IntCondition*> intConditions;
-		std::vector<FloatCondition*> floatConditions;
-		std::vector<BoolCondition*> boolConditions;
+		std::vector<AnimationCondition*> conditions;
 
 		bool canTransition();	//ğŒ‚ğ–‚½‚·‚Ætrue
 
 		//Condition‚ğì¬
-		void AddIntCondition(std::string name);
-		void AddFloatCondition(std::string name);
-		void AddBoolCondition(std::string name);
-
-		//Condition‚Ì’l‚ğ•ÏX
-		void ChangeIntCondition(std::string name, int value, int index);
-		void ChangeFloatCondition(std::string name, float value, int index);
-		void ChangeBoolCondition(std::string name, bool value, int index);
-
+		void AddCondition(std::string name, float value, AnimationCondition::Mode mode);
 };

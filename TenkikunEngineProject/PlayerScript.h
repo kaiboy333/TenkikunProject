@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Script.h"
+#include "MonoBehaviour.h"
 #include "Image.h"
 #include "ImageRenderer.h"
 #include "GameObject.h"
@@ -12,11 +12,11 @@
 #include <iostream>
 #include <sstream>
 
-class PlayerScript : public Script {
-	public:
-		void ScriptStart() override;
+class PlayerScript : public MonoBehaviour {
+	protected:
+		void MonoStart() override;
 
-		void ScriptUpdate() override;
+		void MonoUpdate() override;
 
 	private:
 		float speed = 3.0f;

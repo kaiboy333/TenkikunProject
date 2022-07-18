@@ -5,6 +5,7 @@
 #include "Info.h"
 #include <random>
 #include "Scene.h"
+#include "AnimatorController.h"
 
 class ProjectFileManager
 {
@@ -18,6 +19,7 @@ class ProjectFileManager
 			Script_h,
 			Kumo,
 			Scene,
+			Anim,
 			None,
 		};
 
@@ -57,6 +59,10 @@ class ProjectFileManager
 		static void WriteToSceneFile(Scene* scene);	//現在のシーンの情報をシーンファイルに書き込む
 
 		static void LoadSceneFromFile(std::filesystem::path scenePath, Scene* scene);	//シーンファイルからシーンを作成
+
+		static void WriteToAnimFile(AnimatorController* ac);	//現在のアニメーションの情報をシーンファイルに書き込む
+
+		static void LoadAnimFromFile(std::filesystem::path scenePath, AnimatorController* ac);	//アニメーションファイルからアニメーションコントローラーを作成
 
 		template<class T>
 		static std::vector<T*> GetSpecificInfos();	//idInfosにある特定(T)のクラスを取得する

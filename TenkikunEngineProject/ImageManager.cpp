@@ -17,7 +17,7 @@ int ImageManager::LoadAndGetImage(std::filesystem::path path)
 	gh = LoadGraph(path.string().c_str());
 	//画像が読み込めなかったら
 	if (gh == -1) {
-		Debug::Log("画像ファイルが読み込めないよ: " + path.string() + "\n");
+		Debug::Log("画像ファイルが読み込めないよ: " + path.string());
 	}
 	//それを返す
 	return gh;

@@ -55,7 +55,7 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 						transform->localPosition = pos;
 					}
 					catch (const std::invalid_argument& e) {
-						Debug::Log("数字ではありません。\n");
+						Debug::Log("数字ではありません。");
 					}
 				});
 				break;
@@ -66,7 +66,7 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 						transform->localRotation = rote;
 					}
 					catch (const std::invalid_argument& e) {
-						Debug::Log("数字ではありません。\n");
+						Debug::Log("数字ではありません。");
 					}
 				});
 				break;
@@ -77,7 +77,7 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 						transform->localScale = scale;
 					}
 					catch (const std::invalid_argument& e) {
-						Debug::Log("数字ではありません。\n");
+						Debug::Log("数字ではありません。");
 					}
 				});
 				break;

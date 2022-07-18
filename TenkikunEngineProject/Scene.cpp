@@ -65,7 +65,7 @@ GameObject* Scene::CreateSquare()
 GameObject* Scene::CreateCamera() 
 {
 	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->SetName("Main Camera");	//名前変更
+	gameobject->SetName("MainCamera");	//名前変更
 
 	Camera* camera = gameobject->AddComponent<Camera>();	//Cameraコンポーネント作成
 	SetNowCamera(camera);	//現在のカメラにこれをセット

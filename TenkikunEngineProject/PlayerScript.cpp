@@ -2,7 +2,7 @@
 #include "AnimationState.h"
 #include "Input.h"
 
-void PlayerScript::ScriptStart()
+void PlayerScript::MonoStart()
 {
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();
 	//アニメーションの作成
@@ -40,18 +40,15 @@ void PlayerScript::ScriptStart()
 	//Transition作成
 	//待機StateのTransition追加
 	AnimationTransition* idleToRun = idleState->AddTransition(runState);
-	idleToRun->AddFloatCondition("isSpeed");
-	idleToRun->ChangeFloatCondition("isSpeed", 1.0, 0);
+	idleToRun->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Greater);
 	//走るStateのTransition追加
 	AnimationTransition* runToIdle = runState->AddTransition(idleState);
-	runToIdle->AddFloatCondition("isSpeed");
-	runToIdle->ChangeFloatCondition("isSpeed", 1.0, 1);
-
+	runToIdle->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Less);
 
 	firstChild = gameobject->transform->children[0];
 }
 
-void PlayerScript::ScriptUpdate()
+void PlayerScript::MonoUpdate()
 {
 	ImageRenderer* imageRenderer = gameobject->GetComponent<ImageRenderer>();
 
@@ -116,4 +113,3 @@ void PlayerScript::ScriptUpdate()
 		}
 	}
 }
-

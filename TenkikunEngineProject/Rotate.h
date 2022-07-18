@@ -1,14 +1,13 @@
 #pragma once
 
-#include "Script.h"
+#include "MonoBehaviour.h"
 #include "Transform.h"
 
-class Rotate : public Script
+class Rotate : public MonoBehaviour
 {
-	public:
-		void ScriptStart() override;
-
-		void ScriptUpdate() override;
+	protected:
+		virtual void MonoStart();
+		virtual void MonoUpdate();
 
 	private:
 		float rotateSpeed = 1.0f;
