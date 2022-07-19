@@ -5,7 +5,7 @@
 #include "Image.h"
 #include <vector>
 
-class Animation
+class Animation : public SceneInfo
 {
 	public:
 		std::map<int, Image*> frameAndImages;	//‰æ‘œ‚Æ‚»‚ê‚ª—ˆ‚éFrame”

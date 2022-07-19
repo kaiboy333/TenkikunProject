@@ -12,7 +12,7 @@
 class Animation;
 class AnimationState;
 class Animator;
-class AnimatorController
+class AnimatorController : public SceneInfo
 {
 	public:
 		Animator* animator = nullptr;
@@ -28,10 +28,17 @@ class AnimatorController
 
 		std::unordered_map<std::string, AnimationParamater*> paramaters;
 
+		std::filesystem::path path;	//コントローラーのパス
+
+		void SetName(std::string name);
+		std::string GetName();
+
+		std::vector<AnimationState*> GetStates();
+
 	private:
 		std::vector<AnimationState*> states;
 
-		//ImageRenderer* imageRenderer = nullptr;
+		std::string name;
 
 };
 

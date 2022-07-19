@@ -46,3 +46,18 @@ void AnimatorController::AddBoolParamater(std::string name, bool value = false)
 
 	paramaters.insert_or_assign(name, animationParamater);
 }
+
+void AnimatorController::SetName(std::string name)
+{
+	this->name = name;
+}
+
+std::string AnimatorController::GetName()
+{
+	return name;
+}
+
+std::vector<AnimationState*> AnimatorController::GetStates()
+{
+	return states;
+}

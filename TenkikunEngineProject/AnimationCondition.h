@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-class AnimationCondition
+class AnimationCondition : public SceneInfo
 {
 public:
 	std::string name;

@@ -132,6 +132,17 @@ void ProjectFileManager::CreateAndLoadKumoFile(std::filesystem::path path)
 	WriteToInfo(kumoPath);
 }
 
+void ProjectFileManager::WriteToAnimationFile(std::filesystem::path animationPath)
+{
+
+}
+
+void ProjectFileManager::LoadAnimFromFile(std::filesystem::path animationPath, Animation* animation)
+{
+
+}
+
+
 void ProjectFileManager::WriteToInfo(std::filesystem::path kumoPath)
 {
 	//ファイルを開く
@@ -419,14 +430,165 @@ void ProjectFileManager::LoadSceneFromFile(std::filesystem::path scenePath, Scen
 	}
 }
 
-void ProjectFileManager::WriteToAnimFile(AnimatorController* ac)
+void ProjectFileManager::WriteToAnimationControllerFile(AnimatorController* ac)
 {
+	//シーンファイルを開く
+	std::ofstream ofs(ac->path);
+	//開けたら
+	if (ofs) {
+		//クラスとファイルIDのマップを作成
+		std::unordered_map<SceneInfo*, int> fileIDs;
 
+		//ファイルID
+		int fileID;
+
+		//AnimationParamater
+		for (std::pair<std::string, AnimationParamater*> pair : ac->paramaters) {
+			AnimationParamater* paramater = pair.second;
+
+			//クラス名書き込む
+			ofs << typeid(*paramater).name() << std::endl;
+
+			//ファイルIDを生成
+			fileID = GetValue<SceneInfo*, int>(fileIDs, paramater, CreateFileID());
+			//ファイルIDを書き込む
+			ofs << "\tfileID: " << fileID << std::endl;
+
+			//typeを書き込む
+			ofs << "\ttype: " << (int)paramater->type << std::endl;
+
+			//名前を書き込む
+			ofs << "\tname: " << paramater->name << std::endl;
+
+			//intValueを書き込む
+			ofs << "\tintValue: " << paramater->intValue << std::endl;
+
+			//floatValueを書き込む
+			ofs << "\tfloatValue: " << paramater->floatValue << std::endl;
+
+			//boolValueを書き込む
+			ofs << "\tboolValue: " << (int)paramater->boolValue << std::endl;
+		}
+
+		//AnimationState
+		for (AnimationState* state : ac->GetStates()) {
+			//クラス名書き込む
+			ofs << typeid(*state).name() << std::endl;
+
+			//ファイルIDを生成
+			fileID = GetValue<SceneInfo*, int>(fileIDs, state, CreateFileID());
+			//ファイルIDを書き込む
+			ofs << "\tfileID: " << fileID << std::endl;
+
+			//acのファイルIDを取得
+			fileID = GetValue<SceneInfo*, int>(fileIDs, ac, CreateFileID());
+			//acのファイルIDを書き込む
+			ofs << "\tanimationController: {fileID: " << fileID << " }" << std::endl;
+
+			//animationのファイルIDを取得
+			fileID = GetValue<SceneInfo*, int>(fileIDs, state->animation, CreateFileID());
+			//animationのファイルIDを書き込む
+			ofs << "\tanimation: {fileID: " << fileID << " }" << std::endl;
+
+			//nameを書き込む
+			ofs << "\tname: " << state->name << std::endl;
+
+			//speedを書き込む
+			ofs << "\tspeed: " << state->speed << std::endl;
+
+			//transitionsのサイズを書き込む
+			ofs << "\ttransitions: " << (int)state->transitions.size() << std::endl;
+
+			for (AnimationTransition* transition : state->transitions) {
+				//transitionのファイルIDを取得
+				fileID = GetValue<SceneInfo*, int>(fileIDs, transition, CreateFileID());
+				//transitionのファイルIDを書き込む
+				ofs << "\ttransition: {fileID: " << fileID << " }" << std::endl;
+
+				//AnimationTransition
+				//クラス名書き込む
+				ofs << typeid(*transition).name() << std::endl;
+
+				//ファイルIDを生成
+				fileID = GetValue<SceneInfo*, int>(fileIDs, transition, CreateFileID());
+				//ファイルIDを書き込む
+				ofs << "\tfileID: " << fileID << std::endl;
+
+				//acのファイルIDを取得
+				fileID = GetValue<SceneInfo*, int>(fileIDs, ac, CreateFileID());
+				//acのファイルIDを書き込む
+				ofs << "\tanimationController: {fileID: " << fileID << " }" << std::endl;
+
+				//fromStateのファイルIDを取得
+				fileID = GetValue<SceneInfo*, int>(fileIDs, transition->fromState, CreateFileID());
+				//fromStateのファイルIDを書き込む
+				ofs << "\tfromState: {fileID: " << fileID << " }" << std::endl;
+
+				//toStateのファイルIDを取得
+				fileID = GetValue<SceneInfo*, int>(fileIDs, transition->toState, CreateFileID());
+				//toStateのファイルIDを書き込む
+				ofs << "\ttoState: {fileID: " << fileID << " }" << std::endl;
+
+				//conditionsの数を書き込む
+				ofs << "\tconditions: " << (int)transition->conditions.size() << std::endl;
+
+				for (AnimationCondition* condition : transition->conditions) {
+					//conditionのファイルIDを取得
+					fileID = GetValue<SceneInfo*, int>(fileIDs, condition, CreateFileID());
+					//conditionのファイルIDを書き込む
+					ofs << "\t\tcondition: {fileID: " << fileID << " }" << std::endl;
+
+					//AnimationCondition
+					//クラス名書き込む
+					ofs << typeid(*condition).name() << std::endl;
+
+					//ファイルIDを生成
+					fileID = GetValue<SceneInfo*, int>(fileIDs, condition, CreateFileID());
+					//ファイルIDを書き込む
+					ofs << "\tfileID: " << fileID << std::endl;
+
+					//nameを書き込む
+					ofs << "\tname: " << condition->name << std::endl;
+
+					//modeを書き込む
+					ofs << "\tmode: " << (int)condition->mode << std::endl;
+
+					//valueを書き込む
+					ofs << "\tvalue: " << condition->value << std::endl;
+				}
+			}
+		}
+
+		//AnimationController
+		//クラス名書き込む
+		ofs << typeid(*ac).name() << std::endl;
+
+		//ファイルIDを生成
+		fileID = GetValue<SceneInfo*, int>(fileIDs, ac, CreateFileID());
+
+		//ファイルIDを書き込む
+		ofs << "\tfileID: " << fileID << std::endl;
+
+		//ac名を書き込む
+		ofs << "acName: " << ac->GetName() << std::endl;
+	}
 }
 
-void ProjectFileManager::LoadAnimFromFile(std::filesystem::path scenePath, AnimatorController* ac)
+void ProjectFileManager::LoadAnimationControllerFromFile(std::filesystem::path acPath, AnimatorController* ac)
 {
+	//行たちを読み込み
+	std::vector<std::string> lines = MyString::GetLines(acPath);
+	int row = 0;
+	//ファイルIDとクラスマップを作成
+	std::unordered_map<int, SceneInfo*> sceneInfos;
 
+	//アニメーションコントローラー名取得
+	ac->SetName(MyString::Split(lines[row++], ' ')[1]);
+
+	//読み込める限り
+	while (lines.size() - 1 > row) {
+
+	}
 }
 
 std::string ProjectFileManager::CreateGUID()

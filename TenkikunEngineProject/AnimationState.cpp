@@ -1,5 +1,4 @@
 #include "AnimationState.h"
-#include "IntCondition.h"
 #include <algorithm>
 
 AnimationTransition* AnimationState::AddTransition(AnimationState* toState)

@@ -56,13 +56,17 @@ class ProjectFileManager
 
 		static void WriteToKumoFile(std::filesystem::path kumoPath);	//雲ファイルに記述する
 
+		static void WriteToAnimationFile(std::filesystem::path animationPath);	//アニメーションファイルに記述する
+
+		static void LoadAnimFromFile(std::filesystem::path animationPath, Animation* animation);	//アニメーションファイルからアニメーションを作成
+
 		static void WriteToSceneFile(Scene* scene);	//現在のシーンの情報をシーンファイルに書き込む
 
 		static void LoadSceneFromFile(std::filesystem::path scenePath, Scene* scene);	//シーンファイルからシーンを作成
 
-		static void WriteToAnimFile(AnimatorController* ac);	//現在のアニメーションの情報をシーンファイルに書き込む
+		static void WriteToAnimationControllerFile(AnimatorController* ac);	//現在のacの情報をacファイルに書き込む
 
-		static void LoadAnimFromFile(std::filesystem::path scenePath, AnimatorController* ac);	//アニメーションファイルからアニメーションコントローラーを作成
+		static void LoadAnimationControllerFromFile(std::filesystem::path acPath, AnimatorController* ac);	//acファイルからacを作成
 
 		template<class T>
 		static std::vector<T*> GetSpecificInfos();	//idInfosにある特定(T)のクラスを取得する

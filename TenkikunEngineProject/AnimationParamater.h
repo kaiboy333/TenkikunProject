@@ -2,7 +2,7 @@
 
 #include <string>
 
-class AnimationParamater
+class AnimationParamater : public SceneInfo
 {
 	public:
 		enum class Type {
