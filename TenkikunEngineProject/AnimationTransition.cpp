@@ -1,14 +1,34 @@
 #include "AnimationTransition.h"
 
-AnimationTransition::AnimationTransition(AnimationState* fromState, AnimationState* toState, AnimatorController* ac)
-{
-	this->fromState = fromState;
-	this->toState = toState;
-	this->ac = ac;
-}
+//AnimationTransition::AnimationTransition(AnimationState* fromState, AnimationState* toState, AnimatorController* ac)
+//{
+//	this->fromState = fromState;
+//	this->toState = toState;
+//	this->ac = ac;
+//}
 
-bool AnimationTransition::canTransition()
+//AnimationTransition::AnimationTransition()
+//{
+//}
+//
+//AnimationTransition::AnimationTransition(const AnimationTransition& transition)
+//{
+//	//fromState
+//	this->fromState = new AnimationState(*transition.fromState);
+//
+//	//toState
+//	this->toState = new AnimationState(*transition.toState);
+//
+//	//conditions
+//	for (AnimationCondition* condition : transition.conditions) {
+//		this->conditions.push_back(new AnimationCondition(*condition));
+//	}
+//}
+
+bool AnimationTransition::canTransition(Animator* animator)
 {
+	AnimatorController* ac = animator->ac;
+
 	//ğŒ”»’è
 	for (AnimationCondition* condition : conditions) {
 		auto iter = ac->paramaters.find(condition->name);
@@ -26,7 +46,10 @@ bool AnimationTransition::canTransition()
 
 void AnimationTransition::AddCondition(std::string name, float value, AnimationCondition::Mode mode)
 {
-	AnimationCondition* condition = new AnimationCondition(name, value, mode);	//Conditionì¬
+	AnimationCondition* condition = new AnimationCondition();	//Conditionì¬
+	condition->name = name;
+	condition->value = value;
+	condition->mode = mode;
 	conditions.emplace_back(condition);	//ƒŠƒXƒg‚É’Ç‰Á
 }
 

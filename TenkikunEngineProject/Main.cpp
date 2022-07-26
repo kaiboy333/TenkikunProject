@@ -132,7 +132,7 @@ inline void CulculateFPS() {
 	double fps = 1 / frameTime;
 
 	//Debug::Log("FPS : " + std::to_string(fps));	//FPS‚ð•\Ž¦
-	Debug::Log("time : " + std::to_string(frameTime));	//FPS‚ð•\Ž¦
+	//Debug::Log("time : " + std::to_string(frameTime));	//FPS‚ð•\Ž¦
 
 	timeStart = timeEnd; // “ü‚ê‘Ö‚¦
 }

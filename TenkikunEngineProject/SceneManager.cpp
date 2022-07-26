@@ -28,14 +28,8 @@ void SceneManager::LoadScene(std::string sceneName)
 			std::ifstream ifs(scenePath);
 			//開けたら
 			if (ifs) {
-				//シーンを作成
-				Scene* scene = new Scene();
-				//シーンのパスを設定
-				scene->scenePath = scenePath;
-				nowScene = scene;	//登録
-				scene->Init();	//初期化
-				//シーンファイルから読み込む
-				ProjectFileManager::LoadSceneFromFile(scenePath, scene);
+				ProjectFileManager::LoadFromFile();	//他のファイルを読み込む
+				ProjectFileManager::LoadFromSceneFile(scenePath);	//シーンファイルからシーンを再現
 			}
 		}
 	}
@@ -71,13 +65,14 @@ void SceneManager::MakeScene()
 	std::ofstream ofs(scenePath.c_str());
 	//シーンファイルを作成、開く
 	if (ofs) {
-		//ツリーリストに追加、雲ファイルも作成
-		WindowManager::projectWindow->SetFileChildrenToTreeList(scenePath);
-		//ファイルアイコン更新
-		WindowManager::projectWindow->filePrintRect->LoadFoler();
+		////ツリーリストに追加、雲ファイルも作成
+		//WindowManager::projectWindow->SetFileChildrenToTreeList(scenePath);
+		////ファイルアイコン更新
+		//WindowManager::projectWindow->filePrintRect->LoadFoler();
 
 		scene->CreateCamera();	//カメラ生成
-		scene->CreateTenkikun();	//天気くん生成
+		//scene->CreateTenkikun();	//天気くん生成
+		scene->CreateUnityChan();	//Unityちゃん生成
 
 
 		//シーンをセーブ
@@ -85,10 +80,18 @@ void SceneManager::MakeScene()
 	}
 }
 
+void SceneManager::SetNowScene(Scene* scene)
+{
+	nowScene = scene;
+}
+
 void SceneManager::SaveScene()
 {
 	//編集モードなら
 	if (playMode == PlayMode::EDIT) {
+		std::unordered_map<SceneInfo*, int> idInfos;
+		//シーン以外の情報をファイルに書き込む
+		ProjectFileManager::WriteToFile();
 		//現在のシーンをセーブ(シーンファイルに書き込む)
 		ProjectFileManager::WriteToSceneFile(nowScene);
 		Debug::Log(nowScene->GetName() + "をセーブしました。");

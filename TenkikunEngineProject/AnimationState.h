@@ -14,19 +14,20 @@ class AnimationTransition;
 class AnimationState : public SceneInfo
 {
 	public:
-		AnimationState(AnimatorController* ac);
-
-		AnimatorController* ac = nullptr;
+		//AnimatorController* ac = nullptr;
+		//GameObject* gameobject = nullptr;
 		Animation* animation = nullptr;
 
 		std::string name = "New Animation";
 
 		float speed = 1.0f;
-		float count = 0;
 
 		std::vector<AnimationTransition*> transitions;
 
-		void Update();
+		//AnimationState();
+		//AnimationState(const AnimationState& state);
+
+		void Update(Animator* animator);
 
 		AnimationTransition* AddTransition(AnimationState* toState);	//êVÇµÇ¢Transitioní«â¡
 };

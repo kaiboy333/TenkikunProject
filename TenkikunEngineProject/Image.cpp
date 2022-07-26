@@ -1,8 +1,8 @@
 #include "Image.h"
 #include "ImageManager.h"
 
-Image::Image(std::filesystem::path path) {
-	this->path = path;	//パスを入れる
+Image::Image(std::filesystem::path path) : Info()
+{
 	this->gh = ImageManager::LoadAndGetImage(path);	//画像読み込み
 	if (gh) {
 		GetGraphSizeF(gh, &width, &height);	//画像サイズ取得
@@ -34,9 +34,4 @@ void Image::SetAlpha(int alpha)
 int Image::GetAlpha()
 {
 	return alpha;
-}
-
-std::filesystem::path Image::GetPath()
-{
-	return path;
 }

@@ -20,10 +20,10 @@ int Font::GetFH()
 
 float Font::GetFontWidth(std::string str)
 {
-	return GetDrawStringWidthToHandle(str.c_str(), str.length(), fh);
+	return (float)GetDrawStringWidthToHandle(str.c_str(), (int)str.length(), fh);
 }
 
 float Font::GetFontHeight()
 {
-	return GetFontSizeToHandle(fh);
+	return (float)GetFontSizeToHandle(fh);
 }

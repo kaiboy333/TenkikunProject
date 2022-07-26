@@ -9,16 +9,14 @@
 #include "Window.h"
 
 class TreeList;
-class Scene
+class Scene : public SceneInfo
 {
 	public:
 		std::vector<GameObject*> gameobjects;	//GameObjectたち
 
 		TreeList* treeList = nullptr;
 
-		std::filesystem::path scenePath;	//シーンファイルパス
-
-		Scene();
+		std::filesystem::path scenePath;
 
 		void Init();
 
@@ -30,6 +28,7 @@ class Scene
 		GameObject* CreateSquare();	//四角い画像のゲームオブジェクトを作成
 		GameObject* CreateCamera();	//カメラゲームオブジェクトを作成
 		GameObject* CreateTenkikun();	//天気くんの画像のゲームオブジェクトを作成
+		GameObject* CreateUnityChan();	//アニメーションがついたUnityちゃんのゲームオブジェクト作成
 
 		void Destroy(GameObject* gameobject);	//指定のGameObjectを削除
 

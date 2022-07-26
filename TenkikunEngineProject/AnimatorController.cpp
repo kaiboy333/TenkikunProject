@@ -1,28 +1,49 @@
 #include "AnimatorController.h"
 
-void AnimatorController::Update()
-{
-	//Stateの更新
-	if (nowState != nullptr) {
-		nowState->Update();
-	}
-}
+//AnimatorController::AnimatorController()
+//{
+//}
+//
+//AnimatorController::AnimatorController(const AnimatorController& ac)
+//{
+//	//名前をコピー
+//	this->name = ac.name;
+//
+//	//nowStateをコピー
+//	this->nowState = new AnimationState(*ac.nowState);
+//
+//	//statesをコピー
+//	for (AnimationState* state : ac.states) {
+//		this->states.push_back(new AnimationState(*state));
+//	}
+//}
 
-AnimationState* AnimatorController::AddAnimation(Animation* animation)
-{
-	AnimationState* state = new AnimationState(this);	//Stateを作成
-	state->animation = animation;	//StateにAnimationをセット
-	this->states.emplace_back(state);	//Stateをリストに追加
-	//最初の場所がnullなら
-	if (nowState == nullptr) {
-		nowState = state;	//追加
-	}
-	return state;	//返す
-}
+//void AnimatorController::Update(Animator* animator)
+//{
+//	//Stateの更新
+//	if (nowState != nullptr) {
+//		nowState->Update(animator);
+//	}
+//}
+
+//AnimationState* AnimatorController::AddState(Animation* animation, std::string stateName)
+//{
+//	AnimationState* state = new AnimationState();	//Stateを作成
+//	//state->ac = animator->GetAnimatorController();	//StateにAnimationControllerをセット
+//	state->name = stateName;	//nameセット
+//	state->animation = animation;	//StateにAnimationをセット
+//	states.emplace_back(state);	//Stateをリストに追加
+//	//最初の場所がnullなら
+//	if (nowState == nullptr) {
+//		nowState = state;	//追加
+//	}
+//	return state;	//返す
+//}
 
 void AnimatorController::AddIntParamater(std::string name, int value = 0)
 {
-	AnimationParamater* animationParamater = new AnimationParamater(name);
+	AnimationParamater* animationParamater = new AnimationParamater();
+	animationParamater->name = name;
 	animationParamater->type = AnimationParamater::Type::Int;
 	animationParamater->intValue = value;
 
@@ -31,7 +52,8 @@ void AnimatorController::AddIntParamater(std::string name, int value = 0)
 
 void AnimatorController::AddFloatParamater(std::string name, float value = 0.0f)
 {
-	AnimationParamater* animationParamater = new AnimationParamater(name);
+	AnimationParamater* animationParamater = new AnimationParamater();
+	animationParamater->name = name;
 	animationParamater->type = AnimationParamater::Type::Float;
 	animationParamater->floatValue = value;
 
@@ -40,24 +62,10 @@ void AnimatorController::AddFloatParamater(std::string name, float value = 0.0f)
 
 void AnimatorController::AddBoolParamater(std::string name, bool value = false)
 {
-	AnimationParamater* animationParamater = new AnimationParamater(name);
+	AnimationParamater* animationParamater = new AnimationParamater();
+	animationParamater->name = name;
 	animationParamater->type = AnimationParamater::Type::Bool;
 	animationParamater->boolValue = value;
 
 	paramaters.insert_or_assign(name, animationParamater);
-}
-
-void AnimatorController::SetName(std::string name)
-{
-	this->name = name;
-}
-
-std::string AnimatorController::GetName()
-{
-	return name;
-}
-
-std::vector<AnimationState*> AnimatorController::GetStates()
-{
-	return states;
 }

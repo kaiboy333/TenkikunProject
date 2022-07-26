@@ -5,6 +5,7 @@
 #include "MyMath.h"
 #include "Info.h"
 
+class Info;
 class Image : public Info
 {
 	public:
@@ -18,15 +19,11 @@ class Image : public Info
 		void SetAlpha(int alpha);
 		int GetAlpha();
 
-		std::filesystem::path GetPath();
-
 	private:
 		int gh = -1;
 
-		float width, height;	//横幅、縦幅
+		float width = 0, height = 0;	//横幅、縦幅
 
 		int alpha = 255;	//画像のアルファ値
-
-		std::filesystem::path path;	//画像のパス
 };
 

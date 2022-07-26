@@ -32,7 +32,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, Window* 
 			TCHAR strBuf[MAX_LEN + 1] = {};
 			GetKeyInputString(strBuf, ih);
 			//‹ó”’‚Å‚Í‚È‚¢‚È‚ç
-			if (strBuf != "") {
+			if (std::string(strBuf) != "") {
 				this->text = strBuf;	//“ü—Í‚µ‚½•¶Žš‚ðƒZƒbƒg
 			}
 
@@ -74,7 +74,7 @@ void TextBox::Draw()
 		//—LŒø‰»”ÍˆÍ“à‚È‚ç
 		if (activeRect) {
 			//•`‰æ§ŒÀ
-			SetDrawArea(activeRect->startX, activeRect->startY, activeRect->startX + activeRect->width, activeRect->startY + activeRect->height);
+			SetDrawArea((int)activeRect->startX, (int)activeRect->startY, (int)(activeRect->startX + activeRect->width), (int)(activeRect->startY + activeRect->height));
 			//•ÏŠ·Œã‚Ì•¶Žš—ñ•`‰æ
 			DrawStringFToHandle(startX, startY, text.c_str(), GetColor(0, 0, 0), FontManager::systemFont->GetFH());
 			//‘O‰ñ‚Ì•`‰æ—Ìˆæ‚É–ß‚·

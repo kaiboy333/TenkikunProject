@@ -2,11 +2,18 @@
 
 #include <string>
 #include "SceneInfo.h"
+#include <filesystem>
 
 class Info : public SceneInfo
 {
 	public:
-		void SetGUID(std::string guid);
+		std::filesystem::path path;
+
+		std::string name;
+
+		Info();
+
+		//void SetGUID(std::string guid);
 		std::string GetGUID();
 
 	private:

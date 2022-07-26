@@ -19,7 +19,8 @@ class ProjectFileManager
 			Script_h,
 			Kumo,
 			Scene,
-			Anim,
+			Animation,
+			AnimatorController,
 			None,
 		};
 
@@ -43,8 +44,14 @@ class ProjectFileManager
 		//ドラッグされたファイルのパスたち
 		static std::vector<std::filesystem::path> dragFilePathes;
 
-		//Infoが入ったもの
-		static std::unordered_map<std::string, Info*> idInfos;
+		//static std::unordered_map<Info*, int> infoAndFileID;
+
+		static std::unordered_map<std::string, Info*> guidAndInfo;
+
+		//sceneInfos
+		static std::unordered_map<int, SceneInfo*> sceneInfos;
+
+		static std::unordered_map<std::string, std::filesystem::path> guidAndPath;
 
 		ProjectFileManager();
 
@@ -54,32 +61,35 @@ class ProjectFileManager
 
 		static void CreateAndLoadKumoFile(std::filesystem::path kumoPath);	//ファイル専用のくも(メタ)ファイルをチェック
 
-		static void WriteToKumoFile(std::filesystem::path kumoPath);	//雲ファイルに記述する
+		static Info* CreateInfo(std::filesystem::path path);	//ファイルからInfoを作成
 
-		static void WriteToAnimationFile(std::filesystem::path animationPath);	//アニメーションファイルに記述する
+		static void WriteToKumoFile(std::filesystem::path kumoPath, Info* info);	//雲ファイルに記述する
 
-		static void LoadAnimFromFile(std::filesystem::path animationPath, Animation* animation);	//アニメーションファイルからアニメーションを作成
+		static void WriteToFile();	//保存するファイルに情報を記述する
+		static void LoadFromFile();	//すべての保存ファイルから情報を読み込む
 
 		static void WriteToSceneFile(Scene* scene);	//現在のシーンの情報をシーンファイルに書き込む
+		static void LoadFromSceneFile(std::filesystem::path scenePath);	//シーンファイルからシーンを作成
 
-		static void LoadSceneFromFile(std::filesystem::path scenePath, Scene* scene);	//シーンファイルからシーンを作成
-
-		static void WriteToAnimationControllerFile(AnimatorController* ac);	//現在のacの情報をacファイルに書き込む
-
-		static void LoadAnimationControllerFromFile(std::filesystem::path acPath, AnimatorController* ac);	//acファイルからacを作成
-
-		template<class T>
-		static std::vector<T*> GetSpecificInfos();	//idInfosにある特定(T)のクラスを取得する
-
-	private:
-		static void WriteToInfo(std::filesystem::path kumoPath);	//雲ファイルからInfoを作成
-
-		static std::string CreateGUID();	//GUIDを生成する(stringで)
+		//template<class T>
+		//static std::vector<T*> GetSpecificGUIDInfos();	//guidInfosにある特定(T)のクラスを取得する
 
 		static int CreateFileID();	//fileIDを生成する(intで)
+		static std::string CreateGUID();	//GUIDを生成する(stringで)
+
+		static std::string GetNameWithoutExtensionName(std::filesystem::path path);	//拡張子を抜いたファイル名取得
+
+	private:
+		static void WriteToAnimationFile(Animation* animation);	//アニメーションファイルに記述する
+		static void LoadFromAnimationFile(std::filesystem::path animationPath);	//アニメーションファイルからアニメーションを作成
+
+		static void WriteToAnimatorControllerFile(AnimatorController* ac);	//現在のacの情報をacファイルに書き込む
+		static void LoadFromAnimatorControllerFile(std::filesystem::path acPath);	//acファイルからacを作成
 
 		template<class T, class K>
-		static K GetValue(std::unordered_map<T, K>& map, T key, K value);	//マップのvalueを取得、なかったら新しいvalueを取得
+		static K GetValue(std::unordered_map<T, K>& map, T key, K value);	//マップのvalueを取得、なかったら新しいvalueを追加、取得
+
+		static std::string GetGUIDFromKumoPath(std::filesystem::path kumoPath);	//kumoPathからguidを取得
 };
 
 template<class T, class K>
@@ -98,22 +108,22 @@ inline K ProjectFileManager::GetValue(std::unordered_map<T, K>& map, T key, K va
 	}
 }
 
-template<class T>
-inline std::vector<T*> ProjectFileManager::GetSpecificInfos()
-{
-	std::vector<T*> infos;
-
-	//回す
-	for (std::pair pair : idInfos) {
-		//このInfoクラスがTクラスであるなら
-		//キャスト変換可能なら
-		if (static_cast<T*>(pair.second) != nullptr) {
-			//キャストしてInfoを取得
-			T* info = static_cast<T*>(pair.second);
-			//リストに追加
-			infos.push_back(info);
-		}
-	}
-
-	return infos;
-}
+//template<class T>
+//inline std::vector<T*> ProjectFileManager::GetSpecificGUIDInfos()
+//{
+//	std::vector<T*> infos;
+//
+//	//回す
+//	for (std::pair pair : idInfos) {
+//		//このInfoクラスがTクラスであるなら
+//		//キャスト変換可能なら
+//		if (static_cast<T*>(pair.second) != nullptr) {
+//			//キャストしてInfoを取得
+//			T* info = static_cast<T*>(pair.second);
+//			//リストに追加
+//			infos.push_back(info);
+//		}
+//	}
+//
+//	return infos;
+//}

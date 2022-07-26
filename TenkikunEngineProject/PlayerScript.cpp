@@ -4,48 +4,7 @@
 
 void PlayerScript::MonoStart()
 {
-	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();
-	//アニメーションの作成
-	Animator* animator = gameobject->AddComponent<Animator>();
-	AnimatorController* ac = new AnimatorController();
-	animator->SetAnimationController(ac);	//Animatorにacをセット
-	ac->AddFloatParamater("isSpeed", 0.0f);
-
-	//待機アニメーションのセット
-	//待機画像の作成
-	std::vector<Image*> idleImages;
-	for (int i = 0; i < 3; i++) {
-		std::stringstream ss;
-		ss << "image/" << "UnityChan_Idle" << i << ".png";
-		idleImages.emplace_back(new Image(ss.str()));	//Imageを追加
-	}
-	//待機アニメーションの作成
-	Animation* idleAnim = new Animation(idleImages, 7);
-	//acにアニメーションをセットしてStateを取得
-	AnimationState* idleState = ac->AddAnimation(idleAnim);
-
-	//走るアニメーションのセット
-	//走る画像の作成
-	std::vector<Image*> runImages;
-	for (int i = 0; i < 8; i++) {
-		std::stringstream ss;
-		ss << "image/" << "UnityChan_Run" << i << ".png";
-		runImages.emplace_back(new Image(ss.str()));	//Imageを追加
-	}
-	//走るアニメーションの作成
-	Animation* runAnim = new Animation(runImages, 3);
-	//acにアニメーションをセットしてStateを取得
-	AnimationState* runState = ac->AddAnimation(runAnim);
-
-	//Transition作成
-	//待機StateのTransition追加
-	AnimationTransition* idleToRun = idleState->AddTransition(runState);
-	idleToRun->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Greater);
-	//走るStateのTransition追加
-	AnimationTransition* runToIdle = runState->AddTransition(idleState);
-	runToIdle->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Less);
-
-	firstChild = gameobject->transform->children[0];
+	//firstChild = gameobject->transform->children[0];
 }
 
 void PlayerScript::MonoUpdate()
@@ -53,7 +12,7 @@ void PlayerScript::MonoUpdate()
 	ImageRenderer* imageRenderer = gameobject->GetComponent<ImageRenderer>();
 
 	Animator* animator = gameobject->GetComponent<Animator>();
-	AnimatorController* ac = animator->GetAnimatorController();
+	AnimatorController* ac = animator->ac;
 
 	if (Input::GetKey(Input::KeyCode::D)) {
 		gameobject->transform->position += Vector3::Right() * speed;
@@ -69,12 +28,12 @@ void PlayerScript::MonoUpdate()
 		ac->AddFloatParamater("isSpeed", 0.0f);
 	}
 
-	if (Input::GetKey(Input::R) && Input::GetKey(Input::LEFT_SHIFT)) {
-		gameobject->transform->rotation += Vector3::Back() * 1.0f;
-	}
-	else if (Input::GetKey(Input::R) && !Input::GetKey(Input::LEFT_SHIFT)) {
-		gameobject->transform->rotation += Vector3::Forward() * 1.0f;
-	}
+	//if (Input::GetKey(Input::R) && Input::GetKey(Input::LEFT_SHIFT)) {
+	//	gameobject->transform->rotation += Vector3::Back() * 1.0f;
+	//}
+	//else if (Input::GetKey(Input::R) && !Input::GetKey(Input::LEFT_SHIFT)) {
+	//	gameobject->transform->rotation += Vector3::Forward() * 1.0f;
+	//}
 
 	if (Input::GetKey(Input::KeyCode::RIGHT)) {
 		gameobject->transform->scale += Vector3::Right() * 0.01f;
@@ -101,15 +60,15 @@ void PlayerScript::MonoUpdate()
 		gameobject->transform->position = Camera::ScreenToWorldPoint(mousePos);
 	}
 
-	if (Input::GetKeyDown(Input::KeyCode::P)) {
-		//子がいるなら
-		if (gameobject->transform->children.size() != 0) {
-			//外す
-			firstChild->SetParent(nullptr);
-		}
-		else {
-			//セット
-			firstChild->SetParent(gameobject->transform);
-		}
-	}
+	//if (Input::GetKeyDown(Input::KeyCode::P)) {
+	//	//子がいるなら
+	//	if (gameobject->transform->children.size() != 0) {
+	//		//外す
+	//		firstChild->SetParent(nullptr);
+	//	}
+	//	else {
+	//		//セット
+	//		firstChild->SetParent(gameobject->transform);
+	//	}
+	//}
 }

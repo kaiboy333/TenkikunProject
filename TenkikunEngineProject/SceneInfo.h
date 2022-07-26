@@ -2,6 +2,9 @@
 
 class SceneInfo
 {
+	public:
+		int fileID;
 
+		SceneInfo();
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "SceneInfo.h"
 
 class AnimationParamater : public SceneInfo
 {
@@ -13,13 +14,11 @@ class AnimationParamater : public SceneInfo
 
 		Type type = Type::Int;
 
-		std::string name;
+		std::string name = "";
 
-		int intValue;
-		float floatValue;
-		bool boolValue;
-
-		AnimationParamater(std::string name);
+		int intValue = 0;
+		float floatValue = 0;
+		bool boolValue = false;
 
 		float GetValue();
 };

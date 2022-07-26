@@ -5,31 +5,35 @@
 
 class AnimationCondition : public SceneInfo
 {
-public:
-	std::string name;
+	public:
+		std::string name;
 
-	float value;
+		float value = 0;
 
-	enum class Mode {
-		Equals,
-		NotEquals,
-		Greater,
-		Less,
-	};
+		enum class Mode {
+			Equals,
+			NotEquals,
+			Greater,
+			Less,
+		};
 
-	Mode mode;
+		Mode mode = Mode::Equals;
 
-	AnimationCondition(std::string name, float value = 0, Mode mode = Mode::Equals);
+		//AnimationCondition(const AnimationCondition& condition);
 
-	bool isMeetCondition(float value);	//ðŒ‚ð–ž‚½‚µ‚Ä‚¢‚é‚©
+		bool isMeetCondition(float value);	//ðŒ‚ð–ž‚½‚µ‚Ä‚¢‚é‚©
 };
 
-inline AnimationCondition::AnimationCondition(std::string name, float value, Mode mode)
-{
-	this->name = name;
-	this->value = value;
-	this->mode = mode;
-}
+//inline AnimationCondition::AnimationCondition(const AnimationCondition& condition) {
+//	//name
+//	this->name = condition.name;
+//
+//	//value
+//	this->value = condition.value;
+//
+//	//mode
+//	this->mode = condition.mode;
+//}
 
 inline bool AnimationCondition::isMeetCondition(float value)
 {

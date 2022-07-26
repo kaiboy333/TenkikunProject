@@ -21,5 +21,5 @@ class PlayerScript : public MonoBehaviour {
 	private:
 		float speed = 3.0f;
 
-		Transform* firstChild = nullptr;
+		//Transform* firstChild = nullptr;
 };

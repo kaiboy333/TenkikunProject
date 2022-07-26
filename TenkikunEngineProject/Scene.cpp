@@ -5,11 +5,6 @@
 #include "ProjectFileManager.h"
 #include "Debug.h"
 
-Scene::Scene()
-{
-
-}
-
 void Scene::Init()
 {
 	Window* window = WindowManager::hierarchyWindow;
@@ -53,9 +48,9 @@ GameObject* Scene::CreateSquare()
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
 	Component* component = static_cast<Component*>(imageRenderer);
 	//四角の画像を探す
-	for (Image* image : ProjectFileManager::GetSpecificInfos<Image>()) {
-		if (image->GetPath().string() == ProjectFileManager::resourceFilePath.string() + "\\Square.png") {
-			imageRenderer->image = image;	//imageをセット
+	for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
+		if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\Square.png") {
+			imageRenderer->image = new Image(pair.second);	//imageをセット
 			break;
 		}
 	}
@@ -79,14 +74,81 @@ GameObject* Scene::CreateTenkikun()
 	gameobject->SetName("Tenkikun");	//名前変更
 
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
-	Component* component = static_cast<Component*>(imageRenderer);
+	//Component* component = static_cast<Component*>(imageRenderer);
 	//天気くんの画像を探す
-	for (Image* image : ProjectFileManager::GetSpecificInfos<Image>()) {
-		if (image->GetPath().string() == ProjectFileManager::resourceFilePath.string() + "\\Tenkikun.png") {
-			imageRenderer->image = image;	//imageをセット
+	for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
+		if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\Tenkikun.png") {
+			imageRenderer->image = new Image(pair.second);	//imageをセット
 			break;
 		}
 	}
+	return gameobject;
+}
+
+GameObject* Scene::CreateUnityChan()
+{
+	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
+	gameobject->SetName("UnityChan");	//名前変更
+
+	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
+	Animator* animator = gameobject->AddComponent<Animator>();	//Animatorコンポーネント作成
+
+	//アニメーションコントローラーの作成
+	std::filesystem::path acPath = ProjectFileManager::currentPath.string() + "\\" + "PlayerAnimatorController" + ".animctr";
+	AnimatorController* ac = static_cast<AnimatorController*>(ProjectFileManager::CreateInfo(acPath));
+
+	animator->ac = ac;	//Animatorにacをセット
+	ac->AddFloatParamater("isSpeed", 0.0f);	//パラメーターをセット
+	//ac->animator = animator;	//acにAnimatorをセット
+
+	//待機アニメーションのセット
+	//待機アニメーションの作成
+	std::filesystem::path idleAnimPath = ProjectFileManager::currentPath.string() + "\\" + "IdleAnimation" + ".anim";
+	Animation* idleAnim = static_cast<Animation*>(ProjectFileManager::CreateInfo(idleAnimPath));
+
+	//待機画像の作成
+	std::vector<Image*> idleImages;
+	for (int i = 0; i < 3; i++) {
+		for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
+			if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Idle" + std::to_string(i) + ".png") {
+				idleImages.push_back(new Image(pair.second));	//画像追加
+				break;
+			}
+		}
+	}
+	//アニメーションキーとして追加
+	idleAnim->AddAnimationKey(idleImages, 10);
+	//acにアニメーションをセットしてStateを取得
+	AnimationState* idleState = animator->AddState(idleAnim, "Idle");
+
+	//走るアニメーションのセット
+	//待機アニメーションの作成
+	std::filesystem::path runAnimPath = ProjectFileManager::currentPath.string() + "\\" + "RunAnimation" + ".anim";
+	Animation* runAnim = static_cast<Animation*>(ProjectFileManager::CreateInfo(idleAnimPath));
+	
+	//走る画像の作成
+	std::vector<Image*> runImages;
+	for (int i = 0; i < 8; i++) {
+		for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
+			if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Run" + std::to_string(i) + ".png") {
+				runImages.push_back(new Image(pair.second));	//画像追加
+				break;
+			}
+		}
+	}
+	//アニメーションキーとして追加
+	runAnim->AddAnimationKey(runImages, 7);
+	//acにアニメーションをセットしてStateを取得
+	AnimationState* runState = animator->AddState(runAnim, "Run");
+
+	//Transition作成
+	//待機StateのTransition追加
+	AnimationTransition* idleToRun = idleState->AddTransition(runState);
+	idleToRun->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Greater);
+	//走るStateのTransition追加
+	AnimationTransition* runToIdle = runState->AddTransition(idleState);
+	runToIdle->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Less);
+
 	return gameobject;
 }
 
@@ -104,7 +166,7 @@ void Scene::Destroy(GameObject* gameobject)
 		if (transform->parent) {
 			//親にある自身を削除
 			std::vector<Transform*>* children = &transform->parent->children;
-			children->erase(std::remove(children->begin(), children->end(), transform));
+			//children->erase(std::remove(children->begin(), children->end(), transform));
 		}
 
 		//シーンから自身を削除
