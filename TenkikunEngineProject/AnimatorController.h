@@ -8,6 +8,7 @@
 #include "Animator.h"
 #include "AnimationState.h"
 #include "AnimationParamater.h"
+#include "Info.h"
 
 class Animation;
 class AnimationState;
@@ -27,8 +28,12 @@ class AnimatorController : public Info
 		void AddFloatParamater(std::string name, float value);
 		void AddBoolParamater(std::string name, bool value);
 
-		std::unordered_map<std::string, AnimationParamater*> paramaters;
+		std::vector<AnimationParamater*> paramaters;
 
 		std::vector<AnimationState*> states;
+
+		AnimatorController(std::filesystem::path path);
+
+		AnimationParamater* GetParamater(std::string name);	//名前からパラメータを取得
 };
 

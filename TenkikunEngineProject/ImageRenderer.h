@@ -7,6 +7,7 @@
 #include "Image.h"
 
 class Camera;
+class Image;
 class ImageRenderer :  public Component
 {
 	public:

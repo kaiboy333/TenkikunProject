@@ -6,6 +6,7 @@
 
 using namespace std;
 
+class Image;
 class WindowButton : public TriggerRect
 {
 	public:

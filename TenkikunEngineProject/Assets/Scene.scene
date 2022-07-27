@@ -1,43 +1,43 @@
 class GameObject
-	fileID: 97013192
+	fileID: 12678598
 	name: MainCamera
 	components: 2
-		component: {fileID: 86370740 }
-		component: {fileID: 86140372 }
+		component: {fileID: 85806236 }
+		component: {fileID: 34391276 }
 class Transform
-	fileID: 86370740
-	gameobject: {fileID: 97013192 }
+	fileID: 85806236
+	gameobject: {fileID: 12678598 }
 	localPosition: {x: 0 ,y: 0 ,z: 0 }
 	localRotation: {x: 0 ,y: 0 ,z: 0 }
 	localScale: {x: 1 ,y: 1 ,z: 1 }
 	children: 0
 	parent: {fileID: 0 }
 class Camera
-	fileID: 86140372
-	gameobject: {fileID: 97013192 }
+	fileID: 34391276
+	gameobject: {fileID: 12678598 }
 class GameObject
-	fileID: 35230680
+	fileID: 76177204
 	name: UnityChan
 	components: 3
-		component: {fileID: 58982377 }
-		component: {fileID: 9166170 }
-		component: {fileID: 48037704 }
+		component: {fileID: 98224778 }
+		component: {fileID: 44515976 }
+		component: {fileID: 97266855 }
 class Transform
-	fileID: 58982377
-	gameobject: {fileID: 35230680 }
+	fileID: 98224778
+	gameobject: {fileID: 76177204 }
 	localPosition: {x: 0 ,y: 0 ,z: 0 }
 	localRotation: {x: 0 ,y: 0 ,z: 0 }
 	localScale: {x: 1 ,y: 1 ,z: 1 }
 	children: 0
 	parent: {fileID: 0 }
 class ImageRenderer
-	fileID: 9166170
-	gameobject: {fileID: 35230680 }
+	fileID: 44515976
+	gameobject: {fileID: 76177204 }
 	isFlipX: 0
 	isFlipY: 0
 	image: {fileID: 0 ,guid: 0 }
 class Animator
-	fileID: 48037704
-	gameobject: {fileID: 35230680 }
-	animatorController: {fileID: 73944211 ,guid: 56DA404F-D8B0-472A-B8CD-19A51CD63F39 }
-	nowState: {fileID: 38123713 }
+	fileID: 97266855
+	gameobject: {fileID: 76177204 }
+	animatorController: {fileID: 91149777 ,guid: 92E92F97-939B-49A8-8EE0-04BA507460F2 }
+	nowState: {fileID: 95078477 }

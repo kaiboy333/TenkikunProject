@@ -50,7 +50,7 @@ GameObject* Scene::CreateSquare()
 	//四角の画像を探す
 	for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
 		if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\Square.png") {
-			imageRenderer->image = new Image(pair.second);	//imageをセット
+			imageRenderer->image = static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]);	//imageをセット
 			break;
 		}
 	}
@@ -78,7 +78,7 @@ GameObject* Scene::CreateTenkikun()
 	//天気くんの画像を探す
 	for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
 		if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\Tenkikun.png") {
-			imageRenderer->image = new Image(pair.second);	//imageをセット
+			imageRenderer->image = static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]);	//imageをセット
 			break;
 		}
 	}
@@ -95,23 +95,22 @@ GameObject* Scene::CreateUnityChan()
 
 	//アニメーションコントローラーの作成
 	std::filesystem::path acPath = ProjectFileManager::currentPath.string() + "\\" + "PlayerAnimatorController" + ".animctr";
-	AnimatorController* ac = static_cast<AnimatorController*>(ProjectFileManager::CreateInfo(acPath));
+	AnimatorController* ac = new AnimatorController(acPath);
 
 	animator->ac = ac;	//Animatorにacをセット
 	ac->AddFloatParamater("isSpeed", 0.0f);	//パラメーターをセット
-	//ac->animator = animator;	//acにAnimatorをセット
 
 	//待機アニメーションのセット
 	//待機アニメーションの作成
 	std::filesystem::path idleAnimPath = ProjectFileManager::currentPath.string() + "\\" + "IdleAnimation" + ".anim";
-	Animation* idleAnim = static_cast<Animation*>(ProjectFileManager::CreateInfo(idleAnimPath));
+	Animation* idleAnim = new Animation(idleAnimPath);
 
 	//待機画像の作成
 	std::vector<Image*> idleImages;
 	for (int i = 0; i < 3; i++) {
 		for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
 			if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Idle" + std::to_string(i) + ".png") {
-				idleImages.push_back(new Image(pair.second));	//画像追加
+				idleImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]));	//画像追加
 				break;
 			}
 		}
@@ -124,14 +123,14 @@ GameObject* Scene::CreateUnityChan()
 	//走るアニメーションのセット
 	//待機アニメーションの作成
 	std::filesystem::path runAnimPath = ProjectFileManager::currentPath.string() + "\\" + "RunAnimation" + ".anim";
-	Animation* runAnim = static_cast<Animation*>(ProjectFileManager::CreateInfo(idleAnimPath));
+	Animation* runAnim = new Animation(runAnimPath);
 	
 	//走る画像の作成
 	std::vector<Image*> runImages;
 	for (int i = 0; i < 8; i++) {
 		for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
 			if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Run" + std::to_string(i) + ".png") {
-				runImages.push_back(new Image(pair.second));	//画像追加
+				runImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]));	//画像追加
 				break;
 			}
 		}
@@ -223,7 +222,7 @@ std::string Scene::GetName()
 void Scene::SetName(std::string name, bool isForce)
 {
 	//シーンパスのマップを取得
-	std::unordered_map<std::string, std::filesystem::path>& map = SceneManager::scenePathes;
+	std::map<std::string, std::filesystem::path>& map = SceneManager::scenePathes;
 
 	//強制でその名前にしないなら
 	if (!isForce) {
@@ -245,8 +244,17 @@ void Scene::SetName(std::string name, bool isForce)
 	if (!isForce) {
 		//既に前の名前が登録されているなら
 		if (map.contains(this->name)) {
-			//シーンパスのマップの名前を変える(置き換え)
-			map.insert_or_assign(map.find(this->name), name, map[this->name]);
+			//シーンパスのファイル名を取り除いた文字取得
+			std::string removedFileName = map[this->name].string().substr(0, map[this->name].string().length() - map[this->name].filename().string().length());
+			//変更後の名前取得
+			std::filesystem::path afterPath = removedFileName + name + ".scene";
+			//シーンファイルの名前も変更
+			std::filesystem::rename(map[this->name], afterPath);
+
+			//シーンパスの前のを削除
+			map.erase(map.find(this->name));
+			//シーンパスの新しいのを追加(これで実質入れ替え)
+			map.insert(std::make_pair(name, afterPath));
 		}
 	}
 	this->name = name;	//実際に変える

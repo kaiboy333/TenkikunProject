@@ -11,6 +11,7 @@ class Transition;
 class Animator;
 class AnimatorController;
 class AnimationTransition;
+class Animation;
 class AnimationState : public SceneInfo
 {
 	public:

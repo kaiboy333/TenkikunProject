@@ -31,11 +31,11 @@ bool AnimationTransition::canTransition(Animator* animator)
 
 	//ğŒ”»’è
 	for (AnimationCondition* condition : conditions) {
-		auto iter = ac->paramaters.find(condition->name);
+		AnimationParamater* paramater = ac->GetParamater(condition->name);
 		//Œ©‚Â‚©‚Á‚½‚ç
-		if (iter != ac->paramaters.end()) {
+		if (paramater) {
 			//ğŒ‚É‡‚í‚È‚©‚Á‚½‚ç
-			if (!condition->isMeetCondition(iter->second->GetValue())) {
+			if (!condition->isMeetCondition(paramater->GetValue())) {
 				return false;
 			};
 		}

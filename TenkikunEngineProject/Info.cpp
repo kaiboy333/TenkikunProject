@@ -1,19 +1,25 @@
 #include "Info.h"
 #include "ProjectFileManager.h"
 
-Info::Info() : SceneInfo()
+Info::Info(std::filesystem::path path, bool canWrite) : SceneInfo()
 {
-	guid = ProjectFileManager::CreateGUID();	//guidを作成、セット
+	////guidとInfoのマップに追加
+	//ProjectFileManager::guidAndInfo.insert(std::make_pair(guid, this));
 
-	ProjectFileManager::guidAndInfo.insert(std::make_pair(guid, this));	//guidとInfoのマップに追加
-}
+	//パスをセット
+	this->path = path;
+	//名前を設定
+	this->name = ProjectFileManager::GetNameWithoutExtensionName(path.filename());
+	//ファイルが存在していなく、新しく開いていいなら
+	if (!std::filesystem::exists(path) && canWrite) {
+		//ファイルを作成
+		std::ofstream ofs(path.c_str());
+	}
+	//雲ファイルを作成、guidをセット
+	this->guid = ProjectFileManager::WriteToKumoFile(path.string() + ".kumo");
 
-//void Info::SetGUID(std::string guid)
-//{
-//	this->guid = guid;
-//}
-
-std::string Info::GetGUID()
-{
-	return guid;
+	//guidとパスのペアをマップに登録
+	ProjectFileManager::guidAndPath.insert(std::make_pair(this->guid, path));
+	//pathとInfoのマップに追加
+	ProjectFileManager::pathAndInfo.insert(std::make_pair(path, this));
 }

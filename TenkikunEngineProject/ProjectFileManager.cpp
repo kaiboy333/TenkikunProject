@@ -6,8 +6,8 @@
 #include <rpcdce.h>
 #include "MyString.h"
 #include "Image.h"
-#include <string>
 #include "Script.h"
+#include "Info.h"
 
 ProjectFileManager::ProjectFileManager()
 {
@@ -116,6 +116,57 @@ ProjectFileManager::FileType ProjectFileManager::GetFileType(std::filesystem::pa
 	return targetFileType;
 }
 
+bool ProjectFileManager::IsFileType(std::filesystem::path path)
+{
+	//パスの拡張子を取得
+	std::string extensionName = path.extension().string();
+
+	//初期化
+	FileType targetFileType = FileType::None;
+
+	//パスがディレクトリだったら
+	if (std::filesystem::is_directory(path)) {
+		targetFileType = FileType::Folder;
+	}
+	else {
+		//画像だったら
+		if (extensionName == ".png" || extensionName == ".jpg") {
+			targetFileType = FileType::Image;
+		}
+		//スクリプトだったら(cpp)
+		else if (extensionName == ".cpp") {
+			targetFileType = FileType::Script_cpp;
+		}
+		//スクリプトだったら(hpp)
+		else if (extensionName == ".hpp") {
+			targetFileType = FileType::Script_hpp;
+		}
+		//スクリプトだったら(h)
+		else if (extensionName == ".h") {
+			targetFileType = FileType::Script_h;
+		}
+		//雲ファイルなら
+		else if (extensionName == ".kumo") {
+			targetFileType = FileType::Kumo;
+		}
+		//シーンファイルなら
+		else if (extensionName == ".scene") {
+			targetFileType = FileType::Scene;
+		}
+		//アニメーションファイルなら
+		else if (extensionName == ".anim") {
+			targetFileType = FileType::Animation;
+		}
+		//アニメーションコントローラーなら
+		else if (extensionName == ".animctr") {
+			targetFileType = FileType::AnimatorController;
+		}
+	}
+
+	//ファイルタイプがあるならtrue
+	return targetFileType != FileType::None;
+}
+
 void ProjectFileManager::CreateAndLoadKumoFile(std::filesystem::path path)
 {
 	//ファイルタイプが何もナシか雲ファイルなら
@@ -129,92 +180,112 @@ void ProjectFileManager::CreateAndLoadKumoFile(std::filesystem::path path)
 	//雲ファイルパスを作成
 	std::filesystem::path kumoPath = std::filesystem::path(path.string() + ".kumo");
 
-	Info* info = CreateInfo(path);
+	//ファイルに記述する
+	WriteToKumoFile(kumoPath);
+	//雲ファイル読み込み
+	LoadFromKumoFile(kumoPath);
+}
+
+//Info* ProjectFileManager::CreateInfo(std::filesystem::path path)
+//{
+//}
+
+std::string ProjectFileManager::WriteToKumoFile(std::filesystem::path kumoPath)
+{
+	std::string guid = "0";
 
 	//ファイルが存在しないなら
 	if (!std::filesystem::exists(kumoPath)) {
-		//ファイルに記述する
-		WriteToKumoFile(kumoPath, info);
+		//雲ファイルなら
+		if (GetFileType(kumoPath) == FileType::Kumo) {
+			//雲拡張子を抜いたパスを取得
+			std::filesystem::path originPath = GetNameWithoutExtensionName(kumoPath);
+
+			//元のパスがないなら
+			if (!std::filesystem::exists(originPath)) {
+				//雲ファイルを削除
+				std::filesystem::remove(kumoPath);
+				//おわり
+				return guid;
+			}
+
+			//ファイルを作成、開く
+			std::ofstream ofs(kumoPath.c_str());
+			//開けたら
+			if (ofs) {
+				//guidを作成
+				guid = CreateGUID();
+				ofs << "guid: " << guid << std::endl;	//guidを書き込む
+			}
+			else {
+				Debug::Log(kumoPath.string() + "は開けませんでした。");
+			}
+		}
 	}
+	//存在するなら
+	else {
+		//guidを取得
+		guid = GetGUIDFromKumoFile(kumoPath);
+	}
+
+	return guid;
 }
 
-Info* ProjectFileManager::CreateInfo(std::filesystem::path path)
-{
-	//Infoクラス作成
-	Info* info = nullptr;
-
-	//もし新しく開くファイルなら
-	if (GetFileType(path) == FileType::Animation || GetFileType(path) == FileType::AnimatorController) {
-		//ファイルを作成
-		std::ofstream ifs(path.c_str());
-	}
-
-	////ファイルが存在するなら
-	//if (std::filesystem::exists(path)) {
-		switch (GetFileType(path)) {
-			case FileType::Image:
-				info = new Image(path);
-				break;
-			case FileType::Animation:
-				info = new Animation();
-				break;
-			case FileType::AnimatorController:
-				info = new AnimatorController();
-				break;
-		}
-		if (info) {
-			//guidとパスのペアをマップに登録
-			guidAndPath.insert(std::make_pair(info->GetGUID(), path));
-			//パスを設定
-			info->path = path;
-			//名前を設定
-			info->name = GetNameWithoutExtensionName(path.filename());
-		}
-	//}
-
-	return info;
-}
-
-void ProjectFileManager::WriteToKumoFile(std::filesystem::path kumoPath, Info* info)
+void ProjectFileManager::LoadFromKumoFile(std::filesystem::path kumoPath)
 {
 	//雲ファイルなら
 	if (GetFileType(kumoPath) == FileType::Kumo) {
-		//ファイルを作成、開く
-		std::ofstream ofs(kumoPath.c_str());
-		//開けたら
-		if (ofs) {
-			//雲拡張子を抜いたパスを取得
-			std::filesystem::path originPath(kumoPath.string().substr(0, kumoPath.string().length() - kumoPath.extension().string().length()));
+		//雲拡張子を抜いたパスを取得
+		std::filesystem::path originPath = GetNameWithoutExtensionName(kumoPath);
 
-			//元のパスがあるなら
-			if (std::filesystem::exists(originPath)) {
-				if (info) {
-					ofs << "guid: " << info->GetGUID() << std::endl;	//guidを書き込む
-				}
-			}
-			//ないなら
-			else {
-				//雲ファイルを削除
-				std::filesystem::remove_all(kumoPath);
-			}
+		//行たちを読み込み
+		std::vector<std::string> lines = MyString::GetLines(kumoPath);
+		int row = 0;
 
-		}
-		else {
-			Debug::Log(kumoPath.string() + "は開けませんでした。");
+		//guidを取得
+		std::string guid = MyString::Split(lines[row++], ' ')[1];
+
+		Info* info = nullptr;
+
+		switch (GetFileType(originPath)) {
+			case FileType::Image:
+				info = new Image(originPath);
+				break;
+			case FileType::Animation:
+				info = new Animation(originPath);
+				break;
+			case FileType::AnimatorController:
+				info = new AnimatorController(originPath);
+				break;
 		}
 	}
 }
 
+std::string ProjectFileManager::GetGUIDFromKumoFile(std::filesystem::path kumoPath) {
+	//雲ファイルなら
+	if (GetFileType(kumoPath) == FileType::Kumo) {
+		//行たちを読み込み
+		std::vector<std::string> lines = MyString::GetLines(kumoPath);
+
+		//guidを取得
+		return MyString::Split(lines[0], ' ')[1];
+	}
+
+	return "0";
+}
+
 void ProjectFileManager::WriteToFile() {
-	for (std::pair<std::string, Info*> pair : guidAndInfo) {
-		if (typeid(*pair.second) == typeid(Animation)) {
-			//アニメーションファイルに記述する
-			WriteToAnimationFile(static_cast<Animation*>(pair.second));
-		}
-		else if (typeid(*pair.second) == typeid(AnimatorController)) {
-			//アニメーションコントローラーファイルに記述する
-			WriteToAnimatorControllerFile(static_cast<AnimatorController*>(pair.second));
-		}
+	for (std::pair<std::filesystem::path, Info*> pair : pathAndInfo) {
+		switch (GetFileType(pair.first)) {
+			case FileType::Animation:
+				//アニメーションファイルを読み込む
+				WriteToAnimationFile(static_cast<Animation*>(pair.second));
+				break;
+			case FileType::AnimatorController:
+				//アニメーションコントローラーファイルを読み込む
+				WriteToAnimatorControllerFile(static_cast<AnimatorController*>(pair.second));
+				break;
+			}
 	}
 }
 
@@ -242,11 +313,6 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 	std::ofstream ofs(scene->scenePath);
 	//開けたら
 	if (ofs) {
-		//ツリーリストに追加、雲ファイルも作成
-		WindowManager::projectWindow->SetFileChildrenToTreeList(scene->scenePath);
-		//ファイルアイコン更新
-		WindowManager::projectWindow->filePrintRect->LoadFoler();
-
 		for (GameObject* gameobject : scene->gameobjects) {
 			//クラス名書き込む
 			ofs << typeid(*gameobject).name() << std::endl;
@@ -340,7 +406,7 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 						//imageのファイルID取得
 						fileID = imageRenderer->image->fileID;
 						//imageのguidを取得
-						guid = imageRenderer->image->GetGUID();
+						guid = imageRenderer->image->guid;
 					}
 					else {
 						//fileIDを0にする
@@ -358,7 +424,7 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 					//acのファイルID取得
 					fileID = animator->ac->fileID;
 					//acを書き込む(guidも)
-					ofs << "\tanimatorController: {fileID: " << fileID << " ,guid: " << animator->ac->GetGUID() << " }" << std::endl;
+					ofs << "\tanimatorController: {fileID: " << fileID << " ,guid: " << animator->ac->guid << " }" << std::endl;
 
 					//nowStateのファイルIDを取得
 					fileID = animator->nowState->fileID;
@@ -492,13 +558,13 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			//fileID、guidともに0ではないなら
 			if (fileID != 0 && guid != "0") {
 				//imageを取得
-				image = static_cast<Image*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new Image(guidAndPath[guid])));
+				image = static_cast<Image*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[guidAndPath[guid]]));
 			}
 			//imageをセット
 			imageRenderer->image = image;
 		}
 		//Animatorなら
-		else if (className == typeid(ImageRenderer).name()) {
+		else if (className == typeid(Animator).name()) {
 			//ゲームオブジェクトのファイルIDを取得
 			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
 			//ゲームオブジェクトを取得
@@ -507,13 +573,18 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			Animator* animator = gameobject->AddComponent<Animator>();
 
 			//acのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
 			//acのguidを取得
 			guid = MyString::Split(lines[row++], ' ')[4];
 			//acを取得、リストにも登録
-			AnimatorController* ac = static_cast<AnimatorController*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, guidAndInfo[guid]));
+			AnimatorController* ac = static_cast<AnimatorController*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[guidAndPath[guid]]));
 			//acをセット
 			animator->ac = ac;
+
+			//nowStateのファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			//nowStateをセット
+			animator->nowState = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
 		}
 		//else if (className == typeid(MonoBehaviour).name()) {
 		//	//ゲームオブジェクトのファイルIDを取得
@@ -532,11 +603,6 @@ void ProjectFileManager::WriteToAnimatorControllerFile(AnimatorController* ac)
 	std::ofstream ofs(ac->path);
 	//開けたら
 	if (ofs) {
-		//ツリーリストに追加、雲ファイルも作成
-		WindowManager::projectWindow->SetFileChildrenToTreeList(ac->path);
-		//ファイルアイコン更新
-		WindowManager::projectWindow->filePrintRect->LoadFoler();
-
 		//ファイルID
 		int fileID;
 		//guid
@@ -551,17 +617,26 @@ void ProjectFileManager::WriteToAnimatorControllerFile(AnimatorController* ac)
 		//ファイルIDを書き込む
 		ofs << "\tfileID: " << fileID << std::endl;
 
-		//ac名を書き込む
-		ofs << "acName: " << ac->name << std::endl;
+		//paramatersの数を書き込む
+		ofs << "\tparamaters: " << (int)ac->paramaters.size() << std::endl;
+		for (AnimationParamater* paramater : ac->paramaters) {
+			//paramaterのファイルIDを取得
+			fileID = paramater->fileID;
+			//paramaterのファイルIDを書き込む
+			ofs << "\t\tparamater: {fileID: " << fileID << " }" << std::endl;
+		}
 
-		////animatorのファイルIDを取得
-		//fileID = ac->animator->fileID;
-		////animatorのファイルIDを書き込む
-		//ofs << "\tanimator: {fileID: " << fileID << " }" << std::endl;
+		//statesの数を書き込む
+		ofs << "\tstates: " << (int)ac->states.size() << std::endl;
+		for (AnimationState* state : ac->states) {
+			//stateのファイルIDを取得
+			fileID = state->fileID;
+			//paramaterのファイルIDを書き込む
+			ofs << "\t\tstate: {fileID: " << fileID << " }" << std::endl;
+		}
 
 		//AnimationParamater
-		for (std::pair<std::string, AnimationParamater*> pair : ac->paramaters) {
-			AnimationParamater* paramater = pair.second;
+		for (AnimationParamater* paramater : ac->paramaters) {
 
 			//クラス名書き込む
 			ofs << typeid(*paramater).name() << std::endl;
@@ -597,19 +672,12 @@ void ProjectFileManager::WriteToAnimatorControllerFile(AnimatorController* ac)
 			//ファイルIDを書き込む
 			ofs << "\tfileID: " << fileID << std::endl;
 
-			////acのファイルID取得
-			//fileID = ac->fileID;
-			////acのguid取得
-			//guid = ac->GetGUID();
-			////acのファイルIDを書き込む
-			//ofs << "\tanimatorController: {fileID: " << fileID << " ,guid: " << guid << " }" << std::endl;
-
 			//animationのファイルIDを取得
 			fileID = state->animation->fileID;
 			//animationのguidを取得
-			guid = state->animation->GetGUID();
+			guid = state->animation->guid;
 			//animationを書き込む(guidも)
-			ofs << "\tanimation: {fileID: " << fileID << " ,guid: " << state->animation->GetGUID() << " }" << std::endl;
+			ofs << "\tanimation: {fileID: " << fileID << " ,guid: " << state->animation->guid << " }" << std::endl;
 
 			//nameを書き込む
 			ofs << "\tname: " << state->name << std::endl;
@@ -635,11 +703,6 @@ void ProjectFileManager::WriteToAnimatorControllerFile(AnimatorController* ac)
 				fileID = transition->fileID;
 				//ファイルIDを書き込む
 				ofs << "\tfileID: " << fileID << std::endl;
-
-				//acのファイルID取得
-				fileID = ac->fileID;
-				//acを書き込む(guidも)
-				ofs << "\tanimatorController: {fileID: " << fileID << " ,guid: " << ac->GetGUID() << " }" << std::endl;
 
 				//fromStateのファイルIDを取得
 				fileID = transition->fromState->fileID;
@@ -704,27 +767,30 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 
 		//AnimatorControllerなら
 		if (className == typeid(AnimatorController).name()) {
-			//guidを取得
-			for (std::pair<std::string, std::filesystem::path> pair : guidAndPath) {
-				//もしパスが一致したなら
-				if (pair.second == acPath) {
-					//そのguidを取得
-					guid = pair.first;
-					break;
-				}
-			}
 			//AnimatorControllerを取得
-			AnimatorController* ac = static_cast<AnimatorController*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, guidAndInfo[guid]));
-			////guidをセット
-			//ac->guid(guid);
-			//パスを設定
-			ac->path = acPath;
+			AnimatorController* ac = static_cast<AnimatorController*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[acPath]));
 
-			//名前を変える
-			ac->name = MyString::Split(lines[row++], ' ')[1];
+			//animationparamatersの数を取得
+			int paramaterNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			for (int i = 0; i < paramaterNum; i++) {
+				//paramaterのファイルIDを取得
+				fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+				//paramaterを取得
+				AnimationParamater* paramater = static_cast<AnimationParamater*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationParamater()));
+				//paramaterをリストに追加
+				ac->paramaters.push_back(paramater);
+			}
 
-			////animatorをセット
-			//ac->animator = static_cast<Animator*>(sceneInfos[fileID]);
+			//statesの数を取得
+			int stateNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			for (int i = 0; i < stateNum; i++) {
+				//stateのファイルIDを取得
+				fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+				//stateを取得
+				AnimationState* state = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
+				//stateをリストに追加
+				ac->states.push_back(state);
+			}
 		}
 		//AnimationParamaterなら
 		else if (className == typeid(AnimationParamater).name()) {
@@ -751,17 +817,14 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 			//AnimationState生成
 			AnimationState* state = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
 
-			////acのファイルIDを取得
-			//fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
-			////acをセット
-			//state->ac = static_cast<AnimatorController*>(sceneInfos[fileID]);
-
 			//animationのファイルIDを取得
 			fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
 			//animationのguidを取得
 			guid = MyString::Split(lines[row++], ' ')[4];
 			//animationセット
-			state->animation = static_cast<Animation*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, guidAndInfo[guid]));
+			//std::filesystem::path path = guidAndPath[guid];
+			//Info* info = pathAndInfo[path];
+			state->animation = static_cast<Animation*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[guidAndPath[guid]]));
 
 			//名前をセット
 			state->name = MyString::Split(lines[row++], ' ')[1];
@@ -784,11 +847,6 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 		else if (className == typeid(AnimationTransition).name()) {
 			//AnimationTransition生成
 			AnimationTransition* transition = static_cast<AnimationTransition*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationTransition()));
-
-			////acのファイルIDを取得
-			//fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
-			////acをセット
-			//transition->ac = static_cast<AnimatorController*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimatorController()));
 
 			//fromStateのファイルIDを取得
 			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
@@ -837,18 +895,16 @@ void ProjectFileManager::WriteToAnimationFile(Animation* animation)
 	std::ofstream ofs(animation->path);
 	//開けたら
 	if (ofs) {
-		//ツリーリストに追加、雲ファイルも作成
-		WindowManager::projectWindow->SetFileChildrenToTreeList(animation->path);
-		//ファイルアイコン更新
-		WindowManager::projectWindow->filePrintRect->LoadFoler();
+		//クラス名を書き込む
+		ofs <<  typeid(*animation).name() << std::endl;
 
 		//ファイルIDを取得
 		fileID = animation->fileID;
 		//ファイルIDを書き込む
 		ofs << "\tfileID: " << fileID << std::endl;
 
-		//nameを書き込む
-		ofs << "\tname: " << animation->name << std::endl;
+		////nameを書き込む
+		//ofs << "\tname: " << animation->name << std::endl;
 
 		//animationKeyのマップの数を書き込む
 		ofs << "\tanimationKeys: " << (int)animation->animationKeys.size() << std::endl;
@@ -862,7 +918,7 @@ void ProjectFileManager::WriteToAnimationFile(Animation* animation)
 			//ImageのファイルIDを取得
 			fileID = animationKey.second->fileID;
 			//Imageのguidを取得
-			std::string guid = animationKey.second->GetGUID();
+			std::string guid = animationKey.second->guid;
 			//Imageを書き込む(guid)
 			ofs << "\t\t\timage: {fileID: " << fileID << " ,guid: " << guid << " }" << std::endl;
 		}
@@ -885,47 +941,42 @@ void ProjectFileManager::LoadFromAnimationFile(std::filesystem::path animationPa
 		std::vector<std::string> lines = MyString::GetLines(animationPath);
 		int row = 0;
 
-		//ファイルIDを取得
-		fileID = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+		//クラス名を取得
+		std::string className = lines[row++];
+		//クラス名がアニメーションなら
+		if (className == typeid(Animation).name()) {
+			//ファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			//アニメーションを取得
+			Animation* animation = static_cast<Animation*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[animationPath]));
 
-		//アニメーションのguidを取得
-		for (std::pair<std::string, std::filesystem::path> pair : guidAndPath) {
-			//もしパスが一致したなら
-			if (pair.second == animationPath) {
-				//そのguidを取得
-				guid = pair.first;
-				break;
+			////名前をセット
+			//animation->name = MyString::Split(lines[row++], ' ')[1];
+
+			////パスを設定
+			//animation->path = animationPath;
+
+			//animationKeyのマップの数を取得
+			int animationKeyNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			for (int i = 0; i < animationKeyNum; i++) {
+				row++;	//1行飛ばす
+				//フレーム数を取得
+				int time = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+				//imageのファイルIDを取得
+				fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
+				//imageのguidを取得
+				std::string guid = MyString::Split(lines[row++], ' ')[4];
+				//imageを取得
+				Image* image = static_cast<Image*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[guidAndPath[guid]]));
+				//timeとimage(animationKey)をセット
+				animation->animationKeys.insert(std::make_pair(time, image));
 			}
+
+			//isLoopをセット
+			animation->isLoop = (bool)std::stoi(MyString::Split(lines[row++], ' ')[1]);
+
 		}
-		//アニメーションを取得
-		Animation* animation = static_cast<Animation*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, guidAndInfo[guid]));
-
-		//名前をセット
-		animation->name = MyString::Split(lines[row++], ' ')[1];
-
-		//パスを設定
-		animation->path = animationPath;
-
-		//animationKeyのマップの数を取得
-		int animationKeyNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
-		for (int i = 0; i < animationKeyNum; i++) {
-			row++;	//1行飛ばす
-			//フレーム数を取得
-			int time = std::stoi(MyString::Split(lines[row++], ' ')[1]);
-			//imageのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
-			//imageのguidを取得
-			std::string guid = MyString::Split(lines[row++], ' ')[4];
-			//imageを取得
-			Image* image = static_cast<Image*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new Image(guidAndPath[guid])));
-			//timeとimage(animationKey)をセット
-			animation->animationKeys.insert(std::make_pair(time, image));
-		}
-
-		//isLoopをセット
-		animation->isLoop = (bool)std::stoi(MyString::Split(lines[row++], ' ')[1]);
 	}
-
 }
 
 std::string ProjectFileManager::CreateGUID()
@@ -976,13 +1027,11 @@ std::string ProjectFileManager::assetParentPathName = "";
 
 std::vector<std::filesystem::path> ProjectFileManager::dragFilePathes;
 
-//std::unordered_map<Info*, int> ProjectFileManager::infoAndFileID;
+std::map<std::filesystem::path, Info*> ProjectFileManager::pathAndInfo;
 
-std::unordered_map<std::string, Info*> ProjectFileManager::guidAndInfo;
+std::map<int, SceneInfo*> ProjectFileManager::sceneInfos;
 
-std::unordered_map<int, SceneInfo*> ProjectFileManager::sceneInfos;
-
-std::unordered_map<std::string, std::filesystem::path> ProjectFileManager::guidAndPath;
+std::map<std::string, std::filesystem::path> ProjectFileManager::guidAndPath;
 
 //ランダム生成期の初期化
 std::random_device ProjectFileManager::rd;

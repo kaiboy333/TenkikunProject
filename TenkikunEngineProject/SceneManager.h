@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include <filesystem>
 #include <fstream>
-#include <unordered_map>
+#include <map>
 
 class Scene;
 class SceneManager
@@ -20,7 +20,7 @@ class SceneManager
 
 		static PlayMode playMode;
 
-		static std::unordered_map<std::string, std::filesystem::path> scenePathes;	//シーン名とそのパス
+		static std::map<std::string, std::filesystem::path> scenePathes;	//シーン名とそのパス
 
 		SceneManager();
 

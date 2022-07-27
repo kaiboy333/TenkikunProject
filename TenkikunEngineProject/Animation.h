@@ -4,7 +4,9 @@
 #include <map>
 #include "Image.h"
 #include <vector>
+#include "Info.h"
 
+class Image;
 class Animation : public Info
 {
 	public:
@@ -15,6 +17,8 @@ class Animation : public Info
 		void AddAnimationKey(std::vector<Image*> images, int timeInterVal = 5);
 
 		//Animation(std::vector<Image*> images, int framePerChange);
+
+		Animation(std::filesystem::path path);
 };
 
 //inline Animation::Animation(std::vector<Image*> images, int framePerChange = 5)

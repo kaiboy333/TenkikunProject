@@ -57,27 +57,23 @@ void SceneManager::MakeScene()
 	//今のパスの中ににシーンファイルを設定
 	std::filesystem::path scenePath(ProjectFileManager::currentPath.string() + "\\" + scene->GetName() + ".scene");
 	//シーンのパスを設定
-	scene->scenePath = scenePath;
+	scene->scenePath = scenePath;	//ファイルを作成
+	std::ofstream ofs(scenePath.c_str());
+
+	//雲ファイルを作成
+	ProjectFileManager::WriteToKumoFile(scenePath.string() + ".kumo");
+	WindowManager::projectWindow->filePrintRect->LoadFoler();
 
 	//シーンリストに追加
 	scenePathes.insert(std::make_pair(scene->GetName(), scenePath));
 
-	std::ofstream ofs(scenePath.c_str());
-	//シーンファイルを作成、開く
-	if (ofs) {
-		////ツリーリストに追加、雲ファイルも作成
-		//WindowManager::projectWindow->SetFileChildrenToTreeList(scenePath);
-		////ファイルアイコン更新
-		//WindowManager::projectWindow->filePrintRect->LoadFoler();
-
-		scene->CreateCamera();	//カメラ生成
-		//scene->CreateTenkikun();	//天気くん生成
-		scene->CreateUnityChan();	//Unityちゃん生成
+	scene->CreateCamera();	//カメラ生成
+	//scene->CreateTenkikun();	//天気くん生成
+	scene->CreateUnityChan();	//Unityちゃん生成
 
 
-		//シーンをセーブ
-		SaveScene();
-	}
+	//シーンをセーブ
+	SaveScene();
 }
 
 void SceneManager::SetNowScene(Scene* scene)
@@ -104,4 +100,4 @@ void SceneManager::SaveScene()
 Scene* SceneManager::nowScene = nullptr;	//現在のScene
 SceneManager::PlayMode SceneManager::playMode = PlayMode::EDIT;	//初期は編集モード
 
-std::unordered_map<std::string, std::filesystem::path> SceneManager::scenePathes;
+std::map<std::string, std::filesystem::path> SceneManager::scenePathes;

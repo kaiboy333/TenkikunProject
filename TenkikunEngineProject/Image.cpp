@@ -1,7 +1,7 @@
 #include "Image.h"
 #include "ImageManager.h"
 
-Image::Image(std::filesystem::path path) : Info()
+Image::Image(std::filesystem::path path) : Info(path, false)	//‘‚«‚ß‚È‚¢
 {
 	this->gh = ImageManager::LoadAndGetImage(path);	//‰æ‘œ“Ç‚İ‚İ
 	if (gh) {

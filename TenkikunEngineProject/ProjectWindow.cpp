@@ -86,7 +86,8 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path addPath)
 		else {
 			//ファイルがシーンファイルなら
 			if (ProjectFileManager::GetFileType(path) == ProjectFileManager::FileType::Scene) {
-				std::string sceneName = path.filename().string().substr(0, path.filename().string().length() - path.extension().string().length());
+				//ファイル名を取得
+				std::string sceneName = ProjectFileManager::GetNameWithoutExtensionName(path.filename());
 				//シーンのマップに無かったら
 				if (!SceneManager::scenePathes.contains(sceneName)) {
 					//シーンマネージャーのリストに追加

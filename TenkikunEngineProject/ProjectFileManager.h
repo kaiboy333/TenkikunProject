@@ -1,11 +1,12 @@
 #pragma once
 
 #include <filesystem>
-#include <unordered_map>
-#include "Info.h"
+#include <map>
 #include <random>
 #include "Scene.h"
+#include "Animation.h"
 #include "AnimatorController.h"
+#include <string>
 
 class ProjectFileManager
 {
@@ -46,24 +47,29 @@ class ProjectFileManager
 
 		//static std::unordered_map<Info*, int> infoAndFileID;
 
-		static std::unordered_map<std::string, Info*> guidAndInfo;
+		//static std::unordered_map<std::string, Info*> guidAndInfo;
+
+		//static std::unordered_map<std::filesystem::path, Info*> pathAndInfo;
+		static std::map<std::filesystem::path, Info*> pathAndInfo;
 
 		//sceneInfos
-		static std::unordered_map<int, SceneInfo*> sceneInfos;
+		static std::map<int, SceneInfo*> sceneInfos;
 
-		static std::unordered_map<std::string, std::filesystem::path> guidAndPath;
+		static std::map<std::string, std::filesystem::path> guidAndPath;
 
 		ProjectFileManager();
 
 		static void Update();
 
 		static FileType GetFileType(std::filesystem::path path);	//指定のファイルはそのタイプであるか
+		static bool IsFileType(std::filesystem::path path);	//ファイルタイプを認識できるか
 
 		static void CreateAndLoadKumoFile(std::filesystem::path kumoPath);	//ファイル専用のくも(メタ)ファイルをチェック
 
-		static Info* CreateInfo(std::filesystem::path path);	//ファイルからInfoを作成
+		static std::string WriteToKumoFile(std::filesystem::path kumoPath);	//雲ファイルに記述する
+		static void LoadFromKumoFile(std::filesystem::path kumoPath);	//雲ファイルから読み込み、Infoを作成
 
-		static void WriteToKumoFile(std::filesystem::path kumoPath, Info* info);	//雲ファイルに記述する
+		//static Info* CreateInfo(std::filesystem::path path);	//ファイルからInfoを作成
 
 		static void WriteToFile();	//保存するファイルに情報を記述する
 		static void LoadFromFile();	//すべての保存ファイルから情報を読み込む
@@ -71,15 +77,14 @@ class ProjectFileManager
 		static void WriteToSceneFile(Scene* scene);	//現在のシーンの情報をシーンファイルに書き込む
 		static void LoadFromSceneFile(std::filesystem::path scenePath);	//シーンファイルからシーンを作成
 
-		//template<class T>
-		//static std::vector<T*> GetSpecificGUIDInfos();	//guidInfosにある特定(T)のクラスを取得する
-
 		static int CreateFileID();	//fileIDを生成する(intで)
 		static std::string CreateGUID();	//GUIDを生成する(stringで)
 
 		static std::string GetNameWithoutExtensionName(std::filesystem::path path);	//拡張子を抜いたファイル名取得
 
 	private:
+		static std::string GetGUIDFromKumoFile(std::filesystem::path kumoPath);	//雲ファイルからguidを取得
+
 		static void WriteToAnimationFile(Animation* animation);	//アニメーションファイルに記述する
 		static void LoadFromAnimationFile(std::filesystem::path animationPath);	//アニメーションファイルからアニメーションを作成
 
@@ -87,13 +92,11 @@ class ProjectFileManager
 		static void LoadFromAnimatorControllerFile(std::filesystem::path acPath);	//acファイルからacを作成
 
 		template<class T, class K>
-		static K GetValue(std::unordered_map<T, K>& map, T key, K value);	//マップのvalueを取得、なかったら新しいvalueを追加、取得
-
-		static std::string GetGUIDFromKumoPath(std::filesystem::path kumoPath);	//kumoPathからguidを取得
+		static K GetValue(std::map<T, K>& map, T key, K value);	//マップのvalueを取得、なかったら新しいvalueを追加、取得
 };
 
 template<class T, class K>
-inline K ProjectFileManager::GetValue(std::unordered_map<T, K>& map, T key, K value)
+inline K ProjectFileManager::GetValue(std::map<T, K>& map, T key, K value)
 {
 	//キーが見つからなかったなら
 	if (!map.contains(key)) {

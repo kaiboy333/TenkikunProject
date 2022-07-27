@@ -11,12 +11,8 @@ class Info : public SceneInfo
 
 		std::string name;
 
-		Info();
+		Info(std::filesystem::path path, bool canWrite = true);	//canWrite:‘‚«‚İ‰Â”\‚©
 
-		//void SetGUID(std::string guid);
-		std::string GetGUID();
-
-	private:
 		std::string guid = "0";
 };
 

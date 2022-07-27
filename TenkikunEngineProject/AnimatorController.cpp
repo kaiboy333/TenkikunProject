@@ -1,8 +1,21 @@
 #include "AnimatorController.h"
 
-//AnimatorController::AnimatorController()
-//{
-//}
+AnimatorController::AnimatorController(std::filesystem::path path) : Info(path)
+{
+
+}
+
+AnimationParamater* AnimatorController::GetParamater(std::string name)
+{
+	for (AnimationParamater* paramater : paramaters) {
+		if (paramater->name == name) {
+			return paramater;
+		}
+	}
+
+	return nullptr;
+}
+
 //
 //AnimatorController::AnimatorController(const AnimatorController& ac)
 //{
@@ -47,7 +60,7 @@ void AnimatorController::AddIntParamater(std::string name, int value = 0)
 	animationParamater->type = AnimationParamater::Type::Int;
 	animationParamater->intValue = value;
 
-	paramaters.insert_or_assign(name, animationParamater);
+	paramaters.push_back(animationParamater);
 }
 
 void AnimatorController::AddFloatParamater(std::string name, float value = 0.0f)
@@ -57,7 +70,7 @@ void AnimatorController::AddFloatParamater(std::string name, float value = 0.0f)
 	animationParamater->type = AnimationParamater::Type::Float;
 	animationParamater->floatValue = value;
 
-	paramaters.insert_or_assign(name, animationParamater);
+	paramaters.push_back(animationParamater);
 }
 
 void AnimatorController::AddBoolParamater(std::string name, bool value = false)
@@ -67,5 +80,5 @@ void AnimatorController::AddBoolParamater(std::string name, bool value = false)
 	animationParamater->type = AnimationParamater::Type::Bool;
 	animationParamater->boolValue = value;
 
-	paramaters.insert_or_assign(name, animationParamater);
+	paramaters.push_back(animationParamater);
 }

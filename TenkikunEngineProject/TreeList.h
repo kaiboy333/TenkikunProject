@@ -39,7 +39,6 @@ public:
 	void UpdateNodes();	//階層を更新
 
 	int UpdateNodeAndChildrenNodes(TreeNode* node, int row);	//nodeとnodeの子を含むノードのrowとstairNoをすべてセットする
-
 private:
 	TreeNode* root = nullptr;
 
