@@ -1,8 +1,8 @@
 Debug/
-.vs
-.txt
-.scene
-.anim
-.animCtr
-.kumo
+*.vs
+*.txt
+*.scene
+*.anim
+*.kumo
+*.animctr
 TenkikunEngineProject/Assets/Scenes/
