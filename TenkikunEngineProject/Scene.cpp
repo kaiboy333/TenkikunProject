@@ -108,12 +108,7 @@ GameObject* Scene::CreateUnityChan()
 	//待機画像の作成
 	std::vector<Image*> idleImages;
 	for (int i = 0; i < 3; i++) {
-		for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
-			if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Idle" + std::to_string(i) + ".png") {
-				idleImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]));	//画像追加
-				break;
-			}
-		}
+		idleImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Idle" + std::to_string(i) + ".png"]));
 	}
 	//アニメーションキーとして追加
 	idleAnim->AddAnimationKey(idleImages, 10);
@@ -128,12 +123,7 @@ GameObject* Scene::CreateUnityChan()
 	//走る画像の作成
 	std::vector<Image*> runImages;
 	for (int i = 0; i < 8; i++) {
-		for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
-			if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Run" + std::to_string(i) + ".png") {
-				runImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]));	//画像追加
-				break;
-			}
-		}
+		runImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Run" + std::to_string(i) + ".png"]));
 	}
 	//アニメーションキーとして追加
 	runAnim->AddAnimationKey(runImages, 7);

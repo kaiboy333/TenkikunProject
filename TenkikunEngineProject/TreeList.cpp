@@ -4,18 +4,8 @@
 TreeList::TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool isFirstOpen, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
 {
 	//ノードのボタン画像を探す
-	for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
-		if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\rightArrow.png") {
-			images[0] = static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]);	//imageをセット
-			break;
-		}
-	}
-	for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
-		if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\downArrow.png") {
-			images[1] = static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]);	//imageをセット
-			break;
-		}
-	}
+	images[0] = static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\RightArrow.png"]);
+	images[1] = static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\DownArrow.png"]);
 
 	this->drawRoot = drawRoot;
 

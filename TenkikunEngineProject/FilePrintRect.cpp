@@ -58,6 +58,8 @@ void FilePrintRect::MakeDuplicatedFile(std::filesystem::path copyPath)
 		if (ProjectFileManager::GetFileType(copyPath) != ProjectFileManager::FileType::None) {
 			//ファイルをペースト
 			filesystem::copy(copyPath, pastePath);
+			//ファイルをチェック
+			ProjectFileManager::CheckAddFile(pastePath);
 			//ツリーリストにフォルダ名を追加
 			WindowManager::projectWindow->SetFileChildrenToTreeList(pastePath);
 		}

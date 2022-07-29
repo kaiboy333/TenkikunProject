@@ -7,7 +7,7 @@ SceneManager::SceneManager()
 {
 	//シーンが何もないなら
 	if (scenePathes.size() == 0) {
-		MakeScene();	//シーンを作成
+		MakeScene(ProjectFileManager::sceneFilePath);	//シーンを作成
 	}
 	//あるなら
 	else {
@@ -43,8 +43,12 @@ Scene* SceneManager::GetNowScene()
 	return nowScene;
 }
 
-void SceneManager::MakeScene()
+void SceneManager::MakeScene(std::filesystem::path parentPath)
 {
+	//親がフォルダーじゃないなら作らない
+	if (ProjectFileManager::GetFileType(parentPath) != ProjectFileManager::FileType::Folder)
+		return;
+
 	//シーンを作成
 	Scene* scene = new Scene();
 
@@ -54,8 +58,8 @@ void SceneManager::MakeScene()
 	}
 	scene->Init();	//初期化
 
-	//今のパスの中ににシーンファイルを設定
-	std::filesystem::path scenePath(ProjectFileManager::currentPath.string() + "\\" + scene->GetName() + ".scene");
+	//親のフォルダ内の中ににシーンファイルを設定
+	std::filesystem::path scenePath(parentPath.string() + "\\" + scene->GetName() + ".scene");
 	//シーンのパスを設定
 	scene->scenePath = scenePath;	//ファイルを作成
 	std::ofstream ofs(scenePath.c_str());

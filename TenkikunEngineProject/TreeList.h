@@ -18,7 +18,7 @@ public:
 	Image* images[2];
 
 	//親から子の余白
-	float tabSpace = 18;
+	float tabSpace = 12;
 
 	bool isFirstOpen;	//ノード追加時に開けた状態で追加するか
 

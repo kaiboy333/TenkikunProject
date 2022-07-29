@@ -15,11 +15,11 @@ void ProjectWindow::Init()
 	//ツリーリスト作成
 	treeList = new TreeList(startX, startY, WindowManager::hierarchyWindow->width, height, this, false, true, ProjectFileManager::assetFilePath.filename().string());
 
-	vector<filesystem::path> pathes;
+	//vector<filesystem::path> pathes;
 
-	pathes.push_back(ProjectFileManager::assetFilePath);
+	//pathes.push_back(ProjectFileManager::assetFilePath);
 
-	//ツリーリストにアセットのパスを追加
+	//ツリーリストにパスを追加
 	SetFileChildrenToTreeList(ProjectFileManager::assetFilePath);
 
 	filePrintRect = new FilePrintRect(WindowManager::hierarchyWindow->width, startY, width - WindowManager::hierarchyWindow->width, height, this);
@@ -41,19 +41,16 @@ void ProjectWindow::Draw()
 	filePrintRect->Draw();
 }
 
-void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path addPath)
+void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path path)
 {
 	vector<filesystem::path> pathes;
 
-	pathes.push_back(addPath);
+	pathes.push_back(path);
 
 	//ツリーリストにアセットのパスを追加
 	while (pathes.size() != 0) {
 		filesystem::path path = pathes[0];
 		pathes.erase(pathes.begin());
-
-		//雲ファイルがなければ作成、読み込み
-		ProjectFileManager::CreateAndLoadKumoFile(path);
 
 		//パスがディレクトリだったら
 		if (filesystem::is_directory(path)) {
@@ -70,7 +67,6 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path addPath)
 				filePrintRect->LoadFoler();
 			});
 
-			//パスがアセットフォルダじゃないなら
 			if (path != ProjectFileManager::assetFilePath) {
 				//親のパスからアセットの上の部分を除いたものを取得
 				string parentPathName = path.parent_path().string().substr(ProjectFileManager::assetParentPathName.length());
@@ -81,18 +77,6 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path addPath)
 			//子をリストに追加
 			for (filesystem::path childPath : filesystem::directory_iterator(path)) {
 				pathes.push_back(childPath);
-			}
-		}
-		else {
-			//ファイルがシーンファイルなら
-			if (ProjectFileManager::GetFileType(path) == ProjectFileManager::FileType::Scene) {
-				//ファイル名を取得
-				std::string sceneName = ProjectFileManager::GetNameWithoutExtensionName(path.filename());
-				//シーンのマップに無かったら
-				if (!SceneManager::scenePathes.contains(sceneName)) {
-					//シーンマネージャーのリストに追加
-					SceneManager::scenePathes.insert(std::make_pair(sceneName, path));
-				}
 			}
 		}
 	}

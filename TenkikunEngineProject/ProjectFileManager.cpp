@@ -32,6 +32,22 @@ ProjectFileManager::ProjectFileManager()
 		std::filesystem::create_directory(resourceFilePath);
 	}
 
+	//シーンフォルダパスを作成
+	sceneFilePath = assetFilePath.string() + "\\Scenes";
+	//シーンフォルダが存在しないなら
+	if (!std::filesystem::exists(sceneFilePath)) {
+		//フォルダを作成
+		std::filesystem::create_directory(sceneFilePath);
+	}
+
+	
+
+	//アセットファイルの子を見ていく
+	for (filesystem::path childPath : filesystem::directory_iterator(assetFilePath)) {
+		//ファイルをチェック
+		CheckAddFile(childPath);
+	}
+
 	////リソースフォルダ内に入れたい画像をコピー&ペースト
 	////四角の画像パスをコピー&ペースト
 	//std::filesystem::path copyPath = std::filesystem::path(imageFilePath.string() + "\\Square.png");
@@ -118,63 +134,15 @@ ProjectFileManager::FileType ProjectFileManager::GetFileType(std::filesystem::pa
 
 bool ProjectFileManager::IsFileType(std::filesystem::path path)
 {
-	//パスの拡張子を取得
-	std::string extensionName = path.extension().string();
-
-	//初期化
-	FileType targetFileType = FileType::None;
-
-	//パスがディレクトリだったら
-	if (std::filesystem::is_directory(path)) {
-		targetFileType = FileType::Folder;
-	}
-	else {
-		//画像だったら
-		if (extensionName == ".png" || extensionName == ".jpg") {
-			targetFileType = FileType::Image;
-		}
-		//スクリプトだったら(cpp)
-		else if (extensionName == ".cpp") {
-			targetFileType = FileType::Script_cpp;
-		}
-		//スクリプトだったら(hpp)
-		else if (extensionName == ".hpp") {
-			targetFileType = FileType::Script_hpp;
-		}
-		//スクリプトだったら(h)
-		else if (extensionName == ".h") {
-			targetFileType = FileType::Script_h;
-		}
-		//雲ファイルなら
-		else if (extensionName == ".kumo") {
-			targetFileType = FileType::Kumo;
-		}
-		//シーンファイルなら
-		else if (extensionName == ".scene") {
-			targetFileType = FileType::Scene;
-		}
-		//アニメーションファイルなら
-		else if (extensionName == ".anim") {
-			targetFileType = FileType::Animation;
-		}
-		//アニメーションコントローラーなら
-		else if (extensionName == ".animctr") {
-			targetFileType = FileType::AnimatorController;
-		}
-	}
-
-	//ファイルタイプがあるならtrue
-	return targetFileType != FileType::None;
+	//ファイルタイプがなしではないならtrue
+	return GetFileType(path) != FileType::None;
 }
 
 void ProjectFileManager::CreateAndLoadKumoFile(std::filesystem::path path)
 {
-	//ファイルタイプが何もナシか雲ファイルなら
-	if (GetFileType(path) == FileType::None || GetFileType(path) == FileType::Kumo)
+	//ファイルタイプがないか雲ファイルなら
+	if (!IsFileType(path) || GetFileType(path) == FileType::Kumo)
 		//終わり
-		return;
-	//アセットファイルも無視
-	if (path == assetFilePath)
 		return;
 
 	//雲ファイルパスを作成
@@ -185,10 +153,6 @@ void ProjectFileManager::CreateAndLoadKumoFile(std::filesystem::path path)
 	//雲ファイル読み込み
 	LoadFromKumoFile(kumoPath);
 }
-
-//Info* ProjectFileManager::CreateInfo(std::filesystem::path path)
-//{
-//}
 
 std::string ProjectFileManager::WriteToKumoFile(std::filesystem::path kumoPath)
 {
@@ -455,7 +419,7 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 	SceneManager::SetNowScene(scene);	//登録
 	scene->Init();	//初期化
 	//パスのファイル名からシーン名を取得、セット
-	scene->SetName(scenePath.filename().string(), true);
+	scene->SetName(GetNameWithoutExtensionName(scenePath.filename()), true);
 
 	//行たちを読み込み
 	std::vector<std::string> lines = MyString::GetLines(scenePath);
@@ -1017,9 +981,50 @@ std::string ProjectFileManager::GetNameWithoutExtensionName(std::filesystem::pat
 	return path.string().substr(0, path.string().length() - path.extension().string().length());
 }
 
+void ProjectFileManager::CheckAddFile(std::filesystem::path path)
+{
+	//アセットファイルだったら終わり
+	if (path == assetFilePath)
+		return;
+
+	vector<filesystem::path> pathes;
+
+	pathes.push_back(path);
+
+	//ツリーリストにアセットのパスを追加
+	while (pathes.size() != 0) {
+		filesystem::path path = pathes[0];
+		pathes.erase(pathes.begin());
+
+		//雲ファイルがなければ作成、読み込み
+		CreateAndLoadKumoFile(path);
+
+		//パスがディレクトリだったら
+		if (filesystem::is_directory(path)) {
+			//子をリストに追加
+			for (filesystem::path childPath : filesystem::directory_iterator(path)) {
+				pathes.push_back(childPath);
+			}
+		}
+		else {
+			//ファイルがシーンファイルなら
+			if (GetFileType(path) == FileType::Scene) {
+				//ファイル名を取得
+				std::string sceneName = GetNameWithoutExtensionName(path.filename());
+				//シーンのマップに無かったら
+				if (!SceneManager::scenePathes.contains(sceneName)) {
+					//シーンマネージャーのリストに追加
+					SceneManager::scenePathes.insert(std::make_pair(sceneName, path));
+				}
+			}
+		}
+	}
+}
+
 std::filesystem::path ProjectFileManager::assetFilePath;
 std::filesystem::path ProjectFileManager::resourceFilePath;
 std::filesystem::path ProjectFileManager::imageFilePath;
+std::filesystem::path ProjectFileManager::sceneFilePath;
 
 std::filesystem::path ProjectFileManager::currentPath;
 

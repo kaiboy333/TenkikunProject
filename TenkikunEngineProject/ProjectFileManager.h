@@ -35,9 +35,10 @@ class ProjectFileManager
 
 		static std::filesystem::path currentPath;	//現在のパス
 
-		static std::filesystem::path assetFilePath;	//アセットフォルダがあるパス
-		static std::filesystem::path resourceFilePath;	//リソースフォルダがあるパス
-		static std::filesystem::path imageFilePath;	//エンジンで使う画像が入っているフォルダのパス
+		static std::filesystem::path assetFilePath;	//アセットフォルダがあるパス(デフォルト)
+		static std::filesystem::path resourceFilePath;	//リソースフォルダがあるパス(デフォルト)
+		static std::filesystem::path imageFilePath;	//エンジンで使う画像が入っているフォルダのパス(今は機能しない)
+		static std::filesystem::path sceneFilePath;	//シーンを入れるためのフォルダのパス(デフォルト)
 
 		//アセットの絶対パスのファイル名だけ除いたもの
 		static std::string assetParentPathName;
@@ -64,8 +65,6 @@ class ProjectFileManager
 		static FileType GetFileType(std::filesystem::path path);	//指定のファイルはそのタイプであるか
 		static bool IsFileType(std::filesystem::path path);	//ファイルタイプを認識できるか
 
-		static void CreateAndLoadKumoFile(std::filesystem::path kumoPath);	//ファイル専用のくも(メタ)ファイルをチェック
-
 		static std::string WriteToKumoFile(std::filesystem::path kumoPath);	//雲ファイルに記述する
 		static void LoadFromKumoFile(std::filesystem::path kumoPath);	//雲ファイルから読み込み、Infoを作成
 
@@ -82,6 +81,8 @@ class ProjectFileManager
 
 		static std::string GetNameWithoutExtensionName(std::filesystem::path path);	//拡張子を抜いたファイル名取得
 
+		static void CheckAddFile(std::filesystem::path path);	//追加されたファイルを子も含めチェック
+
 	private:
 		static std::string GetGUIDFromKumoFile(std::filesystem::path kumoPath);	//雲ファイルからguidを取得
 
@@ -93,6 +94,8 @@ class ProjectFileManager
 
 		template<class T, class K>
 		static K GetValue(std::map<T, K>& map, T key, K value);	//マップのvalueを取得、なかったら新しいvalueを追加、取得
+
+		static void CreateAndLoadKumoFile(std::filesystem::path path);	//ファイルから雲ファイルを作成したり読み込んだりする
 };
 
 template<class T, class K>
