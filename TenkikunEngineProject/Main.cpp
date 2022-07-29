@@ -7,7 +7,6 @@
 #include <tchar.h>
 #include <mmsystem.h>
 #include <string>
-#include "Script.h"
 #include "PlayerScript.h"
 #include "Input.h"
 #include "Rotate.h"

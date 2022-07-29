@@ -104,9 +104,6 @@
     <ClCompile Include="Animator.cpp">
       <Filter>ソース ファイル\component</Filter>
     </ClCompile>
-    <ClCompile Include="Script.cpp">
-      <Filter>ソース ファイル\component</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerScript.cpp">
       <Filter>ソース ファイル\script</Filter>
     </ClCompile>
@@ -259,9 +256,6 @@
     <ClInclude Include="Window.h">
       <Filter>ソース ファイル\window</Filter>
     </ClInclude>
-    <ClInclude Include="Script.h">
-      <Filter>ソース ファイル\component</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerScript.h">
       <Filter>ソース ファイル\script</Filter>
     </ClInclude>
@@ -384,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="AnimationParamater.h">
       <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoBehaviour.h">
+      <Filter>ソース ファイル\component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

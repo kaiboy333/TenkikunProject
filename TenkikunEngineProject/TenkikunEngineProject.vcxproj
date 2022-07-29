@@ -180,7 +180,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneInfo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Script.cpp" />
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="ScrollRect.cpp" />
     <ClCompile Include="TextRect.cpp" />
@@ -222,6 +221,7 @@
     <ClInclude Include="InspectorWindow.h" />
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MonoBehaviour.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="ProjectFileManager.h" />
@@ -233,7 +233,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Script.h" />
     <ClInclude Include="AnimationState.h" />
     <ClInclude Include="ScrollRect.h" />
     <ClInclude Include="TextRect.h" />

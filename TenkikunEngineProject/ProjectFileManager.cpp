@@ -6,7 +6,6 @@
 #include <rpcdce.h>
 #include "MyString.h"
 #include "Image.h"
-#include "Script.h"
 #include "Info.h"
 
 ProjectFileManager::ProjectFileManager()

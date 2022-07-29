@@ -55,7 +55,7 @@ void FilePrintRect::MakeDuplicatedFile(std::filesystem::path copyPath)
 	//ファイルが存在しないなら
 	if (!std::filesystem::exists(pastePath)) {
 		//元のファイルタイプを確認して大丈夫そうなら
-		if (ProjectFileManager::GetFileType(copyPath) != ProjectFileManager::FileType::None) {
+		if (ProjectFileManager::IsFileType(copyPath)) {
 			//ファイルをペースト
 			filesystem::copy(copyPath, pastePath);
 			//ファイルをチェック
