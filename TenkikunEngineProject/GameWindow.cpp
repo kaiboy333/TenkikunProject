@@ -31,6 +31,6 @@ void GameWindow::Draw()
     //ƒV[ƒ“‚Ì•`‰æ
     Scene* scene = SceneManager::GetNowScene();
     if (scene != nullptr) {
-        scene->Draw(this);
+        scene->Draw();
     }
 }

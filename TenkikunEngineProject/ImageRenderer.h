@@ -1,14 +1,14 @@
 #pragma once
 
 #include "ImageManager.h"
-#include "Component.h"
+#include "DrawComponent.h"
 #include "Camera.h"
 #include "Window.h"
 #include "Image.h"
 
 class Camera;
 class Image;
-class ImageRenderer :  public Component
+class ImageRenderer :  public DrawComponent
 {
 	public:
 		bool isFlipX = false;	//¶‰E”½“]‚©
@@ -17,8 +17,10 @@ class ImageRenderer :  public Component
 
 		Image* image = nullptr;	//‰æ‘œ
 
+		ImageRenderer(GameObject* gameobject);
+
 		void Update() override;
 
-		void Draw(Window* parentWindow, Camera* camera);	//‰æ‘œ‚ğ•`‰æ
+		void Draw();	//‰æ‘œ‚ğ•`‰æ
 };
 

@@ -18,11 +18,13 @@ class Scene : public SceneInfo
 
 		std::filesystem::path scenePath;
 
+		//std::vector<function<void()>> addAndRemoveEvents;	//追加、削除の関数をいれる
+
 		void Init();
 
 		void Update();
 
-		void Draw(Window* parentWindow);
+		void Draw();
 
 		GameObject* CreateEmpty();	//空のゲームオブジェクトを作成
 		GameObject* CreateSquare();	//四角い画像のゲームオブジェクトを作成

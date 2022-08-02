@@ -3,7 +3,7 @@
 #include "GameWindow.h"
 #include "WindowManager.h"
 
-Camera::Camera()
+Camera::Camera(GameObject* gameobject) : Component(gameobject)
 {
 	this->width = 700;
 	this->height = 500;

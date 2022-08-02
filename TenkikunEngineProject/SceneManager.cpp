@@ -73,6 +73,7 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 
 	scene->CreateCamera();	//ƒJƒƒ‰¶¬
 	//scene->CreateTenkikun();	//“V‹C‚­‚ñ¶¬
+	scene->CreateSquare();
 	scene->CreateUnityChan();	//Unity‚¿‚á‚ñ¶¬
 
 

@@ -72,7 +72,7 @@ class Transform : public Component
 
 		Transform* parent = nullptr;	//e‚ÌTransform
 
-		Transform();
+		Transform(GameObject* gameobject);
 
 		void Update() override;	//e‚Ì‘Š‘Î‚É‚æ‚Á‚Ä•Ï‚¦‚é
 

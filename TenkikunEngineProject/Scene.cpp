@@ -4,6 +4,8 @@
 #include "Animator.h"
 #include "ProjectFileManager.h"
 #include "Debug.h"
+#include "Collider.h"
+#include "HitChecker.h"
 
 void Scene::Init()
 {
@@ -14,19 +16,29 @@ void Scene::Init()
 
 void Scene::Update()
 {
+	std::vector<Collider*> colliders;
+
 	for (GameObject* gameobject : gameobjects) {
 		gameobject->Update();	//ゲームオブジェクトの更新
-		//for (Transform* child : gameobject->transform->children) {
-		//	child->Update();
-		//}
+
+		std::vector<Collider*> objectColliders = gameobject->GetComponents<Collider>();	//コライダーたちを取得
+		colliders.insert(colliders.end(), objectColliders.begin(), objectColliders.end());	//リストに一気に追加
+	}
+
+	for (int i = 0; i < colliders.size(); i++) {
+		for (int j = i + 1; j < colliders.size(); j++) {
+			if (HitChecker::IsHit(colliders[i], colliders[j])) {
+				Debug::Log("Hit!!");
+			}
+		}
 	}
 }
 
-void Scene::Draw(Window* parentWindow)
+void Scene::Draw()
 {
 	Camera* camera = nowCamera;   //現在の対象のCameraを描画
 	for (GameObject* gameobject : gameobjects) {
-		gameobject->Draw(parentWindow, camera);	//ゲームオブジェクトの描画
+		gameobject->Draw();	//ゲームオブジェクトの描画
 	}
 }
 
@@ -54,6 +66,9 @@ GameObject* Scene::CreateSquare()
 			break;
 		}
 	}
+
+	BoxCollider* boxCollider = gameobject->AddComponent<BoxCollider>();	//BoxCollider作成
+
 	return gameobject;
 }
 
@@ -82,6 +97,9 @@ GameObject* Scene::CreateTenkikun()
 			break;
 		}
 	}
+
+	gameobject->AddComponent<BoxCollider>();	//BoxCollider作成
+
 	return gameobject;
 }
 
@@ -137,6 +155,8 @@ GameObject* Scene::CreateUnityChan()
 	//走るStateのTransition追加
 	AnimationTransition* runToIdle = runState->AddTransition(idleState);
 	runToIdle->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Less);
+
+	gameobject->AddComponent<BoxCollider>();	//BoxCollider作成
 
 	return gameobject;
 }

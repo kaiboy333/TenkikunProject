@@ -75,6 +75,9 @@
     <Filter Include="ソース ファイル\window\text">
       <UniqueIdentifier>{e7ee46b4-9b29-4586-8746-235e1b3e87f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\component\collider">
+      <UniqueIdentifier>{aa5879d4-68b2-4485-bbea-43ed93ad34ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -224,6 +227,24 @@
     <ClCompile Include="Animation.cpp">
       <Filter>ソース ファイル\animation</Filter>
     </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexCollider.cpp">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="HitChecker.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawComponent.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -370,9 +391,6 @@
     <ClInclude Include="ImageManager.h">
       <Filter>ソース ファイル\image</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationCondition.h">
       <Filter>ソース ファイル\animation</Filter>
     </ClInclude>
@@ -381,6 +399,27 @@
     </ClInclude>
     <ClInclude Include="MonoBehaviour.h">
       <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexCollider.h">
+      <Filter>ソース ファイル\component\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="HitChecker.h">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawComponent.h">
+      <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ソース ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -34,6 +34,14 @@ void Draw();
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
+	// メインループに入る前に精度を取得しておく
+	if (QueryPerformanceFrequency(&timeFreq) == FALSE) { // この関数で0(FALSE)が帰る時は未対応
+		// そもそもQueryPerformanceFrequencyが使えない様な(古い)PCではどうせ色々キツイだろうし
+		return(E_FAIL); // 本当はこんな帰り方しては行けない(後続の解放処理が呼ばれない)
+	}
+	// 1度取得しておく(初回計算用)
+	QueryPerformanceCounter(&timeStart);
+
 	SetMainWindowText("Tenkikun Engine");
 	ChangeWindowMode(TRUE); //ウィンドウモードで起動
 	SetGraphMode(WIDTH, HEIGHT, 32); //画面の解像度指定
@@ -50,26 +58,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		return -1;			// エラーが起きたら直ちに終了
 	}
 
-	// メインループに入る前に精度を取得しておく
-	if (QueryPerformanceFrequency(&timeFreq) == FALSE) { // この関数で0(FALSE)が帰る時は未対応
-		// そもそもQueryPerformanceFrequencyが使えない様な(古い)PCではどうせ色々キツイだろうし
-		return(E_FAIL); // 本当はこんな帰り方しては行けない(後続の解放処理が呼ばれない)
-	}
-	// 1度取得しておく(初回計算用)
-	QueryPerformanceCounter(&timeStart);
 
 	Init();	//初期化
 
 	//メインループ
 	while (ProcessMessage() == 0) {
-		CulculateFPS();	//FPSの計算
-
 		Update();	//更新
 
 		Draw();	//描画
 
 		ScreenFlip();	//画面裏返す
 
+		CulculateFPS();	//FPSの計算
 	}
 
 
@@ -127,13 +127,21 @@ inline void CulculateFPS() {
 		Sleep(sleepTime);   // 寝る
 		timeEndPeriod(1);   // 戻す
 	}
+	else {
+		//Debug::Log("処理落ち");
+	}
 
-	double fps = 1 / frameTime;
+	LARGE_INTEGER timeNow;
+	QueryPerformanceCounter(&timeNow);
+	double elapsedTime = static_cast<double>(timeNow.QuadPart - timeStart.QuadPart) / static_cast<double>(timeFreq.QuadPart);
+	double fps = 1 / elapsedTime;
+
+	// 今の時間を取得
+	QueryPerformanceCounter(&timeStart);
 
 	//Debug::Log("FPS : " + std::to_string(fps));	//FPSを表示
-	//Debug::Log("time : " + std::to_string(frameTime));	//FPSを表示
 
-	timeStart = timeEnd; // 入れ替え
+	//timeStart = timeEnd; // 入れ替え
 }
 
 inline void Update() {

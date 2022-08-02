@@ -54,6 +54,15 @@ Matrix Matrix::GetMRoteX(float angleX)
 	return matrix;
 }
 
+Matrix Matrix::GetMRoteX(Vector3 centerPoint, float angleX)
+{
+	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
+	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
+	Matrix mRotateX = Matrix::GetMRoteX(angleX);	//原点中心に回転
+
+	return mTransBack * mRotateX * mTrans;
+}
+
 Matrix Matrix::GetMRoteY(float angleY)
 {
 	Matrix matrix = Matrix();
@@ -71,6 +80,15 @@ Matrix Matrix::GetMRoteY(float angleY)
 	return matrix;
 }
 
+Matrix Matrix::GetMRoteY(Vector3 centerPoint, float angleY)
+{
+	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
+	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
+	Matrix mRotateY = Matrix::GetMRoteY(angleY);	//原点中心に回転
+
+	return mTransBack * mRotateY * mTrans;
+}
+
 Matrix Matrix::GetMRoteZ(float angleZ)
 {
 	Matrix matrix = Matrix();
@@ -86,6 +104,15 @@ Matrix Matrix::GetMRoteZ(float angleZ)
 	matrix.m[3][3] = 1.0f;
 
 	return matrix;
+}
+
+Matrix Matrix::GetMRoteZ(Vector3 centerPoint, float angleZ)
+{
+	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
+	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
+	Matrix mRotateZ = Matrix::GetMRoteZ(angleZ);	//原点中心に回転
+
+	return mTransBack * mRotateZ * mTrans;
 }
 
 Matrix Matrix::GetMRote(Vector3 angleVec)

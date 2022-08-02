@@ -1,4 +1,5 @@
 #include "Vector3.h"
+#include <cmath>
 
 Vector3::Vector3()
 {
@@ -12,6 +13,20 @@ Vector3::Vector3(float x, float y, float z)
     this->x = x;
     this->y = y;
     this->z = z;
+}
+
+float Vector3::GetMagnitude()
+{
+    //三平方の定理で長さを返す
+    return (float)std::pow(std::pow(x, 2) + std::pow(y, 2) + std::pow(z, 2), 0.5);
+}
+
+Vector3 Vector3::GetNormalized()
+{
+    //長さを取得して
+    float length = GetMagnitude();
+    //それぞれのベクトルを長さで割る
+    return Vector3(x / length, y / length, z / length);
 }
 
 Vector3 Vector3::operator+(const Vector3& other) const
@@ -140,4 +155,9 @@ const Vector3 Vector3::Forward()
 const Vector3 Vector3::Back()
 {
     return Vector3(0, 0, -1);
+}
+
+float Vector3::Distance(Vector3 vec1, Vector3 vec2)
+{
+    return (vec2 - vec1).GetMagnitude();
 }

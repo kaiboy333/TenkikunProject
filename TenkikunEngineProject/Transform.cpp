@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "Property.h"
 
-Transform::Transform()
+Transform::Transform(GameObject* gameobject) : Component(gameobject)
 {
 	this->canPutSameComponent = false;	//2‚Â‚Í“ü‚ê‚ç‚ê‚È‚¢
 }

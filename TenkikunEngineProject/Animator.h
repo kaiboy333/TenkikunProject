@@ -10,6 +10,8 @@ class AnimatorController;
 class Animator : public Component
 {
 	public:
+		Animator(GameObject* gameobject);
+
 		void Update() override;
 
 		AnimatorController* ac = nullptr;

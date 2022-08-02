@@ -11,7 +11,7 @@ class Camera : public Component
         int width = 700,  height = 500;
         float zoom = 1;
 
-        Camera();
+        Camera(GameObject* gameobject);
 
         void Update() override;
 

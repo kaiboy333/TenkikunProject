@@ -7,6 +7,8 @@
 #include "MyString.h"
 #include "Image.h"
 #include "Info.h"
+#include "BoxCollider.h"
+#include "CircleCollider.h"
 
 ProjectFileManager::ProjectFileManager()
 {
@@ -395,6 +397,29 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 					ofs << "\tnowState: {fileID: " << fileID << " }" << std::endl;
 
 				}
+				//BoxColliderなら
+				else if (type == typeid(BoxCollider)) {
+					BoxCollider* boxCollider = static_cast<BoxCollider*>(component);
+
+					//offsetを書き込む
+					Vector3 offset = boxCollider->offset;
+					ofs << "\toffset: {x: " << offset.x << " ,y: " << offset.y << " ,z: " << offset.z << " }" << std::endl;
+
+					//sizeを書き込む
+					Vector3 size = boxCollider->size;
+					ofs << "\tsize: {x: " << size.x << " ,y: " << size.y << " ,z: " << size.z << " }" << std::endl;
+				}
+				//CircleColliderなら
+				else if (type == typeid(CircleCollider)) {
+					CircleCollider* circleCollider = static_cast<CircleCollider*>(component);
+
+					//offsetを書き込む
+					Vector3 offset = circleCollider->offset;
+					ofs << "\toffset: {x: " << offset.x << " ,y: " << offset.y << " ,z: " << offset.z << " }" << std::endl;
+
+					//radiousを書き込む
+					ofs << "\tradious: " << circleCollider->radious << std::endl;
+				}
 				////MonoBehaviourなら
 				//else if (type == typeid(MonoBehaviour)) {
 				//	MonoBehaviour* mono = static_cast<MonoBehaviour*>(component);
@@ -481,7 +506,7 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			//ファイルIDが0でないなら
 			if (fileID != 0) {
 				//セット
-				parent = static_cast<Transform*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new Transform()));
+				parent = static_cast<Transform*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new Transform(nullptr)));
 				//ローカルを変えずにワールドを変える
 				transform->SetParent(parent, false);
 			}
@@ -548,6 +573,43 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
 			//nowStateをセット
 			animator->nowState = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
+		}
+		else if (className == typeid(BoxCollider).name()) {
+			//ゲームオブジェクトのファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			//ゲームオブジェクトを取得
+			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+			//BoxColliderを作成、取得
+			BoxCollider* boxCollider = gameobject->AddComponent<BoxCollider>();
+
+			//offsetを取得
+			std::vector<std::string> words = MyString::Split(lines[row++], ' ');
+			Vector3 offset = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			//offsetをセット
+			boxCollider->offset = offset;
+
+			//sizeを取得
+			words = MyString::Split(lines[row++], ' ');
+			Vector3 size = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			//sizeをセット
+			boxCollider->size = size;
+		}
+		else if (className == typeid(CircleCollider).name()) {
+			//ゲームオブジェクトのファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			//ゲームオブジェクトを取得
+			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+			//BoxColliderを作成、取得
+			CircleCollider* circleCollider = gameobject->AddComponent<CircleCollider>();
+
+			//offsetを取得
+			std::vector<std::string> words = MyString::Split(lines[row++], ' ');
+			Vector3 offset = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			//offsetをセット
+			circleCollider->offset = offset;
+
+			//radiousをセット
+			circleCollider->radious = std::stof(MyString::Split(lines[row++], ' ')[1]);
 		}
 		//else if (className == typeid(MonoBehaviour).name()) {
 		//	//ゲームオブジェクトのファイルIDを取得

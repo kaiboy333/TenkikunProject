@@ -149,7 +149,12 @@
     <ClCompile Include="AnimationParamater.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AnimatorController.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="DrawComponent.cpp" />
+    <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentRect.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -191,6 +196,7 @@
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="TriggerRect.cpp" />
     <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="VertexCollider.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowManager.cpp" />
@@ -201,7 +207,13 @@
     <ClInclude Include="Animator.h" />
     <ClInclude Include="AnimatorController.h" />
     <ClInclude Include="AnimationCondition.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CircleCollider.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HitChecker.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentRect.h" />
     <ClInclude Include="Debug.h" />
@@ -209,7 +221,6 @@
     <ClInclude Include="FilePrintRect.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontManager.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="HierarchyWindow.h" />
     <ClInclude Include="Image.h" />
@@ -244,6 +255,7 @@
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="TriggerRect.h" />
     <ClInclude Include="Vector3.h" />
+    <ClInclude Include="VertexCollider.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="WindowButton.h" />

@@ -10,6 +10,9 @@ class Vector3
 		Vector3();
 		Vector3(float x, float y, float z);
 
+		float GetMagnitude();
+		Vector3 GetNormalized();
+
 		Vector3 operator +(const Vector3& other) const;	//‘«‚µŽZ
 		Vector3 operator -(const Vector3& other) const;	//ˆø‚«ŽZ
 		Vector3 operator *(const float& other) const;	//Š|‚¯ŽZ
@@ -35,5 +38,6 @@ class Vector3
 		const static Vector3 Forward();
 		const static Vector3 Back();
 
+		static float Distance(Vector3 vec1, Vector3 vec2);
 };
 

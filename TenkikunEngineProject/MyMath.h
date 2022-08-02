@@ -13,5 +13,8 @@ class MyMath
 		static float Clamp(float value, float min, float max);
 
 		static float Lerp(float min, float max, float t);
+
+		//ü•ª‚ÌŒğ·”»’è
+		static bool IsCross(Vector3 vec1, Vector3 vec2, Vector3 vec3, Vector3 vec4, Vector3& crossPos);
 };
 

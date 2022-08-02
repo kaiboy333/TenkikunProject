@@ -1,5 +1,10 @@
 #include "Animator.h"
 
+Animator::Animator(GameObject* gameobject) : Component(gameobject)
+{
+	
+}
+
 void Animator::Update()
 {
 	//AnimationController‚ÌXV
@@ -61,6 +66,10 @@ AnimationState* Animator::AddState(Animation* animation, std::string stateName)
 	//Å‰‚ÌêŠ‚ªnull‚È‚ç
 	if (nowState == nullptr) {
 		nowState = state;	//’Ç‰Á
+		//ImageRenderer‚ðŽæ“¾
+		ImageRenderer* imageRenderer = gameobject->GetComponent<ImageRenderer>();
+		//animationKey‚ÌÅ‰‚Ì‰æ‘œ‚ðImage‚ÉÝ’è
+		imageRenderer->image = animation->animationKeys.begin()->second;
 	}
 	return state;	//•Ô‚·
 }

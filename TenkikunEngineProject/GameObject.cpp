@@ -1,10 +1,26 @@
 #include "GameObject.h"
 #include "ImageRenderer.h"
 #include "Animator.h"
+#include "Collider.h"
 
 GameObject::GameObject()
 {
 
+}
+
+void GameObject::RemoveComponent(Component* component)
+{
+	if ((int)components.size() != 0) {
+		auto iter = std::find(components.begin(), components.end(), component);
+		//見つかったなら
+		if (iter != components.end()) {
+			//コンポーネントのリストから削除
+			components.erase(std::remove(components.begin(), components.end(), component));
+			//解放
+			delete(component);
+			component = nullptr;
+		}
+	}
 }
 
 void GameObject::Update()
@@ -14,13 +30,15 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::Draw(Window* parentWindow, Camera* camera)
+void GameObject::Draw()
 {
-	Component* component = nullptr;
-	//ImageComponentがあるなら
-	if ((component = this->GetComponent<ImageRenderer>()) != nullptr) {
-		ImageRenderer* image = static_cast<ImageRenderer*>(component);
-		image->Draw(parentWindow, camera);	//描画
+	for (Component* component : components) {
+		auto& type = typeid(*component);
+		//DrawComponentがあるなら
+		if (dynamic_cast<DrawComponent*>(component) != nullptr) {
+			DrawComponent* drawComponent = static_cast<DrawComponent*>(component);
+			drawComponent->Draw();	//描画
+		}
 	}
 }
 
