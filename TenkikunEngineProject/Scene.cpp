@@ -27,8 +27,10 @@ void Scene::Update()
 
 	for (int i = 0; i < colliders.size(); i++) {
 		for (int j = i + 1; j < colliders.size(); j++) {
-			if (HitChecker::IsHit(colliders[i], colliders[j])) {
-				Debug::Log("Hit!!");
+			std::vector<Vector3> crossPoint;
+
+			if (HitChecker::IsHit(colliders[i], colliders[j], crossPoint)) {
+				//Debug::Log("Hit!!");
 			}
 		}
 	}

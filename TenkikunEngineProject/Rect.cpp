@@ -37,12 +37,6 @@ std::vector<Vector3> Rect::GetPoints()
 	return points;
 }
 
-float Rect::Cross(Vector3 a, Vector3 b)
-{
-	return a.x * b.y - a.y * b.x;
-}
-
-
 Rect* Rect::GetCrossRect(Rect* r1, Rect* r2)
 {
 	std::vector<Vector3> crossPoints;	//交点たち
@@ -68,17 +62,12 @@ Rect* Rect::GetCrossRect(Rect* r1, Rect* r2)
 			Vector3 p3 = points2[j % 4];
 			Vector3 p4 = points2[(j + 1) % 4];
 
-			float det = Cross(p2 - p1, p4 - p3);
+			Vector3 crossPoint;
 
-			//平行じゃないなら
-			if (det != 0) {
-				float s = Cross(p3 - p1, p4 - p3) / det;
-				float t = Cross(p2 - p1, p1 - p3) / det;
-
-				//線分の交点なら
-				if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
-					crossPoints.push_back(Vector3(p1.x + s * (p2 - p1).x, p1.y + s * (p2 - p1).y, 0));
-				}
+			//交点があるなら
+			if (Vector3::IsCross(p1, p2, p3, p4, crossPoint)) {
+				//リストに追加
+				crossPoints.push_back(crossPoint);
 			}
 		}
 	}

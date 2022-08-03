@@ -26,7 +26,7 @@ class Vector3
 
 		Vector3 operator -() const;	//ê≥ïâîΩì]
 
-
+		bool operator ==(const Vector3& other) const;
 
 		const static Vector3 Zero();
 		const static Vector3 One();
@@ -39,5 +39,9 @@ class Vector3
 		const static Vector3 Back();
 
 		static float Distance(Vector3 vec1, Vector3 vec2);
+
+		static float Cross(Vector3 a, Vector3 b);
+
+		static bool IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint);
 };
 

@@ -10,6 +10,6 @@ class DrawComponent : public Component
 
 		virtual void Draw();
 
-		Vector3 GetDrawPos(Vector3 pos);
+		static Vector3 GetDrawPos(Vector3 pos);
 };
 

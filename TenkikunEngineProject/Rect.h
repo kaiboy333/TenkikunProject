@@ -19,8 +19,5 @@ class Rect
 		std::vector<Vector3> GetPoints();
 
 		static Rect* GetCrossRect(Rect* r1, Rect* r2);
-
-	private:
-		static float Cross(Vector3 a, Vector3 b);	//Œğ·”»’è“r’†‚Åg‚¤’l
 };
 
