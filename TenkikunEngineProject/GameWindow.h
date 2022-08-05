@@ -6,9 +6,12 @@
 
 class Scene;
 class Camera;
+class TextRect;
 class GameWindow :  public Window
 {
 	public:
+		TextRect* frameText;
+
 		GameWindow();
 
 		virtual void Update() override;	//SceneçXêV

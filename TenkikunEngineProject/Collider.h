@@ -15,9 +15,13 @@ class Collider : public DrawComponent
 
 		unsigned int color = GetColor(0, 255, 0);
 
+		std::vector<Vector3> crossPoints;
+
 		Collider(GameObject* gameobject);
 
 		virtual void Update() override;
+
+		virtual void Draw() override;
 
 		//コライダーの中心点を返す
 		Vector3 GetPosition();

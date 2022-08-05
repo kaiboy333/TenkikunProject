@@ -34,12 +34,12 @@ Vector3 DrawComponent::GetDrawPos(Vector3 pos)
 	}
 
 	float drawX = pos.x + startDrawX + gameWindow->width / 2.0f;
-	float drawY = pos.y + startDrawY + gameWindow->height / 2.0f;
+	float drawY = -pos.y + startDrawY + gameWindow->height / 2.0f;
 
 	Vector3 cameraPos = camera->gameobject->transform->position;
 
 	drawX = (drawX - cameraPos.x) * camera->zoom;
-	drawY = (drawY - cameraPos.y) * camera->zoom;
+	drawY = (drawY - (-cameraPos.y)) * camera->zoom;
 
 	return Vector3(gameWindow->startX + drawX, gameWindow->startY + drawY, 0);
 }

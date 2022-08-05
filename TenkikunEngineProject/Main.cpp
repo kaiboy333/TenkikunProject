@@ -27,6 +27,9 @@ LARGE_INTEGER timeStart;
 LARGE_INTEGER timeEnd;
 LARGE_INTEGER timeFreq;
 
+int frameCount = 0;
+double sumFPS = 0;
+
 void Init();
 void CulculateFPS();
 void Update();
@@ -85,32 +88,6 @@ inline void Init() {
 	WindowManager();	//ゲーム画面の初期化
 	SceneManager();	//シーンマネージャーの初期化
 	Input();	//入力の初期化
-
-	//Scene* scene = SceneManager::GetNowScene();	//シーンを取得
-
-	//GameObject* player = scene->CreateEmpty();	//プレイヤーオブジェクトを作成
-	//player->transform->position = Vector3(0, 0, 0);
-	//player->SetName("Player");
-	//PlayerScript* script = player->AddComponent<PlayerScript>();	//プレイヤースクリプト作成
-
-	//GameObject* square = scene->CreateSquare();
-	//square->transform->SetParent(player->transform);
-	//square->transform->position = Vector3(50, 0, 0);
-	////square->AddComponent<Rotate>();
-
-	//GameObject* square2 = scene->CreateSquare();
-	//square2->transform->SetParent(square->transform);
-	//square2->transform->position = Vector3(150, 0, 0);
-	//square2->transform->scale = Vector3(0.5f, 0.5f, 1);
-
-	//GameObject* square3 = scene->CreateSquare();
-	//square3->transform->position = Vector3(-100, 0, 0);
-	//square3->transform->scale = Vector3(1, 1, 1);
-
-	//scene->CreateEmpty();
-	//scene->CreateEmpty();
-	//scene->CreateEmpty();
-
 }
 
 inline void CulculateFPS() {
@@ -139,7 +116,14 @@ inline void CulculateFPS() {
 	// 今の時間を取得
 	QueryPerformanceCounter(&timeStart);
 
-	//Debug::Log("FPS : " + std::to_string(fps));	//FPSを表示
+	sumFPS += fps;
+	frameCount++;
+	if (frameCount % 60 == 0) {
+		fps = sumFPS / 60;
+		sumFPS = 0;
+		frameCount = 0;
+		WindowManager::gameWindow->frameText->SetText("FPS : " + std::to_string(fps));	//FPSを表示
+	}
 
 	//timeStart = timeEnd; // 入れ替え
 }

@@ -172,6 +172,11 @@ float Vector3::Cross(Vector3 vec1, Vector3 vec2)
     return vec1.x * vec2.y - vec1.y * vec2.x;
 }
 
+float Vector3::Inner(Vector3 vec1, Vector3 vec2)
+{
+    return vec1.x * vec2.x + vec1.y * vec2.y;
+}
+
 bool Vector3::IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint)
 {
     float det = Cross(p2 - p1, p4 - p3);

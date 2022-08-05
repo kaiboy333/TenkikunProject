@@ -24,7 +24,7 @@ void ImageRenderer::Draw()
 
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, image->GetAlpha());
 
-			DrawRotaGraph3F(drawPos.x, drawPos.y, image->GetWidth() / 2, image->GetHeight() / 2, scale.x, scale.y, MyMath::EulerToRad(rota.z), image->GetGH(), true, isFlipX, isFlipY);	//•`‰æ
+			DrawRotaGraph3F(drawPos.x, drawPos.y, image->GetWidth() / 2, image->GetHeight() / 2, scale.x, scale.y, -MyMath::EulerToRad(rota.z), image->GetGH(), true, isFlipX, isFlipY);	//•`‰æ
 		}
 	}
 }

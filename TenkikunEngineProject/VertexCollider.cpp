@@ -9,13 +9,16 @@ void VertexCollider::Draw()
     auto vertexes = GetVertexes();
     GameWindow* gameWindow = WindowManager::gameWindow;
 
-    for (int i = 0, length= vertexes.size(); i < length; i++) {
+    for (int i = 0, length= (int)vertexes.size(); i < length; i++) {
         Vector3 drawPos1 = GetDrawPos(vertexes[i % length]);
         Vector3 drawPos2 = GetDrawPos(vertexes[(i + 1) % length]);
 
         //•Ó‚ð•`‰æ
         DrawLineAA(drawPos1.x, drawPos1.y, drawPos2.x, drawPos2.y, color);
     }
+
+    //Œð“_‚Ì•`‰æ
+    Collider::Draw();
 }
 
 std::vector<Vector3> VertexCollider::GetVertexes(std::vector<Vector3> toVertexVecs)

@@ -58,7 +58,7 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 	}
 	scene->Init();	//初期化
 
-	//親のフォルダ内の中ににシーンファイルを設定
+	//親のフォルダ内の中にシーンファイルを設定
 	std::filesystem::path scenePath(parentPath.string() + "\\" + scene->GetName() + ".scene");
 	//シーンのパスを設定
 	scene->scenePath = scenePath;	//ファイルを作成
@@ -73,7 +73,9 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 
 	scene->CreateCamera();	//カメラ生成
 	//scene->CreateTenkikun();	//天気くん生成
-	scene->CreateSquare();
+	//scene->CreateSquare();
+	scene->CreateCircle();
+	scene->CreateCircle();
 	scene->CreateUnityChan();	//Unityちゃん生成
 
 

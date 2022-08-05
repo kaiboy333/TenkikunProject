@@ -27,10 +27,13 @@ void Scene::Update()
 
 	for (int i = 0; i < colliders.size(); i++) {
 		for (int j = i + 1; j < colliders.size(); j++) {
-			std::vector<Vector3> crossPoint;
+			std::vector<Vector3> crossPoints;
 
-			if (HitChecker::IsHit(colliders[i], colliders[j], crossPoint)) {
+			if (HitChecker::IsHit(colliders[i], colliders[j], crossPoints)) {
 				//Debug::Log("Hit!!");
+				//当たった交点をコライダーの交点リストに追加
+				colliders[i]->crossPoints.insert(colliders[i]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
+				colliders[j]->crossPoints.insert(colliders[j]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
 			}
 		}
 	}
@@ -70,6 +73,27 @@ GameObject* Scene::CreateSquare()
 	}
 
 	BoxCollider* boxCollider = gameobject->AddComponent<BoxCollider>();	//BoxCollider作成
+
+	return gameobject;
+}
+
+GameObject* Scene::CreateCircle()
+{
+	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
+	gameobject->SetName("Circle");	//名前変更
+	gameobject->transform->scale = Vector3(0.3f, 0.3f, 1);	//サイズ変更
+
+	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
+	Component* component = static_cast<Component*>(imageRenderer);
+	//円の画像を探す
+	for (std::pair<std::string, std::filesystem::path> pair : ProjectFileManager::guidAndPath) {
+		if (pair.second.string() == ProjectFileManager::resourceFilePath.string() + "\\Circle.png") {
+			imageRenderer->image = static_cast<Image*>(ProjectFileManager::pathAndInfo[pair.second]);	//imageをセット
+			break;
+		}
+	}
+
+	CircleCollider* circleCollider = gameobject->AddComponent<CircleCollider>();	//CircleCollider作成
 
 	return gameobject;
 }

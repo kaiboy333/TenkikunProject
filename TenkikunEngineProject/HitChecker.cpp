@@ -1,6 +1,7 @@
 #include "HitChecker.h"
 #include "DrawComponent.h"
 #include "Rect.h"
+#include <set>
 
 bool HitChecker::IsHit(Collider* c1, Collider* c2, std::vector<Vector3>& crossPoints)
 {
@@ -63,32 +64,26 @@ bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2, std::vector<Vec
     float r2 = c2->radious * std::max<float>(scale2.x, scale2.y);
 
     //円が二点で交わっているなら
-    if (std::abs(r1 - r2) < Vector3::Distance(centerPos1, centerPos2) < r1 + r2) {
+    if (std::abs(r1 - r2) < Vector3::Distance(centerPos1, centerPos2) && Vector3::Distance(centerPos1, centerPos2) < r1 + r2) {
         float a = 2 * (centerPos2.x - centerPos1.x);
         float b = 2 * (centerPos2.y - centerPos1.y);
         float c = (centerPos1.x + centerPos2.x) * (centerPos1.x - centerPos2.x) + (centerPos1.y + centerPos2.y) * (centerPos1.y - centerPos2.y) + (r2 + r1) * (r2 - r1);
 
-        float d1 = std::abs(a * centerPos1.x + b * centerPos1.y + c);
-        float d2 = std::abs(a * centerPos2.x + b * centerPos2.y + c);
+        float d1 = -(a * centerPos1.x + b * centerPos1.y + c);
 
         float tmp0 = std::powf(a, 2) + std::powf(b, 2);
 
-        float tmp1 = std::sqrtf(((std::powf(a, 2) + std::powf(b, 2)) * std::powf(r1, 2) - std::powf(d1, 2)));
-        float tmp2 = std::sqrtf(((std::powf(a, 2) + std::powf(b, 2)) * std::powf(r2, 2) - std::powf(d2, 2)));
+        float tmp1 = std::sqrtf((tmp0 * std::powf(r1, 2) - std::powf(d1, 2)));
 
-        Vector3 crossPos1 = Vector3((a * d1 - b * tmp1) / tmp0 + centerPos1.x, (b * d1 - a * tmp1) / tmp0 + centerPos1.y, 0);
-        Vector3 crossPos2 = Vector3((a * d2 - b * tmp2) / tmp0 + centerPos2.x, (b * d2 - a * tmp2) / tmp0 + centerPos2.y, 0);
+        Vector3 crossPoint1 = Vector3((a * d1 - b * tmp1) / tmp0 + centerPos1.x, (b * d1 + a * tmp1) / tmp0 + centerPos1.y, 0);
+        Vector3 crossPoint2 = Vector3((a * d1 + b * tmp1) / tmp0 + centerPos1.x, (b * d1 - a * tmp1) / tmp0 + centerPos1.y, 0);
 
-        //交点が同じなら
-        if (crossPos1 == crossPos2) {
-            //一つだけ追加
-            crossPoints.push_back(crossPos1);
+        //交点をリストに追加
+        if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint1) == crossPoints.end()) {
+            crossPoints.push_back(crossPoint1);
         }
-        //それ以外は
-        else {
-            //どちらも追加
-            crossPoints.push_back(crossPos1);
-            crossPoints.push_back(crossPos2);
+        if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint2) == crossPoints.end()) {
+            crossPoints.push_back(crossPoint2);
         }
     }
 
@@ -112,7 +107,9 @@ bool HitChecker::IsHitBB(BoxCollider* c1, BoxCollider* c2, std::vector<Vector3>&
             //交点があるなら
             if (Vector3::IsCross(p1, p2, p3, p4, crossPoint)) {
                 //リストに追加
-                crossPoints.push_back(crossPoint);
+                if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint) == crossPoints.end()) {
+                    crossPoints.push_back(crossPoint);
+                }
             }
         }
     }
@@ -123,27 +120,51 @@ bool HitChecker::IsHitBB(BoxCollider* c1, BoxCollider* c2, std::vector<Vector3>&
 bool HitChecker::IsHitCB(CircleCollider* c1, BoxCollider* c2, std::vector<Vector3>& crossPoints)
 {
     //円の中心点を取得
-    Vector3 circleCenter = c1->GetPosition();
-    //矩形の回転を取得
-    float roteZ2 = c2->gameobject->transform->rotation.r.z;
-    //頂点を原点中心に-z度回転させる
-    circleCenter = Matrix::GetMRoteZ(-roteZ2) * circleCenter;
-
-    //矩形の頂点取得
+    Vector3 centerPos = c1->GetPosition();
+    Vector3 scale = c1->gameobject->transform->scale;
+    float r = c1->radious * std::max<float>(scale.x, scale.y);
+    //矩形の頂点を取得
     std::vector<Vector3> vertexes = c2->GetVertexes();
-    for (Vector3 vertex : vertexes) {
-        //頂点を原点中心に-z度回転させる
-        vertex = Matrix::GetMRoteZ(-roteZ2) * vertex;
+
+    for (int i = 0, length = (int)vertexes.size(); i < length; i++) {
+        Vector3 p1 = vertexes[i % length];
+        Vector3 p2 = vertexes[(i + 1) % length];
+
+        float a = p1.y - p2.y;
+        float b = p2.x - p1.x;
+        float c = Vector3::Cross(p1, p2);
+
+        //円の中心から直線までの最短距離を求める
+        float minDistance = std::abs(a * centerPos.x + b * centerPos.y + c) / std::sqrtf(std::powf(a, 2) + std::powf(b, 2));
+
+        //直線が交わるなら
+        if (minDistance <= r) {
+            float d = -(a * centerPos.x + b * centerPos.y + c);
+
+            float tmp0 = std::powf(a, 2) + std::powf(b, 2);
+
+            float tmp1 = std::sqrtf((tmp0 * std::powf(r, 2) - std::powf(d, 2)));
+
+            Vector3 crossPoint1 = Vector3((a * d - b * tmp1) / tmp0 + centerPos.x, (b * d + a * tmp1) / tmp0 + centerPos.y, 0);
+            Vector3 crossPoint2 = Vector3((a * d + b * tmp1) / tmp0 + centerPos.x, (b * d - a * tmp1) / tmp0 + centerPos.y, 0);
+
+            float s = (crossPoint1 - p1).GetMagnitude() / (p2 - p1).GetMagnitude();
+            //交点が線分の範囲内にあるなら(ベクトルが同じ方向かつ長さの比が0から1)
+            if (s >= 0 && s <= 1 && Vector3::Inner(crossPoint1 - p1, p2 - p1) >= 0.99f) {
+                if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint1) == crossPoints.end()) {
+                    crossPoints.push_back(crossPoint1);
+                }
+            }
+            float t = (crossPoint2 - p1).GetMagnitude() / (p2 - p1).GetMagnitude();
+            //交点が線分の範囲内にあるなら(ベクトルが同じ方向かつ長さの比が0から1)
+            if (t >= 0 && t <= 1 && Vector3::Inner(crossPoint2 - p1, p2 - p1) >= 0.99f) {
+                if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint2) == crossPoints.end()) {
+                    crossPoints.push_back(crossPoint2);
+                }
+            }
+        }
     }
 
-    //円の中心点から矩形への最短となる位置
-    float px = MyMath::Clamp(circleCenter.x, vertexes[0].x, vertexes[2].x);
-    float py = MyMath::Clamp(circleCenter.y, vertexes[0].y, vertexes[2].y);
-    Vector3 nearPos = Vector3(px, py, 0);
-    //教理をとる
-    float distance = Vector3::Distance(circleCenter, nearPos);
-
-    //距離が半径以下ならtrue
-    return distance <= c1->radious;
+    return (int)crossPoints.size() != 0;
 }
 

@@ -40,7 +40,8 @@ class Vector3
 
 		static float Distance(Vector3 vec1, Vector3 vec2);
 
-		static float Cross(Vector3 a, Vector3 b);
+		static float Cross(Vector3 vec1, Vector3 vec2);
+		static float Inner(Vector3 vec1, Vector3 vec2);
 
 		static bool IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint);
 };

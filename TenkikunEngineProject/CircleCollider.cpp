@@ -23,4 +23,7 @@ void CircleCollider::Draw()
 	float maxScale = std::max<float>(scale.x, scale.y);
 
 	DrawOvalAA(drawPos.x, drawPos.y, radious * maxScale, radious * maxScale, 30, color, FALSE);
+
+	//Œð“_‚Ì•`‰æ
+	Collider::Draw();
 }

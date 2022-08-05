@@ -3,7 +3,7 @@
 
 GameWindow::GameWindow() : Window(300, 0, 700, 500)
 {
-
+    frameText = new TextRect(startX, startY, "");
 }
 
 void GameWindow::Update()
@@ -33,4 +33,7 @@ void GameWindow::Draw()
     if (scene != nullptr) {
         scene->Draw();
     }
+
+    //frameText‚Ì•`‰æ
+    frameText->Draw();
 }
