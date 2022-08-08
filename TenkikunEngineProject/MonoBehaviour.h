@@ -5,6 +5,8 @@
 class MonoBehaviour : public Component
 {
 	public:
+		MonoBehaviour(GameObject* gameobject);
+
 		virtual void Update();
 
 	private:
@@ -14,4 +16,3 @@ class MonoBehaviour : public Component
 		virtual void MonoStart() = 0;
 		virtual void MonoUpdate() = 0;
 };
-

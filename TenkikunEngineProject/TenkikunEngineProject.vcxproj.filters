@@ -78,6 +78,9 @@
     <Filter Include="ソース ファイル\component\collider">
       <UniqueIdentifier>{aa5879d4-68b2-4485-bbea-43ed93ad34ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\physic">
+      <UniqueIdentifier>{6d88deea-ea5e-40e0-ab01-5dfea66dda15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -243,6 +246,18 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="DrawComponent.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>ソース ファイル\physic</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>ソース ファイル\component</Filter>
+    </ClCompile>
+    <ClCompile Include="MonoBehaviour.cpp">
       <Filter>ソース ファイル\component</Filter>
     </ClCompile>
   </ItemGroup>
@@ -420,6 +435,15 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>ソース ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>ソース ファイル\physic</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>ソース ファイル\component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

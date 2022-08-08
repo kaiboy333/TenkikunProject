@@ -3,7 +3,6 @@
 #include "GameWindow.h"
 #include <vector>
 #include "SceneManager.h"
-#include <Windows.h>
 #include <tchar.h>
 #include <mmsystem.h>
 #include <string>
@@ -15,6 +14,7 @@
 #include "ProjectFileManager.h"
 #include "FontManager.h"
 #include "Debug.h"
+#include "Time.h"
 
 #pragma comment(lib,"winmm.lib")
 
@@ -22,29 +22,13 @@ constexpr auto WIDTH = 1300;
 constexpr auto HEIGHT = 800;
 
 // 本当はグローバルにしない方が良い
-const float MIN_FRAME_TIME = 1.0f / 60;
-LARGE_INTEGER timeStart;
-LARGE_INTEGER timeEnd;
-LARGE_INTEGER timeFreq;
-
-int frameCount = 0;
-double sumFPS = 0;
 
 void Init();
-void CulculateFPS();
 void Update();
 void Draw();
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	// メインループに入る前に精度を取得しておく
-	if (QueryPerformanceFrequency(&timeFreq) == FALSE) { // この関数で0(FALSE)が帰る時は未対応
-		// そもそもQueryPerformanceFrequencyが使えない様な(古い)PCではどうせ色々キツイだろうし
-		return(E_FAIL); // 本当はこんな帰り方しては行けない(後続の解放処理が呼ばれない)
-	}
-	// 1度取得しておく(初回計算用)
-	QueryPerformanceCounter(&timeStart);
-
 	SetMainWindowText("Tenkikun Engine");
 	ChangeWindowMode(TRUE); //ウィンドウモードで起動
 	SetGraphMode(WIDTH, HEIGHT, 32); //画面の解像度指定
@@ -71,8 +55,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		Draw();	//描画
 
 		ScreenFlip();	//画面裏返す
-
-		CulculateFPS();	//FPSの計算
 	}
 
 
@@ -82,6 +64,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 }
 
 inline void Init() {
+	Time();	//タイムマネージャーの初期化
 	ProjectFileManager();	//ファイルマネージャーの初期化
 	ImageManager();	//イメージマネージャーの初期化
 	FontManager();	//フォントマネージャーの初期化
@@ -90,45 +73,8 @@ inline void Init() {
 	Input();	//入力の初期化
 }
 
-inline void CulculateFPS() {
-	// 今の時間を取得
-	QueryPerformanceCounter(&timeEnd);
-	// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
-	double frameTime = static_cast<double>(timeEnd.QuadPart - timeStart.QuadPart) / static_cast<double>(timeFreq.QuadPart);
-
-	if (frameTime < MIN_FRAME_TIME) { // 時間に余裕がある
-		// ミリ秒に変換
-		DWORD sleepTime = static_cast<DWORD>((MIN_FRAME_TIME - frameTime) * 1000);
-
-		timeBeginPeriod(1); // 分解能を上げる(こうしないとSleepの精度はガタガタ)
-		Sleep(sleepTime);   // 寝る
-		timeEndPeriod(1);   // 戻す
-	}
-	else {
-		//Debug::Log("処理落ち");
-	}
-
-	LARGE_INTEGER timeNow;
-	QueryPerformanceCounter(&timeNow);
-	double elapsedTime = static_cast<double>(timeNow.QuadPart - timeStart.QuadPart) / static_cast<double>(timeFreq.QuadPart);
-	double fps = 1 / elapsedTime;
-
-	// 今の時間を取得
-	QueryPerformanceCounter(&timeStart);
-
-	sumFPS += fps;
-	frameCount++;
-	if (frameCount % 60 == 0) {
-		fps = sumFPS / 60;
-		sumFPS = 0;
-		frameCount = 0;
-		WindowManager::gameWindow->frameText->SetText("FPS : " + std::to_string(fps));	//FPSを表示
-	}
-
-	//timeStart = timeEnd; // 入れ替え
-}
-
 inline void Update() {
+	Time::Update();	//時間の更新
 	ProjectFileManager::Update(); //ProjectFileManagerの更新
 	WindowManager::Update();	//Windowの更新
 	Input::Update();	//キーの更新

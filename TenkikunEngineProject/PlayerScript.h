@@ -11,8 +11,12 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include "RigidBody.h"
 
 class PlayerScript : public MonoBehaviour {
+	public:
+		PlayerScript(GameObject* gameobject);
+
 	protected:
 		void MonoStart() override;
 
@@ -21,5 +25,5 @@ class PlayerScript : public MonoBehaviour {
 	private:
 		float speed = 3.0f;
 
-		//Transform* firstChild = nullptr;
+		RigidBody* rb = nullptr;
 };

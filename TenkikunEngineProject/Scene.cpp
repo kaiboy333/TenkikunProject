@@ -6,6 +6,8 @@
 #include "Debug.h"
 #include "Collider.h"
 #include "HitChecker.h"
+#include "RigidBody.h"
+#include "PlayerScript.h"
 
 void Scene::Init()
 {
@@ -183,6 +185,10 @@ GameObject* Scene::CreateUnityChan()
 	runToIdle->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Less);
 
 	gameobject->AddComponent<BoxCollider>();	//BoxColliderì¬
+
+	gameobject->AddComponent<RigidBody>();	//RigidBodyì¬
+
+	gameobject->AddComponent<PlayerScript>();	//Scriptì¬
 
 	return gameobject;
 }

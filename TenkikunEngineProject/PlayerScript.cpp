@@ -1,10 +1,18 @@
 #include "PlayerScript.h"
 #include "AnimationState.h"
 #include "Input.h"
+#include <cmath>
+
+PlayerScript::PlayerScript(GameObject* gameobject) : MonoBehaviour(gameobject)
+{
+
+}
 
 void PlayerScript::MonoStart()
 {
-	//firstChild = gameobject->transform->children[0];
+	rb = gameobject->GetComponent<RigidBody>();
+	//rb->gravityScale = 0;
+	rb->velocity = Vector3::Zero();
 }
 
 void PlayerScript::MonoUpdate()
@@ -15,13 +23,13 @@ void PlayerScript::MonoUpdate()
 	AnimatorController* ac = animator->ac;
 
 	if (Input::GetKey(Input::KeyCode::D)) {
-		gameobject->transform->position += Vector3::Right() * speed;
-		ac->AddFloatParamater("isSpeed", speed);
+		rb->AddForce(Vector3::Right() * speed);
+		ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
 		imageRenderer->isFlipX = false;
 	}
 	else if (Input::GetKey(Input::KeyCode::A)) {
-		gameobject->transform->position += Vector3::Left() * speed;
-		ac->AddFloatParamater("isSpeed", speed);
+		rb->AddForce(Vector3::Left() * speed);
+		ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
 		imageRenderer->isFlipX = true;
 	}
 	else {
@@ -71,4 +79,8 @@ void PlayerScript::MonoUpdate()
 	//		firstChild->SetParent(gameobject->transform);
 	//	}
 	//}
+
+	if (Input::GetKeyDown(Input::SPACE)) {
+
+	}
 }

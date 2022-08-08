@@ -175,12 +175,15 @@
     <ClCompile Include="KeyState.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="MonoBehaviour.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="MyString.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="ProjectFileManager.cpp" />
     <ClCompile Include="ProjectWindow.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneInfo.cpp" />
@@ -189,6 +192,7 @@
     <ClCompile Include="ScrollRect.cpp" />
     <ClCompile Include="TextRect.cpp" />
     <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="AnimationTransition.cpp" />
     <ClCompile Include="TransformRect.cpp" />
@@ -235,11 +239,13 @@
     <ClInclude Include="MonoBehaviour.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="MyString.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="ProjectFileManager.h" />
     <ClInclude Include="ProjectWindow.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneInfo.h" />
@@ -248,6 +254,7 @@
     <ClInclude Include="ScrollRect.h" />
     <ClInclude Include="TextRect.h" />
     <ClInclude Include="TextBox.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="AnimationTransition.h" />
     <ClInclude Include="TransformRect.h" />
