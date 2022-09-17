@@ -31,6 +31,7 @@ void Scene::Update()
 		for (int j = i + 1; j < colliders.size(); j++) {
 			std::vector<Vector3> crossPoints;
 
+			//当たり判定と衝突応答
 			if (HitChecker::IsHit(colliders[i], colliders[j], crossPoints)) {
 				//Debug::Log("Hit!!");
 				//当たった交点をコライダーの交点リストに追加
@@ -39,6 +40,13 @@ void Scene::Update()
 			}
 		}
 	}
+
+	//GameObjectなどをここで追加、削除する
+	for (auto& addAndRemoveEvent : addAndRemoveEvents) {
+		addAndRemoveEvent();
+	}
+	//リセット
+	addAndRemoveEvents.clear();
 }
 
 void Scene::Draw()
@@ -53,9 +61,12 @@ GameObject* Scene::CreateEmpty()
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobject->transform = gameobject->AddComponent<Transform>();	//Transformをついか
-	gameobjects.emplace_back(gameobject);	//リストに追加
 	gameobject->SetName("GameObject");	//名前変更(初期の名前)
 	treeList->Add(new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen), treeList->GetRoot());	//TreeNodeにも追加
+	//あとで追加
+	addAndRemoveEvents.push_back([this, gameobject](void) {
+		gameobjects.emplace_back(gameobject);	//リストに追加
+	});
 	return gameobject;
 }
 

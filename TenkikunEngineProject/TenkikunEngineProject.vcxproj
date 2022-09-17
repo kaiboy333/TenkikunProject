@@ -153,6 +153,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CreateBallScript.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -215,6 +217,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CreateBallScript.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HitChecker.h" />

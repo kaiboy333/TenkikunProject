@@ -26,12 +26,8 @@ class ProjectFileManager
 		};
 
 		//ランダム関連(fileID)
-		static const int MIN = 1;
-		static const int MAX = 100000000;
-
-		static std::random_device rd;
-		static std::default_random_engine eng;
-		static std::uniform_int_distribution<int> distr;
+		static const int ID_MIN = 1;
+		static const int ID_MAX = 100000000;
 
 		static std::filesystem::path currentPath;	//現在のパス
 

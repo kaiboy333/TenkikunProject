@@ -260,6 +260,12 @@
     <ClCompile Include="MonoBehaviour.cpp">
       <Filter>ソース ファイル\component</Filter>
     </ClCompile>
+    <ClCompile Include="CreateBallScript.cpp">
+      <Filter>ソース ファイル\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>ソース ファイル\physic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -444,6 +450,12 @@
     </ClInclude>
     <ClInclude Include="RigidBody.h">
       <Filter>ソース ファイル\component</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateBallScript.h">
+      <Filter>ソース ファイル\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>ソース ファイル\physic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

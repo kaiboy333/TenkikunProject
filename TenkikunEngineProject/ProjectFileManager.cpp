@@ -9,6 +9,7 @@
 #include "Info.h"
 #include "BoxCollider.h"
 #include "CircleCollider.h"
+#include "MonoBehaviour.h"
 
 ProjectFileManager::ProjectFileManager()
 {
@@ -420,15 +421,14 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 					//radiousを書き込む
 					ofs << "\tradious: " << circleCollider->radious << std::endl;
 				}
-				////MonoBehaviourなら
-				//else if (type == typeid(MonoBehaviour)) {
-				//	MonoBehaviour* mono = static_cast<MonoBehaviour*>(component);
-				//	//MonoBehaviourのfileIDを取得
-				//	fileID = GetValue<SceneInfo*, int>(fileIDs, mono, CreateFileID());
-				//	Type
-				//	//ヘッダーとcppのIDを書き込む(fileID, guid)
-				//	ofs << "mono: {fileID: " << fileID  << " ,guid: {header: " << mono->GetGUID() << " ,cpp: " << script->GetMonoBehaviour()->GetCPPGUID() << " }" << " }" << std::endl;
-				//}
+				//MonoBehaviourなら
+				else if (type == typeid(MonoBehaviour)) {
+					MonoBehaviour* mono = static_cast<MonoBehaviour*>(component);
+					//MonoBehaviourのfileIDを取得
+					fileID = mono->fileID;
+					////ヘッダーとcppのIDを書き込む(fileID, guid);;
+					//ofs << "mono: {fileID: " << fileID << " ,guid: {header: " << mono->GetGUID() << " ,cpp: " << script->GetMonoBehaviour()->GetCPPGUID() << " }" << " }" << std::endl;
+				}
 			}
 		}
 	}
@@ -611,14 +611,14 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			//radiousをセット
 			circleCollider->radious = std::stof(MyString::Split(lines[row++], ' ')[1]);
 		}
-		//else if (className == typeid(MonoBehaviour).name()) {
+		else if (className == typeid(MonoBehaviour).name()) {
 		//	//ゲームオブジェクトのファイルIDを取得
 		//	fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
 		//	//ゲームオブジェクトを取得
 		//	GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 		//	//MonoBehaviourを作成、取得
 		//	MonoBehaviour* mono = gameobject->AddComponent<>();
-		//}
+		}
 	}
 }
 
@@ -1034,7 +1034,7 @@ std::string ProjectFileManager::CreateGUID()
 int ProjectFileManager::CreateFileID()
 {
 	//ランダムに生成
-	return distr(eng);
+	return MyMath::RandomRange(ProjectFileManager::ID_MIN, ProjectFileManager::ID_MAX);
 }
 
 std::string ProjectFileManager::GetNameWithoutExtensionName(std::filesystem::path path)
@@ -1098,8 +1098,3 @@ std::map<std::filesystem::path, Info*> ProjectFileManager::pathAndInfo;
 std::map<int, SceneInfo*> ProjectFileManager::sceneInfos;
 
 std::map<std::string, std::filesystem::path> ProjectFileManager::guidAndPath;
-
-//ランダム生成期の初期化
-std::random_device ProjectFileManager::rd;
-std::default_random_engine ProjectFileManager::eng(ProjectFileManager::rd());
-std::uniform_int_distribution<int> ProjectFileManager::distr(ProjectFileManager::MIN, ProjectFileManager::MAX);

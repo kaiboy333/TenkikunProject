@@ -13,6 +13,6 @@ class CircleCollider : public Collider
 
 		virtual void Draw() override;
 
-		void SetRadiousFromImageRenderer(ImageRenderer* imageRenderer);
+		//void SetRadiousFromImageRenderer(ImageRenderer* imageRenderer);
 };
 

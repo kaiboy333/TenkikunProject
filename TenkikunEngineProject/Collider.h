@@ -11,7 +11,9 @@
 class Collider : public DrawComponent
 {
 	public:
-		Vector3 offset;
+		Vector3 offset;	//’†S‚©‚ç‚Ç‚Ì‚­‚ç‚¢‚¸‚ê‚Ä‚¢‚é‚©
+
+		bool isTrigger = false;	//‚·‚è”²‚¯‚é‚©
 
 		unsigned int color = GetColor(0, 255, 0);
 

@@ -2,6 +2,7 @@
 #include "ProjectFileManager.h"
 #include "MyString.h"
 #include "Debug.h"
+#include "CreateBallScript.h"
 
 SceneManager::SceneManager()
 {
@@ -74,10 +75,20 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 	scene->CreateCamera();	//カメラ生成
 	//scene->CreateTenkikun();	//天気くん生成
 	//scene->CreateSquare();
-	scene->CreateCircle();
-	scene->CreateCircle();
-	scene->CreateUnityChan();	//Unityちゃん生成
+	//scene->CreateCircle();
+	//GameObject* circle2 = scene->CreateCircle();
+	//circle2->transform->position = Vector3(50, 0, 0);
+	//scene->CreateUnityChan();	//Unityちゃん生成
 
+	GameObject* o = scene->CreateEmpty();
+	o->AddComponent<CreateBallScript>();
+
+	//GameObjectなどをここで追加、削除する
+	for (auto& addAndRemoveEvent : scene->addAndRemoveEvents) {
+		addAndRemoveEvent();
+	}
+	//リセット
+	scene->addAndRemoveEvents.clear();
 
 	//シーンをセーブ
 	SaveScene();

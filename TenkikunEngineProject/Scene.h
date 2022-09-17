@@ -18,7 +18,7 @@ class Scene : public SceneInfo
 
 		std::filesystem::path scenePath;
 
-		//std::vector<function<void()>> addAndRemoveEvents;	//’Ç‰ÁAíœ‚ÌŠÖ”‚ğ‚¢‚ê‚é
+		std::vector<function<void()>> addAndRemoveEvents;	//’Ç‰ÁAíœ‚ÌŠÖ”‚ğ‚¢‚ê‚é
 
 		void Init();
 

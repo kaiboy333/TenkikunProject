@@ -52,3 +52,21 @@ bool MyMath::IsCross(Vector3 vec1, Vector3 vec2, Vector3 vec3, Vector3 vec4, Vec
 
     return true;
 }
+
+int MyMath::RandomRange(int min, int max)
+{
+    std::uniform_int_distribution<int> distr(min, max);
+    return distr(eng);
+}
+
+float MyMath::RandomRange(float min, float max)
+{
+    std::uniform_real_distribution<float> distr(min, max);
+    return distr(eng);
+}
+
+//ƒ‰ƒ“ƒ_ƒ€¶¬Šú‚Ì‰Šú‰»
+std::random_device MyMath::rd;
+std::default_random_engine MyMath::eng(MyMath::rd());
+
+
