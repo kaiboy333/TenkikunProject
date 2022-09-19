@@ -463,7 +463,7 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 		//GameObjectなら
 		if (className == typeid(GameObject).name()) {
 			//クラス生成
-			GameObject* gameobject = static_cast<GameObject*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, scene->CreateEmpty()));
+			GameObject* gameobject = static_cast<GameObject*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, scene->CreateEmpty(false)));
 			//名前取得
 			gameobject->SetName(MyString::Split(lines[row++], ' ')[1]);
 			//コンポーネントの数取得

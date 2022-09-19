@@ -44,14 +44,14 @@ bool HitChecker::IsHit(Collider* c1, Collider* c2, std::vector<Vector3>& crossPo
 
 bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2)
 {
-    float distance = Vector3::Distance(c1->GetPosition(), c2->GetPosition());
+    float d = Vector3::Distance(c1->GetPosition(), c2->GetPosition());
 
     Vector3 scale1 = c1->gameobject->transform->scale;
     Vector3 scale2 = c2->gameobject->transform->scale;
     float r1 = c1->radious * std::max<float>(scale1.x, scale1.y);
     float r2 = c2->radious * std::max<float>(scale2.x, scale2.y);
 
-    bool isHit = r1 + r2 >= distance;
+    bool isHit = r1 + r2 >= d;
 
     RigidBody* rb1 = c1->gameobject->GetComponent<RigidBody>();
     RigidBody* rb2 = c2->gameobject->GetComponent<RigidBody>();
@@ -59,18 +59,32 @@ bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2)
     //剛体ですり抜けなく、同じオブジェクトについていなければ
     if (rb1 && rb2 && !c1->isTrigger && !c2->isTrigger && isHit
         && c1->gameobject != c2->gameobject) {
+        //Vector3 p12 = c2->GetPosition() - c1->GetPosition();
+        //Vector3 n = p12 / p12.GetMagnitude();
+        //Vector3 v12 = rb2->velocity - rb1->velocity;
+        //Vector3 vn1 = n * Vector3::Inner(rb1->velocity, n);
+        //Vector3 vt1 = rb1->velocity - vn1;
+        //Vector3 t = vt1 / vt1.GetMagnitude();
+        //float j = (1 + Physics::e) * (rb1->mass * rb2->mass / (rb1->mass + rb2->mass)) * Vector3::Inner(v12, n);
+        //Vector3 J = n * j;
+
+        ////力を瞬間的に加える
+        //rb1->AddForce(J, RigidBody::ForceMode::Impulse);
+        //rb2->AddForce(-J, RigidBody::ForceMode::Impulse);
+
+        float k = 3.0f;
+        float e = 1.0f;
         Vector3 p12 = c2->GetPosition() - c1->GetPosition();
         Vector3 n = p12 / p12.GetMagnitude();
         Vector3 v12 = rb2->velocity - rb1->velocity;
         Vector3 vn1 = n * Vector3::Inner(rb1->velocity, n);
         Vector3 vt1 = rb1->velocity - vn1;
         Vector3 t = vt1 / vt1.GetMagnitude();
+        float spring = -k * (r1 + r2 - d);
         float j = (1 + Physics::e) * (rb1->mass * rb2->mass / (rb1->mass + rb2->mass)) * Vector3::Inner(v12, n);
-        Vector3 J = n * j;
-
-        //力を瞬間的に加える
-        rb1->AddForce(J, RigidBody::ForceMode::Impulse);
-        rb2->AddForce(-J, RigidBody::ForceMode::Impulse);
+        Vector3 impulse = n * (j + spring);
+        rb1->AddForce(impulse, RigidBody::ForceMode::Impulse);
+        rb2->AddForce(-impulse, RigidBody::ForceMode::Impulse);
     }
 
     return isHit;

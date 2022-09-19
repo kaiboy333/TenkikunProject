@@ -11,6 +11,7 @@ Camera::Camera(GameObject* gameobject) : Component(gameobject)
 
 void Camera::Update()
 {
+	//zoom += Input::GetMouseWheelRoteValue() * zoomSpeed;
 }
 
  Vector3 Camera::ScreenToWorldPoint(Vector3 screenPosition)

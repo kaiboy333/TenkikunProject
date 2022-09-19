@@ -35,7 +35,7 @@ void CreateBallScript::MonoUpdate()
 			//速度調整
 			rb->velocity = -Vector3(std::cosf(MyMath::EulerToRad(angle)), std::sinf(MyMath::EulerToRad(angle)), 0) * ballSpeed;
 			//サイズ調整
-			float ballSize = MyMath::RandomRange(0.05f, ballSizeMax);
+			float ballSize = 0.3f;
 			ball->transform->scale = (Vector3::One() - Vector3::Forward()) * ballSize;
 			//重さ調整
 			rb->mass = ballSize * ballWeight;

@@ -16,9 +16,9 @@ class CreateBallScript : public MonoBehaviour
 
 		float makeDistance = 300;
 
-		float ballSpeed = 300;
+		float ballSpeed = 200;
 
-		float ballWeight = 20;
+		float ballWeight = 1;
 
 		float ballSizeMax = 0.5f;
 };

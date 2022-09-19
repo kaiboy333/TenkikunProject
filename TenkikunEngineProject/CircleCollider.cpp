@@ -21,8 +21,9 @@ void CircleCollider::Draw()
 	GameWindow* gameWindow = WindowManager::gameWindow;
 	Vector3 scale = this->gameobject->transform->scale;
 	float maxScale = std::max<float>(scale.x, scale.y);
+	float zoom = SceneManager::GetNowScene()->GetNowCamera()->zoom;
 
-	DrawOvalAA(drawPos.x, drawPos.y, radious * maxScale, radious * maxScale, 30, color, FALSE);
+	DrawOvalAA(drawPos.x, drawPos.y, radious * maxScale * zoom, radious * maxScale * zoom, 30, color, FALSE);
 
 	//Œð“_‚Ì•`‰æ
 	Collider::Draw();

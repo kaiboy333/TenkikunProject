@@ -72,23 +72,17 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 	//シーンリストに追加
 	scenePathes.insert(std::make_pair(scene->GetName(), scenePath));
 
-	scene->CreateCamera();	//カメラ生成
-	//scene->CreateTenkikun();	//天気くん生成
-	//scene->CreateSquare();
-	//scene->CreateCircle();
-	//GameObject* circle2 = scene->CreateCircle();
+	scene->CreateCamera(false);	//カメラ生成
+	//scene->CreateTenkikun(false);	//天気くん生成
+	//scene->CreateSquare(false);
+	//GameObject* circle = scene->CreateCircle(false);
+	//circle->transform->position = Vector3(-50, 0, 0);
+	//GameObject* circle2 = scene->CreateCircle(false);
 	//circle2->transform->position = Vector3(50, 0, 0);
-	//scene->CreateUnityChan();	//Unityちゃん生成
+	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
-	GameObject* o = scene->CreateEmpty();
+	GameObject* o = scene->CreateEmpty(false);
 	o->AddComponent<CreateBallScript>();
-
-	//GameObjectなどをここで追加、削除する
-	for (auto& addAndRemoveEvent : scene->addAndRemoveEvents) {
-		addAndRemoveEvent();
-	}
-	//リセット
-	scene->addAndRemoveEvents.clear();
 
 	//シーンをセーブ
 	SaveScene();

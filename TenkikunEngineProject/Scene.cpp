@@ -57,23 +57,39 @@ void Scene::Draw()
 	}
 }
 
-GameObject* Scene::CreateEmpty()
+GameObject* Scene::CreateEmpty(bool isLaterAdd)
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobject->transform = gameobject->AddComponent<Transform>();	//Transformをついか
-	gameobject->SetName("GameObject");	//名前変更(初期の名前)
 	treeList->Add(new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen), treeList->GetRoot());	//TreeNodeにも追加
-	//あとで追加
-	addAndRemoveEvents.push_back([this, gameobject](void) {
+	if (isLaterAdd) {
+		//あとで追加
+		addAndRemoveEvents.push_back([this, gameobject](void) {
+			gameobject->SetName("GameObject");	//名前変更(初期の名前)
+			gameobjects.emplace_back(gameobject);	//リストに追加
+		});
+	}
+	else {
+		//すぐに追加
+		gameobject->SetName("GameObject");	//名前変更(初期の名前)
 		gameobjects.emplace_back(gameobject);	//リストに追加
-	});
+	}
 	return gameobject;
 }
 
-GameObject* Scene::CreateSquare()
+GameObject* Scene::CreateSquare(bool isLaterAdd)
 {
-	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->SetName("Square");	//名前変更
+	GameObject* gameobject = CreateEmpty(isLaterAdd);	//空のGameObjectを作成
+	if (isLaterAdd) {
+		//あとで
+		addAndRemoveEvents.push_back([this, gameobject](void) {
+			gameobject->SetName("Square");	//名前変更
+		});
+	}
+	else {
+		//すぐに
+		gameobject->SetName("Square");	//名前変更
+	}
 
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
 	Component* component = static_cast<Component*>(imageRenderer);
@@ -90,10 +106,19 @@ GameObject* Scene::CreateSquare()
 	return gameobject;
 }
 
-GameObject* Scene::CreateCircle()
+GameObject* Scene::CreateCircle(bool isLaterAdd)
 {
-	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->SetName("Circle");	//名前変更
+	GameObject* gameobject = CreateEmpty(isLaterAdd);	//空のGameObjectを作成
+	if (isLaterAdd) {
+		//あとで
+		addAndRemoveEvents.push_back([this, gameobject](void) {
+			gameobject->SetName("Circle");	//名前変更
+		});
+	}
+	else {
+		//すぐに
+		gameobject->SetName("Circle");	//名前変更
+	}
 	gameobject->transform->scale = Vector3(0.3f, 0.3f, 1);	//サイズ変更
 
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
@@ -111,10 +136,19 @@ GameObject* Scene::CreateCircle()
 	return gameobject;
 }
 
-GameObject* Scene::CreateCamera() 
+GameObject* Scene::CreateCamera(bool isLaterAdd)
 {
-	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->SetName("MainCamera");	//名前変更
+	GameObject* gameobject = CreateEmpty(isLaterAdd);	//空のGameObjectを作成
+	if (isLaterAdd) {
+		//あとで
+		addAndRemoveEvents.push_back([this, gameobject](void) {
+			gameobject->SetName("MainCamera");	//名前変更
+		});
+	}
+	else {
+		//すぐに
+		gameobject->SetName("MainCamera");	//名前変更
+	}
 
 	Camera* camera = gameobject->AddComponent<Camera>();	//Cameraコンポーネント作成
 	SetNowCamera(camera);	//現在のカメラにこれをセット
@@ -122,10 +156,19 @@ GameObject* Scene::CreateCamera()
 	return gameobject;
 }
 
-GameObject* Scene::CreateTenkikun()
+GameObject* Scene::CreateTenkikun(bool isLaterAdd)
 {
-	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->SetName("Tenkikun");	//名前変更
+	GameObject* gameobject = CreateEmpty(isLaterAdd);	//空のGameObjectを作成
+	if (isLaterAdd) {
+		//あとで
+		addAndRemoveEvents.push_back([this, gameobject](void) {
+			gameobject->SetName("Tenkikun");	//名前変更
+		});
+	}
+	else {
+		//すぐに
+		gameobject->SetName("Tenkikun");	//名前変更
+	}
 
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
 	//Component* component = static_cast<Component*>(imageRenderer);
@@ -142,10 +185,19 @@ GameObject* Scene::CreateTenkikun()
 	return gameobject;
 }
 
-GameObject* Scene::CreateUnityChan()
+GameObject* Scene::CreateUnityChan(bool isLaterAdd)
 {
 	GameObject* gameobject = CreateEmpty();	//空のGameObjectを作成
-	gameobject->SetName("UnityChan");	//名前変更
+	if (isLaterAdd) {
+		//あとで
+		addAndRemoveEvents.push_back([this, gameobject](void) {
+			gameobject->SetName("UnityChan");	//名前変更
+		});
+	}
+	else {
+		//すぐに
+		gameobject->SetName("UnityChan");	//名前変更
+	}
 
 	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
 	Animator* animator = gameobject->AddComponent<Animator>();	//Animatorコンポーネント作成

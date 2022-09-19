@@ -26,12 +26,12 @@ class Scene : public SceneInfo
 
 		void Draw();
 
-		GameObject* CreateEmpty();	//空のゲームオブジェクトを作成
-		GameObject* CreateSquare();	//四角い画像のゲームオブジェクトを作成
-		GameObject* CreateCircle();	//円の画像のゲームオブジェクトを作成
-		GameObject* CreateCamera();	//カメラゲームオブジェクトを作成
-		GameObject* CreateTenkikun();	//天気くんの画像のゲームオブジェクトを作成
-		GameObject* CreateUnityChan();	//アニメーションがついたUnityちゃんのゲームオブジェクト作成
+		GameObject* CreateEmpty(bool isLaterAdd = true);	//空のゲームオブジェクトを作成(後で追加するか)
+		GameObject* CreateSquare(bool isLaterAdd = true);	//四角い画像のゲームオブジェクトを作成
+		GameObject* CreateCircle(bool isLaterAdd = true);	//円の画像のゲームオブジェクトを作成
+		GameObject* CreateCamera(bool isLaterAdd = true);	//カメラゲームオブジェクトを作成
+		GameObject* CreateTenkikun(bool isLaterAdd = true);	//天気くんの画像のゲームオブジェクトを作成
+		GameObject* CreateUnityChan(bool isLaterAdd = true);	//アニメーションがついたUnityちゃんのゲームオブジェクト作成
 
 		void Destroy(GameObject* gameobject);	//指定のGameObjectを削除
 
