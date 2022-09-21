@@ -61,6 +61,10 @@ void TreeNode::SetElement(std::string element)
 	//‚»‚ê‚É‚æ‚é•A‚‚³XV
 	width = FontManager::systemFont->GetFontWidth(element);
 	height = FontManager::systemFont->GetFontHeight();
+	if (activeRect) {
+		activeRect->width = FontManager::systemFont->GetFontWidth(element);
+		activeRect->height = FontManager::systemFont->GetFontHeight();
+	}
 }
 
 std::string TreeNode::GetElement()

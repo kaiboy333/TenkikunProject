@@ -47,10 +47,14 @@ void TriggerRect::CheckInput()
 
 			//マウスが乗ってるだけなら
 			MouseOnEvent();
+			//前回マウスが乗っていなかったら
+			if (!isOn) {
+				MouseEnterEvent();
+			}
 
 			//ファイルがドロップされたら
 			if (ProjectFileManager::dragFilePathes.size() != 0) {
-				FileDropEvents();
+				FileDropEvent();
 			}
 			//乗っている判定にする
 			isOn = true;
@@ -63,6 +67,11 @@ void TriggerRect::CheckInput()
 			}
 			//乗っていない判定にする
 			isOn = false;
+		}
+
+		//選択されていたら
+		if (GetIsSelected()) {
+			SelectedEvent();
 		}
 
 		//エンターを押したなら
@@ -154,10 +163,28 @@ void TriggerRect::PushEnterEvent()
 	}
 }
 
-void TriggerRect::FileDropEvents()
+void TriggerRect::MouseEnterEvent()
+{
+	//実行可能リストに追加
+	for (std::function<void()> func : mouseEnterEvents) {
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
+	}
+}
+
+void TriggerRect::FileDropEvent()
 {
 	//実行可能リストに追加
 	for (std::function<void()> func : fileDropEvents) {
+		auto pair = std::make_pair(eventNo, func);
+		parentWindow->activeEvents.push_back(pair);
+	}
+}
+
+void TriggerRect::SelectedEvent()
+{
+	//実行可能リストに追加
+	for (std::function<void()> func : selectedEvents) {
 		auto pair = std::make_pair(eventNo, func);
 		parentWindow->activeEvents.push_back(pair);
 	}

@@ -54,7 +54,7 @@ vector<Window*> WindowManager::GetWindows()
 {
 	vector<Window*> windows;
 
-	if (gameWindow && hierarchyWindow && inspectorWindow) {
+	if (gameWindow && hierarchyWindow && inspectorWindow && projectWindow) {
 		windows.push_back(gameWindow);
 		windows.push_back(hierarchyWindow);
 		windows.push_back(inspectorWindow);

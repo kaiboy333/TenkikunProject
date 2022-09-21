@@ -32,8 +32,11 @@ class TriggerRect : public Rect
 		std::vector<std::function<void()>> mouseDoubleClickEvents;
 		std::vector<std::function<void()>> mouseRightClickEvents;
 		std::vector<std::function<void()>> mouseOnEvents;
+		std::vector<std::function<void()>> mouseEnterEvents;
 		std::vector<std::function<void()>> mouseExitEvents;
 		std::vector<std::function<void()>> mouseWheelEvents;
+
+		std::vector<std::function<void()>> selectedEvents;
 
 		std::vector<std::function<void()>> pushEnterEvents;
 
@@ -47,11 +50,14 @@ class TriggerRect : public Rect
 		void MouseDoubleClickEvent();
 		void MouseRightClickEvent();
 		void MouseOnEvent();
+		void MouseEnterEvent();
 		void MouseExitEvent();
 		void MouseWheelEvent();
 
+		void SelectedEvent();
+
 		void PushEnterEvent();
 
-		void FileDropEvents();
+		void FileDropEvent();
 };
 

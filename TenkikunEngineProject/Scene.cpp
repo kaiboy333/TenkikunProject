@@ -61,7 +61,16 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 {
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobject->transform = gameobject->AddComponent<Transform>();	//Transformをついか
-	treeList->Add(new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen), treeList->GetRoot());	//TreeNodeにも追加
+	TreeNode* node = new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen);
+	//マウスが乗っていたら
+	node->selectedEvents.push_back([node, this, gameobject](void) {
+		//選択されていてバックスペースを押したら
+		if (node->GetIsSelected() && Input::GetKeyDown(Input::KeyCode::BACK_SPACE, false)) {
+			//ゲームオブジェクトを削除
+			this->Destroy(gameobject);
+		}
+	});
+	treeList->Add(node, treeList->GetRoot());	//TreeNodeにも追加
 	if (isLaterAdd) {
 		//あとで追加
 		addAndRemoveEvents.push_back([this, gameobject](void) {
