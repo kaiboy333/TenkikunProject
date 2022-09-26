@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector2.h"
 
 class Vector3
 {
@@ -28,6 +29,8 @@ class Vector3
 
 		bool operator ==(const Vector3& other) const;
 
+		operator Vector2() const;	//Vector2‚©‚çVector3‚ÖƒLƒƒƒXƒg•ÏŠ·
+
 		const static Vector3 Zero();
 		const static Vector3 One();
 
@@ -40,9 +43,9 @@ class Vector3
 
 		static float Distance(Vector3 vec1, Vector3 vec2);
 
-		static float Cross(Vector3 vec1, Vector3 vec2);
-		static float Inner(Vector3 vec1, Vector3 vec2);
+		//static float Cross(Vector3 vec1, Vector3 vec2);
+		//static float Inner(Vector3 vec1, Vector3 vec2);
 
-		static bool IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint);
+		//static bool IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint);
 };
 

@@ -19,12 +19,20 @@ void CircleCollider::Draw()
 {
 	Vector3 drawPos = GetDrawPos(GetPosition());
 	GameWindow* gameWindow = WindowManager::gameWindow;
-	Vector3 scale = this->gameobject->transform->scale;
-	float maxScale = std::max<float>(scale.x, scale.y);
 	float zoom = SceneManager::GetNowScene()->GetNowCamera()->zoom;
 
-	DrawOvalAA(drawPos.x, drawPos.y, radious * maxScale * zoom, radious * maxScale * zoom, 30, color, FALSE);
+	DrawOvalAA(drawPos.x, drawPos.y, GetActualRadious() * zoom, GetActualRadious() * zoom, 30, color, FALSE);
 
 	//Œğ“_‚Ì•`‰æ
 	Collider::Draw();
+}
+
+float CircleCollider::GetActualRadious()
+{
+	//‘å‚«‚³æ“¾
+	Vector3 scale = this->gameobject->transform->scale;
+	//xAy‚Ì‘å‚«‚¢‚Ù‚¤‚ğæ“¾
+	float maxScale = std::max<float>(scale.x, scale.y);
+	
+	return radious * maxScale;
 }

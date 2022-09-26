@@ -122,6 +122,17 @@ bool Vector3::operator==(const Vector3& other) const
     return x == other.x && y == other.y && z == other.z;
 }
 
+Vector3::operator Vector2() const
+{
+    Vector3 vec;
+
+    vec.x = this->x;
+    vec.y = this->y;
+    vec.z = 0;
+
+    return vec;
+}
+
 const Vector3 Vector3::Zero()
 {
     return Vector3();
@@ -167,34 +178,34 @@ float Vector3::Distance(Vector3 vec1, Vector3 vec2)
     return (vec2 - vec1).GetMagnitude();
 }
 
-float Vector3::Cross(Vector3 vec1, Vector3 vec2)
-{
-    return vec1.x * vec2.y - vec1.y * vec2.x;
-}
-
-float Vector3::Inner(Vector3 vec1, Vector3 vec2)
-{
-    return vec1.x * vec2.x + vec1.y * vec2.y;
-}
-
-bool Vector3::IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint)
-{
-    float det = Cross(p2 - p1, p4 - p3);
-
-    //平行じゃないなら
-    if (det != 0) {
-        float s = Cross(p3 - p1, p4 - p3) / det;
-        float t = Cross(p2 - p1, p1 - p3) / det;
-
-        //線分の交点なら
-        if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
-            crossPoint.x = p1.x + s * (p2 - p1).x;
-            crossPoint.y = p1.y + s * (p2 - p1).y;
-            crossPoint.z = 0;
-
-            return true;
-        }
-    }
-
-    return false;
-}
+//float Vector3::Cross(Vector3 vec1, Vector3 vec2)
+//{
+//    return vec1.x * vec2.y - vec1.y * vec2.x;
+//}
+//
+//float Vector3::Inner(Vector3 vec1, Vector3 vec2)
+//{
+//    return vec1.x * vec2.x + vec1.y * vec2.y;
+//}
+//
+//bool Vector3::IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint)
+//{
+//    float det = Cross(p2 - p1, p4 - p3);
+//
+//    //平行じゃないなら
+//    if (det != 0) {
+//        float s = Cross(p3 - p1, p4 - p3) / det;
+//        float t = Cross(p2 - p1, p1 - p3) / det;
+//
+//        //線分の交点なら
+//        if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
+//            crossPoint.x = p1.x + s * (p2 - p1).x;
+//            crossPoint.y = p1.y + s * (p2 - p1).y;
+//            crossPoint.z = 0;
+//
+//            return true;
+//        }
+//    }
+//
+//    return false;
+//}
