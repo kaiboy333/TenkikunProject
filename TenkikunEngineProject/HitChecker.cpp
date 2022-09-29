@@ -5,7 +5,7 @@
 #include "RigidBody.h"
 #include "Physics.h"
 
-bool HitChecker::IsHit(Collider* c1, Collider* c2, std::vector<Vector3>& crossPoints)
+bool HitChecker::IsHit(Collider* c1, Collider* c2, std::vector<Vector2>& crossPoints)
 {
     //初期化
     crossPoints.clear();
@@ -42,7 +42,7 @@ bool HitChecker::IsHit(Collider* c1, Collider* c2, std::vector<Vector3>& crossPo
 
 bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2)
 {
-    float d = Vector3::Distance(c1->GetPosition(), c2->GetPosition());
+    float d = Vector2::Distance(c1->GetPosition(), c2->GetPosition());
 
     float r1 = c1->GetActualRadious();
     float r2 = c2->GetActualRadious();
@@ -86,17 +86,17 @@ bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2)
     return isHit;
 }
 
-bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2, std::vector<Vector3>& crossPoints)
+bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2, std::vector<Vector2>& crossPoints)
 {
-    float distance = Vector3::Distance(c1->GetPosition(), c2->GetPosition());
+    float distance = Vector2::Distance(c1->GetPosition(), c2->GetPosition());
 
-    Vector3 centerPos1 = c1->GetPosition();
-    Vector3 centerPos2 = c2->GetPosition();
+    Vector2 centerPos1 = c1->GetPosition();
+    Vector2 centerPos2 = c2->GetPosition();
     float r1 = c1->GetActualRadious();
     float r2 = c2->GetActualRadious();
 
     //円が二点で交わっているなら
-    if (std::abs(r1 - r2) < Vector3::Distance(centerPos1, centerPos2) && Vector3::Distance(centerPos1, centerPos2) < r1 + r2) {
+    if (std::abs(r1 - r2) < Vector2::Distance(centerPos1, centerPos2) && Vector2::Distance(centerPos1, centerPos2) < r1 + r2) {
         float a = 2 * (centerPos2.x - centerPos1.x);
         float b = 2 * (centerPos2.y - centerPos1.y);
         float c = (centerPos1.x + centerPos2.x) * (centerPos1.x - centerPos2.x) + (centerPos1.y + centerPos2.y) * (centerPos1.y - centerPos2.y) + (r2 + r1) * (r2 - r1);
@@ -107,8 +107,8 @@ bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2, std::vector<Vec
 
         float tmp1 = std::sqrtf((tmp0 * std::powf(r1, 2) - std::powf(d1, 2)));
 
-        Vector3 crossPoint1 = Vector3((a * d1 - b * tmp1) / tmp0 + centerPos1.x, (b * d1 + a * tmp1) / tmp0 + centerPos1.y, 0);
-        Vector3 crossPoint2 = Vector3((a * d1 + b * tmp1) / tmp0 + centerPos1.x, (b * d1 - a * tmp1) / tmp0 + centerPos1.y, 0);
+        Vector2 crossPoint1 = Vector2((a * d1 - b * tmp1) / tmp0 + centerPos1.x, (b * d1 + a * tmp1) / tmp0 + centerPos1.y);
+        Vector2 crossPoint2 = Vector2((a * d1 + b * tmp1) / tmp0 + centerPos1.x, (b * d1 - a * tmp1) / tmp0 + centerPos1.y);
 
         //交点をリストに追加
         if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint1) == crossPoints.end()) {
@@ -122,10 +122,10 @@ bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2, std::vector<Vec
     return IsHitCC(c1, c2);
 }
 
-bool HitChecker::IsHitBB(BoxCollider* c1, BoxCollider* c2, std::vector<Vector3>& crossPoints)
+bool HitChecker::IsHitBB(BoxCollider* c1, BoxCollider* c2, std::vector<Vector2>& crossPoints)
 {
-    std::vector<Vector3> vertexes1 = c1->GetVertexes();
-    std::vector<Vector3> vertexes2 = c2->GetVertexes();
+    std::vector<Vector2> vertexes1 = c1->GetVertexes();
+    std::vector<Vector2> vertexes2 = c2->GetVertexes();
 
     for (int i = 0, length1 = (int)vertexes1.size(); i < length1; i++) {
         for (int j = 0, length2 = (int)vertexes2.size(); j < length2; j++) {
@@ -149,14 +149,14 @@ bool HitChecker::IsHitBB(BoxCollider* c1, BoxCollider* c2, std::vector<Vector3>&
     return (int)crossPoints.size() != 0;
 }
 
-bool HitChecker::IsHitCB(CircleCollider* c1, BoxCollider* c2, std::vector<Vector3>& crossPoints)
+bool HitChecker::IsHitCB(CircleCollider* c1, BoxCollider* c2, std::vector<Vector2>& crossPoints)
 {
     //円の中心点を取得
-    Vector3 centerPos = c1->GetPosition();
+    Vector2 centerPos = c1->GetPosition();
     Vector3 scale = c1->gameobject->transform->scale;
-    float r = c1->radious * std::max<float>(scale.x, scale.y);
+    float r = c1->GetActualRadious();
     //矩形の頂点を取得
-    std::vector<Vector3> vertexes = c2->GetVertexes();
+    std::vector<Vector2> vertexes = c2->GetVertexes();
 
     for (int i = 0, length = (int)vertexes.size(); i < length; i++) {
         Vector2 p1 = vertexes[i % length];

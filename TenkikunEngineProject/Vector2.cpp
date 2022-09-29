@@ -1,5 +1,6 @@
 #include "Vector2.h"
 #include <cmath>
+#include "DrawComponent.h"
 
 Vector2::Vector2()
 {
@@ -26,6 +27,19 @@ Vector2 Vector2::GetNormalized()
     //‚»‚ê‚¼‚ê‚ÌƒxƒNƒgƒ‹‚ð’·‚³‚ÅŠ„‚é
     return Vector2(x / length, y / length);
 }
+
+//void Vector2::Draw(unsigned int color, Vector2 startPos)
+//{
+//    Vector2 drawStartPos = DrawComponent::GetDrawPos(startPos);
+//    Vector2 drawPos = DrawComponent::GetDrawPos(*this + startPos);
+//    DrawLineAA(drawStartPos.x, drawStartPos.y, drawPos.x, drawPos.y, color);
+//}
+//
+//void Vector2::DrawPoint(unsigned int color)
+//{
+//    Vector2 drawPos = DrawComponent::GetDrawPos(*this);
+//    DrawCircleAA(drawPos.x, drawPos.y, 5, 20, color);
+//}
 
 Vector2 Vector2::operator+(const Vector2& other) const
 {
@@ -112,10 +126,11 @@ bool Vector2::operator==(const Vector2& other) const
 
 Vector2::operator Vector3() const
 {
-    Vector2 vec;
+    Vector3 vec;
 
     vec.x = this->x;
     vec.y = this->y;
+    vec.z = 0;
 
     return vec;
 }
@@ -186,10 +201,10 @@ bool Vector2::IsCross(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2& c
     return false;
 }
 
-float Vector2::GetShortestDistance(Vector2 p1, Vector2 p2, Vector2 targetPoint, Vector2& crossPoint)
+float Vector2::GetMinDistance(Vector2 p1, Vector2 p2, Vector2 targetPoint, Vector2& crossPoint)
 {
     Vector2 p12 = p2 - p1;
-    float a = p12.GetMagnitude();
+    float a = std::powf(p12.GetMagnitude(), 2);
 
     if (a == 0) {
         return Vector2::Distance(p1, targetPoint);

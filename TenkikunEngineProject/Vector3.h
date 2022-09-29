@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2.h"
 
+class Vector2;
 class Vector3
 {
 	public:
@@ -29,7 +30,7 @@ class Vector3
 
 		bool operator ==(const Vector3& other) const;
 
-		operator Vector2() const;	//Vector2からVector3へキャスト変換
+		operator Vector2() const;	//Vector3からVector2へキャスト変換
 
 		const static Vector3 Zero();
 		const static Vector3 One();

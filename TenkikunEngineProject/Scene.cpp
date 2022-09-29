@@ -8,6 +8,7 @@
 #include "HitChecker.h"
 #include "RigidBody.h"
 #include "PlayerScript.h"
+#include "GJK.h"
 
 void Scene::Init()
 {
@@ -27,19 +28,48 @@ void Scene::Update()
 		colliders.insert(colliders.end(), objectColliders.begin(), objectColliders.end());	//リストに一気に追加
 	}
 
-	for (int i = 0; i < colliders.size(); i++) {
-		for (int j = i + 1; j < colliders.size(); j++) {
-			std::vector<Vector3> crossPoints;
+	//コライダーが2つ以上あるなら
+	if ((int)colliders.size() >= 2) {
+		for (int i = 0; i < (int)colliders.size(); i++) {
+			for (int j = i + 1; j < (int)colliders.size(); j++) {
+				//同じゲームオブジェクトのコライダーなら
+				if (colliders[i]->gameobject == colliders[j]->gameobject) {
+					//飛ばす
+					continue;
+				}
+				//std::vector<Vector3> crossPoints;
 
-			//当たり判定と衝突応答
-			if (HitChecker::IsHit(colliders[i], colliders[j], crossPoints)) {
-				//Debug::Log("Hit!!");
-				//当たった交点をコライダーの交点リストに追加
-				colliders[i]->crossPoints.insert(colliders[i]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
-				colliders[j]->crossPoints.insert(colliders[j]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
+				////当たり判定と衝突応答
+				//if (HitChecker::IsHit(colliders[i], colliders[j], crossPoints)) {
+				//	//Debug::Log("Hit!!");
+				//	//当たった交点をコライダーの交点リストに追加
+				//	colliders[i]->crossPoints.insert(colliders[i]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
+				//	colliders[j]->crossPoints.insert(colliders[j]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
+				//}
+
+				if (GJK::IsHit(colliders[i], colliders[j])) {
+					colliders[i]->isHit = true;
+					colliders[j]->isHit = true;
+				}
+				//if (GJK::IsHit2(colliders[i])) {
+				//	colliders[i]->isHit = true;
+				//}
+				//if (GJK::IsHit2( colliders[j])) {
+				//	colliders[j]->isHit = true;
+				//}
 			}
 		}
 	}
+
+	//Vector2 crossPoint;
+	//Vector2 vec1 = Vector2(-50, -10), vec2 = Vector2(50, -10), vec3 = Vector2::Zero();
+	//Vector2::GetMinDistance(vec1, vec2, vec3, crossPoint);
+	//vec1.DrawPoint();
+	//vec2.DrawPoint();
+	//vec3.DrawPoint();
+	//crossPoint.DrawPoint(GetColor(255, 0, 0));
+	//ScreenFlip();
+
 
 	//GameObjectなどをここで追加、削除する
 	for (auto& addAndRemoveEvent : addAndRemoveEvents) {

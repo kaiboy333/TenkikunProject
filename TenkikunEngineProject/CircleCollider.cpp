@@ -17,6 +17,13 @@ CircleCollider::CircleCollider(GameObject* gameobject) : Collider(gameobject)
 
 void CircleCollider::Draw()
 {
+	if (isHit) {
+		color = GetColor(255, 0, 0);
+	}
+	else {
+		color = GetColor(0, 255, 0);
+	}
+
 	Vector3 drawPos = GetDrawPos(GetPosition());
 	GameWindow* gameWindow = WindowManager::gameWindow;
 	float zoom = SceneManager::GetNowScene()->GetNowCamera()->zoom;

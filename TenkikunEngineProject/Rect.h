@@ -16,7 +16,7 @@ class Rect
 		bool IsPointIn(float x, float y);	//指定座標は四角の内部か
 		bool IsPointIn2(float x, float y);	//指定座標は四角の内部か(一番右と一番下の場所は含まれない)
 
-		std::vector<Vector3> GetPoints();
+		std::vector<Vector2> GetPoints();
 
 		static Rect* GetCrossRect(Rect* r1, Rect* r2);
 };

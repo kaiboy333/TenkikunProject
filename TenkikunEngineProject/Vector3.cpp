@@ -124,11 +124,10 @@ bool Vector3::operator==(const Vector3& other) const
 
 Vector3::operator Vector2() const
 {
-    Vector3 vec;
+    Vector2 vec;
 
     vec.x = this->x;
     vec.y = this->y;
-    vec.z = 0;
 
     return vec;
 }

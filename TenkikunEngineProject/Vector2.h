@@ -1,6 +1,8 @@
 #pragma once
 #include "Vector3.h"
+#include "DxLib.h"
 
+class Vector3;
 class Vector2
 {
 public:
@@ -12,6 +14,9 @@ public:
 
 	float GetMagnitude();
 	Vector2 GetNormalized();
+
+	//void Draw(unsigned int color = GetColor(0, 0, 255), Vector2 startPos = Vector2::Zero());
+	//void DrawPoint(unsigned int color = GetColor(0, 0, 255));
 
 	Vector2 operator +(const Vector2& other) const;	//足し算
 	Vector2 operator -(const Vector2& other) const;	//引き算
@@ -28,7 +33,7 @@ public:
 
 	bool operator ==(const Vector2& other) const;
 
-	operator Vector3() const;	//Vector3からVector2へキャスト変換
+	operator Vector3() const;	//Vector2からVector3へキャスト変換
 
 	const static Vector2 Zero();
 	const static Vector2 One();
@@ -45,6 +50,6 @@ public:
 
 	static bool IsCross(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2& crossPoint);
 
-	static float GetShortestDistance(Vector2 p1, Vector2 p2, Vector2 targetPoint, Vector2& crossPoint);
+	static float GetMinDistance(Vector2 p1, Vector2 p2, Vector2 targetPoint, Vector2& crossPoint);
 };
 

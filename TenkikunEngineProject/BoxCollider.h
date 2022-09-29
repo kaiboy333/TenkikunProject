@@ -9,6 +9,6 @@ class BoxCollider : public VertexCollider
 
 		BoxCollider(GameObject* gameobject);
 
-		virtual std::vector<Vector3> GetVertexes() override;
+		virtual std::vector<Vector2> GetVertexes() override;
 };
 

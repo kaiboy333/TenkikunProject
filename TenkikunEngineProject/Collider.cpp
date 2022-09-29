@@ -8,6 +8,8 @@ void Collider::Update()
 {
     //交点リセット
     crossPoints.clear();
+    //当たり判定リセット
+    isHit = false;
 }
 
 void Collider::Draw()
@@ -15,7 +17,7 @@ void Collider::Draw()
     for (Vector3 crossPoint : crossPoints) {
         //交点の描画
         Vector3 drawPos = DrawComponent::GetDrawPos(crossPoint);
-        DrawCircleAA(drawPos.x, drawPos.y, 3, 30, GetColor(0, 0, 255), TRUE);
+        DrawCircleAA(drawPos.x, drawPos.y, 3, 30, GetColor(0, 255, 0), TRUE);
     }
 }
 

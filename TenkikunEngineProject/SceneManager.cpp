@@ -74,15 +74,18 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 
 	scene->CreateCamera(false);	//カメラ生成
 	//scene->CreateTenkikun(false);	//天気くん生成
-	//scene->CreateSquare(false);
-	//GameObject* circle = scene->CreateCircle(false);
-	//circle->transform->position = Vector3(-50, 0, 0);
-	//GameObject* circle2 = scene->CreateCircle(false);
-	//circle2->transform->position = Vector3(50, 0, 0);
+	//GameObject* square = scene->CreateSquare(false);
+	//square->transform->position = Vector3(-50, 0, 0);
+	//GameObject* square2 = scene->CreateSquare(false);
+	//square2->transform->position = Vector3(50, 0, 0);
+	GameObject* circle = scene->CreateCircle(false);
+	circle->transform->position = Vector3(-50, 0, 0);
+	GameObject* circle2 = scene->CreateCircle(false);
+	circle2->transform->position = Vector3(50, 0, 0);
 	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
-	GameObject* o = scene->CreateEmpty(false);
-	o->AddComponent<CreateBallScript>();
+	//GameObject* o = scene->CreateEmpty(false);
+	//o->AddComponent<CreateBallScript>();
 
 	//シーンをセーブ
 	SaveScene();
