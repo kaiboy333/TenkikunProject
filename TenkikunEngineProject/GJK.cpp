@@ -4,9 +4,8 @@
 
 bool GJK::IsHit(Collider* c1, Collider* c2)
 {
-    const Vector2 originPos = Vector2::Zero();
     Vector2 v = c1->GetPosition() - c2->GetPosition();
-    if (v == originPos) {
+    if (v == Vector2::Zero()) {
         return true;
     }
 
@@ -17,16 +16,22 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
         vertexes.push_back(Support(c1, c2, v));
 
         Vector2 crossPoint;
+        int minSideIndex;
+
         switch ((int)vertexes.size()) {
             case 1:
-                v = originPos - vertexes[0];
+                v = -vertexes[0];
                 break;
             case 2:
                 if (vertexes[0] == vertexes[1]) {
                     return false;
                 }
-                //vertexes[1] - vertexes[0]との内積が負になるような垂直なベクトルを取得
+                //vertexes[1] - vertexes[0]に垂直なベクトルを取得
                 v = Matrix::GetMRoteZ(vertexes[0], 90) * (vertexes[1] - vertexes[0]);
+                //vertexes[0]との内積が負だったら方向を逆にする
+                if (Vector2::Inner(v, vertexes[0]) < 0) {
+                    v = -v;
+                }
                 //Vector2::GetMinDistance(vertexes[0], vertexes[1], originPos, crossPoint);
                 ////垂線ではないのなら
                 //if (crossPoint == vertexes[0] || crossPoint == vertexes[1]) {
@@ -40,11 +45,44 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
                     return false;
                 }
                 //原点が3点で作った三角形に含まれているなら
-                if (IsPointInTriangle(originPos, vertexes)) {
+                if (IsPointInTriangle(Vector2::Zero(), vertexes)) {
+                    //反時計回り
+                    int dir = 1;
+                    //時計回りなら
+                    if (Vector2::Inner(vertexes[1] - vertexes[0], vertexes[2] - vertexes[0]) > 0) {
+                        //正負反転
+                        dir = -1;
+                    }
+                    Vector2 beforeSupportVec = Vector2::Zero();
+                    for (int j = 0; j < 30; j++) {
+                        //原点から凸包への最短距離を求める
+                        GetShortestDistanceToShape(Vector2::Zero(), vertexes, crossPoint, minSideIndex);
+                        //最短距離となる辺に垂直なベクトルを取得(dirを掛けて図形の辺方向に向ける)
+                        v = Matrix::GetMRoteZ(vertexes[0], -90) * (vertexes[(minSideIndex + 1) % (int)vertexes.size()] - vertexes[minSideIndex]) * dir;
+                        //サポート写像を求める
+                        Vector2 supportVec = Support(c1, c2, v);
+                        //前回のサポート写像の長さが、今回のサポート写像の長さ以下なら
+                        if (beforeSupportVec.GetMagnitude() <= supportVec.GetMagnitude()) {
+                            //終わり(それがめり込み深度)
+                            break;
+                        }
+                        //今回のを記憶
+                        beforeSupportVec = supportVec;
+                        //サポート写像を追加(最短距離となる辺の番号+1の頂点に)
+                        vertexes.insert(vertexes.begin() + ((minSideIndex + 1) % (int)vertexes.size()), supportVec);
+                    }
+
+                    //めり込み深度は
+                    Vector2 sinkVec = beforeSupportVec;
                     return true;
                 }
-                //原点から三角形への最短距離を求め、遠い点を削除する(結果二点になる)
-                v = -GetShortestDistanceVecToTriangle(originPos, vertexes);
+
+                //原点から三角形への最短距離を求める
+                GetShortestDistanceToShape(Vector2::Zero(), vertexes, crossPoint, minSideIndex);
+                //原点から一番遠い点を削除(結果二点になる)
+                vertexes.erase(vertexes.begin() + ((minSideIndex - 1 + (int)vertexes.size()) % (int)vertexes.size()));
+                //次の方向を求める
+                v = -crossPoint;
                 break;
         }
     }
@@ -108,9 +146,9 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
 //    return false;
 //}
 
-Vector2 GJK::Support(Collider* c1, Collider* c2, Vector2 d)
+Vector2 GJK::Support(Collider* c1, Collider* c2, Vector2 v)
 {
-    return Support(c1, d) - Support(c2, -d);
+    return Support(c1, v) - Support(c2, -v);
 }
 
 Vector2 GJK::Support(Collider* c, Vector2 d)
@@ -197,11 +235,9 @@ bool GJK::IsPointInTriangle(Vector2 point, std::vector<Vector2> vertexes)
     return true;
 }
 
-Vector2 GJK::GetShortestDistanceVecToTriangle(Vector2 targetPoint, std::vector<Vector2> &vertexes)
+float GJK::GetShortestDistanceToShape(Vector2 targetPoint, std::vector<Vector2> &vertexes, Vector2& crossPoint, int& minSideIndex)
 {
     float minDistance = 0;
-    int removeIndex = 0;
-    Vector2 crossPoint;
     for (int i = 0, len = (int)vertexes.size(); i < len; i++) {
         Vector2 vert1 = vertexes[i % len];
         Vector2 vert2 = vertexes[(i + 1) % len];
@@ -212,44 +248,43 @@ Vector2 GJK::GetShortestDistanceVecToTriangle(Vector2 targetPoint, std::vector<V
         if (i == 0) {
             minDistance = distance;
             crossPoint = crossPoint2;
+            minSideIndex = i;
         }
         //最短を見つけたら
         else if (minDistance > distance) {
             minDistance = distance;
             crossPoint = crossPoint2;
-            removeIndex = (i + 2) % len;
+            minSideIndex = i;
         }
     }
 
-    //原点から一番遠い点を削除
-    vertexes.erase(vertexes.begin() + removeIndex);
-    return crossPoint;
+    return minDistance;
 }
 
-Vector2 GJK::GetFirstP(Collider* c)
-{
-    auto& type = typeid(*c);
+//Vector2 GJK::GetFirstP(Collider* c)
+//{
+//    auto& type = typeid(*c);
+//
+//    auto& typeBC = typeid(BoxCollider);
+//    auto& typeCC = typeid(CircleCollider);
+//
+//    if (type == typeBC) {
+//        return GetFirstP(static_cast<VertexCollider*>(c));
+//    }
+//    else if (type == typeCC) {
+//        return GetFirstP(static_cast<CircleCollider*>(c));
+//    }
+//
+//    return Vector2();
+//}
 
-    auto& typeBC = typeid(BoxCollider);
-    auto& typeCC = typeid(CircleCollider);
-
-    if (type == typeBC) {
-        return GetFirstP(static_cast<VertexCollider*>(c));
-    }
-    else if (type == typeCC) {
-        return GetFirstP(static_cast<CircleCollider*>(c));
-    }
-
-    return Vector2();
-}
-
-Vector2 GJK::GetFirstP(VertexCollider* c)
-{
-    //最初の頂点を返す
-    return c->GetVertexes()[0];
-}
-
-Vector2 GJK::GetFirstP(CircleCollider* c)
-{
-    return c->GetPosition() + Vector2::Up() * c->GetActualRadious();
-}
+//Vector2 GJK::GetFirstP(VertexCollider* c)
+//{
+//    //最初の頂点を返す
+//    return c->GetVertexes()[0];
+//}
+//
+//Vector2 GJK::GetFirstP(CircleCollider* c)
+//{
+//    return c->GetPosition() + Vector2::Up() * c->GetActualRadious();
+//}
