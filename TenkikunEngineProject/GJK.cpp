@@ -6,13 +6,13 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
 {
     const Vector2 originPos = Vector2::Zero();
     Vector2 v = c1->GetPosition() - c2->GetPosition();
-    //図形の中心が原点だったら
     if (v == originPos) {
         return true;
     }
 
     std::vector<Vector2> vertexes;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 30; i++) {
+
         //サポート写像を求める
         vertexes.push_back(Support(c1, c2, v));
 
@@ -25,14 +25,17 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
                 if (vertexes[0] == vertexes[1]) {
                     return false;
                 }
-                Vector2::GetMinDistance(vertexes[0], vertexes[1], originPos, crossPoint);
-                //垂線ではないのなら
-                if (crossPoint == vertexes[0] || crossPoint == vertexes[1]) {
-                    return false;
-                }
-                v = -crossPoint;
+                //vertexes[1] - vertexes[0]との内積が負になるような垂直なベクトルを取得
+                v = Matrix::GetMRoteZ(vertexes[0], 90) * (vertexes[1] - vertexes[0]);
+                //Vector2::GetMinDistance(vertexes[0], vertexes[1], originPos, crossPoint);
+                ////垂線ではないのなら
+                //if (crossPoint == vertexes[0] || crossPoint == vertexes[1]) {
+                //    return false;
+                //}
+                //v = -crossPoint;
                 break;
             case 3:
+                //新しくできた頂点が他二点と被るなら(収束したなら)
                 if (vertexes[2] == vertexes[0] || vertexes[2] == vertexes[1]) {
                     return false;
                 }

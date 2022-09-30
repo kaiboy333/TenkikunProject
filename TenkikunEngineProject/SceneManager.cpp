@@ -74,14 +74,14 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 
 	scene->CreateCamera(false);	//ƒJƒƒ‰¶¬
 	//scene->CreateTenkikun(false);	//“V‹C‚­‚ñ¶¬
-	//GameObject* square = scene->CreateSquare(false);
-	//square->transform->position = Vector3(-50, 0, 0);
+	GameObject* square = scene->CreateSquare(false);
+	square->transform->position = Vector3(-50, 0, 0);
 	//GameObject* square2 = scene->CreateSquare(false);
 	//square2->transform->position = Vector3(50, 0, 0);
 	GameObject* circle = scene->CreateCircle(false);
-	circle->transform->position = Vector3(-50, 0, 0);
-	GameObject* circle2 = scene->CreateCircle(false);
-	circle2->transform->position = Vector3(50, 0, 0);
+	circle->transform->position = Vector3(-5, 0, 0);
+	//GameObject* circle2 = scene->CreateCircle(false);
+	//circle2->transform->position = Vector3(50, 0, 0);
 	//scene->CreateUnityChan(false);	//Unity‚¿‚á‚ñ¶¬
 
 	//GameObject* o = scene->CreateEmpty(false);
