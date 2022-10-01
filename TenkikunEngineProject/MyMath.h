@@ -16,7 +16,7 @@ class MyMath
 		static float Lerp(float min, float max, float t);
 
 		//ü•ª‚ÌŒğ·”»’è
-		static bool IsCross(Vector3 vec1, Vector3 vec2, Vector3 vec3, Vector3 vec4, Vector3& crossPos);
+		static bool IsCross(Vector2 vec1, Vector2 vec2, Vector2 vec3, Vector2 vec4, Vector2& crossPos);
 
 		static int RandomRange(int min, int max);
 		static float RandomRange(float min, float max);
@@ -26,4 +26,3 @@ class MyMath
 		static std::random_device rd;
 		static std::default_random_engine eng;
 };
-

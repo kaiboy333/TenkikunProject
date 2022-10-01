@@ -27,7 +27,7 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
                     return false;
                 }
                 //vertexes[1] - vertexes[0]に垂直なベクトルを取得
-                v = Matrix::GetMRoteZ(vertexes[0], 90) * (vertexes[1] - vertexes[0]);
+                v = Matrix::GetMRoteZ(Vector2::Zero(), 90) * (vertexes[1] - vertexes[0]);
                 //vertexes[0]との内積が負だったら方向を逆にする
                 if (Vector2::Inner(v, vertexes[0]) < 0) {
                     v = -v;
@@ -49,20 +49,23 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
                     //反時計回り
                     int dir = 1;
                     //時計回りなら
-                    if (Vector2::Inner(vertexes[1] - vertexes[0], vertexes[2] - vertexes[0]) > 0) {
+                    if (Vector2::Cross(vertexes[1] - vertexes[0], vertexes[2] - vertexes[0]) > 0) {
                         //正負反転
                         dir = -1;
                     }
-                    Vector2 beforeSupportVec = Vector2::Zero();
+
+                    //許せる誤差
+                    float okDistance = 0.1f;
+                    Vector2 beforeSupportVec = vertexes[2];
                     for (int j = 0; j < 30; j++) {
                         //原点から凸包への最短距離を求める
                         GetShortestDistanceToShape(Vector2::Zero(), vertexes, crossPoint, minSideIndex);
                         //最短距離となる辺に垂直なベクトルを取得(dirを掛けて図形の辺方向に向ける)
-                        v = Matrix::GetMRoteZ(vertexes[0], -90) * (vertexes[(minSideIndex + 1) % (int)vertexes.size()] - vertexes[minSideIndex]) * dir;
+                        v = Matrix::GetMRoteZ(Vector2::Zero(), 90) * (vertexes[(minSideIndex + 1) % (int)vertexes.size()] - vertexes[minSideIndex]) * (float)dir;
                         //サポート写像を求める
                         Vector2 supportVec = Support(c1, c2, v);
-                        //前回のサポート写像の長さが、今回のサポート写像の長さ以下なら
-                        if (beforeSupportVec.GetMagnitude() <= supportVec.GetMagnitude()) {
+                        //前回のサポート写像と今回のサポート写像の距離が一定以下なら
+                        if (Vector2::Distance(beforeSupportVec, supportVec) <= okDistance) {
                             //終わり(それがめり込み深度)
                             break;
                         }
@@ -73,7 +76,7 @@ bool GJK::IsHit(Collider* c1, Collider* c2)
                     }
 
                     //めり込み深度は
-                    Vector2 sinkVec = beforeSupportVec;
+                    Vector2 sinkVec = crossPoint;
                     return true;
                 }
 
@@ -175,13 +178,17 @@ Vector2 GJK::Support(VertexCollider* c, Vector2 d)
     float maxDot = 0;
     //最大内積の時の頂点座標
     Vector2 supportVec;
+    //最大内積の時の長さ(距離)
+    float maxDistance = 0;
 
     for (int i = 0, len = (int)vertexes.size(); i < len; i++) {
         Vector2 vertex = vertexes[i];
         float dot = Vector2::Inner(vertex, d);
+        float distance = vertex.GetMagnitude();
         if (i == 0) {
             maxDot = dot;
             supportVec = vertex;
+            maxDistance = distance;
         }
         //内積が今までで最大なら
         else if (dot > maxDot) {
@@ -189,6 +196,18 @@ Vector2 GJK::Support(VertexCollider* c, Vector2 d)
             maxDot = dot;
             //その時の頂点を記憶
             supportVec = vertex;
+            //長さを記憶
+            maxDistance = distance;
+        }
+        //内積が同じ最大なら
+        else if (dot == maxDot) {
+            //今回のほうが長いなら更新
+            if (maxDistance < distance) {
+                //その時の頂点を記憶
+                supportVec = vertex;
+                //長さを記憶
+                maxDistance = distance;
+            }
         }
     }
 

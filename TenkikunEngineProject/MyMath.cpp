@@ -1,4 +1,5 @@
 #include "MyMath.h"
+#include "Vector2.h"
 
 float MyMath::RadToEuler(float rad)
 {
@@ -30,7 +31,7 @@ float MyMath::Lerp(float min, float max, float t)
     return min + (max - min) * t;
 }
 
-bool MyMath::IsCross(Vector3 vec1, Vector3 vec2, Vector3 vec3, Vector3 vec4, Vector3& crossPos)
+bool MyMath::IsCross(Vector2 vec1, Vector2 vec2, Vector2 vec3, Vector2 vec4, Vector2& crossPos)
 {
     float d = (vec2.x - vec1.x) * (vec4.y - vec3.y) - (vec2.y - vec1.y) * (vec4.x - vec3.x);
 
