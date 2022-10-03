@@ -3,6 +3,7 @@
 #include "MyString.h"
 #include "Debug.h"
 #include "CreateBallScript.h"
+#include "RigidBody.h"
 
 SceneManager::SceneManager()
 {
@@ -74,15 +75,17 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 
 	scene->CreateCamera(false);	//ƒJƒƒ‰¶¬
 	//scene->CreateTenkikun(false);	//“V‹C‚­‚ñ¶¬
-	GameObject* square = scene->CreateSquare(false);
-	square->transform->position = Vector3(-50, 0, 0);
+	//GameObject* square = scene->CreateSquare(false);
+	//square->transform->position = Vector3(-50, 0, 0);
+	//square->AddComponent<RigidBody>();
 	GameObject* square2 = scene->CreateSquare(false);
-	square2->transform->position = Vector3(50, 0, 0);
-	//GameObject* circle = scene->CreateCircle(false);
-	//circle->transform->position = Vector3(-5, 0, 0);
+	square2->transform->position = Vector3(0, -100, 0);
+	square2->transform->scale = Vector3(5, 1, 1);
+	GameObject* circle = scene->CreateCircle(false);
+	circle->transform->position = Vector3(-5, 0, 0);
 	//GameObject* circle2 = scene->CreateCircle(false);
 	//circle2->transform->position = Vector3(50, 0, 0);
-	//scene->CreateUnityChan(false);	//Unity‚¿‚á‚ñ¶¬
+	scene->CreateUnityChan(false);	//Unity‚¿‚á‚ñ¶¬
 
 	//GameObject* o = scene->CreateEmpty(false);
 	//o->AddComponent<CreateBallScript>();

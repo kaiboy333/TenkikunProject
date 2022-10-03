@@ -16,27 +16,25 @@ bool HitChecker::IsHit(Collider* c1, Collider* c2, std::vector<Vector2>& crossPo
     auto& typeCC = typeid(CircleCollider);
     auto& typeBC = typeid(BoxCollider);
 
-    if(true) {
-        //円と円の当たり判定
-        if (type1 == typeCC && type2 == typeCC) {
-            return IsHitCC(static_cast<CircleCollider*>(c1), static_cast<CircleCollider*>(c2), crossPoints);
-        }
-        //矩形と矩形の当たり判定
-        if (type1 == typeBC && type2 == typeBC) {
-            return IsHitBB(static_cast<BoxCollider*>(c1), static_cast<BoxCollider*>(c2), crossPoints);
-        }
-        //円と矩形の当たり判定
-        else if (type1 == typeCC && type2 == typeBC) {
-            return IsHitCB(static_cast<CircleCollider*>(c1), static_cast<BoxCollider*>(c2), crossPoints);
-        }
-        else if (type1 == typeBC && type2 == typeCC) {
-            return IsHitCB(static_cast<CircleCollider*>(c2), static_cast<BoxCollider*>(c1), crossPoints);
-        }
-        //どれにも当てはまらない場合
-        else {
-            //falseを返す
-            return false;
-        }
+    //円と円の当たり判定
+    if (type1 == typeCC && type2 == typeCC) {
+        return IsHitCC(static_cast<CircleCollider*>(c1), static_cast<CircleCollider*>(c2), crossPoints);
+    }
+    //矩形と矩形の当たり判定
+    if (type1 == typeBC && type2 == typeBC) {
+        return IsHitBB(static_cast<BoxCollider*>(c1), static_cast<BoxCollider*>(c2), crossPoints);
+    }
+    //円と矩形の当たり判定
+    else if (type1 == typeCC && type2 == typeBC) {
+        return IsHitCB(static_cast<CircleCollider*>(c1), static_cast<BoxCollider*>(c2), crossPoints);
+    }
+    else if (type1 == typeBC && type2 == typeCC) {
+        return IsHitCB(static_cast<CircleCollider*>(c2), static_cast<BoxCollider*>(c1), crossPoints);
+    }
+    //どれにも当てはまらない場合
+    else {
+        //falseを返す
+        return false;
     }
 }
 
@@ -58,10 +56,10 @@ bool HitChecker::IsHitCC(CircleCollider* c1, CircleCollider* c2)
         Vector2 p12 = c2->GetPosition() - c1->GetPosition();
         Vector2 n = p12 / p12.GetMagnitude();
         Vector2 v12 = rb2->velocity - rb1->velocity;
-        Vector2 vn1 = n * Vector2::Inner(rb1->velocity, n);
+        Vector2 vn1 = n * Vector2::Dot(rb1->velocity, n);
         Vector2 vt1 = rb1->velocity - vn1;
         Vector2 t = vt1 / vt1.GetMagnitude();
-        float j = (1 + Physics::e) * (rb1->mass * rb2->mass / (rb1->mass + rb2->mass)) * Vector2::Inner(v12, n);
+        float j = (1 + Physics::e) * (rb1->mass * rb2->mass / (rb1->mass + rb2->mass)) * Vector2::Dot(v12, n);
         Vector2 J = n * j;
 
         //力を瞬間的に加える
@@ -182,14 +180,14 @@ bool HitChecker::IsHitCB(CircleCollider* c1, BoxCollider* c2, std::vector<Vector
 
             float s = (crossPoint1 - p1).GetMagnitude() / (p2 - p1).GetMagnitude();
             //交点が線分の範囲内にあるなら(ベクトルが同じ方向かつ長さの比が0から1)
-            if (s >= 0 && s <= 1 && Vector2::Inner(crossPoint1 - p1, p2 - p1) >= 0.99f) {
+            if (s >= 0 && s <= 1 && Vector2::Dot(crossPoint1 - p1, p2 - p1) >= 0.99f) {
                 if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint1) == crossPoints.end()) {
                     crossPoints.push_back(crossPoint1);
                 }
             }
             float t = (crossPoint2 - p1).GetMagnitude() / (p2 - p1).GetMagnitude();
             //交点が線分の範囲内にあるなら(ベクトルが同じ方向かつ長さの比が0から1)
-            if (t >= 0 && t <= 1 && Vector2::Inner(crossPoint2 - p1, p2 - p1) >= 0.99f) {
+            if (t >= 0 && t <= 1 && Vector2::Dot(crossPoint2 - p1, p2 - p1) >= 0.99f) {
                 if (std::find(crossPoints.begin(), crossPoints.end(), crossPoint2) == crossPoints.end()) {
                     crossPoints.push_back(crossPoint2);
                 }
@@ -199,4 +197,3 @@ bool HitChecker::IsHitCB(CircleCollider* c1, BoxCollider* c2, std::vector<Vector
 
     return (int)crossPoints.size() != 0;
 }
-

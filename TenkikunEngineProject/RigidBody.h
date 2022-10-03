@@ -14,6 +14,8 @@ class RigidBody	: public Component
 
 		//‘¬“x
 		Vector3 velocity;
+		//Šp‘¬“x
+		Vector3 angularVelocity;
 		//d—Í‚Ì‰½”{‚©
 		float gravityScale = 1.0f;
 		//¿—Ê

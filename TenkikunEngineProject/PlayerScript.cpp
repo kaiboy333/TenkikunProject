@@ -2,6 +2,7 @@
 #include "AnimationState.h"
 #include "Input.h"
 #include <cmath>
+#include "Physics.h"
 
 PlayerScript::PlayerScript(GameObject* gameobject) : MonoBehaviour(gameobject)
 {
@@ -11,8 +12,8 @@ PlayerScript::PlayerScript(GameObject* gameobject) : MonoBehaviour(gameobject)
 void PlayerScript::MonoStart()
 {
 	rb = gameobject->GetComponent<RigidBody>();
-	//rb->gravityScale = 0;
-	rb->velocity = Vector3::Zero();
+	rb->gravityScale = 0;
+	rb->velocity = Vector3::Down() * 50;
 }
 
 void PlayerScript::MonoUpdate()
@@ -22,19 +23,19 @@ void PlayerScript::MonoUpdate()
 	Animator* animator = gameobject->GetComponent<Animator>();
 	AnimatorController* ac = animator->ac;
 
-	if (Input::GetKey(Input::KeyCode::D)) {
-		rb->AddForce(Vector3::Right() * speed);
-		ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
-		imageRenderer->isFlipX = false;
-	}
-	else if (Input::GetKey(Input::KeyCode::A)) {
-		rb->AddForce(Vector3::Left() * speed);
-		ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
-		imageRenderer->isFlipX = true;
-	}
-	else {
-		ac->AddFloatParamater("isSpeed", 0.0f);
-	}
+	//if (Input::GetKey(Input::KeyCode::D)) {
+	//	rb->AddForce(Vector3::Right() * speed);
+	//	ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
+	//	imageRenderer->isFlipX = false;
+	//}
+	//else if (Input::GetKey(Input::KeyCode::A)) {
+	//	rb->AddForce(Vector3::Left() * speed);
+	//	ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
+	//	imageRenderer->isFlipX = true;
+	//}
+	//else {
+	//	ac->AddFloatParamater("isSpeed", 0.0f);
+	//}
 
 	//if (Input::GetKey(Input::R) && Input::GetKey(Input::LEFT_SHIFT)) {
 	//	gameobject->transform->rotation += Vector3::Back() * 1.0f;

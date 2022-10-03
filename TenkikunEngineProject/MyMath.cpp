@@ -70,4 +70,8 @@ float MyMath::RandomRange(float min, float max)
 std::random_device MyMath::rd;
 std::default_random_engine MyMath::eng(MyMath::rd());
 
+const float MyMath::PI = std::numbers::pi;
+const float MyMath::RAD_TO_DEG = 360 / (MyMath::PI * 2);
+const float MyMath::DEG_TO_RAD = (MyMath::PI * 2) / 360;
+
 

@@ -175,7 +175,7 @@ float Vector2::Cross(Vector2 vec1, Vector2 vec2)
     return vec1.x * vec2.y - vec1.y * vec2.x;
 }
 
-float Vector2::Inner(Vector2 vec1, Vector2 vec2)
+float Vector2::Dot(Vector2 vec1, Vector2 vec2)
 {
     return vec1.x * vec2.x + vec1.y * vec2.y;
 }

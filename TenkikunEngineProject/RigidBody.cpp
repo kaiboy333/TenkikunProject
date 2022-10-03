@@ -17,6 +17,8 @@ void RigidBody::Update()
 	Transform* transform = gameobject->transform;
 	//位置の更新
 	transform->localPosition += velocity * Time::GetDeltaTime();
+	//角度の更新
+	transform->localRotation += angularVelocity * Time::GetDeltaTime();
 }
 
 void RigidBody::AddForce(Vector3 force, ForceMode forceMode)

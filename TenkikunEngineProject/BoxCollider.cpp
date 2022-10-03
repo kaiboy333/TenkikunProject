@@ -35,3 +35,19 @@ std::vector<Vector2> BoxCollider::GetVertexes()
 	//頂点を取得、それを返す
 	return VertexCollider::GetVertexes(toVertexVecs);
 }
+
+float BoxCollider::GetActualWidth()
+{
+	//スケール取得
+	Vector3 scale = gameobject->transform->scale;
+
+	return size.x * scale.x;
+}
+
+float BoxCollider::GetActualHeight()
+{
+	//スケール取得
+	Vector3 scale = gameobject->transform->scale;
+
+	return size.y * scale.y;
+}

@@ -4,10 +4,15 @@
 #include <math.h>
 #include "Vector3.h"
 #include <random>
+#include <numbers>
 
 class MyMath
 {
 	public:
+		static const float PI;
+		static const float RAD_TO_DEG;
+		static const float DEG_TO_RAD;
+
 		static float RadToEuler(float rad);	//ラジアンからオイラーへ
 		static float EulerToRad(float deg);
 

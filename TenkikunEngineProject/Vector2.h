@@ -46,7 +46,7 @@ public:
 	static float Distance(Vector2 vec1, Vector2 vec2);
 
 	static float Cross(Vector2 vec1, Vector2 vec2);
-	static float Inner(Vector2 vec1, Vector2 vec2);
+	static float Dot(Vector2 vec1, Vector2 vec2);
 
 	static bool IsCross(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2& crossPoint);
 

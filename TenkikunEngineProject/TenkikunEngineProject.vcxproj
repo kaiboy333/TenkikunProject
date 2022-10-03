@@ -154,6 +154,8 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="ContactPoint.cpp" />
     <ClCompile Include="CreateBallScript.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="HitChecker.cpp" />
@@ -220,6 +222,8 @@
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Constraint.h" />
+    <ClInclude Include="ContactPoint.h" />
     <ClInclude Include="CreateBallScript.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="GameObject.h" />

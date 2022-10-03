@@ -177,34 +177,12 @@ float Vector3::Distance(Vector3 vec1, Vector3 vec2)
     return (vec2 - vec1).GetMagnitude();
 }
 
-//float Vector3::Cross(Vector3 vec1, Vector3 vec2)
-//{
-//    return vec1.x * vec2.y - vec1.y * vec2.x;
-//}
-//
-//float Vector3::Inner(Vector3 vec1, Vector3 vec2)
-//{
-//    return vec1.x * vec2.x + vec1.y * vec2.y;
-//}
-//
-//bool Vector3::IsCross(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, Vector3& crossPoint)
-//{
-//    float det = Cross(p2 - p1, p4 - p3);
-//
-//    //•½s‚¶‚á‚È‚¢‚È‚ç
-//    if (det != 0) {
-//        float s = Cross(p3 - p1, p4 - p3) / det;
-//        float t = Cross(p2 - p1, p1 - p3) / det;
-//
-//        //ü•ª‚ÌŒð“_‚È‚ç
-//        if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
-//            crossPoint.x = p1.x + s * (p2 - p1).x;
-//            crossPoint.y = p1.y + s * (p2 - p1).y;
-//            crossPoint.z = 0;
-//
-//            return true;
-//        }
-//    }
-//
-//    return false;
-//}
+Vector3 Vector3::Cross(Vector3 vec1, Vector3 vec2)
+{
+    return Vector3(vec1.y * vec2.z - vec1.z * vec2.y, vec1.z * vec2.x - vec1.x * vec2.z, vec1.x * vec2.y - vec1.y * vec2.x);
+}
+
+float Vector3::Dot(Vector3 vec1, Vector3 vec2)
+{
+    return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
+}

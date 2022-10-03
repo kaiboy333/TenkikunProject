@@ -10,5 +10,8 @@ class BoxCollider : public VertexCollider
 		BoxCollider(GameObject* gameobject);
 
 		virtual std::vector<Vector2> GetVertexes() override;
+
+		float GetActualWidth();
+		float GetActualHeight();
 };
 
