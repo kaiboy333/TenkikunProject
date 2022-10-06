@@ -4,6 +4,7 @@
 #include "MyString.h"
 #include "Debug.h"
 #include "ImageIcon.h"
+#include "FolderIcon.h"
 
 FilePrintRect::FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
 {
@@ -111,7 +112,7 @@ void FilePrintRect::LoadFoler()
 					break;
 				case ProjectFileManager::FileType::Folder:
 					//フォルダアイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\folder.png", childPath);
+					fileIcon = new FolderIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\folder.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_cpp:
 					//スクリプト(cpp)アイコン作成

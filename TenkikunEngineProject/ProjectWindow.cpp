@@ -57,8 +57,8 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path path)
 			//ノード作成
 			TreeNode* node = new TreeNode(path.filename().string(), treeList, treeList->isFirstOpen);
 
-			//イベントを追加
-			node->mouseClickDownEvents.push_back([this, node]() {
+			//イベントを追加(ダブルクリックをしたら)
+			node->mouseDoubleClickEvents.push_back([this, node]() {
 				//クリックしたノードから絶対パスを求める
 				std::filesystem::path path = std::filesystem::path(ProjectFileManager::assetParentPathName + node->GetPath());
 				//現在のパスにさっきのパスを入れる

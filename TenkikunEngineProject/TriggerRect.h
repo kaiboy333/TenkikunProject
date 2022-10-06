@@ -19,6 +19,10 @@ class TriggerRect : public Rect
 
 		Rect* activeRect = nullptr;	//有効化されている領域
 
+		float clickInterval = 0.5f;	//クリックから次のクリックまでの間隔
+		bool isClicked = false;	//一回目クリックしたか
+		float clickTime = 0;	//クリックしたときの時間
+
 		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow, int eventNo = 0);
 
 		void CheckInput();

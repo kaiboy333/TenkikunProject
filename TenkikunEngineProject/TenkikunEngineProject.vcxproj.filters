@@ -278,6 +278,9 @@
     <ClCompile Include="Constraint.cpp">
       <Filter>ソース ファイル\physic</Filter>
     </ClCompile>
+    <ClCompile Include="FolderIcon.cpp">
+      <Filter>ソース ファイル\window\project\icon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -480,6 +483,9 @@
     </ClInclude>
     <ClInclude Include="Constraint.h">
       <Filter>ソース ファイル\physic</Filter>
+    </ClInclude>
+    <ClInclude Include="FolderIcon.h">
+      <Filter>ソース ファイル\window\project\icon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

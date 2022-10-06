@@ -100,6 +100,13 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 			this->Destroy(gameobject);
 		}
 	});
+	node->mouseDoubleClickEvents.push_back([node](void) {
+		GameObject* gameobject = GameObject::Find(node->GetElement());	//このノードの名前からゲームオブジェクト取得
+		//見つかったなら
+		if (gameobject) {
+			WindowManager::inspectorWindow->SetGameObject(gameobject);	//ゲームオブジェクトの情報をヒエラルキーにセット
+		}
+	});
 	treeList->Add(node, treeList->GetRoot());	//TreeNodeにも追加
 	if (isLaterAdd) {
 		//あとで追加

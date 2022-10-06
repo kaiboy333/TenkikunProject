@@ -1,6 +1,7 @@
 #include "TriggerRect.h"
 #include "WindowManager.h"
 #include "ProjectFileManager.h"
+#include "Time.h"
 
 TriggerRect::TriggerRect(float startX, float startY, float width, float height, Window* parentWindow, int eventNo) : Rect(startX, startY, width, height)
 {
@@ -31,8 +32,22 @@ void TriggerRect::CheckInput()
 			//左クリックを押した瞬間なら
 			if (Input::GetMouseButtonDown(Input::Mouse_Left, false)) {
 				MouseClickDownEvent();
+
+				//時間を測定
+				float nowClickTime = Time::GetTime();
+				//これが二回目のクリックかつ次のクリックまでの間隔がclickInterval以下なら
+				if (isClicked && nowClickTime - clickTime <= clickInterval) {
+					MouseDoubleClickEvent();
+					isClicked = false;
+				}
+				else {
+					//一度クリックした判定に
+					isClicked = true;
+					//時間を記憶
+					clickTime = Time::GetTime();
+				}
 			}
-				//左クリックを離した瞬間なら
+			//左クリックを離した瞬間なら
 			else if (Input::GetMouseButtonUp(Input::Mouse_Left, false)) {
 				MouseClickUpEvent();
 			}

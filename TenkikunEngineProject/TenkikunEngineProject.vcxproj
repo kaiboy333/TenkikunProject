@@ -158,6 +158,7 @@
     <ClCompile Include="ContactPoint.cpp" />
     <ClCompile Include="CreateBallScript.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
+    <ClCompile Include="FolderIcon.cpp" />
     <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentRect.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="ContactPoint.h" />
     <ClInclude Include="CreateBallScript.h" />
     <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="FolderIcon.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HitChecker.h" />
     <ClInclude Include="Component.h" />

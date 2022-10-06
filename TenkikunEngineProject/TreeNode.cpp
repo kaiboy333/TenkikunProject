@@ -12,11 +12,6 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 	mouseClickDownEvents.push_back([this]() {
 		//クリックしたときに自身を選択中にする
 		this->parentWindow->SetSelectedTriggerRect(this);
-		GameObject* gameobject = GameObject::Find(this->GetElement());	//このノードの名前からからゲームオブジェクト取得
-		//見つかったなら
-		if (gameobject) {
-			WindowManager::inspectorWindow->SetGameObject(gameobject);	//ゲームオブジェクトの情報をヒエラルキーにセット
-		}
 	});
 
 	button = new WindowButton(startX - height, startY, height, height, treeList->parentWindow);	//ボタン作成

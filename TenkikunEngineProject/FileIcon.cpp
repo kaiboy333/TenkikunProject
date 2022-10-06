@@ -1,6 +1,7 @@
 #include "FileIcon.h"
 #include "ImageManager.h"
 #include "FontManager.h"
+#include "ProjectFileManager.h"
 
 FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, Window* parentWindow, std::string imageFileName, std::filesystem::path path) : TriggerRect(startX, startY, 2 * blankWidth + iconWidth, 2 * blankHeight + iconHeight + FontManager::systemFont->GetFontHeight(), parentWindow)
 {
