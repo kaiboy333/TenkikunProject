@@ -233,7 +233,7 @@ GameObject* Scene::CreateTenkikun(bool isLaterAdd)
 
 GameObject* Scene::CreateUnityChan(bool isLaterAdd)
 {
-	GameObject* gameobject = CreateEmpty();	//‹ó‚ÌGameObject‚ğì¬
+	GameObject* gameobject = CreateEmpty(isLaterAdd);	//‹ó‚ÌGameObject‚ğì¬
 	if (isLaterAdd) {
 		//‚ ‚Æ‚Å
 		addAndRemoveEvents.push_back([this, gameobject](void) {

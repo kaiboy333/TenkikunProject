@@ -195,6 +195,7 @@
     <ClCompile Include="SceneInfo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="AnimationState.cpp" />
+    <ClCompile Include="ScriptIcon.cpp" />
     <ClCompile Include="ScrollRect.cpp" />
     <ClCompile Include="TextRect.cpp" />
     <ClCompile Include="TextBox.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="AnimationState.h" />
+    <ClInclude Include="ScriptIcon.h" />
     <ClInclude Include="ScrollRect.h" />
     <ClInclude Include="TextRect.h" />
     <ClInclude Include="TextBox.h" />

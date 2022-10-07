@@ -23,6 +23,8 @@ void ProjectWindow::Init()
 	SetFileChildrenToTreeList(ProjectFileManager::assetFilePath);
 
 	filePrintRect = new FilePrintRect(WindowManager::hierarchyWindow->width, startY, width - WindowManager::hierarchyWindow->width, height, this);
+	//ファイルアイコン更新
+	filePrintRect->LoadFoler();
 }
 
 void ProjectWindow::Update()

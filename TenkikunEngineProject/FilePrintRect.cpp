@@ -5,6 +5,7 @@
 #include "Debug.h"
 #include "ImageIcon.h"
 #include "FolderIcon.h"
+#include "ScriptIcon.h"
 
 FilePrintRect::FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
 {
@@ -19,11 +20,7 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 		for (std::filesystem::path path : ProjectFileManager::dragFilePathes) {
 			MakeDuplicatedFile(path);	//ファイルを複製して指定のパスに置く
 		}
-		LoadFoler();	//フォルダ内表示更新
 	});
-
-	//パスのフォルダ更新
-	LoadFoler();
 }
 
 void FilePrintRect::Draw()
@@ -63,6 +60,8 @@ void FilePrintRect::MakeDuplicatedFile(std::filesystem::path copyPath)
 			ProjectFileManager::CheckAddFile(pastePath);
 			//ツリーリストにフォルダ名を追加
 			WindowManager::projectWindow->SetFileChildrenToTreeList(pastePath);
+			//フォルダ内表示更新
+			LoadFoler();
 		}
 	}
 
@@ -116,15 +115,15 @@ void FilePrintRect::LoadFoler()
 					break;
 				case ProjectFileManager::FileType::Script_cpp:
 					//スクリプト(cpp)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_cpp.png", childPath);
+					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_cpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_hpp:
 					//スクリプト(hpp)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_hpp.png", childPath);
+					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_hpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_h:
 					//スクリプト(h)アイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_h.png", childPath);
+					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_h.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Scene:
 					//シーンアイコン作成

@@ -281,6 +281,9 @@
     <ClCompile Include="FolderIcon.cpp">
       <Filter>ソース ファイル\window\project\icon</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptIcon.cpp">
+      <Filter>ソース ファイル\window\project\icon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -485,6 +488,9 @@
       <Filter>ソース ファイル\physic</Filter>
     </ClInclude>
     <ClInclude Include="FolderIcon.h">
+      <Filter>ソース ファイル\window\project\icon</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptIcon.h">
       <Filter>ソース ファイル\window\project\icon</Filter>
     </ClInclude>
   </ItemGroup>
