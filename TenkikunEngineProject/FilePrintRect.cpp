@@ -7,7 +7,7 @@
 #include "FolderIcon.h"
 #include "ScriptIcon.h"
 
-FilePrintRect::FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
+FilePrintRect::FilePrintRect(float startX, float startY, float width, float height) : ScrollRect(startX, startY, width, height, width, height)
 {
 	//アイコン同士の空白幅を計算する
 	iconBetweenWidth = (width - iconWidthHeight * maxFileNumInRow) / (maxFileNumInRow + 1);
@@ -25,9 +25,6 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 
 void FilePrintRect::Draw()
 {
-	//画像のアルファ値設定
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-
 	//枠描画
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 
@@ -35,9 +32,6 @@ void FilePrintRect::Draw()
 	for (FileIcon* fileIcon : fileIcons) {
 		fileIcon->Draw();
 	}
-
-	//画像のアルファ値設定
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
 	DrawBoxAA(pathNameRect->startX, pathNameRect->startY, pathNameRect->startX + width, pathNameRect->startY + pathNameRect->height, GetColor(255, 255, 255), TRUE);
 	//現在のファイルパス描画
@@ -72,9 +66,9 @@ void FilePrintRect::LoadFoler()
 	//前のアイコンを消去
 	for (FileIcon* fileIcon : fileIcons) {
 		//parentWindowから削除(アイコン)
-		parentWindow->RemoveTriggerRect(fileIcon);
+		WindowManager::RemoveTriggerRect(fileIcon);
 		//parentWindowから削除(TextBox)
-		parentWindow->RemoveTriggerRect(fileIcon->fileNameRect);
+		WindowManager::RemoveTriggerRect(fileIcon->fileNameRect);
 		//スクロールのリストからも削除
 		RemoveToScrollRect(fileIcon);
 		//アイコンにあるTextBoxも削除
@@ -107,27 +101,27 @@ void FilePrintRect::LoadFoler()
 			switch (ProjectFileManager::GetFileType(childPath)) {
 				case ProjectFileManager::FileType::Image:
 					//イメージアイコン作成
-					fileIcon = new ImageIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, std::filesystem::relative(childPath).string(), childPath);
+					fileIcon = new ImageIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, std::filesystem::relative(childPath).string(), childPath);
 					break;
 				case ProjectFileManager::FileType::Folder:
 					//フォルダアイコン作成
-					fileIcon = new FolderIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\folder.png", childPath);
+					fileIcon = new FolderIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, ProjectFileManager::imageFilePath.string() + "\\folder.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_cpp:
 					//スクリプト(cpp)アイコン作成
-					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_cpp.png", childPath);
+					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, ProjectFileManager::imageFilePath.string() + "\\script_cpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_hpp:
 					//スクリプト(hpp)アイコン作成
-					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_hpp.png", childPath);
+					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, ProjectFileManager::imageFilePath.string() + "\\script_hpp.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Script_h:
 					//スクリプト(h)アイコン作成
-					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\script_h.png", childPath);
+					fileIcon = new ScriptIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, ProjectFileManager::imageFilePath.string() + "\\script_h.png", childPath);
 					break;
 				case ProjectFileManager::FileType::Scene:
 					//シーンアイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, parentWindow, ProjectFileManager::imageFilePath.string() + "\\Tenkikun.png", childPath);
+					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, ProjectFileManager::imageFilePath.string() + "\\Tenkikun.png", childPath);
 					break;
 				case ProjectFileManager::FileType::None:
 					//何もしない

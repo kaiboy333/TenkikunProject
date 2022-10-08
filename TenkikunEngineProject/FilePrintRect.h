@@ -16,7 +16,7 @@ class FilePrintRect :  public ScrollRect
 
 		TextRect* pathNameRect = nullptr;	//åªç›ÇÃÉpÉXÇÃñºëOÇÃTextRect
 
-		FilePrintRect(float startX, float startY, float width, float height, Window* parentWindow);
+		FilePrintRect(float startX, float startY, float width, float height);
 
 		void Draw();
 

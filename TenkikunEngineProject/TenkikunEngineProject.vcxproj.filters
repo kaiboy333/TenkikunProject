@@ -81,6 +81,9 @@
     <Filter Include="ソース ファイル\physic">
       <UniqueIdentifier>{6d88deea-ea5e-40e0-ab01-5dfea66dda15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\window\menuList">
+      <UniqueIdentifier>{30ac303d-1bdb-45cb-80b0-b4b31adc81cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -283,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="ScriptIcon.cpp">
       <Filter>ソース ファイル\window\project\icon</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuNode.cpp">
+      <Filter>ソース ファイル\window\menuList</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuList.cpp">
+      <Filter>ソース ファイル\window\menuList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -492,6 +501,12 @@
     </ClInclude>
     <ClInclude Include="ScriptIcon.h">
       <Filter>ソース ファイル\window\project\icon</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuNode.h">
+      <Filter>ソース ファイル\window\menuList</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuList.h">
+      <Filter>ソース ファイル\window\menuList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

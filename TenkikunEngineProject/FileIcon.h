@@ -19,7 +19,7 @@ class FileIcon : public TriggerRect
 
 		float blankWidth, blankHeight;	//枠の幅、高さ
 
-		FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, Window* parentWindow, std::string imageFileName, std::filesystem::path path);
+		FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, std::string imageFileName, std::filesystem::path path);
 
 		virtual void Draw();	//アイコン描画
 

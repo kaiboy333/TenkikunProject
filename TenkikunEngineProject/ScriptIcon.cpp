@@ -1,6 +1,6 @@
 #include "ScriptIcon.h"
 
-ScriptIcon::ScriptIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, Window* parentWindow, std::string imageFileName, std::filesystem::path path) : FileIcon(startX, startY, iconWidth, iconHeight, blankWidth, blankHeight, parentWindow, imageFileName, path)
+ScriptIcon::ScriptIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, std::string imageFileName, std::filesystem::path path) : FileIcon(startX, startY, iconWidth, iconHeight, blankWidth, blankHeight, imageFileName, path)
 {
 	//イベントを追加(ダブルクリックをしたら)
 	this->mouseDoubleClickEvents.push_back([this]() {

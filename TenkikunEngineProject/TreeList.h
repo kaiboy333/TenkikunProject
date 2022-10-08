@@ -22,7 +22,7 @@ public:
 
 	bool isFirstOpen;	//ノード追加時に開けた状態で追加するか
 
-	TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool isFirstOpen, bool drawRoot = true, std::string e = "root");
+	TreeList(float startX, float startY, float width, float height, bool isFirstOpen, bool drawRoot = true, std::string e = "root");
 
 	//指定の親にノードを追加
 	void Add(TreeNode* targetNode, TreeNode* parentNode);

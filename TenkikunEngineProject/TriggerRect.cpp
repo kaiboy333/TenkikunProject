@@ -3,10 +3,9 @@
 #include "ProjectFileManager.h"
 #include "Time.h"
 
-TriggerRect::TriggerRect(float startX, float startY, float width, float height, Window* parentWindow, int eventNo) : Rect(startX, startY, width, height)
+TriggerRect::TriggerRect(float startX, float startY, float width, float height, int eventNo) : Rect(startX, startY, width, height)
 {
-	this->parentWindow = parentWindow;
-	this->parentWindow->AddTriggerRect(this);	//ウィンドウに自身を追加
+	WindowManager::AddTriggerRect(this);	//ウィンドウマネージャーに自身を追加
 	this->eventNo = eventNo;
 
 	activeRect = new Rect(startX, startY, width, height);
@@ -98,7 +97,7 @@ void TriggerRect::CheckInput()
 
 bool TriggerRect::GetIsSelected()
 {
-	return parentWindow->GetSelectedTriggerRect() == this;
+	return WindowManager::GetSelectedTriggerRect() == this;
 }
 
 int TriggerRect::GetEventNo()
@@ -111,7 +110,7 @@ void TriggerRect::MouseClickDownEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseClickDownEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -120,7 +119,7 @@ void TriggerRect::MouseClickUpEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseClickUpEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -129,7 +128,7 @@ void TriggerRect::MouseDoubleClickEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseDoubleClickEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -138,7 +137,7 @@ void TriggerRect::MouseRightClickEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseRightClickEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -147,7 +146,7 @@ void TriggerRect::MouseOnEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseOnEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -156,7 +155,7 @@ void TriggerRect::MouseExitEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseExitEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -165,7 +164,7 @@ void TriggerRect::MouseWheelEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseWheelEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -174,7 +173,7 @@ void TriggerRect::PushEnterEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : pushEnterEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -183,7 +182,7 @@ void TriggerRect::MouseEnterEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : mouseEnterEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -192,7 +191,7 @@ void TriggerRect::FileDropEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : fileDropEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }
 
@@ -201,6 +200,6 @@ void TriggerRect::SelectedEvent()
 	//実行可能リストに追加
 	for (std::function<void()> func : selectedEvents) {
 		auto pair = std::make_pair(eventNo, func);
-		parentWindow->activeEvents.push_back(pair);
+		WindowManager::activeEvents.push_back(pair);
 	}
 }

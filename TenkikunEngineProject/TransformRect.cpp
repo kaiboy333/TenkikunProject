@@ -14,11 +14,11 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 	textRects.push_back(new TextRect(startX, startDrawY, "Position"));
 
 	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "x:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "y:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "z:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 
 	StartNewLine();	//改行
 
@@ -26,11 +26,11 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 	textRects.push_back(new TextRect(startX, startDrawY, "Rotation"));
 
 	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "x:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "y:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "z:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 
 	StartNewLine();	//改行
 
@@ -38,11 +38,11 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 	textRects.push_back(new TextRect(startX, startDrawY, "Scale"));
 
 	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "x:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "y:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "z:"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), WindowManager::inspectorWindow, true, "", TextBox::InputType::Number));
+	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 
 	Transform* transform = static_cast<Transform*>(component);
 	for (int i = 0; i < 9; i++) {
@@ -132,6 +132,6 @@ void TransformRect::RemoveAllTriggerRect()
 {
 	//テキストボックス削除
 	for (TextBox* textBox : textBoxes) {
-		textBox->parentWindow->RemoveTriggerRect(textBox);
+		WindowManager::RemoveTriggerRect(textBox);
 	}
 }

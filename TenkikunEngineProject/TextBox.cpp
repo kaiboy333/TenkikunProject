@@ -1,9 +1,10 @@
 #include "TextBox.h"
 #include "FontManager.h"
 #include "Debug.h"
+#include "WindowManager.h"
 //#include "Window.h"
 
-TextBox::TextBox(float startX, float startY, float width, float height, Window* parentWindow, bool canChange, string text, InputType inputType) : TriggerRect(startX, startY, width, height, parentWindow)
+TextBox::TextBox(float startX, float startY, float width, float height, bool canChange, string text, InputType inputType) : TriggerRect(startX, startY, width, height)
 {
 	this->text = text;	//テキストセット
 	this->inputType = inputType;	//入力タイプセット
@@ -20,7 +21,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, Window* 
 				ih = MakeKeyInput(MAX_LEN, FALSE, FALSE, FALSE);	//InputHandle作成
 				SetActiveKeyInput(ih);	//入力を可能にする
 				SetKeyInputString(this->text.c_str(), ih);	//入力中の文字の中に既にあるtextをいれる
-				this->parentWindow->SetSelectedTriggerRect(this);	//自身を選択対象にする
+				WindowManager::SetSelectedTriggerRect(this);	//自身を選択対象にする
 			}
 		}
 	});
@@ -36,7 +37,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, Window* 
 				this->text = strBuf;	//入力した文字をセット
 			}
 
-			this->parentWindow->SetSelectedTriggerRect(nullptr);	//自身を選択対象から外す
+			WindowManager::SetSelectedTriggerRect(nullptr);	//自身を選択対象から外す
 			DxLib::DeleteKeyInput(ih);	//InputHandle削除
 		}
 	});
@@ -49,9 +50,6 @@ void TextBox::Draw()
 	GetDrawArea(&beforeDrawRect);
 
 	if (canChange) {
-		//画像のアルファ値設定
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-
 		//マウスが乗っていたら
 		if (isOn) {
 			//四角の描画
@@ -82,9 +80,6 @@ void TextBox::Draw()
 		}
 	}
 	else {
-		//画像のアルファ値設定
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-
 		if (canChange) {
 			DrawBoxAA(startX, startY, startX + FontManager::systemFont->GetFontWidth(strBuf), startY + FontManager::systemFont->GetFontHeight(), GetColor(30, 144, 255), TRUE);
 		}

@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "MyMath.h"
 
-WindowButton::WindowButton(float startX, float startY, float width, float height, Window* parentWindow) : TriggerRect(startX, startY, width, height, parentWindow)
+WindowButton::WindowButton(float startX, float startY, float width, float height) : TriggerRect(startX, startY, width, height)
 {
 	this->mouseClickDownEvents.push_back([this]() {
 		//ƒ}ƒEƒX‚ªæ‚Á‚Ä‚¢‚½‚ç

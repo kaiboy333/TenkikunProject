@@ -301,6 +301,8 @@ Vector2 GJK::GetContactPoints(Collider* c1, Collider* c2)
             return GetContactPoints(static_cast<CircleCollider*>(c2), static_cast<BoxCollider*>(c1));
         }
     }
+
+    return Vector2();
 }
 
 Vector2 GJK::GetContactPoints(VertexCollider* c1, VertexCollider* c2)
@@ -308,7 +310,7 @@ Vector2 GJK::GetContactPoints(VertexCollider* c1, VertexCollider* c2)
     float minDistance;
     Vector2 contactPoint;
     //c1‚Ì“_‚Æc2‚Ì}Œ`‚ÌÅ’Z‹——£
-    for (int i = 0, len = c1->GetVertexes().size(); i < len; i++) {
+    for (int i = 0, len = (int)c1->GetVertexes().size(); i < len; i++) {
         int minSideIndex;
         Vector2 crossPoint;
         float distance = GetShortestDistanceToShape(c1->GetVertexes()[i], c2->GetVertexes(), crossPoint, minSideIndex);
@@ -324,7 +326,7 @@ Vector2 GJK::GetContactPoints(VertexCollider* c1, VertexCollider* c2)
         }
     }
     //c2‚Ì“_‚Æc1‚Ì}Œ`‚ÌÅ’Z‹——£
-    for (int i = 0, len = c1->GetVertexes().size(); i < len; i++) {
+    for (int i = 0, len = (int)c1->GetVertexes().size(); i < len; i++) {
         int minSideIndex;
         Vector2 crossPoint;
         float distance = GetShortestDistanceToShape(c2->GetVertexes()[i], c1->GetVertexes(), crossPoint, minSideIndex);

@@ -3,7 +3,7 @@
 #include "Debug.h"
 #include "FontManager.h"
 
-TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->parentWindow->startX + FontManager::systemFont->GetFontHeight(), treeList->parentWindow->startY, FontManager::systemFont->GetFontWidth(e), FontManager::systemFont->GetFontHeight(), treeList->parentWindow)
+TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->startX + FontManager::systemFont->GetFontHeight(), treeList->startY, FontManager::systemFont->GetFontWidth(e), FontManager::systemFont->GetFontHeight())
 {
 	element = e;
 	this->treeList = treeList;
@@ -11,10 +11,10 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 
 	mouseClickDownEvents.push_back([this]() {
 		//クリックしたときに自身を選択中にする
-		this->parentWindow->SetSelectedTriggerRect(this);
+		WindowManager::SetSelectedTriggerRect(this);
 	});
 
-	button = new WindowButton(startX - height, startY, height, height, treeList->parentWindow);	//ボタン作成
+	button = new WindowButton(startX - height, startY, height, height);	//ボタン作成
 	//画像セット
 	button->image = treeList->images[isOpen];
 
@@ -90,9 +90,6 @@ string TreeNode::GetPath()
 
 void TreeNode::Draw()
 {
-	//画像のアルファ値設定
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-
 	//選択されているなら
 	if (GetIsSelected()) {
 		//四角の描画

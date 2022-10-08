@@ -10,7 +10,7 @@ class GameWindow;
 class HierarchyWindow;
 class InspectorWindow;
 class ProjectWindow;
-class WindowManager
+class WindowManager : Rect
 {
 	public:
 		static GameWindow* gameWindow;
@@ -18,7 +18,11 @@ class WindowManager
 		static InspectorWindow* inspectorWindow;
 		static ProjectWindow* projectWindow;
 
-		static Window* activeWindow;
+		//static Window* activeWindow;
+		static TriggerRect* selectedTriggerRect;	//選択中のTriggerRect
+
+		static const float WIDTH;
+		static const float HEIGHT;
 
 		WindowManager();
 
@@ -27,6 +31,21 @@ class WindowManager
 
 		static vector<Window*> GetWindows();	//現在あるすべてのウィンドウを取得
 
-		static bool canUseGameWnd;	//ゲーム画面が反応するか
+		static void SetSelectedTriggerRect(TriggerRect* selectedTriggerRect);	//指定のTriggerRectを選択された状態にする(前のは解除)
+		static void ClearSelectedTriggerRect();	//すべての選択された状態のTriggerRectを解除する
+
+		static TriggerRect* GetSelectedTriggerRect();
+
+		static bool canUseGameWnd;	//ゲーム画面を操作中か
+
+		static std::vector<std::pair<int, std::function<void()>>> activeEvents;	//実行できるイベント関数
+
+		static void RemoveTriggerRect(TriggerRect* triggerRect);
+		static void AddTriggerRect(TriggerRect* triggerRect);
+
+		static void EventCheck();	//イベントトリガーチェック
+
+	private:
+		static std::vector<TriggerRect*> triggerRects;	//反応する四角たち
 };
 

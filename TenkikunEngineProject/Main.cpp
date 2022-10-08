@@ -18,9 +18,6 @@
 
 #pragma comment(lib,"winmm.lib")
 
-constexpr auto WIDTH = 1300;
-constexpr auto HEIGHT = 800;
-
 // 本当はグローバルにしない方が良い
 
 void Init();
@@ -31,7 +28,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 {
 	SetMainWindowText("Tenkikun Engine");
 	ChangeWindowMode(TRUE); //ウィンドウモードで起動
-	SetGraphMode(WIDTH, HEIGHT, 32); //画面の解像度指定
+	SetGraphMode((int)WindowManager::WIDTH, (int)WindowManager::HEIGHT, 32); //画面の解像度指定
 	SetWindowSizeChangeEnableFlag(FALSE); //画面サイズ変更不可
 	SetDrawScreen(DX_SCREEN_BACK);	//裏画面で描画
 	SetWindowIconID(IDI_TENKIKUN);	//ウィンドウアイコン設定
@@ -81,11 +78,5 @@ inline void Update() {
 }
 
 inline void Draw() {
-	//画像のアルファ値設定
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-
-	//画面全体を黒で描画
-	DrawBoxAA(0, 0, WIDTH, HEIGHT, GetColor(0, 0, 0), TRUE);
-
 	WindowManager::Draw();	//ウィンドウ画面を描画
 }

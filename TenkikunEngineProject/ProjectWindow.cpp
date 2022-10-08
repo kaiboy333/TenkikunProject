@@ -13,7 +13,7 @@ ProjectWindow::ProjectWindow() : Window(0, 500, 1000, 300)
 void ProjectWindow::Init()
 {
 	//ツリーリスト作成
-	treeList = new TreeList(startX, startY, WindowManager::hierarchyWindow->width, height, this, false, true, ProjectFileManager::assetFilePath.filename().string());
+	treeList = new TreeList(startX, startY, WindowManager::hierarchyWindow->width, height, false, true, ProjectFileManager::assetFilePath.filename().string());
 
 	//vector<filesystem::path> pathes;
 
@@ -22,7 +22,7 @@ void ProjectWindow::Init()
 	//ツリーリストにパスを追加
 	SetFileChildrenToTreeList(ProjectFileManager::assetFilePath);
 
-	filePrintRect = new FilePrintRect(WindowManager::hierarchyWindow->width, startY, width - WindowManager::hierarchyWindow->width, height, this);
+	filePrintRect = new FilePrintRect(WindowManager::hierarchyWindow->width, startY, width - WindowManager::hierarchyWindow->width, height);
 	//ファイルアイコン更新
 	filePrintRect->LoadFoler();
 }

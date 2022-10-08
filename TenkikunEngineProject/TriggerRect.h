@@ -11,7 +11,7 @@ class Window;
 class TriggerRect : public Rect
 {
 	public:
-		Window* parentWindow = nullptr;	//登録するウィンドウ
+		//Window* parentWindow = nullptr;	//登録するウィンドウ
 
 		bool isOn = false;	//マウスが乗るときにtrue
 
@@ -23,7 +23,7 @@ class TriggerRect : public Rect
 		bool isClicked = false;	//一回目クリックしたか
 		float clickTime = 0;	//クリックしたときの時間
 
-		TriggerRect(float startX, float startY, float width, float height, Window* parentWindow, int eventNo = 0);
+		TriggerRect(float startX, float startY, float width, float height, int eventNo = 0);
 
 		void CheckInput();
 

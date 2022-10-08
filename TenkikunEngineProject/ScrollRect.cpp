@@ -2,7 +2,7 @@
 #include "MyMath.h"
 #include <string>
 
-ScrollRect::ScrollRect(float startX, float startY, float width, float height, float scrollWidth, float scrollHeight, Window* parentWindow) : TriggerRect(startX, startY, width, height, parentWindow)
+ScrollRect::ScrollRect(float startX, float startY, float width, float height, float scrollWidth, float scrollHeight) : TriggerRect(startX, startY, width, height)
 {
 	this->scrollWidth = scrollWidth;
 	this->scrollHeight = scrollHeight;

@@ -1,7 +1,7 @@
 #include "TreeList.h"
 #include "ProjectFileManager.h"
 
-TreeList::TreeList(float startX, float startY, float width, float height, Window* parentWindow, bool isFirstOpen, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height, parentWindow)
+TreeList::TreeList(float startX, float startY, float width, float height, bool isFirstOpen, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height)
 {
 	//ノードのボタン画像を探す
 	images[0] = static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\RightArrow.png"]);
@@ -120,27 +120,22 @@ void TreeList::Draw()
 	//描画範囲制限
 	SetDrawArea((int)startX, (int)startY, (int)(startX + width), (int)(startY + height));
 
-	if (this->parentWindow) {
-		//リストの先頭の要素を取得、削除
-		std::vector<TreeNode*> nodes;
-		nodes.push_back(root);
+	//リストの先頭の要素を取得、削除
+	std::vector<TreeNode*> nodes;
+	nodes.push_back(root);
 
-		while (nodes.size() != 0) {
+	while (nodes.size() != 0) {
 
-			TreeNode* node = nodes[0];
-			nodes.erase(nodes.begin());
+		TreeNode* node = nodes[0];
+		nodes.erase(nodes.begin());
 
-			if (node->isActive) {
-				node->Draw();
-			}
-
-			//子らを追加
-			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
+		if (node->isActive) {
+			node->Draw();
 		}
-	}
-	//画像のアルファ値設定
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
+		//子らを追加
+		nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
+	}
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 
 	//前回の描画領域に戻す
@@ -180,8 +175,8 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 	node->SetStairNo(node->parentNode ? node->parentNode->GetStairNo() + 1 : 0);
 
 	//開始位置セット
-	node->startX = parentWindow->startX + tabSpace * (node->GetStairNo() + 1) + node->button->width * node->GetStairNo() + (startScrollX - startX);
-	node->startY = parentWindow->startY + node->GetRow() * node->height + (startScrollY - startY);
+	node->startX = startX + tabSpace * (node->GetStairNo() + 1) + node->button->width * node->GetStairNo() + (startScrollX - startX);
+	node->startY = startY + node->GetRow() * node->height + (startScrollY - startY);
 
 	node->button->startX = node->startX - node->button->width;
 	node->button->startY = node->startY;

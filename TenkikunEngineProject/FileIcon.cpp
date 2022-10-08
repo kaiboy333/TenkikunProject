@@ -3,7 +3,7 @@
 #include "FontManager.h"
 #include "ProjectFileManager.h"
 
-FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, Window* parentWindow, std::string imageFileName, std::filesystem::path path) : TriggerRect(startX, startY, 2 * blankWidth + iconWidth, 2 * blankHeight + iconHeight + FontManager::systemFont->GetFontHeight(), parentWindow)
+FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, std::string imageFileName, std::filesystem::path path) : TriggerRect(startX, startY, 2 * blankWidth + iconWidth, 2 * blankHeight + iconHeight + FontManager::systemFont->GetFontHeight())
 {
 	iconGH = ImageManager::LoadAndGetImage(imageFileName);	//画像を取得
 	this->iconWidth = iconWidth;
@@ -11,11 +11,11 @@ FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight
 	this->blankWidth = blankWidth;
 	this->blankHeight = blankHeight;
 	this->path = path;	//対になるファイルのパスをセット
-	fileNameRect = new TextBox(startX + blankWidth - overWidth / 2, startY + blankHeight + iconHeight, iconWidth + overWidth, FontManager::systemFont->GetFontHeight(), parentWindow, false, path.filename().string());	//TextBox作成
+	fileNameRect = new TextBox(startX + blankWidth - overWidth / 2, startY + blankHeight + iconHeight, iconWidth + overWidth, FontManager::systemFont->GetFontHeight(), false, path.filename().string());	//TextBox作成
 
 	this->mouseClickDownEvents.push_back([this]() {
 		//クリックしたときに自身を選択中にする
-		this->parentWindow->SetSelectedTriggerRect(this);
+		WindowManager::SetSelectedTriggerRect(this);
 	});
 }
 
@@ -24,9 +24,6 @@ void FileIcon::Draw()
 	if (iconGH) {
 		int imageWidth, imageHeight;
 		GetGraphSize(iconGH, &imageWidth, &imageHeight);
-
-		//画像のアルファ値設定
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
 		if (!GetIsSelected() && isOn) {
 			//灰色を描画
@@ -50,10 +47,9 @@ void FileIcon::Draw()
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			//青色を描画
 			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(30, 144, 255), TRUE);
+			//画像のアルファ値を戻す
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 		}
-		
-		//画像のアルファ値戻す
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	}
 }
 

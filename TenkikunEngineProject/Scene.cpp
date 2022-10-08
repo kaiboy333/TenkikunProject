@@ -13,7 +13,7 @@
 void Scene::Init()
 {
 	Window* window = WindowManager::hierarchyWindow;
-	treeList = new TreeList(window->startX, window->startY, window->width, window->height, window, true, true, this->name);
+	treeList = new TreeList(window->startX, window->startY, window->width, window->height, true, true, this->name);
 	SetName("Scene", false);	//–¼‘O‰Šú‰»(”í‚è‚Í•Ï‚¦‚é)
 }
 

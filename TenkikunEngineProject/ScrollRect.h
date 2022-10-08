@@ -4,7 +4,7 @@
 class ScrollRect : public TriggerRect
 {
 	public:
-		ScrollRect(float startX, float startY, float width, float height, float scrollWidth, float scrollHeight, Window* parentWindow);
+		ScrollRect(float startX, float startY, float width, float height, float scrollWidth, float scrollHeight);
 
 		//float deltaScrollX, deltaScrollY;	//いままで動かしたマウスホイールの回転値
 		float scrollWidth, scrollHeight;
