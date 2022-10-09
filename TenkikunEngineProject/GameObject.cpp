@@ -67,13 +67,14 @@ GameObject* GameObject::Find(std::string name)
 
 void GameObject::SetName(std::string name)
 {
+	std::string newName = name;
 	int no = 1;	//被り防止用番号
 	//被らなくなるまで繰り返す
-	while (GameObject::Find(name)) {
-		name = name + " (" + std::to_string(no++) + ")";	//新しい候補の名前を作成
+	while (GameObject::Find(newName)) {
+		newName = name + " (" + std::to_string(no++) + ")";	//新しい候補の名前を作成
 	}
-	SetTreeNodeName(name);	//TreeNodeの名前を変えて
-	this->name = name;	//実際に変える
+	SetTreeNodeName(newName);	//TreeNodeの名前を変えて
+	this->name = newName;	//実際に変える
 }
 
 std::string GameObject::GetName()

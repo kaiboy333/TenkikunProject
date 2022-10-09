@@ -9,24 +9,24 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 	this->treeList = treeList;
 	this->isOpen = isOpen;
 
-	mouseClickDownEvents.push_back([this]() {
+	mouseClickDownEvents.push_back(std::make_pair(1, [this]() {
 		//クリックしたときに自身を選択中にする
 		WindowManager::SetSelectedTriggerRect(this);
-	});
+	}));
 
 	button = new WindowButton(startX - height, startY, height, height);	//ボタン作成
 	//画像セット
 	button->image = treeList->images[isOpen];
 
 	//ボタンをクリックしたら
-	button->onClickEvents.push_back([this, treeList]() {
+	button->onClickEvents.push_back(std::make_pair(1, [this, treeList]() {
 		//開いているかの判定を反転させる
 		this->isOpen = !this->isOpen;
 		//画像セット
 		button->image = treeList->images[this->isOpen];
 		//ツリーリスト更新
 		treeList->UpdateNodes();
-	});
+	}));
 }
 
 int TreeNode::GetStairNo()

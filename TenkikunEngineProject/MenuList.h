@@ -6,8 +6,19 @@
 class MenuList : public Rect
 {
 	public:
-		static const int WIDTH = 100;
+		static const int WIDTH = 150;
+
+		std::vector<MenuNode*> menuNodes;
 
 		MenuList(float startX, float startY, std::vector<std::string> elements);
+
+		void SetIsVisible(bool isVisible);
+
+		void Draw();
+
+		MenuNode* FindNode(std::string element);	//このメニューリストの中から探す
+
+	private:
+		bool isVisible = true;
 };
 

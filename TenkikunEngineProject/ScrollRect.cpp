@@ -10,7 +10,7 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 	startScrollY = startY;
 
 	//マウスホイールで動かしたら
-	this->mouseWheelEvents.push_back([this]() {
+	this->mouseWheelEvents.push_back(std::make_pair(0, [this]() {
 		//スクロールの高さが表示可能高さよりも大きいなら
 		if (this->scrollHeight > this->height) {
 			//マウスホイールの回転値を取得
@@ -36,7 +36,7 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 
 			ScrollUpdate();	//有効化更新
 		}
-	});
+	}));
 }
 
 void ScrollRect::AddToScrollRect(TriggerRect* triggerRect)

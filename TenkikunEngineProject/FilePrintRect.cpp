@@ -16,11 +16,11 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 	pathNameRect = new TextRect(startX, startY, pathName);		//現在のパスの名前をセット
 
 	//ファイルがドロップされたら
-	fileDropEvents.push_back([this]() {
+	fileDropEvents.push_back(std::make_pair(1, [this]() {
 		for (std::filesystem::path path : ProjectFileManager::dragFilePathes) {
 			MakeDuplicatedFile(path);	//ファイルを複製して指定のパスに置く
 		}
-	});
+	}));
 }
 
 void FilePrintRect::Draw()

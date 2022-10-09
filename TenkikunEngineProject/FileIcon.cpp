@@ -13,10 +13,10 @@ FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight
 	this->path = path;	//対になるファイルのパスをセット
 	fileNameRect = new TextBox(startX + blankWidth - overWidth / 2, startY + blankHeight + iconHeight, iconWidth + overWidth, FontManager::systemFont->GetFontHeight(), false, path.filename().string());	//TextBox作成
 
-	this->mouseClickDownEvents.push_back([this]() {
+	this->mouseClickDownEvents.push_back(std::make_pair(1, [this]() {
 		//クリックしたときに自身を選択中にする
 		WindowManager::SetSelectedTriggerRect(this);
-	});
+	}));
 }
 
 void FileIcon::Draw()

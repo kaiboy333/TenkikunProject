@@ -49,7 +49,7 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 		int j = i / 3;
 		switch (j) {
 			case 0:
-				textBoxes[i]->pushEnterEvents.push_back([this, transform, j]() {
+				textBoxes[i]->pushEnterEvents.push_back(std::make_pair(1, [this, transform, j]() {
 					try {
 						Vector3 pos = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
 						transform->localPosition = pos;
@@ -57,10 +57,10 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 					catch (const std::invalid_argument& e) {
 						Debug::Log("”š‚Å‚Í‚ ‚è‚Ü‚¹‚ñB");
 					}
-				});
+				}));
 				break;
 			case 1:
-				textBoxes[i]->pushEnterEvents.push_back([this, transform, j]() {
+				textBoxes[i]->pushEnterEvents.push_back(std::make_pair(1, [this, transform, j]() {
 					try {
 						Vector3 rote = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
 						transform->localRotation = rote;
@@ -68,10 +68,10 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 					catch (const std::invalid_argument& e) {
 						Debug::Log("”š‚Å‚Í‚ ‚è‚Ü‚¹‚ñB");
 					}
-				});
+				}));
 				break;
 			case 2:
-				textBoxes[i]->pushEnterEvents.push_back([this, transform, j]() {
+				textBoxes[i]->pushEnterEvents.push_back(std::make_pair(1, [this, transform, j]() {
 					try {
 						Vector3 scale = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
 						transform->localScale = scale;
@@ -79,7 +79,7 @@ TransformRect::TransformRect(float startX, float startY, Component* component) :
 					catch (const std::invalid_argument& e) {
 						Debug::Log("”š‚Å‚Í‚ ‚è‚Ü‚¹‚ñB");
 					}
-				});
+				}));
 				break;
 			default:
 				break;

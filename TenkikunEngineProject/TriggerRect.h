@@ -5,9 +5,9 @@
 #include <functional>
 #include <vector>
 #include "Rect.h"
-#include "Window.h"
+//#include "Window.h"
 
-class Window;
+//class Window;
 class TriggerRect : public Rect
 {
 	public:
@@ -19,9 +19,11 @@ class TriggerRect : public Rect
 
 		Rect* activeRect = nullptr;	//有効化されている領域
 
-		float clickInterval = 0.5f;	//クリックから次のクリックまでの間隔
+		const float CLICK_INTERVAL = GetDoubleClickTime() / 1000.0f;	//クリックから次のクリックまでの間隔
 		bool isClicked = false;	//一回目クリックしたか
 		float clickTime = 0;	//クリックしたときの時間
+
+		bool isClicking = false;	//ボタンを押したか
 
 		TriggerRect(float startX, float startY, float width, float height, int eventNo = 0);
 
@@ -31,37 +33,25 @@ class TriggerRect : public Rect
 
 		int GetEventNo();	//イベント番号
 
-		std::vector<std::function<void()>> mouseClickDownEvents;
-		std::vector<std::function<void()>> mouseClickUpEvents;
-		std::vector<std::function<void()>> mouseDoubleClickEvents;
-		std::vector<std::function<void()>> mouseRightClickEvents;
-		std::vector<std::function<void()>> mouseOnEvents;
-		std::vector<std::function<void()>> mouseEnterEvents;
-		std::vector<std::function<void()>> mouseExitEvents;
-		std::vector<std::function<void()>> mouseWheelEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseClickDownEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseClickUpEvents;
+		std::vector<std::pair<int, std::function<void()>>> onClickEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseDoubleClickEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseRightClickEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseOnEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseEnterEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseExitEvents;
+		std::vector<std::pair<int, std::function<void()>>> mouseWheelEvents;
 
-		std::vector<std::function<void()>> selectedEvents;
+		std::vector<std::pair<int, std::function<void()>>> selectedEvents;
 
-		std::vector<std::function<void()>> pushEnterEvents;
+		std::vector<std::pair<int, std::function<void()>>> pushEnterEvents;
 
-		std::vector<std::function<void()>> fileDropEvents;
+		std::vector<std::pair<int, std::function<void()>>> fileDropEvents;
 
 	private :
 		int eventNo;
 
-		void MouseClickDownEvent();
-		void MouseClickUpEvent();
-		void MouseDoubleClickEvent();
-		void MouseRightClickEvent();
-		void MouseOnEvent();
-		void MouseEnterEvent();
-		void MouseExitEvent();
-		void MouseWheelEvent();
-
-		void SelectedEvent();
-
-		void PushEnterEvent();
-
-		void FileDropEvent();
+		void AddToActiveEvents(std::vector<std::pair<int, std::function<void()>>> pairs);
 };
 

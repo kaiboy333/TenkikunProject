@@ -60,14 +60,14 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path path)
 			TreeNode* node = new TreeNode(path.filename().string(), treeList, treeList->isFirstOpen);
 
 			//イベントを追加(ダブルクリックをしたら)
-			node->mouseDoubleClickEvents.push_back([this, node]() {
+			node->mouseDoubleClickEvents.push_back(std::make_pair(1, [this, node]() {
 				//クリックしたノードから絶対パスを求める
 				std::filesystem::path path = std::filesystem::path(ProjectFileManager::assetParentPathName + node->GetPath());
 				//現在のパスにさっきのパスを入れる
 				ProjectFileManager::currentPath = path;
 				//パス内のフォルダ更新
 				filePrintRect->LoadFoler();
-			});
+			}));
 
 			if (path != ProjectFileManager::assetFilePath) {
 				//親のパスからアセットの上の部分を除いたものを取得

@@ -5,6 +5,7 @@
 #include "HierarchyWindow.h"
 #include "InspectorWindow.h"
 #include "ProjectWindow.h"
+#include "MenuList.h"
 
 class GameWindow;
 class HierarchyWindow;
@@ -19,7 +20,6 @@ class WindowManager : Rect
 		static ProjectWindow* projectWindow;
 
 		//static Window* activeWindow;
-		static TriggerRect* selectedTriggerRect;	//選択中のTriggerRect
 
 		static const float WIDTH;
 		static const float HEIGHT;
@@ -45,7 +45,14 @@ class WindowManager : Rect
 
 		static void EventCheck();	//イベントトリガーチェック
 
+		static void SetMenuList(MenuList* menuList);
+		static MenuList* GetMenuList();
+
 	private:
 		static std::vector<TriggerRect*> triggerRects;	//反応する四角たち
+
+		static TriggerRect* selectedTriggerRect;	//選択中のTriggerRect
+
+		static MenuList* menuList;	//作られたメニューリスト
 };
 

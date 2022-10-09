@@ -30,13 +30,13 @@ void TriggerRect::CheckInput()
 		if (activeRect->IsPointIn2(mousePos.x, mousePos.y)) {
 			//左クリックを押した瞬間なら
 			if (Input::GetMouseButtonDown(Input::Mouse_Left, false)) {
-				MouseClickDownEvent();
+				AddToActiveEvents(mouseClickDownEvents);
 
 				//時間を測定
 				float nowClickTime = Time::GetTime();
 				//これが二回目のクリックかつ次のクリックまでの間隔がclickInterval以下なら
-				if (isClicked && nowClickTime - clickTime <= clickInterval) {
-					MouseDoubleClickEvent();
+				if (isClicked && nowClickTime - clickTime <= CLICK_INTERVAL) {
+					AddToActiveEvents(mouseDoubleClickEvents);
 					isClicked = false;
 				}
 				else {
@@ -45,30 +45,40 @@ void TriggerRect::CheckInput()
 					//時間を記憶
 					clickTime = Time::GetTime();
 				}
+
+				//マウスが乗っていたら
+				if (isOn) {
+					isClicking = true;
+				}
 			}
 			//左クリックを離した瞬間なら
 			else if (Input::GetMouseButtonUp(Input::Mouse_Left, false)) {
-				MouseClickUpEvent();
+				AddToActiveEvents(mouseClickUpEvents);
+
+				//前にクリックしていたなら
+				if (isClicking) {
+					AddToActiveEvents(onClickEvents);
+				}
 			}
 			//右クリックなら
 			else if (Input::GetMouseButtonDown(Input::Mouse_Right, false)) {
-				MouseRightClickEvent();
+				AddToActiveEvents(mouseRightClickEvents);
 			}
 			//マウスホイールが動いたなら
 			else if (Input::GetMouseWheelRoteValue() != 0) {
-				MouseWheelEvent();
+				AddToActiveEvents(mouseWheelEvents);
 			}
 
 			//マウスが乗ってるだけなら
-			MouseOnEvent();
+			AddToActiveEvents(mouseOnEvents);
 			//前回マウスが乗っていなかったら
 			if (!isOn) {
-				MouseEnterEvent();
+				AddToActiveEvents(mouseEnterEvents);
 			}
 
 			//ファイルがドロップされたら
 			if (ProjectFileManager::dragFilePathes.size() != 0) {
-				FileDropEvent();
+				AddToActiveEvents(fileDropEvents);
 			}
 			//乗っている判定にする
 			isOn = true;
@@ -77,7 +87,10 @@ void TriggerRect::CheckInput()
 		else {
 			//前回マウスが乗っていたら
 			if (isOn) {
-				MouseExitEvent();
+				AddToActiveEvents(mouseExitEvents);
+
+				//クリック判定をなしに
+				isClicking = false;
 			}
 			//乗っていない判定にする
 			isOn = false;
@@ -85,12 +98,12 @@ void TriggerRect::CheckInput()
 
 		//選択されていたら
 		if (GetIsSelected()) {
-			SelectedEvent();
+			AddToActiveEvents(selectedEvents);
 		}
 
 		//エンターを押したなら
 		if (Input::GetKeyDown(Input::ENTER, false)) {
-			PushEnterEvent();
+			AddToActiveEvents(pushEnterEvents);
 		}
 	}	
 }
@@ -105,101 +118,10 @@ int TriggerRect::GetEventNo()
 	return eventNo;
 }
 
-void TriggerRect::MouseClickDownEvent()
+void TriggerRect::AddToActiveEvents(std::vector<std::pair<int, std::function<void()>>> pairs)
 {
 	//実行可能リストに追加
-	for (std::function<void()> func : mouseClickDownEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::MouseClickUpEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : mouseClickUpEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::MouseDoubleClickEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : mouseDoubleClickEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::MouseRightClickEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : mouseRightClickEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::MouseOnEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : mouseOnEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::MouseExitEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : mouseExitEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::MouseWheelEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : mouseWheelEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::PushEnterEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : pushEnterEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::MouseEnterEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : mouseEnterEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::FileDropEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : fileDropEvents) {
-		auto pair = std::make_pair(eventNo, func);
-		WindowManager::activeEvents.push_back(pair);
-	}
-}
-
-void TriggerRect::SelectedEvent()
-{
-	//実行可能リストに追加
-	for (std::function<void()> func : selectedEvents) {
-		auto pair = std::make_pair(eventNo, func);
+	for (std::pair<int, std::function<void()>> pair : pairs) {
 		WindowManager::activeEvents.push_back(pair);
 	}
 }

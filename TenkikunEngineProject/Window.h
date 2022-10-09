@@ -5,7 +5,7 @@
 #include "TriggerRect.h"
 
 class TriggerRect;
-class Window : public Rect
+class Window : public TriggerRect
 {
 	public:
 		Window(float startX, float startY, float width, float height);

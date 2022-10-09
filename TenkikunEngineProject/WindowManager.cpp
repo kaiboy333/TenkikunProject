@@ -8,26 +8,42 @@ void WindowManager::Draw()
 	//画面全体を黒で描画
 	DrawBoxAA(0, 0, WIDTH, HEIGHT, GetColor(0, 0, 0), TRUE);
 
+	//Windowの描画
 	for (Window* parentWindow : GetWindows()) {
 		parentWindow->Draw();
+	}
+
+	if (menuList) {
+		//メニューリストの描画
+		menuList->Draw();
 	}
 }
 
 void WindowManager::Update()
 {
 	for (Window* parentWindow : GetWindows()) {
-		//クリックしたとき
-		if (Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, canUseGameWnd)) {
-			//ひとまず選択を解除
-			ClearSelectedTriggerRect();
-				
+		parentWindow->Update();
+	}
 
-			////ウィンドウグループが前のウィンドウグループとは違うなら
-			//if ((typeid(*parentWindow) == typeid(GameWindow)) != canUseGameWnd) {
-			//	//ウィンドウがゲーム画面ならゲーム画面のみ使える
-			//	canUseGameWnd = (typeid(*parentWindow) == typeid(GameWindow));
-			//}
+	//クリックしたとき
+	if (Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, canUseGameWnd)) {
+		//ひとまず選択を解除
+		ClearSelectedTriggerRect();
+		
+		Vector3 mousePos = Input::GetMousePosition();
+		bool mouseInGameWnd = gameWindow->IsPointIn2(mousePos.x, mousePos.y);
+		//反応する画面を切り替えるとき
+		if (mouseInGameWnd && !canUseGameWnd || !mouseInGameWnd && canUseGameWnd) {
+			//boolを逆に
+			canUseGameWnd = !canUseGameWnd;
+			return;
 		}
+
+		////ウィンドウグループが前のウィンドウグループとは違うなら
+		//if ((typeid(*parentWindow) == typeid(GameWindow)) != canUseGameWnd) {
+		//	//ウィンドウがゲーム画面ならゲーム画面のみ使える
+		//	canUseGameWnd = (typeid(*parentWindow) == typeid(GameWindow));
+		//}
 	}
 
 	//if (typeid(*activeWindow) == typeid(GameWindow) && canUseGameWnd || !(typeid(*activeWindow) == typeid(GameWindow)) && !canUseGameWnd) {
@@ -36,10 +52,6 @@ void WindowManager::Update()
 		EventCheck();
 	}
 	//}
-
-	for (Window* parentWindow : GetWindows()) {
-		parentWindow->Update();
-	}
 
 	//Ctrl + Sを押したら
 	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL, false) && Input::GetKeyDown(Input::KeyCode::S, false)) {
@@ -144,6 +156,24 @@ void WindowManager::EventCheck()
 	}
 }
 
+void WindowManager::SetMenuList(MenuList* menuList)
+{
+	//前のがあるなら
+	if (WindowManager::menuList) {
+		//前のを解放
+
+		//前回のノードを忘れる
+		MenuNode::selectedMenuNode = nullptr;
+	}
+	//新しいのをセット
+	WindowManager::menuList = menuList;
+}
+
+MenuList* WindowManager::GetMenuList()
+{
+	return menuList;
+}
+
 void WindowManager::RemoveTriggerRect(TriggerRect* triggerRect)
 {
 	//何か入っているなら
@@ -174,4 +204,5 @@ const float WindowManager::HEIGHT = 800;
 
 std::vector<std::pair<int, std::function<void()>>> WindowManager::activeEvents;
 std::vector<TriggerRect*> WindowManager::triggerRects;	//反応する四角たち
-TriggerRect* WindowManager::selectedTriggerRect;	//選択中のTriggerRect
+TriggerRect* WindowManager::selectedTriggerRect = nullptr;	//選択中のTriggerRect
+MenuList* WindowManager::menuList = nullptr;	//作られたメニューリスト

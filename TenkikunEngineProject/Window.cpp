@@ -1,23 +1,7 @@
 #include "Window.h"
 #include "WindowManager.h"
 
-//void Window::SetSelectedTriggerRect(TriggerRect* selectedTriggerRect)
-//{
-//	//新しいのをセット
-//	this->selectedTriggerRect = selectedTriggerRect;
-//}
-//
-//void Window::ClearSelectedTriggerRect()
-//{
-//	selectedTriggerRect = nullptr;
-//}
-//
-//TriggerRect* Window::GetSelectedTriggerRect()
-//{
-//	return selectedTriggerRect;
-//}
-
-Window::Window(float startX, float startY, float width, float height) : Rect(startX, startY, width, height)
+Window::Window(float startX, float startY, float width, float height) : TriggerRect(startX, startY, width, height)
 {
 
 }

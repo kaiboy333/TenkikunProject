@@ -11,7 +11,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, bool can
 	this->canChange = canChange;	//初期は変えられるか
 
 	//クリックしたら
-	mouseClickDownEvents.push_back([this] {
+	mouseClickDownEvents.push_back(std::make_pair(1, [this] {
 		//変更可能なら
 		if (this->canChange) {
 			//入力中ではないなら
@@ -24,10 +24,10 @@ TextBox::TextBox(float startX, float startY, float width, float height, bool can
 				WindowManager::SetSelectedTriggerRect(this);	//自身を選択対象にする
 			}
 		}
-	});
+	}));
 
 	//エンターを押したら
-	pushEnterEvents.push_back([this]() {
+	pushEnterEvents.push_back(std::make_pair(1, [this]() {
 		//入力中だったなら
 		if (GetIsSelected()) {
 			TCHAR strBuf[MAX_LEN + 1] = {};
@@ -40,7 +40,7 @@ TextBox::TextBox(float startX, float startY, float width, float height, bool can
 			WindowManager::SetSelectedTriggerRect(nullptr);	//自身を選択対象から外す
 			DxLib::DeleteKeyInput(ih);	//InputHandle削除
 		}
-	});
+	}));
 }
 
 void TextBox::Draw()

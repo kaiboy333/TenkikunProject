@@ -9,13 +9,23 @@ class MenuNode : public TriggerRect
 	public:
 		std::string element;
 
-		MenuList* menuList = nullptr;
-
 		Image* arrawImage = nullptr;
 		float arrawWidth;
 
-		MenuNode(float startX, float startY, std::string element);
+		static MenuNode* selectedMenuNode;
+
+		MenuNode(float startX, float startY, std::string element, MenuList* parentMenuList);
 
 		void Draw();
+
+		void SetChildMenuList(MenuList* childMenuList);
+		MenuList* GetChildMenuList();
+
+		MenuList* GetParentMenuList();
+
+	private:
+		MenuList* childMenuList = nullptr;
+
+		MenuList* parentMenuList = nullptr;
 };
 

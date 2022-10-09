@@ -4,23 +4,7 @@
 
 WindowButton::WindowButton(float startX, float startY, float width, float height) : TriggerRect(startX, startY, width, height)
 {
-	this->mouseClickDownEvents.push_back([this]() {
-		//マウスが乗っていたら
-		if (isOn) {
-			isClicking = true;
-		}
-	});
 
-	this->mouseClickUpEvents.push_back([this]() {
-		//前にクリックしていたなら
-		if (isClicking) {
-			OnClickEvent();
-		}
-	});
-
-	this->mouseExitEvents.push_back([this]() {
-		isClicking = false;
-	});
 }
 
 void WindowButton::Draw()
@@ -34,12 +18,5 @@ void WindowButton::Draw()
 		if (image->GetGH()) {
 			DrawRotaGraph3F(startX + width / 2, startY + height / 2, image->GetWidth() / 2, image->GetHeight() / 2, width / image->GetWidth(), height / image->GetHeight(), 0, image->GetGH(), TRUE);
 		}
-	}
-}
-
-void WindowButton::OnClickEvent()
-{
-	for (function<void()> func : onClickEvents) {
-		func();
 	}
 }
