@@ -4,6 +4,12 @@
 GameWindow::GameWindow() : Window(300, 0, 700, 500)
 {
     frameText = new TextRect(startX, startY, "");
+
+    //マウスを押した瞬間
+    mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+        //ゲーム画面が使えるように
+        WindowManager::canUseGameWnd = true;
+    }));
 }
 
 void GameWindow::Update()

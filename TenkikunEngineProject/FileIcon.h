@@ -23,6 +23,8 @@ class FileIcon : public TriggerRect
 
 		virtual void Draw();	//ƒAƒCƒRƒ“•`‰æ
 
+		virtual void PreparationLibrate() override;
+
 	protected:
 		bool isImageIcon = false;
 };

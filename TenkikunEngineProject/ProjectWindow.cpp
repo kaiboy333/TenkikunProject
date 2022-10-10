@@ -7,7 +7,11 @@
 
 ProjectWindow::ProjectWindow() : Window(0, 500, 1000, 300)
 {
-
+	//マウスを押した瞬間
+	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		//ゲーム画面が使えるように
+		WindowManager::canUseGameWnd = false;
+	}));
 }
 
 void ProjectWindow::Init()
@@ -60,7 +64,7 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path path)
 			TreeNode* node = new TreeNode(path.filename().string(), treeList, treeList->isFirstOpen);
 
 			//イベントを追加(ダブルクリックをしたら)
-			node->mouseDoubleClickEvents.push_back(std::make_pair(1, [this, node]() {
+			node->mouseDoubleClickEvents.push_back(std::make_pair(node->GetEventNo(), [this, node]() {
 				//クリックしたノードから絶対パスを求める
 				std::filesystem::path path = std::filesystem::path(ProjectFileManager::assetParentPathName + node->GetPath());
 				//現在のパスにさっきのパスを入れる

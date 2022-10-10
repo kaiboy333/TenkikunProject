@@ -1,9 +1,16 @@
 #include "Window.h"
 #include "WindowManager.h"
 
-Window::Window(float startX, float startY, float width, float height) : TriggerRect(startX, startY, width, height)
+Window::Window(float startX, float startY, float width, float height) : TriggerRect(startX, startY, width, height, 0)
 {
-
+	//マウスを押した瞬間
+	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		//メニューリストがあるなら
+		if (WindowManager::GetMenuList()) {
+			//メニューリストのセットを解除
+			WindowManager::SetMenuList(nullptr);
+		}
+	}));
 }
 
 void Window::Update()

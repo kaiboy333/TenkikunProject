@@ -30,14 +30,14 @@ void WindowManager::Update()
 		//ひとまず選択を解除
 		ClearSelectedTriggerRect();
 		
-		Vector3 mousePos = Input::GetMousePosition();
-		bool mouseInGameWnd = gameWindow->IsPointIn2(mousePos.x, mousePos.y);
-		//反応する画面を切り替えるとき
-		if (mouseInGameWnd && !canUseGameWnd || !mouseInGameWnd && canUseGameWnd) {
-			//boolを逆に
-			canUseGameWnd = !canUseGameWnd;
-			return;
-		}
+		//Vector3 mousePos = Input::GetMousePosition();
+		//bool mouseInGameWnd = gameWindow->IsPointIn2(mousePos.x, mousePos.y);
+		////反応する画面を切り替えるとき
+		//if (mouseInGameWnd && !canUseGameWnd || !mouseInGameWnd && canUseGameWnd) {
+		//	//boolを逆に
+		//	canUseGameWnd = !canUseGameWnd;
+		//	return;
+		//}
 
 		////ウィンドウグループが前のウィンドウグループとは違うなら
 		//if ((typeid(*parentWindow) == typeid(GameWindow)) != canUseGameWnd) {
@@ -135,10 +135,9 @@ void WindowManager::EventCheck()
 
 	if ((int)activeEvents.size() != 0) {
 		//昇順にソート
-		std::sort(activeEvents.begin(), activeEvents.end(), [](const std::pair<int, std::function<void()>>& a, const std::pair<int, std::function<void()>>& b)
-			{
-				return a.first > b.first;
-			});
+		std::sort(activeEvents.begin(), activeEvents.end(), [](const std::pair<int, std::function<void()>>& a, const std::pair<int, std::function<void()>>& b){
+			return a.first > b.first;
+		});
 
 		int activeEventNo = activeEvents.begin()->first;	//実際に実行する番号を記憶
 
@@ -160,6 +159,7 @@ void WindowManager::SetMenuList(MenuList* menuList)
 {
 	//前のがあるなら
 	if (WindowManager::menuList) {
+		//前のTriggerRectを削除
 		//前のを解放
 
 		//前回のノードを忘れる

@@ -9,6 +9,15 @@ TriggerRect::TriggerRect(float startX, float startY, float width, float height, 
 	this->eventNo = eventNo;
 
 	activeRect = new Rect(startX, startY, width, height);
+
+	//マウスが入ったら
+	this->mouseEnterEvents.push_back(std::make_pair(GetEventNo(), [this](void) {
+		isTopOn = true;
+	}));
+	//マウスが出たら
+	this->mouseExitEvents.push_back(std::make_pair(GetEventNo(), [this](void) {
+		isTopOn = false;
+	}));
 }
 
 void TriggerRect::CheckInput()
@@ -105,7 +114,7 @@ void TriggerRect::CheckInput()
 		if (Input::GetKeyDown(Input::ENTER, false)) {
 			AddToActiveEvents(pushEnterEvents);
 		}
-	}	
+	}
 }
 
 bool TriggerRect::GetIsSelected()
@@ -118,10 +127,21 @@ int TriggerRect::GetEventNo()
 	return eventNo;
 }
 
+bool TriggerRect::GetIsTopOn()
+{
+	return isTopOn;
+}
+
 void TriggerRect::AddToActiveEvents(std::vector<std::pair<int, std::function<void()>>> pairs)
 {
 	//実行可能リストに追加
 	for (std::pair<int, std::function<void()>> pair : pairs) {
 		WindowManager::activeEvents.push_back(pair);
 	}
+}
+
+void TriggerRect::PreparationLibrate()
+{
+	//WindowManagerから削除
+	WindowManager::RemoveTriggerRect(this);
 }

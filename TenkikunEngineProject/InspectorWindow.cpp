@@ -4,6 +4,12 @@
 InspectorWindow::InspectorWindow() : Window(1000, 0, 300, 800)
 {
 	nameRect = new TextRect(startX, startY, "");
+
+	//マウスを押した瞬間
+	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		//ゲーム画面が使えるように
+		WindowManager::canUseGameWnd = false;
+	}));
 }
 
 void InspectorWindow::Update()

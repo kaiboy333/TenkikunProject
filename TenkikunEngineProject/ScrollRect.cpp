@@ -2,7 +2,7 @@
 #include "MyMath.h"
 #include <string>
 
-ScrollRect::ScrollRect(float startX, float startY, float width, float height, float scrollWidth, float scrollHeight) : TriggerRect(startX, startY, width, height)
+ScrollRect::ScrollRect(float startX, float startY, float width, float height, float scrollWidth, float scrollHeight) : TriggerRect(startX, startY, width, height, 0)
 {
 	this->scrollWidth = scrollWidth;
 	this->scrollHeight = scrollHeight;
@@ -10,7 +10,7 @@ ScrollRect::ScrollRect(float startX, float startY, float width, float height, fl
 	startScrollY = startY;
 
 	//マウスホイールで動かしたら
-	this->mouseWheelEvents.push_back(std::make_pair(0, [this]() {
+	this->mouseWheelEvents.push_back(std::make_pair(GetEventNo(), [this]() {
 		//スクロールの高さが表示可能高さよりも大きいなら
 		if (this->scrollHeight > this->height) {
 			//マウスホイールの回転値を取得

@@ -3,7 +3,7 @@
 ScriptIcon::ScriptIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, std::string imageFileName, std::filesystem::path path) : FileIcon(startX, startY, iconWidth, iconHeight, blankWidth, blankHeight, imageFileName, path)
 {
 	//イベントを追加(ダブルクリックをしたら)
-	this->mouseDoubleClickEvents.push_back(std::make_pair(1, [this]() {
+	this->mouseDoubleClickEvents.push_back(std::make_pair(GetEventNo(), [this]() {
         // 起動したいアプリケーションのフルパス(あるいはカレントフォルダーからの相対パス)と、
             // 必要に応じて引数も空白区切りにて付加する。
         //wchar_t commandLine[] = L"アプリケーションのパスと引数";

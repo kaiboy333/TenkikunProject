@@ -27,7 +27,7 @@ public:
 	//指定の親にノードを追加
 	void Add(TreeNode* targetNode, TreeNode* parentNode);
 
-	TreeNode* Delete(std::string e);
+	void Delete(std::string e);
 
 	TreeNode* FindNode(std::string e);
 	TreeNode* FindNode(std::vector<std::string> pathes);
@@ -39,6 +39,9 @@ public:
 	void UpdateNodes();	//階層を更新
 
 	int UpdateNodeAndChildrenNodes(TreeNode* node, int row);	//nodeとnodeの子を含むノードのrowとstairNoをすべてセットする
+
+	virtual void PreparationLibrate() override;
+
 private:
 	TreeNode* root = nullptr;
 

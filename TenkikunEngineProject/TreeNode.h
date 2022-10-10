@@ -35,6 +35,8 @@ public:
 
 	vector<TreeNode*> GetAllLowStairChildren();	//©•ªˆÈ‰º‚ÌŠK‘wƒm[ƒh‚·‚×‚Ä‚ğæ“¾
 
+	virtual void PreparationLibrate() override;
+
 	private:
 		//ŠK‘w‚Ì[‚³
 		int stairNo = 0;

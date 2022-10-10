@@ -3,7 +3,7 @@
 #include "MenuList.h"
 #include "ProjectFileManager.h"
 
-MenuNode::MenuNode(float startX, float startY, std::string element, MenuList* parentMenuList) : TriggerRect(startX, startY, MenuList::WIDTH, FontManager::systemFont->GetFontHeight())
+MenuNode::MenuNode(float startX, float startY, std::string element, MenuList* parentMenuList) : TriggerRect(startX, startY, MenuList::WIDTH, FontManager::systemFont->GetFontHeight(), 100)
 {
 	this->element = element;
 	this->parentMenuList = parentMenuList;
@@ -14,7 +14,7 @@ MenuNode::MenuNode(float startX, float startY, std::string element, MenuList* pa
 	arrawWidth = height;
 
 	//マウスが乗った瞬間なら
-	this->mouseEnterEvents.push_back(std::make_pair(100, [this](void) {
+	this->mouseEnterEvents.push_back(std::make_pair(GetEventNo(), [this](void) {
 		if (selectedMenuNode ? selectedMenuNode->GetChildMenuList() : nullptr) {
 			if (selectedMenuNode->GetParentMenuList() == this->GetParentMenuList()) {
 				//前回のリスト以降をすべて見えなくするように
@@ -46,6 +46,14 @@ MenuNode::MenuNode(float startX, float startY, std::string element, MenuList* pa
 			selectedMenuNode = this;
 		}
 	}));
+
+	//マウスを押した瞬間なら
+	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		if (WindowManager::GetMenuList()) {
+			//メニューリストを解除
+			WindowManager::SetMenuList(nullptr);
+		}
+	}));
 }
 
 void MenuNode::Draw()
@@ -56,7 +64,7 @@ void MenuNode::Draw()
 	//四角の描画(塗りつぶし)
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(255, 255, 255), TRUE);
 	//マウスが乗っていたら
-	if (isOn) {
+	if (GetIsTopOn()) {
 		//四角の描画
 		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
 	}

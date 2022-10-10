@@ -13,7 +13,7 @@ FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight
 	this->path = path;	//対になるファイルのパスをセット
 	fileNameRect = new TextBox(startX + blankWidth - overWidth / 2, startY + blankHeight + iconHeight, iconWidth + overWidth, FontManager::systemFont->GetFontHeight(), false, path.filename().string());	//TextBox作成
 
-	this->mouseClickDownEvents.push_back(std::make_pair(1, [this]() {
+	this->mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
 		//クリックしたときに自身を選択中にする
 		WindowManager::SetSelectedTriggerRect(this);
 	}));
@@ -25,7 +25,7 @@ void FileIcon::Draw()
 		int imageWidth, imageHeight;
 		GetGraphSize(iconGH, &imageWidth, &imageHeight);
 
-		if (!GetIsSelected() && isOn) {
+		if (!GetIsSelected() && GetIsTopOn()) {
 			//灰色を描画
 			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
 		}
@@ -54,3 +54,9 @@ void FileIcon::Draw()
 }
 
 const float FileIcon::overWidth = 15;
+
+void FileIcon::PreparationLibrate()
+{
+	fileNameRect->PreparationLibrate();
+	delete(fileNameRect);
+}

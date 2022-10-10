@@ -39,7 +39,7 @@ void TreeList::Add(TreeNode* targetNode, TreeNode* parentNode)
 	}
 }
 
-TreeNode* TreeList::Delete(std::string e)
+void TreeList::Delete(std::string e)
 {
 	TreeNode* targetNode = FindNode(e);
 	if (targetNode) {
@@ -47,16 +47,26 @@ TreeNode* TreeList::Delete(std::string e)
 		std::vector<TreeNode*>* childNodes = &targetNode->parentNode->childNodes;
 		//指定のノードを削除
 		childNodes->erase(remove(childNodes->begin(), childNodes->end(), targetNode));
-		//親の参照を削除
-		targetNode->parentNode = nullptr;
-		//ScrollRectのリストから削除
-		RemoveToScrollRect(targetNode);
-		RemoveToScrollRect(targetNode->button);	//ボタンも
+
+		std::vector<TreeNode*> nodes;
+		nodes.push_back(targetNode);
+		while ((int)nodes.size() != 0) {
+			TreeNode* node = nodes[0];
+			nodes.erase(nodes.begin());
+
+			//ScrollRectのリストから削除
+			RemoveToScrollRect(node);
+			RemoveToScrollRect(node->button);	//ボタンも
+
+			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
+
+			//Nodeの準備、解放
+			targetNode->PreparationLibrate();
+			delete(node);
+		}
 		//ノードの階層を更新
 		UpdateNodes();
 	}
-	//ノードを返す
-	return targetNode;
 }
 
 TreeNode* TreeList::FindNode(std::string e)
@@ -188,4 +198,10 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 	}
 
 	return row;
+}
+
+void TreeList::PreparationLibrate()
+{
+	//ノードをすべて解放
+	Delete(GetRoot()->GetElement());
 }

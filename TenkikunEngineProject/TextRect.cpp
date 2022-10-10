@@ -1,6 +1,7 @@
 #include "TextRect.h"
 #include "DxLib.h"
 #include "FontManager.h"
+#include "WindowManager.h"
 
 TextRect::TextRect(float startX, float startY, std::string text) : Rect(startX, startY, FontManager::systemFont->GetFontWidth(text), FontManager::systemFont->GetFontHeight())
 {

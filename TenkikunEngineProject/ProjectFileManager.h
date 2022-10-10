@@ -42,11 +42,6 @@ class ProjectFileManager
 		//ドラッグされたファイルのパスたち
 		static std::vector<std::filesystem::path> dragFilePathes;
 
-		//static std::unordered_map<Info*, int> infoAndFileID;
-
-		//static std::unordered_map<std::string, Info*> guidAndInfo;
-
-		//static std::unordered_map<std::filesystem::path, Info*> pathAndInfo;
 		static std::map<std::filesystem::path, Info*> pathAndInfo;
 
 		//sceneInfos

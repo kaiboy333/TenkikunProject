@@ -3,14 +3,15 @@
 #include "Debug.h"
 #include "FontManager.h"
 
-TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->startX + FontManager::systemFont->GetFontHeight(), treeList->startY, FontManager::systemFont->GetFontWidth(e), FontManager::systemFont->GetFontHeight())
+TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect(treeList->startX + FontManager::systemFont->GetFontHeight(), treeList->startY, FontManager::systemFont->GetFontWidth(e), FontManager::systemFont->GetFontHeight(), 1)
 {
 	element = e;
 	this->treeList = treeList;
 	this->isOpen = isOpen;
 
-	mouseClickDownEvents.push_back(std::make_pair(1, [this]() {
-		//クリックしたときに自身を選択中にする
+	//クリックした瞬間なら
+	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		//自身を選択中にする
 		WindowManager::SetSelectedTriggerRect(this);
 	}));
 
@@ -19,7 +20,7 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 	button->image = treeList->images[isOpen];
 
 	//ボタンをクリックしたら
-	button->onClickEvents.push_back(std::make_pair(1, [this, treeList]() {
+	button->onClickEvents.push_back(std::make_pair(button->GetEventNo(), [this, treeList]() {
 		//開いているかの判定を反転させる
 		this->isOpen = !this->isOpen;
 		//画像セット
@@ -98,7 +99,7 @@ void TreeNode::Draw()
 	//選択されていないなら
 	else {
 		//マウスが乗っていたら
-		if (isOn) {
+		if (GetIsTopOn()) {
 			//四角の描画
 			DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
 		}
@@ -130,4 +131,9 @@ vector<TreeNode*> TreeNode::GetAllLowStairChildren()
 	}
 
 	return nodes;
+}
+
+void TreeNode::PreparationLibrate()
+{
+
 }

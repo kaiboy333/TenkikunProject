@@ -13,8 +13,6 @@ class TriggerRect : public Rect
 	public:
 		//Window* parentWindow = nullptr;	//登録するウィンドウ
 
-		bool isOn = false;	//マウスが乗るときにtrue
-
 		bool isActive = true;	//反応するか
 
 		Rect* activeRect = nullptr;	//有効化されている領域
@@ -25,13 +23,17 @@ class TriggerRect : public Rect
 
 		bool isClicking = false;	//ボタンを押したか
 
-		TriggerRect(float startX, float startY, float width, float height, int eventNo = 0);
+		TriggerRect(float startX, float startY, float width, float height, int eventNo = 1);
 
 		void CheckInput();
 
 		bool GetIsSelected();	//選択されているか
 
 		int GetEventNo();	//イベント番号
+
+		bool GetIsTopOn();
+
+		virtual void PreparationLibrate() override;
 
 		std::vector<std::pair<int, std::function<void()>>> mouseClickDownEvents;
 		std::vector<std::pair<int, std::function<void()>>> mouseClickUpEvents;
@@ -53,5 +55,9 @@ class TriggerRect : public Rect
 		int eventNo;
 
 		void AddToActiveEvents(std::vector<std::pair<int, std::function<void()>>> pairs);
+
+		bool isOn = false;	//マウスが乗るときにtrue
+
+		bool isTopOn = false;	//マウスがすぐ下にあるか
 };
 

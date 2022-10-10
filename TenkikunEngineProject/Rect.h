@@ -2,8 +2,9 @@
 
 #include <vector>
 #include "Vector3.h"
+#include "Librate.h"
 
-class Rect
+class Rect : public Librate
 {
 	public:
 		float startX, startY;
@@ -19,5 +20,7 @@ class Rect
 		std::vector<Vector2> GetPoints();
 
 		static Rect* GetCrossRect(Rect* r1, Rect* r2);
+
+		virtual void PreparationLibrate() = 0;
 };
 
