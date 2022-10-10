@@ -88,3 +88,8 @@ void ScrollRect::InitScrollPos()
 	startScrollX = startX;
 	startScrollY = startY;
 }
+
+void ScrollRect::PreparationLibrate()
+{
+	TriggerRect::PreparationLibrate();
+}

@@ -21,6 +21,6 @@ class Rect : public Librate
 
 		static Rect* GetCrossRect(Rect* r1, Rect* r2);
 
-		virtual void PreparationLibrate() = 0;
+		virtual void PreparationLibrate() override;
 };
 

@@ -56,3 +56,27 @@ MenuNode* MenuList::FindNode(std::string element)
 
 	return nullptr;
 }
+
+void MenuList::PreparationLibrate()
+{
+	std::vector<MenuNode*> menuNodes = this->menuNodes;
+
+	while ((int)menuNodes.size() != 0) {
+		MenuNode* menuNode = menuNodes[0];
+		menuNodes.erase(menuNodes.begin());
+
+		MenuList* menuList = menuNode->GetChildMenuList();
+		if (menuList) {
+			menuNodes.insert(menuNodes.end(), menuList->menuNodes.begin(), menuList->menuNodes.end());
+			//新しいメニューリストの解放
+			delete(menuList);
+			menuList = nullptr;
+		}
+
+		//メニューノードの解放準備
+		menuNode->PreparationLibrate();
+		//解放
+		delete(menuNode);
+		menuNode = nullptr;
+	}
+}

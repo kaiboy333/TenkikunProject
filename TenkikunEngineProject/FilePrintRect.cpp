@@ -61,25 +61,39 @@ void FilePrintRect::MakeDuplicatedFile(std::filesystem::path copyPath)
 
 }
 
-void FilePrintRect::LoadFoler()
+void FilePrintRect::PreparationLibrate()
 {
 	//前のアイコンを消去
 	for (FileIcon* fileIcon : fileIcons) {
-		//parentWindowから削除(アイコン)
-		WindowManager::RemoveTriggerRect(fileIcon);
-		//parentWindowから削除(TextBox)
-		WindowManager::RemoveTriggerRect(fileIcon->fileNameRect);
 		//スクロールのリストからも削除
 		RemoveToScrollRect(fileIcon);
 		//アイコンにあるTextBoxも削除
 		RemoveToScrollRect(fileIcon->fileNameRect);
+		
+		//アイコンの解放準備
+		fileIcon->PreparationLibrate();
+		//解放
+		delete(fileIcon);
+		fileIcon = nullptr;
 	}
 	//リストをリセット
 	fileIcons.clear();
 
+	//TextRect解放準備
+	pathNameRect->PreparationLibrate();
+	//解放
+	delete(pathNameRect);
+	pathNameRect = nullptr;
+
+}
+
+void FilePrintRect::LoadFoler()
+{
+	//解放準備(リセット)
+	PreparationLibrate();
+
 	//スクロールのリセット
 	InitScrollPos();
-
 
 	//現在のパスの名前をセット
 	string pathName = ProjectFileManager::currentPath.string().substr(ProjectFileManager::assetParentPathName.length());	//親のパスからアセットの上の部分を除いたものを取得

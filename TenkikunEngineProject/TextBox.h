@@ -23,6 +23,8 @@ class TextBox : public TriggerRect
 		void SetText(string text);
 		string GetText();
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		int ih;	//インプットハンドル
 

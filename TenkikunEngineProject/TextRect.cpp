@@ -27,3 +27,8 @@ void TextRect::Draw()
 	//•¶Žš•`‰æ
 	DrawStringFToHandle(startX, startY, text.c_str(), GetColor(0, 0, 0), FontManager::systemFont->GetFH());
 }
+
+void TextRect::PreparationLibrate()
+{
+
+}

@@ -20,3 +20,9 @@ void WindowButton::Draw()
 		}
 	}
 }
+
+void WindowButton::PreparationLibrate()
+{
+	//©g‚Ì‰ğ•ú€”õ
+	TriggerRect::PreparationLibrate();
+}

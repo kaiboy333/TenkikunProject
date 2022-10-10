@@ -57,6 +57,11 @@ const float FileIcon::overWidth = 15;
 
 void FileIcon::PreparationLibrate()
 {
+	//TextBox‚Ì€”õA‰ğ•ú
 	fileNameRect->PreparationLibrate();
 	delete(fileNameRect);
+	fileNameRect = nullptr;
+
+	//©g‚Ì€”õ
+	TriggerRect::PreparationLibrate();
 }

@@ -135,5 +135,12 @@ vector<TreeNode*> TreeNode::GetAllLowStairChildren()
 
 void TreeNode::PreparationLibrate()
 {
+	//WindowButton‚Ì‰ğ•ú€”õ
+	button->PreparationLibrate();
+	//‰ğ•ú
+	delete(button);
+	button = nullptr;
 
+	//©g‚Ì‰ğ•ú€”õ
+	TriggerRect::PreparationLibrate();
 }

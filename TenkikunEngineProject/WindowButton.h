@@ -15,5 +15,7 @@ class WindowButton : public TriggerRect
 		WindowButton(float startX, float startY, float width, float height);
 
 		void Draw();
+
+		virtual void PreparationLibrate() override;
 };
 

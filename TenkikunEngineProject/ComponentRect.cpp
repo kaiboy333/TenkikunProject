@@ -24,6 +24,18 @@ void ComponentRect::Draw()
 	nameRect->Draw();	//コンポーネントの名前描画
 }
 
+void ComponentRect::PreparationLibrate()
+{
+	//TextRectの解放準備
+	nameRect->PreparationLibrate();
+	//解放
+	delete(nameRect);
+	nameRect = nullptr;
+
+	//自身の解放準備
+	Rect::PreparationLibrate();
+}
+
 void ComponentRect::StartNewLine()
 {
 	startDrawY += mojiHeight + lineSpace;	//文字の大きさと行間分足す

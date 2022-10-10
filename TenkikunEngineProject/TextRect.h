@@ -13,6 +13,8 @@ class TextRect : public Rect
 
 		virtual void Draw();
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		std::string text;	//テキスト
 };

@@ -84,6 +84,9 @@
     <Filter Include="ソース ファイル\window\menuList">
       <UniqueIdentifier>{30ac303d-1bdb-45cb-80b0-b4b31adc81cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\pointer">
+      <UniqueIdentifier>{420e8ea0-fbd4-4add-a78f-d4cad339be85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -194,9 +197,6 @@
     <ClCompile Include="ScrollRect.cpp">
       <Filter>ソース ファイル\window\rect</Filter>
     </ClCompile>
-    <ClCompile Include="FileIcon.cpp">
-      <Filter>ソース ファイル\window\text</Filter>
-    </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>ソース ファイル\string</Filter>
     </ClCompile>
@@ -292,6 +292,12 @@
     </ClCompile>
     <ClCompile Include="MenuList.cpp">
       <Filter>ソース ファイル\window\menuList</Filter>
+    </ClCompile>
+    <ClCompile Include="Librate.cpp">
+      <Filter>ソース ファイル\pointer</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIcon.cpp">
+      <Filter>ソース ファイル\window\project\icon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -507,6 +513,9 @@
     </ClInclude>
     <ClInclude Include="MenuList.h">
       <Filter>ソース ファイル\window\menuList</Filter>
+    </ClInclude>
+    <ClInclude Include="Librate.h">
+      <Filter>ソース ファイル\pointer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

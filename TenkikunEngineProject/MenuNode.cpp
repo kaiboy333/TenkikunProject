@@ -47,9 +47,10 @@ MenuNode::MenuNode(float startX, float startY, std::string element, MenuList* pa
 		}
 	}));
 
-	//マウスを押した瞬間なら
+	//マウスを押したなら
 	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
-		if (WindowManager::GetMenuList()) {
+		//WindowManagerにリストがあり、このノードにメニューリストがないなら
+		if (WindowManager::GetMenuList() && !GetChildMenuList()) {
 			//メニューリストを解除
 			WindowManager::SetMenuList(nullptr);
 		}
@@ -79,7 +80,7 @@ void MenuNode::Draw()
 		if (arrawImage->GetGH()) {
 			float drawCenterX = startX + width - arrawWidth / 2;
 			float drawCenterY = startY + arrawWidth / 2;
-			DrawRotaGraph3F(drawCenterX, drawCenterY, arrawImage->GetWidth() / 2, arrawImage->GetHeight() / 2, arrawWidth / arrawImage->GetWidth(), arrawWidth / arrawImage->GetHeight(), 0, arrawImage->GetGH(), TRUE);
+			DxLib::DrawRotaGraph3F(drawCenterX, drawCenterY, arrawImage->GetWidth() / 2, arrawImage->GetHeight() / 2, arrawWidth / arrawImage->GetWidth(), arrawWidth / arrawImage->GetHeight(), 0, arrawImage->GetGH(), TRUE);
 		}
 	}
 }
@@ -99,6 +100,11 @@ MenuList* MenuNode::GetChildMenuList()
 
 MenuList* MenuNode::GetParentMenuList() {
 	return parentMenuList;
+}
+
+void MenuNode::PreparationLibrate() {
+	//自身の解放準備
+	TriggerRect::PreparationLibrate();
 }
 
 

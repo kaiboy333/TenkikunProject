@@ -93,9 +93,9 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 	gameobject->transform = gameobject->AddComponent<Transform>();	//Transformをついか
 	TreeNode* node = new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen);
 	//マウスが乗っていたら
-	node->selectedEvents.push_back(std::make_pair(node->GetEventNo(), [node, this, gameobject](void) {
-		//選択されていてバックスペースを押したら
-		if (node->GetIsSelected() && Input::GetKeyDown(Input::KeyCode::BACK_SPACE, false)) {
+	node->mouseOnEvents.push_back(std::make_pair(node->GetEventNo(), [node, this, gameobject](void) {
+		//選択されていて右クリックを押したら
+		if (node->GetIsSelected() && Input::GetMouseButtonDown(Input::MouseCode::Mouse_Right, false)) {
 			//ゲームオブジェクトを削除
 			this->Destroy(gameobject);
 		}

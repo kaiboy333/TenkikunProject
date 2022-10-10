@@ -23,6 +23,8 @@ class MenuNode : public TriggerRect
 
 		MenuList* GetParentMenuList();
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		MenuList* childMenuList = nullptr;
 

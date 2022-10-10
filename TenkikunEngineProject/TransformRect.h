@@ -13,7 +13,9 @@ class TransformRect : public ComponentRect
 
 		virtual void Draw() override;
 
-		virtual void RemoveAllTriggerRect() override;
+		//virtual void RemoveAllTriggerRect() override;
+
+		virtual void PreparationLibrate() override;
 
 	private:
 		vector<TextBox*> textBoxes;

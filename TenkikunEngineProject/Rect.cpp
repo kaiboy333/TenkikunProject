@@ -99,3 +99,8 @@ Rect* Rect::GetCrossRect(Rect* r1, Rect* r2)
 	return new Rect(minPoint.x, minPoint.y, width, height);
 
 }
+
+void Rect::PreparationLibrate()
+{
+	
+}

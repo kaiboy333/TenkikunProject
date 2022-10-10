@@ -26,32 +26,24 @@ void WindowManager::Update()
 	}
 
 	//クリックしたとき
-	if (Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, canUseGameWnd)) {
+	if (Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, false)) {
 		//ひとまず選択を解除
 		ClearSelectedTriggerRect();
-		
-		//Vector3 mousePos = Input::GetMousePosition();
-		//bool mouseInGameWnd = gameWindow->IsPointIn2(mousePos.x, mousePos.y);
-		////反応する画面を切り替えるとき
-		//if (mouseInGameWnd && !canUseGameWnd || !mouseInGameWnd && canUseGameWnd) {
-		//	//boolを逆に
-		//	canUseGameWnd = !canUseGameWnd;
-		//	return;
-		//}
-
-		////ウィンドウグループが前のウィンドウグループとは違うなら
-		//if ((typeid(*parentWindow) == typeid(GameWindow)) != canUseGameWnd) {
-		//	//ウィンドウがゲーム画面ならゲーム画面のみ使える
-		//	canUseGameWnd = (typeid(*parentWindow) == typeid(GameWindow));
-		//}
+		//return;
 	}
 
-	//if (typeid(*activeWindow) == typeid(GameWindow) && canUseGameWnd || !(typeid(*activeWindow) == typeid(GameWindow)) && !canUseGameWnd) {
+	Vector3 mousePos = Input::GetMousePosition();
+	bool isOnGameWnd = gameWindow->IsPointIn2(mousePos.x, mousePos.y);
+
+	if (canUseGameWnd && !isOnGameWnd && Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, true) || !canUseGameWnd && isOnGameWnd && Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, false)) {
+		canUseGameWnd = !canUseGameWnd;
+		return;
+	}
+
 	if (!canUseGameWnd) {
 		//イベントチェック
 		EventCheck();
 	}
-	//}
 
 	//Ctrl + Sを押したら
 	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL, false) && Input::GetKeyDown(Input::KeyCode::S, false)) {
@@ -159,10 +151,10 @@ void WindowManager::SetMenuList(MenuList* menuList)
 {
 	//前のがあるなら
 	if (WindowManager::menuList) {
-		//前のTriggerRectを削除
-		//前のを解放
-
-		//前回のノードを忘れる
+		//前の解放準備
+		WindowManager::menuList->PreparationLibrate();
+		//解放
+		delete(WindowManager::menuList);
 		MenuNode::selectedMenuNode = nullptr;
 	}
 	//新しいのをセット

@@ -96,3 +96,8 @@ string TextBox::GetText()
 {
 	return text;
 }
+
+void TextBox::PreparationLibrate()
+{
+	TriggerRect::PreparationLibrate();
+}

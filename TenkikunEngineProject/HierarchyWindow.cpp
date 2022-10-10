@@ -13,26 +13,20 @@ HierarchyWindow::HierarchyWindow() : Window(0, 0, 300, 500)
 
 		MenuList* menuList1 = new MenuList(menuNode0_0->startX + menuNode0_0->width, menuNode0_0->startY, {"Create Empty", "Create Square", "Create Circle"});
 		MenuNode* menuNode1_0 = menuList1->FindNode("Create Empty");
-		menuNode1_0->onClickEvents.push_back(std::make_pair(menuNode1_0->GetEventNo(), []() {
+		menuNode1_0->mouseClickDownEvents.insert(menuNode1_0->mouseClickDownEvents.begin(), std::make_pair(menuNode1_0->GetEventNo(), []() {
 			SceneManager::GetNowScene()->CreateEmpty();
 		}));
 		MenuNode* menuNode1_1 = menuList1->FindNode("Create Square");
-		menuNode1_1->onClickEvents.push_back(std::make_pair(menuNode1_1->GetEventNo(), []() {
+		menuNode1_1->mouseClickDownEvents.insert(menuNode1_1->mouseClickDownEvents.begin(), std::make_pair(menuNode1_1->GetEventNo(), []() {
 			SceneManager::GetNowScene()->CreateSquare();
 		}));
 		MenuNode* menuNode1_2 = menuList1->FindNode("Create Circle");
-		menuNode1_2->onClickEvents.push_back(std::make_pair(menuNode1_2->GetEventNo(), []() {
+		menuNode1_2->mouseClickDownEvents.insert(menuNode1_2->mouseClickDownEvents.begin(), std::make_pair(menuNode1_2->GetEventNo(), []() {
 			SceneManager::GetNowScene()->CreateCircle();
 		}));
 		//メニューノードにメニューリストをセット
 		menuNode0_0->SetChildMenuList(menuList1);
 
-	}));
-
-	//マウスを押した瞬間
-	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
-		//ゲーム画面が使えるように
-		WindowManager::canUseGameWnd = false;
 	}));
 }
 

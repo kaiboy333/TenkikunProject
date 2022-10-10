@@ -4,12 +4,6 @@
 InspectorWindow::InspectorWindow() : Window(1000, 0, 300, 800)
 {
 	nameRect = new TextRect(startX, startY, "");
-
-	//マウスを押した瞬間
-	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
-		//ゲーム画面が使えるように
-		WindowManager::canUseGameWnd = false;
-	}));
 }
 
 void InspectorWindow::Update()
@@ -39,7 +33,11 @@ void InspectorWindow::SetGameObject(GameObject* gameobject)
 {
 	this->gameobject = gameobject;	//ゲームオブジェクトセット
 	for (ComponentRect* componentRect : componentRects) {
-		componentRect->RemoveAllTriggerRect();	//ComponentRectで作成したTriggerを削除
+		//ComponentRectの解放準備
+		componentRect->PreparationLibrate();
+		//解放
+		delete(componentRect);
+		componentRect = nullptr;
 	}
 	componentRects.clear();	//リスト初期化
 	Init();	//リストセット

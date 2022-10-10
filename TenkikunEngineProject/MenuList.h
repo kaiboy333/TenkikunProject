@@ -18,6 +18,8 @@ class MenuList : public Rect
 
 		MenuNode* FindNode(std::string element);	//このメニューリストの中から探す
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		bool isVisible = true;
 };

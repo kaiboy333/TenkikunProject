@@ -28,3 +28,8 @@ void Window::Draw()
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
 
 }
+
+void Window::PreparationLibrate()
+{
+	TriggerRect::PreparationLibrate();
+}

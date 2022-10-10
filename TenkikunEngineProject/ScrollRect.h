@@ -19,6 +19,8 @@ class ScrollRect : public TriggerRect
 
 		void InitScrollPos();	//スクロール位置リセット
 
+		virtual void PreparationLibrate() override;
+
 	protected:
 		std::vector<TriggerRect*> triggerRects;	//スクロールで動かすTriggerRect
 };

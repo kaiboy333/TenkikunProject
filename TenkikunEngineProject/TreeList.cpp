@@ -204,4 +204,7 @@ void TreeList::PreparationLibrate()
 {
 	//ƒm[ƒh‚ğ‚·‚×‚Ä‰ğ•ú
 	Delete(GetRoot()->GetElement());
+
+	//©g‚Ì‰ğ•ú€”õ
+	ScrollRect::PreparationLibrate();
 }

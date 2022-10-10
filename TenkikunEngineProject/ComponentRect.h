@@ -20,7 +20,9 @@ class ComponentRect : public Rect
 
 		virtual void Draw();
 
-		virtual void RemoveAllTriggerRect() = 0;	//自身が作ったTriggerRectをすべて削除
+		//virtual void RemoveAllTriggerRect() = 0;	//自身が作ったTriggerRectをすべて削除
+
+		virtual void PreparationLibrate() override;
 
 	protected:
 		float rightStartDrawX = startX + width * 2 / 5;	//右側の部分の描画開始位置X

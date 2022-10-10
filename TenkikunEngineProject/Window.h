@@ -14,5 +14,7 @@ class Window : public TriggerRect
 
 		virtual void Draw();	//•`‰æ
 
+		virtual void PreparationLibrate();
+
 	private:
 };

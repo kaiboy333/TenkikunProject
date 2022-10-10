@@ -128,10 +128,28 @@ void TransformRect::Draw()
 	}
 }
 
-void TransformRect::RemoveAllTriggerRect()
+void TransformRect::PreparationLibrate()
 {
-	//テキストボックス削除
+	//テキストボックス
 	for (TextBox* textBox : textBoxes) {
-		WindowManager::RemoveTriggerRect(textBox);
+		//テキストボックスの解放準備
+		textBox->PreparationLibrate();
+		//解放
+		delete(textBox);
+		textBox = nullptr;
 	}
+	textBoxes.clear();
+
+	//TextRect
+	for (TextRect* textRect : textRects) {
+		//TextRectの解放準備
+		textRect->PreparationLibrate();
+		//解放
+		delete(textRect);
+		textRect = nullptr;
+	}
+	textRects.clear();
+
+	//自身の解放準備
+	ComponentRect::PreparationLibrate();
 }

@@ -7,11 +7,6 @@
 
 ProjectWindow::ProjectWindow() : Window(0, 500, 1000, 300)
 {
-	//マウスを押した瞬間
-	mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
-		//ゲーム画面が使えるように
-		WindowManager::canUseGameWnd = false;
-	}));
 }
 
 void ProjectWindow::Init()
@@ -86,4 +81,22 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path path)
 			}
 		}
 	}
+}
+
+void ProjectWindow::PreparationLibrate()
+{
+	//TreeListの解放準備
+	treeList->PreparationLibrate();
+	//解放
+	delete(treeList);
+	treeList = nullptr;
+
+	//FilePrintRectの解放準備
+	filePrintRect->PreparationLibrate();
+	//解放
+	delete(filePrintRect);
+	filePrintRect = nullptr;
+
+	//自身の解放準備
+	Window::PreparationLibrate();
 }

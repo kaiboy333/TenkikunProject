@@ -144,4 +144,15 @@ void TriggerRect::PreparationLibrate()
 {
 	//WindowManager‚©‚çíœ
 	WindowManager::RemoveTriggerRect(this);
+
+	//Rect‚Ì‰ğ•ú€”õ
+	if (activeRect) {
+		activeRect->PreparationLibrate();
+		//‰ğ•ú
+		delete(activeRect);
+		activeRect = nullptr;
+	}
+
+	//©g‚Ì‰ğ•ú€”õ
+	Rect::PreparationLibrate();
 }
