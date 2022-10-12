@@ -209,7 +209,7 @@ void ProjectFileManager::LoadFromKumoFile(std::filesystem::path kumoPath)
 		int row = 0;
 
 		//guidを取得
-		std::string guid = MyString::Split(lines[row++], ' ')[1];
+		std::string guid = MyString::Split(lines[row++], " ")[1];
 
 		Info* info = nullptr;
 
@@ -234,7 +234,7 @@ std::string ProjectFileManager::GetGUIDFromKumoFile(std::filesystem::path kumoPa
 		std::vector<std::string> lines = MyString::GetLines(kumoPath);
 
 		//guidを取得
-		return MyString::Split(lines[0], ' ')[1];
+		return MyString::Split(lines[0], " ")[1];
 	}
 
 	return "0";
@@ -458,50 +458,50 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 		int fileID;
 
 		//ファイルIDを取得
-		fileID = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+		fileID = std::stoi(MyString::Split(lines[row++], " ")[1]);
 
 		//GameObjectなら
 		if (className == typeid(GameObject).name()) {
 			//クラス生成
 			GameObject* gameobject = static_cast<GameObject*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, scene->CreateEmpty(false)));
 			//名前取得
-			gameobject->SetName(MyString::Split(lines[row++], ' ')[1]);
+			gameobject->SetName(MyString::Split(lines[row++], " ")[1]);
 			//コンポーネントの数取得
-			int componentNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			int componentNum = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			//飛ばす
 			row += componentNum;
 		}
 		//Transformなら
 		else if (className == typeid(Transform).name()) {
 			//ゲームオブジェクトのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//ゲームオブジェクトを取得
 			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 			//Transformを取得
 			Transform* transform = gameobject->transform;
 
 			//localPositionをセット
-			std::vector<std::string> words = MyString::Split(lines[row++], ' ');
+			std::vector<std::string> words = MyString::Split(lines[row++], " ");
 			Vector3 localPos = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
 			transform->localPosition = localPos;
 
 			//localRotationをセット
-			words = MyString::Split(lines[row++], ' ');
+			words = MyString::Split(lines[row++], " ");
 			Vector3 localRote = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
 			transform->localRotation = localRote;
 
 			//localScaleをセット
-			words = MyString::Split(lines[row++], ' ');
+			words = MyString::Split(lines[row++], " ");
 			Vector3 localScale = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
 			transform->localScale = localScale;
 
 			//子の数セット
-			int childNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			int childNum = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			//飛ばす
 			row += childNum;
 
 			//親をセット
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			Transform* parent = nullptr;
 			//ファイルIDが0でないなら
 			if (fileID != 0) {
@@ -514,7 +514,7 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 		//Cameraなら
 		else if (className == typeid(Camera).name()) {
 			//ゲームオブジェクトのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//ゲームオブジェクトを取得
 			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 			//Cameraを作成、取得
@@ -526,22 +526,22 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 		//ImageRendererなら
 		else if (className == typeid(ImageRenderer).name()) {
 			//ゲームオブジェクトのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//ゲームオブジェクトを取得
 			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 			//ImageRendererを作成、取得
 			ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();
 
 			//isFlipXを取得
-			imageRenderer->isFlipX = (bool)(std::stoi(MyString::Split(lines[row++], ' ')[1]));
+			imageRenderer->isFlipX = (bool)(std::stoi(MyString::Split(lines[row++], " ")[1]));
 
 			//isFlipYを取得
-			imageRenderer->isFlipY = (bool)(std::stoi(MyString::Split(lines[row++], ' ')[1]));
+			imageRenderer->isFlipY = (bool)(std::stoi(MyString::Split(lines[row++], " ")[1]));
 
 			//imageのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row], " ")[2]);
 			//imageのguidを取得
-			guid = MyString::Split(lines[row++], ' ')[4];
+			guid = MyString::Split(lines[row++], " ")[4];
 			Image* image = nullptr;
 			//fileID、guidともに0ではないなら
 			if (fileID != 0 && guid != "0") {
@@ -554,62 +554,62 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 		//Animatorなら
 		else if (className == typeid(Animator).name()) {
 			//ゲームオブジェクトのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//ゲームオブジェクトを取得
 			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 			//Animatorを作成、取得
 			Animator* animator = gameobject->AddComponent<Animator>();
 
 			//acのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row], " ")[2]);
 			//acのguidを取得
-			guid = MyString::Split(lines[row++], ' ')[4];
+			guid = MyString::Split(lines[row++], " ")[4];
 			//acを取得、リストにも登録
 			AnimatorController* ac = static_cast<AnimatorController*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[guidAndPath[guid]]));
 			//acをセット
 			animator->ac = ac;
 
 			//nowStateのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//nowStateをセット
 			animator->nowState = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
 		}
 		else if (className == typeid(BoxCollider).name()) {
 			//ゲームオブジェクトのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//ゲームオブジェクトを取得
 			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 			//BoxColliderを作成、取得
 			BoxCollider* boxCollider = gameobject->AddComponent<BoxCollider>();
 
 			//offsetを取得
-			std::vector<std::string> words = MyString::Split(lines[row++], ' ');
+			std::vector<std::string> words = MyString::Split(lines[row++], " ");
 			Vector3 offset = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
 			//offsetをセット
 			boxCollider->offset = offset;
 
 			//sizeを取得
-			words = MyString::Split(lines[row++], ' ');
+			words = MyString::Split(lines[row++], " ");
 			Vector3 size = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
 			//sizeをセット
 			boxCollider->size = size;
 		}
 		else if (className == typeid(CircleCollider).name()) {
 			//ゲームオブジェクトのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//ゲームオブジェクトを取得
 			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 			//BoxColliderを作成、取得
 			CircleCollider* circleCollider = gameobject->AddComponent<CircleCollider>();
 
 			//offsetを取得
-			std::vector<std::string> words = MyString::Split(lines[row++], ' ');
+			std::vector<std::string> words = MyString::Split(lines[row++], " ");
 			Vector3 offset = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
 			//offsetをセット
 			circleCollider->offset = offset;
 
 			//radiousをセット
-			circleCollider->radious = std::stof(MyString::Split(lines[row++], ' ')[1]);
+			circleCollider->radious = std::stof(MyString::Split(lines[row++], " ")[1]);
 		}
 		else if (className == typeid(MonoBehaviour).name()) {
 		//	//ゲームオブジェクトのファイルIDを取得
@@ -788,7 +788,7 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 		std::string className = lines[row++];
 
 		//ファイルIDを取得
-		fileID = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+		fileID = std::stoi(MyString::Split(lines[row++], " ")[1]);
 
 		//AnimatorControllerなら
 		if (className == typeid(AnimatorController).name()) {
@@ -796,10 +796,10 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 			AnimatorController* ac = static_cast<AnimatorController*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[acPath]));
 
 			//animationparamatersの数を取得
-			int paramaterNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			int paramaterNum = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			for (int i = 0; i < paramaterNum; i++) {
 				//paramaterのファイルIDを取得
-				fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+				fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 				//paramaterを取得
 				AnimationParamater* paramater = static_cast<AnimationParamater*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationParamater()));
 				//paramaterをリストに追加
@@ -807,10 +807,10 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 			}
 
 			//statesの数を取得
-			int stateNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			int stateNum = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			for (int i = 0; i < stateNum; i++) {
 				//stateのファイルIDを取得
-				fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+				fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 				//stateを取得
 				AnimationState* state = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
 				//stateをリストに追加
@@ -823,19 +823,19 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 			AnimationParamater* paramater = static_cast<AnimationParamater*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationParamater()));
 
 			//名前をセット
-			paramater->name = MyString::Split(lines[row++], ' ')[1];
+			paramater->name = MyString::Split(lines[row++], " ")[1];
 
 			//typeをセット
-			paramater->type = (AnimationParamater::Type)std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			paramater->type = (AnimationParamater::Type)std::stoi(MyString::Split(lines[row++], " ")[1]);
 
 			//intValueをセット
-			paramater->intValue = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			paramater->intValue = std::stoi(MyString::Split(lines[row++], " ")[1]);
 
 			//floatValueを書き込む
-			paramater->floatValue = std::stof(MyString::Split(lines[row++], ' ')[1]);
+			paramater->floatValue = std::stof(MyString::Split(lines[row++], " ")[1]);
 
 			//boolValueを書き込む
-			paramater->boolValue = (bool)std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			paramater->boolValue = (bool)std::stoi(MyString::Split(lines[row++], " ")[1]);
 		}
 		//AnimationStateなら
 		else if (className == typeid(AnimationState).name()) {
@@ -843,25 +843,25 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 			AnimationState* state = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
 
 			//animationのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row], " ")[2]);
 			//animationのguidを取得
-			guid = MyString::Split(lines[row++], ' ')[4];
+			guid = MyString::Split(lines[row++], " ")[4];
 			//animationセット
 			//std::filesystem::path path = guidAndPath[guid];
 			//Info* info = pathAndInfo[path];
 			state->animation = static_cast<Animation*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[guidAndPath[guid]]));
 
 			//名前をセット
-			state->name = MyString::Split(lines[row++], ' ')[1];
+			state->name = MyString::Split(lines[row++], " ")[1];
 
 			//speedをセット
-			state->speed = std::stof(MyString::Split(lines[row++], ' ')[1]);
+			state->speed = std::stof(MyString::Split(lines[row++], " ")[1]);
 
 			//transitionsの数を取得
-			int transitionNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			int transitionNum = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			for (int i = 0; i < transitionNum; i++) {
 				//transitionのファイルIDを取得
-				fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+				fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 				//transitionを取得
 				AnimationTransition* transition = static_cast<AnimationTransition*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationTransition()));
 				//transitionをセット
@@ -874,20 +874,20 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 			AnimationTransition* transition = static_cast<AnimationTransition*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationTransition()));
 
 			//fromStateのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//fromStateをセット
 			transition->fromState = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
 
 			//toStateのファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//toStateをセット
 			transition->toState = static_cast<AnimationState*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationState()));
 
 			//conditionsの数を取得
-			int conditionNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			int conditionNum = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			for (int i = 0; i < conditionNum; i++) {
 				//conditionのファイルIDを取得
-				fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
+				fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 				//conditionを取得
 				AnimationCondition* condition = static_cast<AnimationCondition*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationCondition()));
 				//conditionをセット
@@ -900,13 +900,13 @@ void ProjectFileManager::LoadFromAnimatorControllerFile(std::filesystem::path ac
 			AnimationCondition* condition = static_cast<AnimationCondition*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, new AnimationCondition()));
 
 			//nameをセット
-			condition->name = MyString::Split(lines[row++], ' ')[1];
+			condition->name = MyString::Split(lines[row++], " ")[1];
 
 			//modeをセット
-			condition->mode = (AnimationCondition::Mode)std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			condition->mode = (AnimationCondition::Mode)std::stoi(MyString::Split(lines[row++], " ")[1]);
 
 			//valueをセット
-			condition->value = std::stof(MyString::Split(lines[row++], ' ')[1]);
+			condition->value = std::stof(MyString::Split(lines[row++], " ")[1]);
 		}
 	}
 }
@@ -971,7 +971,7 @@ void ProjectFileManager::LoadFromAnimationFile(std::filesystem::path animationPa
 		//クラス名がアニメーションなら
 		if (className == typeid(Animation).name()) {
 			//ファイルIDを取得
-			fileID = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			//アニメーションを取得
 			Animation* animation = static_cast<Animation*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[animationPath]));
 
@@ -982,15 +982,15 @@ void ProjectFileManager::LoadFromAnimationFile(std::filesystem::path animationPa
 			//animation->path = animationPath;
 
 			//animationKeyのマップの数を取得
-			int animationKeyNum = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			int animationKeyNum = std::stoi(MyString::Split(lines[row++], " ")[1]);
 			for (int i = 0; i < animationKeyNum; i++) {
 				row++;	//1行飛ばす
 				//フレーム数を取得
-				int time = std::stoi(MyString::Split(lines[row++], ' ')[1]);
+				int time = std::stoi(MyString::Split(lines[row++], " ")[1]);
 				//imageのファイルIDを取得
-				fileID = std::stoi(MyString::Split(lines[row], ' ')[2]);
+				fileID = std::stoi(MyString::Split(lines[row], " ")[2]);
 				//imageのguidを取得
-				std::string guid = MyString::Split(lines[row++], ' ')[4];
+				std::string guid = MyString::Split(lines[row++], " ")[4];
 				//imageを取得
 				Image* image = static_cast<Image*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, pathAndInfo[guidAndPath[guid]]));
 				//timeとimage(animationKey)をセット
@@ -998,7 +998,7 @@ void ProjectFileManager::LoadFromAnimationFile(std::filesystem::path animationPa
 			}
 
 			//isLoopをセット
-			animation->isLoop = (bool)std::stoi(MyString::Split(lines[row++], ' ')[1]);
+			animation->isLoop = (bool)std::stoi(MyString::Split(lines[row++], " ")[1]);
 
 		}
 	}

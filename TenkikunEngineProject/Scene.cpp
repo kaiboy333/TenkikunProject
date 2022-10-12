@@ -328,7 +328,7 @@ void Scene::Destroy(GameObject* gameobject)
 	}
 
 	//TreeList‚Ì—v‘f‚àíœ
-	treeList->Delete(gameobject->GetName());
+	treeList->Delete(gameobject->GetPath());
 }
 
 void Scene::SetNowCamera(Camera* camera)

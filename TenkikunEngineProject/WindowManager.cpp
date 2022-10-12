@@ -50,31 +50,6 @@ void WindowManager::Update()
 		//シーンをセーブ
 		SceneManager::SaveScene();
 	}
-	//Ctrl + Fを押したら
-	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL, false) && Input::GetKeyDown(Input::KeyCode::F, false)) {
-		//スクリプトを作成
-		std::vector<std::filesystem::path> scriptPathes;
-		//.h
-		scriptPathes.push_back(std::filesystem::path(ProjectFileManager::currentPath.string() + "\\Script.h"));
-		//.cpp
-		scriptPathes.push_back(std::filesystem::path(ProjectFileManager::currentPath.string() + "\\Script.cpp"));
-		for (auto& scriptPath : scriptPathes) {
-			//ファイルが存在しないなら
-			if (!std::filesystem::exists(scriptPath)) {
-				//元のファイルタイプを確認して大丈夫そうなら
-				if (ProjectFileManager::IsFileType(scriptPath)) {
-					//ファイルを作成
-					std::ofstream ofs(scriptPath);
-					//ファイルをチェック
-					ProjectFileManager::CheckAddFile(scriptPath);
-					//ツリーリストにフォルダ名を追加
-					WindowManager::projectWindow->SetFileChildrenToTreeList(scriptPath);
-					//フォルダ内表示更新
-					WindowManager::projectWindow->filePrintRect->LoadFoler();
-				}
-			}
-		}
-	}
 }
 
 vector<Window*> WindowManager::GetWindows()

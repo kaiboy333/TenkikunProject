@@ -14,10 +14,6 @@ void ProjectWindow::Init()
 	//ツリーリスト作成
 	treeList = new TreeList(startX, startY, WindowManager::hierarchyWindow->width, height, false, true, ProjectFileManager::assetFilePath.filename().string());
 
-	//vector<filesystem::path> pathes;
-
-	//pathes.push_back(ProjectFileManager::assetFilePath);
-
 	//ツリーリストにパスを追加
 	SetFileChildrenToTreeList(ProjectFileManager::assetFilePath);
 
@@ -72,7 +68,8 @@ void ProjectWindow::SetFileChildrenToTreeList(std::filesystem::path path)
 				//親のパスからアセットの上の部分を除いたものを取得
 				string parentPathName = path.parent_path().string().substr(ProjectFileManager::assetParentPathName.length());
 				//親ディレクトリの名前があるノードに新しくノードを追加
-				treeList->Add(node, treeList->FindNode(MyString::Split(parentPathName, '\\')));
+				//treeList->Add(node, treeList->FindNode(MyString::Split(parentPathName, "\\")));
+				treeList->Add(node, treeList->FindNode(parentPathName));
 			}
 
 			//子をリストに追加

@@ -25,7 +25,7 @@ void Transform::SetParent(Transform* newParent, bool isChangeLocal)
 	TreeList* treeList = SceneManager::GetNowScene()->treeList;
 
 	//TreeListから自身の名前削除
-	treeList->Delete(gameobject->GetName());
+	treeList->Delete(gameobject->GetPath());
 	TreeNode* newNode = new TreeNode(gameobject->GetName(), treeList, true);
 
 	//nullptrで親を消すなら
@@ -39,7 +39,7 @@ void Transform::SetParent(Transform* newParent, bool isChangeLocal)
 		//親に自身を追加
 		newParent->children.push_back(this);
 		//TreeListから新しい親を使って自身の名前追加
-		treeList->Add(newNode, treeList->FindNode(newParent->gameobject->GetName()));
+		treeList->Add(newNode, treeList->FindNode(newParent->gameobject->GetPath()));
 	}
 
 	//親にセット

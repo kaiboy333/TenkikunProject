@@ -15,6 +15,11 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 		WindowManager::SetSelectedTriggerRect(this);
 	}));
 
+	mouseRightClickEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		//選択対象にする
+		WindowManager::SetSelectedTriggerRect(this);
+	}));
+
 	button = new WindowButton(startX - height, startY, height, height);	//ボタン作成
 	//画像セット
 	button->image = treeList->images[isOpen];

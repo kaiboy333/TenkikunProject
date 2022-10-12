@@ -17,6 +17,43 @@ FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight
 		//クリックしたときに自身を選択中にする
 		WindowManager::SetSelectedTriggerRect(this);
 	}));
+
+	//右クリックを押したら
+	mouseRightClickEvents.push_back(std::make_pair(GetEventNo(), [this](void) {
+		//選択対象にする
+		WindowManager::SetSelectedTriggerRect(this);
+
+		Vector3 mousePos = Input::GetMousePosition();
+
+		MenuList* menuList0 = new MenuList(mousePos.x, mousePos.y, { "Rename", "Delete", "B", "C" });
+		MenuNode* menuNode0_0 = menuList0->FindNode("Rename");
+		menuNode0_0->mouseClickDownEvents.insert(menuNode0_0->mouseClickDownEvents.begin(), std::make_pair(menuNode0_0->GetEventNo(), [this]() {
+
+		}));
+		MenuNode* menuNode0_1 = menuList0->FindNode("Delete");
+		menuNode0_1->mouseClickDownEvents.insert(menuNode0_1->mouseClickDownEvents.begin(), std::make_pair(menuNode0_1->GetEventNo(), [this]() {
+			//ファイルが存在するなら
+			if (std::filesystem::exists(this->path)) {
+				//ファイル(フォルダ)を削除
+				std::filesystem::remove_all(this->path);
+				//TreeListからも削除
+				WindowManager::projectWindow->treeList->Delete(this->path.string().substr(ProjectFileManager::assetParentPathName.length()));
+
+				//雲ファイルもあるなら
+				if (std::filesystem::exists(this->path.string() + ".kumo")) {
+					//雲ファイル削除
+					std::filesystem::remove(this->path.string() + ".kumo");
+					//TreeListからも削除
+					WindowManager::projectWindow->treeList->Delete(std::string(this->path.string() + ".kumo").substr(ProjectFileManager::assetParentPathName.length()));
+				}
+
+				//filePrintの表示更新
+				WindowManager::projectWindow->filePrintRect->LoadFoler();
+			}
+		}));
+		//WindowManagerにセット
+		WindowManager::SetMenuList(menuList0);
+	}));
 }
 
 void FileIcon::Draw()

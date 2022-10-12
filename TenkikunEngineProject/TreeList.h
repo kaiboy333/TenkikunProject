@@ -30,7 +30,7 @@ public:
 	void Delete(std::string e);
 
 	TreeNode* FindNode(std::string e);
-	TreeNode* FindNode(std::vector<std::string> pathes);
+	//TreeNode* FindNode(std::vector<std::string> pathes);
 
 	void Draw();
 

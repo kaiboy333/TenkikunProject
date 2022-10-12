@@ -45,8 +45,6 @@ class TriggerRect : public Rect
 		std::vector<std::pair<int, std::function<void()>>> mouseExitEvents;
 		std::vector<std::pair<int, std::function<void()>>> mouseWheelEvents;
 
-		std::vector<std::pair<int, std::function<void()>>> selectedEvents;
-
 		std::vector<std::pair<int, std::function<void()>>> pushEnterEvents;
 
 		std::vector<std::pair<int, std::function<void()>>> fileDropEvents;

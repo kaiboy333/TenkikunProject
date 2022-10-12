@@ -105,11 +105,6 @@ void TriggerRect::CheckInput()
 			isOn = false;
 		}
 
-		//選択されていたら
-		if (GetIsSelected()) {
-			AddToActiveEvents(selectedEvents);
-		}
-
 		//エンターを押したなら
 		if (Input::GetKeyDown(Input::ENTER, false)) {
 			AddToActiveEvents(pushEnterEvents);

@@ -46,6 +46,8 @@ public:
 
 	void SetName(std::string name);
 	std::string GetName();
+
+	std::string GetPath();	//親などを含めたパスを取得(TreeList用)
 };
 
 template<class T>

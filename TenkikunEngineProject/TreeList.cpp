@@ -1,5 +1,6 @@
 #include "TreeList.h"
 #include "ProjectFileManager.h"
+#include "MyString.h"
 
 TreeList::TreeList(float startX, float startY, float width, float height, bool isFirstOpen, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height)
 {
@@ -80,7 +81,7 @@ TreeNode* TreeList::FindNode(std::string e)
 		TreeNode* node = nodes[0];
 		nodes.erase(nodes.begin());
 
-		if (node->GetElement() == e)
+		if (node->GetPath() == e)
 			return node;
 
 		//子らを追加
@@ -89,37 +90,37 @@ TreeNode* TreeList::FindNode(std::string e)
 	return nullptr;
 }
 
-TreeNode* TreeList::FindNode(std::vector<std::string> pathes)
-{
-	//リストの先頭の要素を取得、削除
-	std::vector<TreeNode*> nodes;
-	nodes.push_back(root);
-
-	int i = 0;
-
-	while (nodes.size() != 0) {
-
-		TreeNode* node = nodes[0];
-		nodes.erase(nodes.begin());
-
-		if (node->GetElement() == pathes[i]) {
-			//次のstringへ
-			i++;
-			//ノードリセット
-			nodes.clear();
-			//最後までたどり着いたら(見つかったら)
-			if (pathes.size() == i) {
-				//見つかったのを返す
-				return node;
-			}
-			//子らを追加
-			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
-		}
-	}
-
-	//見つからなかったらnullを返す
-	return nullptr;
-}
+//TreeNode* TreeList::FindNode(std::vector<std::string> pathes)
+//{
+//	//リストの先頭の要素を取得、削除
+//	std::vector<TreeNode*> nodes;
+//	nodes.push_back(root);
+//
+//	int i = 0;
+//
+//	while (nodes.size() != 0) {
+//
+//		TreeNode* node = nodes[0];
+//		nodes.erase(nodes.begin());
+//
+//		if (node->GetElement() == pathes[i]) {
+//			//次のstringへ
+//			i++;
+//			//ノードリセット
+//			nodes.clear();
+//			//最後までたどり着いたら(見つかったら)
+//			if (pathes.size() == i) {
+//				//見つかったのを返す
+//				return node;
+//			}
+//			//子らを追加
+//			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
+//		}
+//	}
+//
+//	//見つからなかったらnullを返す
+//	return nullptr;
+//}
 
 void TreeList::Draw()
 {
@@ -203,7 +204,7 @@ int TreeList::UpdateNodeAndChildrenNodes(TreeNode* node, int row)
 void TreeList::PreparationLibrate()
 {
 	//ノードをすべて解放
-	Delete(GetRoot()->GetElement());
+	Delete(GetRoot()->GetPath());
 
 	//自身の解放準備
 	ScrollRect::PreparationLibrate();

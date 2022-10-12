@@ -46,7 +46,7 @@ void GameObject::SetTreeNodeName(std::string name)
 {
 	//TreeListの名前を変える
 	TreeList* treeList = SceneManager::GetNowScene()->treeList;
-	TreeNode* node = treeList->FindNode(this->name);	//元の名前で探す
+	TreeNode* node = treeList->FindNode(this->GetPath());	//元の名前で探す
 	if (node) {
 		//名前セット
 		node->SetElement(name);
@@ -80,4 +80,29 @@ void GameObject::SetName(std::string name)
 std::string GameObject::GetName()
 {
 	return name;
+}
+
+std::string GameObject::GetPath()
+{
+	Transform* transform = this->transform;
+	string path = "";
+
+	//ノードがnullになるまで(ルートの親がnullなのでそこまで)
+	for (int i = 0; transform; i++) {
+		//最初以外は
+		if (i != 0) {
+			//\\を追加
+			path = "\\" + path;
+		}
+		//ノードの名前を追加
+		path = transform->gameobject->name + path;
+		//ノードの親を参照するようにする
+		transform = transform->parent;
+	}
+
+	//最後にシーンの名前を追加
+	path = SceneManager::GetNowScene()->GetName() + "\\" + path;
+
+	return path;
+
 }

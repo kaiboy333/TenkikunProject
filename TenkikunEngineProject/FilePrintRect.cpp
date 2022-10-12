@@ -21,6 +21,64 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 			MakeDuplicatedFile(path);	//ファイルを複製して指定のパスに置く
 		}
 	}));
+
+	//右クリックを押したら
+	mouseRightClickEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		Vector3 mousePos = Input::GetMousePosition();
+
+		MenuList* menuList0 = new MenuList(mousePos.x, mousePos.y, { "Create", "Delete", "B", "C" });
+		//WindowManagerにセット
+		WindowManager::SetMenuList(menuList0);
+
+		MenuNode* menuNode0_0 = menuList0->FindNode("Create");
+		MenuList* menuList1 = new MenuList(menuNode0_0->startX + menuNode0_0->width, menuNode0_0->startY, { "Folder", "C++ Script" });
+		MenuNode* menuNode1_0 = menuList1->FindNode("Folder");
+		menuNode1_0->mouseClickDownEvents.insert(menuNode1_0->mouseClickDownEvents.begin(), std::make_pair(menuNode1_0->GetEventNo(), []() {
+			//フォルダを作成
+			std::filesystem::path folderPath = ProjectFileManager::currentPath.string() + "\\Folder";
+			//ファイルが存在しないなら
+			if (!std::filesystem::exists(folderPath)) {
+				////元のファイルタイプを確認して大丈夫そうなら
+				//if (ProjectFileManager::IsFileType(folderPath)) {
+					//フォルダを作成
+					std::filesystem::create_directory(folderPath);
+					//ファイルをチェック
+					ProjectFileManager::CheckAddFile(folderPath);
+					//ツリーリストにフォルダ名を追加
+					WindowManager::projectWindow->SetFileChildrenToTreeList(folderPath);
+					//フォルダ内表示更新
+					WindowManager::projectWindow->filePrintRect->LoadFoler();
+				//}
+			}
+		}));
+		MenuNode* menuNode1_1 = menuList1->FindNode("C++ Script");
+		menuNode1_1->mouseClickDownEvents.insert(menuNode1_1->mouseClickDownEvents.begin(), std::make_pair(menuNode1_1->GetEventNo(), []() {
+			//スクリプトを作成
+			std::vector<std::filesystem::path> scriptPathes;
+			//.h
+			scriptPathes.push_back(std::filesystem::path(ProjectFileManager::currentPath.string() + "\\Script.h"));
+			//.cpp
+			scriptPathes.push_back(std::filesystem::path(ProjectFileManager::currentPath.string() + "\\Script.cpp"));
+			for (auto& scriptPath : scriptPathes) {
+				//ファイルが存在しないなら
+				if (!std::filesystem::exists(scriptPath)) {
+					//元のファイルタイプを確認して大丈夫そうなら
+					if (ProjectFileManager::IsFileType(scriptPath)) {
+						//ファイルを作成
+						std::ofstream ofs(scriptPath);
+						//ファイルをチェック
+						ProjectFileManager::CheckAddFile(scriptPath);
+						//ツリーリストにフォルダ名を追加
+						WindowManager::projectWindow->SetFileChildrenToTreeList(scriptPath);
+						//フォルダ内表示更新
+						WindowManager::projectWindow->filePrintRect->LoadFoler();
+					}
+				}
+			}
+		}));
+		//メニューノードにメニューリストをセット
+		menuNode0_0->SetChildMenuList(menuList1);
+	}));
 }
 
 void FilePrintRect::Draw()
