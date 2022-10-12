@@ -12,6 +12,27 @@ FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight
 	this->blankHeight = blankHeight;
 	this->path = path;	//対になるファイルのパスをセット
 	fileNameRect = new TextBox(startX + blankWidth - overWidth / 2, startY + blankHeight + iconHeight, iconWidth + overWidth, FontManager::systemFont->GetFontHeight(), false, path.filename().string());	//TextBox作成
+	//エンターキーを押すと
+	fileNameRect->pushEnterEvents.push_back(std::make_pair(fileNameRect->GetEventNo(), [this]() {
+		//変えられないようになる
+		this->fileNameRect->canChange = false;
+		//新しい名前を取得
+		std::string newName = this->fileNameRect->GetText();
+		//前と同じ名前なら終わり
+		if (newName == this->path.filename().string())
+			return;
+		//TreeFileの名前を変更
+		TreeNode* node = WindowManager::projectWindow->treeList->FindNode(this->path.string().substr(ProjectFileManager::assetParentPathName.length()));
+		node->SetElement(newName);
+		//ファイルの名前を変更
+		std::string newFileParentPath = this->path.string().substr(0, this->path.string().length() - this->path.filename().string().length());
+		std::filesystem::rename(this->path, newFileParentPath + newName);
+		//雲ファイルの名前を変更
+		std::filesystem::rename(this->path.string() + ".kumo", newFileParentPath + newName + ".kumo");
+		//パスを変える
+		this->path = newFileParentPath + newName;
+		//loadfile();
+	}));
 
 	this->mouseClickDownEvents.push_back(std::make_pair(GetEventNo(), [this]() {
 		//クリックしたときに自身を選択中にする
@@ -28,7 +49,10 @@ FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight
 		MenuList* menuList0 = new MenuList(mousePos.x, mousePos.y, { "Rename", "Delete", "B", "C" });
 		MenuNode* menuNode0_0 = menuList0->FindNode("Rename");
 		menuNode0_0->mouseClickDownEvents.insert(menuNode0_0->mouseClickDownEvents.begin(), std::make_pair(menuNode0_0->GetEventNo(), [this]() {
-
+			//変更可能にする
+			fileNameRect->canChange = true;
+			//クリックしたのと同じ動作を行う
+			fileNameRect->mouseClickDownEvents[0].second();
 		}));
 		MenuNode* menuNode0_1 = menuList0->FindNode("Delete");
 		menuNode0_1->mouseClickDownEvents.insert(menuNode0_1->mouseClickDownEvents.begin(), std::make_pair(menuNode0_1->GetEventNo(), [this]() {
