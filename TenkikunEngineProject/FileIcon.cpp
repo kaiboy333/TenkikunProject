@@ -126,3 +126,10 @@ void FileIcon::PreparationLibrate()
 	//©g‚Ì€”õ
 	TriggerRect::PreparationLibrate();
 }
+
+std::string FileIcon::GetFileNameNotExtension()
+{
+	std::string fileName = path.filename().string();
+
+	return fileName.substr(0, fileName.length() - path.filename().extension().string().length());
+}

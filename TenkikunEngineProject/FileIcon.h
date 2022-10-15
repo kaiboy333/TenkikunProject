@@ -25,6 +25,8 @@ class FileIcon : public TriggerRect
 
 		virtual void PreparationLibrate() override;
 
+		std::string GetFileNameNotExtension();	//拡張子なしのパスの名前取得
+
 	protected:
 		bool isImageIcon = false;
 };

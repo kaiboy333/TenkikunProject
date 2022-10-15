@@ -92,13 +92,22 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobject->transform = gameobject->AddComponent<Transform>();	//Transformをついか
 	TreeNode* node = new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen);
-	//マウスが乗っていたら
-	node->mouseOnEvents.push_back(std::make_pair(node->GetEventNo(), [node, this, gameobject](void) {
-		//選択されていて右クリックを押したら
-		if (node->GetIsSelected() && Input::GetMouseButtonDown(Input::MouseCode::Mouse_Right, false)) {
-			//ゲームオブジェクトを削除
-			this->Destroy(gameobject);
-		}
+	//右クリックを押したら
+	node->mouseRightClickEvents.push_back(std::make_pair(node->GetEventNo(), [node, this, gameobject](void) {
+		Vector3 mousePos = Input::GetMousePosition();
+
+		MenuList* menuList0 = new MenuList(mousePos.x, mousePos.y, { "Rename(仮)", "Delete", "B", "C" });
+		//WindowManagerにセット
+		WindowManager::SetMenuList(menuList0);
+
+		MenuNode* menuNode0_0 = menuList0->FindNode("Rename");
+		//menuNode0_0->mouseClickDownEvents.insert(menuNode0_0->mouseClickDownEvents.begin(), std::make_pair(menuNode0_0->GetEventNo(), [this, gameobject]() {
+		//	
+		//}));
+		MenuNode* menuNode0_1 = menuList0->FindNode("Delete");
+		menuNode0_1->mouseClickDownEvents.insert(menuNode0_1->mouseClickDownEvents.begin(), std::make_pair(menuNode0_1->GetEventNo(), [this, gameobject]() {
+			Destroy(gameobject);
+		}));
 	}));
 	node->mouseDoubleClickEvents.push_back(std::make_pair(node->GetEventNo(), [node](void) {
 		GameObject* gameobject = GameObject::Find(node->GetElement());	//このノードの名前からゲームオブジェクト取得

@@ -6,6 +6,7 @@
 #include "ImageIcon.h"
 #include "FolderIcon.h"
 #include "ScriptIcon.h"
+#include "SceneIcon.h"
 
 FilePrintRect::FilePrintRect(float startX, float startY, float width, float height) : ScrollRect(startX, startY, width, height, width, height)
 {
@@ -193,7 +194,7 @@ void FilePrintRect::LoadFoler()
 					break;
 				case ProjectFileManager::FileType::Scene:
 					//シーンアイコン作成
-					fileIcon = new FileIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, ProjectFileManager::imageFilePath.string() + "\\Tenkikun.png", childPath);
+					fileIcon = new SceneIcon(iconStartX, iconStartY, iconWidthHeight, iconWidthHeight, 10, 5, ProjectFileManager::imageFilePath.string() + "\\Tenkikun.png", childPath);
 					break;
 				case ProjectFileManager::FileType::None:
 					//何もしない
