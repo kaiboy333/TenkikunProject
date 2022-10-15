@@ -6,6 +6,7 @@
 #include "InspectorWindow.h"
 #include "ProjectWindow.h"
 #include "MenuList.h"
+#include "PlayWindow.h"
 
 class GameWindow;
 class HierarchyWindow;
@@ -18,6 +19,7 @@ class WindowManager : Rect
 		static HierarchyWindow* hierarchyWindow;
 		static InspectorWindow* inspectorWindow;
 		static ProjectWindow* projectWindow;
+		static PlayWindow* playWindow;
 
 		//static Window* activeWindow;
 

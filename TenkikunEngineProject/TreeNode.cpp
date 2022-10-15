@@ -20,16 +20,14 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 		WindowManager::SetSelectedTriggerRect(this);
 	}));
 
-	button = new WindowButton(startX - height, startY, height, height);	//ボタン作成
-	//画像セット
-	button->image = treeList->images[isOpen];
+	button = new WindowButton(startX - height, startY, height, height, treeList->images[isOpen]);	//ボタン作成
 
 	//ボタンをクリックしたら
 	button->onClickEvents.push_back(std::make_pair(button->GetEventNo(), [this, treeList]() {
 		//開いているかの判定を反転させる
 		this->isOpen = !this->isOpen;
 		//画像セット
-		button->image = treeList->images[this->isOpen];
+		button->SetImage(treeList->images[this->isOpen]);
 		//ツリーリスト更新
 		treeList->UpdateNodes();
 	}));

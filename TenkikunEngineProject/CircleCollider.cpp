@@ -18,17 +18,17 @@ CircleCollider::CircleCollider(GameObject* gameobject) : Collider(gameobject)
 void CircleCollider::Draw()
 {
 	if (isHit) {
-		color = GetColor(255, 0, 0);
+		downColor = GetColor(255, 0, 0);
 	}
 	else {
-		color = GetColor(0, 255, 0);
+		downColor = GetColor(0, 255, 0);
 	}
 
 	Vector3 drawPos = GetDrawPos(GetPosition());
 	GameWindow* gameWindow = WindowManager::gameWindow;
 	float zoom = SceneManager::GetNowScene()->GetNowCamera()->zoom;
 
-	DrawOvalAA(drawPos.x, drawPos.y, GetActualRadious() * zoom, GetActualRadious() * zoom, 30, color, FALSE);
+	DrawOvalAA(drawPos.x, drawPos.y, GetActualRadious() * zoom, GetActualRadious() * zoom, 30, downColor, FALSE);
 
 	//Œð“_‚Ì•`‰æ
 	Collider::Draw();

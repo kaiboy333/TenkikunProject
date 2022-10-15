@@ -187,14 +187,17 @@
     <ClCompile Include="MonoBehaviour.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="MyString.cpp" />
+    <ClCompile Include="OnOffButton.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="PlayWindow.cpp" />
     <ClCompile Include="ProjectFileManager.cpp" />
     <ClCompile Include="ProjectWindow.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneIcon.cpp" />
     <ClCompile Include="SceneInfo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="AnimationState.cpp" />
@@ -259,7 +262,9 @@
     <ClInclude Include="MonoBehaviour.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="MyString.h" />
+    <ClInclude Include="OnOffButton.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="PlayWindow.h" />
     <ClInclude Include="ProjectFileManager.h" />
     <ClInclude Include="ProjectWindow.h" />
     <ClInclude Include="Property.h" />
@@ -268,6 +273,7 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneIcon.h" />
     <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="AnimationState.h" />

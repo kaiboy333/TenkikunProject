@@ -17,7 +17,7 @@ class Collider : public DrawComponent
 
 		bool isHit = false;
 
-		unsigned int color = GetColor(0, 255, 0);
+		unsigned int downColor = GetColor(0, 255, 0);
 
 		std::vector<Vector3> crossPoints;
 

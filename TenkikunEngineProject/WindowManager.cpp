@@ -56,11 +56,12 @@ vector<Window*> WindowManager::GetWindows()
 {
 	vector<Window*> windows;
 
-	if (gameWindow && hierarchyWindow && inspectorWindow && projectWindow) {
+	if (gameWindow && hierarchyWindow && inspectorWindow && projectWindow && playWindow) {
 		windows.push_back(gameWindow);
 		windows.push_back(hierarchyWindow);
 		windows.push_back(inspectorWindow);
 		windows.push_back(projectWindow);
+		windows.push_back(playWindow);
 	}
 
 	return windows;
@@ -73,6 +74,7 @@ WindowManager::WindowManager() : Rect(0, 0, WIDTH, HEIGHT)
 	inspectorWindow = new InspectorWindow();
 	projectWindow = new ProjectWindow();
 	projectWindow->Init();
+	playWindow = new PlayWindow();
 
 	//activeWindow = gameWindow;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
 }
@@ -161,6 +163,7 @@ GameWindow* WindowManager::gameWindow = nullptr;
 HierarchyWindow* WindowManager::hierarchyWindow = nullptr;
 InspectorWindow* WindowManager::inspectorWindow = nullptr;
 ProjectWindow* WindowManager::projectWindow = nullptr;
+PlayWindow* WindowManager::playWindow = nullptr;
 
 //Window* WindowManager::activeWindow = nullptr;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
 

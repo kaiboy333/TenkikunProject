@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 #include "SceneManager.h"
 
-GameWindow::GameWindow() : Window(300, 0, 700, 500)
+GameWindow::GameWindow() : Window(300, 50, 700, 450)
 {
     frameText = new TextRect(startX, startY, "");
 }
@@ -10,10 +10,13 @@ void GameWindow::Update()
 {
     Window::Update();
 
-    //シーンの更新
-    Scene* scene = SceneManager::GetNowScene();
-    if (scene != nullptr) {
-        scene->Update();
+    //プレイ中なら
+    if (SceneManager::playMode == SceneManager::PlayMode::PLAY) {
+        //シーンの更新
+        Scene* scene = SceneManager::GetNowScene();
+        if (scene != nullptr) {
+            scene->Update();
+        }
     }
 }
 

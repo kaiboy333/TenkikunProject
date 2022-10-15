@@ -7,10 +7,10 @@ VertexCollider::VertexCollider(GameObject* gameobject) : Collider(gameobject)
 void VertexCollider::Draw()
 {
     if (isHit) {
-        color = GetColor(255, 0, 0);
+        downColor = GetColor(255, 0, 0);
     }
     else {
-        color = GetColor(0, 255, 0);
+        downColor = GetColor(0, 255, 0);
     }
 
     auto vertexes = GetVertexes();
@@ -21,7 +21,7 @@ void VertexCollider::Draw()
         Vector3 drawPos2 = GetDrawPos(vertexes[(i + 1) % length]);
 
         //•Ó‚ð•`‰æ
-        DrawLineAA(drawPos1.x, drawPos1.y, drawPos2.x, drawPos2.y, color);
+        DrawLineAA(drawPos1.x, drawPos1.y, drawPos2.x, drawPos2.y, downColor);
     }
 
     //Œð“_‚Ì•`‰æ

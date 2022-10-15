@@ -299,6 +299,15 @@
     <ClCompile Include="FileIcon.cpp">
       <Filter>ソース ファイル\window\project\icon</Filter>
     </ClCompile>
+    <ClCompile Include="OnOffButton.cpp">
+      <Filter>ソース ファイル\window\button</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayWindow.cpp">
+      <Filter>ソース ファイル\window\game</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneIcon.cpp">
+      <Filter>ソース ファイル\window\project\icon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -516,6 +525,15 @@
     </ClInclude>
     <ClInclude Include="Librate.h">
       <Filter>ソース ファイル\pointer</Filter>
+    </ClInclude>
+    <ClInclude Include="OnOffButton.h">
+      <Filter>ソース ファイル\window\button</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayWindow.h">
+      <Filter>ソース ファイル\window\game</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneIcon.h">
+      <Filter>ソース ファイル\window\project\icon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

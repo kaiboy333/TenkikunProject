@@ -10,12 +10,16 @@ class Image;
 class WindowButton : public TriggerRect
 {
 	public:
-		Image* image = nullptr;	//‰æ‘œ
-
-		WindowButton(float startX, float startY, float width, float height);
+		WindowButton(float startX, float startY, float width, float height, Image* image);
 
 		void Draw();
 
+		void SetImage(Image* image);
+		Image* GetImage();
+
 		virtual void PreparationLibrate() override;
+
+	private:
+		Image* image = nullptr;	//‰æ‘œ
 };
 
