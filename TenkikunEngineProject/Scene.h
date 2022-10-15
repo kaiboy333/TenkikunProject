@@ -14,13 +14,13 @@ class Scene : public SceneInfo
 	public:
 		std::vector<GameObject*> gameobjects;	//GameObjectたち
 
-		TreeList* treeList = nullptr;
+		//TreeList* treeList = nullptr;
 
 		std::filesystem::path scenePath;
 
 		std::vector<function<void()>> addAndRemoveEvents;	//追加、削除の関数をいれる
 
-		void Init();
+		Scene();
 
 		void Update();
 
@@ -43,10 +43,14 @@ class Scene : public SceneInfo
 		std::vector<Camera*> GetCameras();
 
 		std::string GetName();
-		void SetName(std::string name, bool isForce);	//名前を変える(強制でその名前にする)
+		void SetName(std::string name, bool isForce = false);	//名前を変える(強制でその名前にする)
+
+		virtual void PreparationLibrate() override;
+
+		GameObject* Find(std::string name);
 
 	private:
-		std::string name = "";	//Sceneの名前
+		std::string name = "Scene";	//Sceneの名前
 
 		Camera* nowCamera = nullptr;
 

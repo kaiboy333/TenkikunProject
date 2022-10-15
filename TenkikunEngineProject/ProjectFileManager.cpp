@@ -441,7 +441,6 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 	//シーンのパスを設定
 	scene->scenePath = scenePath;
 	SceneManager::SetNowScene(scene);	//登録
-	scene->Init();	//初期化
 	//パスのファイル名からシーン名を取得、セット
 	scene->SetName(GetNameWithoutExtensionName(scenePath.filename()), true);
 
@@ -464,6 +463,8 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 		if (className == typeid(GameObject).name()) {
 			//クラス生成
 			GameObject* gameobject = static_cast<GameObject*>(GetValue<int, SceneInfo*>(sceneInfos, fileID, scene->CreateEmpty(false)));
+			//fileIDが異なって生成されているので修正
+			gameobject->fileID = fileID;
 			//名前取得
 			gameobject->SetName(MyString::Split(lines[row++], " ")[1]);
 			//コンポーネントの数取得

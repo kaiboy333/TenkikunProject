@@ -2,7 +2,7 @@
 #include "ProjectFileManager.h"
 #include "MyString.h"
 
-TreeList::TreeList(float startX, float startY, float width, float height, bool isFirstOpen, bool drawRoot, std::string e) : ScrollRect(startX, startY, width, height, width, height)
+TreeList::TreeList(float startX, float startY, float width, float height, bool isFirstOpen, bool drawRoot, std::string rootName) : ScrollRect(startX, startY, width, height, width, height)
 {
 	//ノードのボタン画像を探す
 	images[0] = static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\RightArrow.png"]);
@@ -13,7 +13,7 @@ TreeList::TreeList(float startX, float startY, float width, float height, bool i
 	this->isFirstOpen = isFirstOpen;
 
 	//root作成
-	root = new TreeNode(e, this, isFirstOpen);
+	root = new TreeNode(rootName, this, isFirstOpen);
 	//ノードの階層を更新
 	UpdateNodes();
 	//ScrollRectのリストに追加(&更新)
@@ -44,10 +44,12 @@ void TreeList::Delete(std::string e)
 {
 	TreeNode* targetNode = FindNode(e);
 	if (targetNode) {
-		//親のノードからリストを取得
-		std::vector<TreeNode*>* childNodes = &targetNode->parentNode->childNodes;
-		//指定のノードを削除
-		childNodes->erase(remove(childNodes->begin(), childNodes->end(), targetNode));
+		//親がいるなら
+		TreeNode* parentNode = targetNode->parentNode;
+		if (parentNode) {
+			//親のリストから自身を削除
+			parentNode->childNodes.erase(std::remove(parentNode->childNodes.begin(), parentNode->childNodes.end(), targetNode));
+		}
 
 		std::vector<TreeNode*> nodes;
 		nodes.push_back(targetNode);
@@ -62,11 +64,15 @@ void TreeList::Delete(std::string e)
 			nodes.insert(nodes.end(), node->childNodes.begin(), node->childNodes.end());
 
 			//Nodeの準備、解放
-			targetNode->PreparationLibrate();
+			node->PreparationLibrate();
 			delete(node);
 		}
-		//ノードの階層を更新
-		UpdateNodes();
+
+		//rootノードではないなら
+		if (parentNode) {
+			//ノードの階層を更新
+			UpdateNodes();
+		}
 	}
 }
 
@@ -151,6 +157,10 @@ void TreeList::Draw()
 
 	//前回の描画領域に戻す
 	SetDrawArea(beforeDrawRect.left, beforeDrawRect.top, beforeDrawRect.right, beforeDrawRect.bottom);
+}
+
+void TreeList::SetRoot(TreeNode*)
+{
 }
 
 TreeNode* TreeList::GetRoot()

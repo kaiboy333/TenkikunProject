@@ -14,5 +14,7 @@ class Info : public SceneInfo
 		Info(std::filesystem::path path, bool canWrite = true);	//canWrite:‘‚«‚İ‰Â”\‚©
 
 		std::string guid = "0";
+
+		virtual void PreparationLibrate() = 0;
 };
 

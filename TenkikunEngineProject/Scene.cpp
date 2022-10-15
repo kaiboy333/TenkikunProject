@@ -10,16 +10,32 @@
 #include "PlayerScript.h"
 #include "GJK.h"
 
-void Scene::Init()
+//void Scene::Init()
+//{
+//	Window* window = WindowManager::hierarchyWindow;
+//	treeList = new TreeList(window->startX, window->startY, window->width, window->height, true, true, this->name);
+//	SetName("Scene", false);	//名前初期化(被りは変える)
+//}
+
+Scene::Scene()
 {
-	Window* window = WindowManager::hierarchyWindow;
-	treeList = new TreeList(window->startX, window->startY, window->width, window->height, true, true, this->name);
-	SetName("Scene", false);	//名前初期化(被りは変える)
+
 }
 
 void Scene::Update()
 {
 	std::vector<Collider*> colliders;
+
+	//GameObjectなどをここで追加、削除する
+	for (auto& addAndRemoveEvent : addAndRemoveEvents) {
+		addAndRemoveEvent();
+	}
+	//リセット
+	addAndRemoveEvents.clear();
+
+	//プレイ中でないならここで終わり
+	if (SceneManager::playMode != SceneManager::PlayMode::PLAY)
+		return;
 
 	for (GameObject* gameobject : gameobjects) {
 		gameobject->Update();	//ゲームオブジェクトの更新
@@ -69,14 +85,6 @@ void Scene::Update()
 	//vec3.DrawPoint();
 	//crossPoint.DrawPoint(GetColor(255, 0, 0));
 	//ScreenFlip();
-
-
-	//GameObjectなどをここで追加、削除する
-	for (auto& addAndRemoveEvent : addAndRemoveEvents) {
-		addAndRemoveEvent();
-	}
-	//リセット
-	addAndRemoveEvents.clear();
 }
 
 void Scene::Draw()
@@ -89,46 +97,54 @@ void Scene::Draw()
 
 GameObject* Scene::CreateEmpty(bool isLaterAdd)
 {
+	TreeList* treeList = WindowManager::hierarchyWindow->treeList;
+
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
+	gameobject->SetScene(this);	//シーンをセット
 	gameobject->transform = gameobject->AddComponent<Transform>();	//Transformをついか
-	TreeNode* node = new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen);
-	//右クリックを押したら
-	node->mouseRightClickEvents.push_back(std::make_pair(node->GetEventNo(), [node, this, gameobject](void) {
-		Vector3 mousePos = Input::GetMousePosition();
+	//シーンが同じなら
+	if (SceneManager::GetNowScene() == this) {
+		TreeNode* node = new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen);
+		//右クリックを押したら
+		node->mouseRightClickEvents.push_back(std::make_pair(node->GetEventNo(), [node, this, gameobject](void) {
+			Vector3 mousePos = Input::GetMousePosition();
 
-		MenuList* menuList0 = new MenuList(mousePos.x, mousePos.y, { "Rename(仮)", "Delete", "B", "C" });
-		//WindowManagerにセット
-		WindowManager::SetMenuList(menuList0);
+			MenuList* menuList0 = new MenuList(mousePos.x, mousePos.y, { "Rename(仮)", "Delete", "B", "C" });
+			//WindowManagerにセット
+			WindowManager::SetMenuList(menuList0);
 
-		MenuNode* menuNode0_0 = menuList0->FindNode("Rename");
-		//menuNode0_0->mouseClickDownEvents.insert(menuNode0_0->mouseClickDownEvents.begin(), std::make_pair(menuNode0_0->GetEventNo(), [this, gameobject]() {
-		//	
-		//}));
-		MenuNode* menuNode0_1 = menuList0->FindNode("Delete");
-		menuNode0_1->mouseClickDownEvents.insert(menuNode0_1->mouseClickDownEvents.begin(), std::make_pair(menuNode0_1->GetEventNo(), [this, gameobject]() {
-			Destroy(gameobject);
-		}));
-	}));
-	node->mouseDoubleClickEvents.push_back(std::make_pair(node->GetEventNo(), [node](void) {
-		GameObject* gameobject = GameObject::Find(node->GetElement());	//このノードの名前からゲームオブジェクト取得
-		//見つかったなら
-		if (gameobject) {
-			WindowManager::inspectorWindow->SetGameObject(gameobject);	//ゲームオブジェクトの情報をヒエラルキーにセット
-		}
-	}));
-	treeList->Add(node, treeList->GetRoot());	//TreeNodeにも追加
+			MenuNode* menuNode0_0 = menuList0->FindNode("Rename");
+			//menuNode0_0->mouseClickDownEvents.insert(menuNode0_0->mouseClickDownEvents.begin(), std::make_pair(menuNode0_0->GetEventNo(), [this, gameobject]() {
+			//	
+			//}));
+			MenuNode* menuNode0_1 = menuList0->FindNode("Delete");
+			menuNode0_1->mouseClickDownEvents.insert(menuNode0_1->mouseClickDownEvents.begin(), std::make_pair(menuNode0_1->GetEventNo(), [this, gameobject]() {
+				Destroy(gameobject);
+				}));
+			}));
+		node->mouseDoubleClickEvents.push_back(std::make_pair(node->GetEventNo(), [node](void) {
+			GameObject* gameobject = GameObject::Find(node->GetElement());	//このノードの名前からゲームオブジェクト取得
+			//見つかったなら
+			if (gameobject) {
+				WindowManager::inspectorWindow->SetGameObject(gameobject);	//ゲームオブジェクトの情報をヒエラルキーにセット
+			}
+			}));
+		treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
+	}
+
 	if (isLaterAdd) {
 		//あとで追加
 		addAndRemoveEvents.push_back([this, gameobject](void) {
 			gameobject->SetName("GameObject");	//名前変更(初期の名前)
 			gameobjects.emplace_back(gameobject);	//リストに追加
-		});
+			});
 	}
 	else {
 		//すぐに追加
 		gameobject->SetName("GameObject");	//名前変更(初期の名前)
 		gameobjects.emplace_back(gameobject);	//リストに追加
 	}
+
 	return gameobject;
 }
 
@@ -337,7 +353,7 @@ void Scene::Destroy(GameObject* gameobject)
 	}
 
 	//TreeListの要素も削除
-	treeList->Delete(gameobject->GetPath());
+	WindowManager::hierarchyWindow->treeList->Delete(gameobject->GetPath());
 }
 
 void Scene::SetNowCamera(Camera* camera)
@@ -384,18 +400,18 @@ void Scene::SetName(std::string name, bool isForce)
 	//シーンパスのマップを取得
 	std::map<std::string, std::filesystem::path>& map = SceneManager::scenePathes;
 
-	//強制でその名前にしないなら
+	//名前の候補決め
+	std::string newName = name;
 	if (!isForce) {
 		int no = 1;	//被り防止用番号
 		//被らなくなるまで繰り返す
-		while (map.contains(name)) {
-			name = name + " (" + std::to_string(no++) + ")";	//新しい候補の名前を作成
+		while (map.contains(newName)) {
+			newName = name + " (" + std::to_string(no++) + ")";	//新しい候補の名前を作成
 		}
 	}
 
 	//TreeListの名前を変える
-	TreeList* treeList = SceneManager::GetNowScene()->treeList;
-	TreeNode* node = treeList->GetRoot();	//ルートノード取得
+	TreeNode* node = WindowManager::hierarchyWindow->treeList->GetRoot();	//ルート取得
 	if (node) {
 		//名前セット
 		node->SetElement(name);
@@ -417,7 +433,35 @@ void Scene::SetName(std::string name, bool isForce)
 			map.insert(std::make_pair(name, afterPath));
 		}
 	}
-	this->name = name;	//実際に変える
+	this->name = newName;	//実際に変える
+}
+
+void Scene::PreparationLibrate()
+{
+	nowCamera = nullptr;
+	cameras.clear();
+
+	for (auto& gameobject : gameobjects) {
+		//gameobjectの解放準備
+		gameobject->PreparationLibrate();
+		//解放
+		delete(gameobject);
+		gameobject = nullptr;
+	}
+	gameobjects.clear();
+
+	//sceneInfosから削除
+	ProjectFileManager::sceneInfos.erase(this->fileID);
+}
+
+GameObject* Scene::Find(std::string name)
+{
+	for (GameObject* gameobject : this->gameobjects) {
+		if (gameobject->GetName() == name) {
+			return gameobject;
+		}
+	}
+	return nullptr;
 }
 
 //void Scene::DestroyGameObject(GameObject* gameobject)

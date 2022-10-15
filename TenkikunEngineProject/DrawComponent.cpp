@@ -43,3 +43,8 @@ Vector3 DrawComponent::GetDrawPos(Vector3 pos)
 
 	return Vector3(gameWindow->startX + drawX, gameWindow->startY + drawY, 0);
 }
+
+void DrawComponent::PreparationLibrate()
+{
+	Component::PreparationLibrate();
+}

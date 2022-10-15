@@ -5,6 +5,11 @@ Animation::Animation(std::filesystem::path path) : Info(path)
 
 }
 
+void Animation::PreparationLibrate()
+{
+	animationKeys.clear();
+}
+
 void Animation::AddAnimationKey(std::vector<Image*> images, int timeInterVal)
 {
 	int length = static_cast<int>(images.size());

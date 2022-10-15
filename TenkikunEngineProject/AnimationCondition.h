@@ -22,6 +22,8 @@ class AnimationCondition : public SceneInfo
 		//AnimationCondition(const AnimationCondition& condition);
 
 		bool isMeetCondition(float value);	//ðŒ‚ð–ž‚½‚µ‚Ä‚¢‚é‚©
+
+		virtual void PreparationLibrate() override;
 };
 
 //inline AnimationCondition::AnimationCondition(const AnimationCondition& condition) {
@@ -50,4 +52,9 @@ inline bool AnimationCondition::isMeetCondition(float value)
 		return this->value != value;
 	}
 	return true;
+}
+
+inline void AnimationCondition::PreparationLibrate()
+{
+
 }

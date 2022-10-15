@@ -21,5 +21,7 @@ class AnimationParamater : public SceneInfo
 		bool boolValue = false;
 
 		float GetValue();
+
+		virtual void PreparationLibrate() override;
 };
 

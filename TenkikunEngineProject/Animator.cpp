@@ -73,3 +73,12 @@ AnimationState* Animator::AddState(Animation* animation, std::string stateName)
 	}
 	return state;	//•Ô‚·
 }
+
+void Animator::PreparationLibrate()
+{
+	ac = nullptr;
+	nowState = nullptr;
+
+	//©g‚Ì‰ğ•ú€”õ
+	Component::PreparationLibrate();
+}

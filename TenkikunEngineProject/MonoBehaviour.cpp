@@ -16,3 +16,9 @@ void MonoBehaviour::Update()
 		MonoUpdate();
 	//}
 }
+
+void MonoBehaviour::PreparationLibrate()
+{
+	//©g‚Ì‰ğ•ú€”õ
+	Component::PreparationLibrate();
+}

@@ -27,6 +27,8 @@ class RigidBody	: public Component
 
 		void AddForce(Vector3 force, ForceMode forceMode = ForceMode::Force);
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		//çáåvÇÃóÕ
 		Vector3 force;

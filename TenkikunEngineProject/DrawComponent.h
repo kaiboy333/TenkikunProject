@@ -11,5 +11,7 @@ class DrawComponent : public Component
 		virtual void Draw();
 
 		static Vector3 GetDrawPos(Vector3 pos);
+
+		virtual void PreparationLibrate() override;
 };
 

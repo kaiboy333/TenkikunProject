@@ -16,6 +16,13 @@ AnimationParamater* AnimatorController::GetParamater(std::string name)
 	return nullptr;
 }
 
+void AnimatorController::PreparationLibrate()
+{
+	paramaters.clear();
+
+	states.clear();
+}
+
 //
 //AnimatorController::AnimatorController(const AnimatorController& ac)
 //{

@@ -16,9 +16,9 @@ class Camera;
 class GameObject : public SceneInfo
 {
 private:
-	std::string name = "";
+	std::string name = "GameObject";
 
-	void SetTreeNodeName(std::string name);	//名前変更
+	Scene* scene = nullptr;
 
 public:
 	Transform* transform = nullptr;	//位置などの情報
@@ -48,6 +48,11 @@ public:
 	std::string GetName();
 
 	std::string GetPath();	//親などを含めたパスを取得(TreeList用)
+
+	virtual void PreparationLibrate() override;
+
+	void SetScene(Scene* scene);
+	Scene* GetScene();
 };
 
 template<class T>

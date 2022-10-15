@@ -17,4 +17,6 @@ class Component : public SceneInfo
 		Component(GameObject* gameobject);
 
 		virtual void Update() = 0;
+
+		virtual void PreparationLibrate();
 };

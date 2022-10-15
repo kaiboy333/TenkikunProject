@@ -22,7 +22,7 @@ void Transform::SetParent(Transform* newParent, bool isChangeLocal)
 		SetParent(nullptr);	//一旦親をなくす
 	}
 
-	TreeList* treeList = SceneManager::GetNowScene()->treeList;
+	TreeList* treeList = WindowManager::hierarchyWindow->treeList;
 
 	//TreeListから自身の名前削除
 	treeList->Delete(gameobject->GetPath());
@@ -84,6 +84,15 @@ void Transform::SetParent(Transform* newParent, bool isChangeLocal)
 		scale_t.y = parentScal.y * localScale_t.y;
 		scale_t.z = parentScal.z * localScale_t.z;
 	}
+}
+
+void Transform::PreparationLibrate()
+{
+	parent = nullptr;
+	children.clear();
+
+	//自身の解放準備
+	Component::PreparationLibrate();
 }
 
 void Transform::ChangedWorldPos(Vector3 pos)

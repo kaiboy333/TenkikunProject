@@ -15,4 +15,6 @@ class MonoBehaviour : public Component
 	protected:
 		virtual void MonoStart() = 0;
 		virtual void MonoUpdate() = 0;
+
+		virtual void PreparationLibrate() override;
 };

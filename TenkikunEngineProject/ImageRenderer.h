@@ -22,5 +22,7 @@ class ImageRenderer :  public DrawComponent
 		void Update() override;
 
 		void Draw();	//‰æ‘œ‚ð•`‰æ
+
+		virtual void PreparationLibrate() override;
 };
 

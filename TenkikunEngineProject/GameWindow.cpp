@@ -10,13 +10,10 @@ void GameWindow::Update()
 {
     Window::Update();
 
-    //プレイ中なら
-    if (SceneManager::playMode == SceneManager::PlayMode::PLAY) {
-        //シーンの更新
-        Scene* scene = SceneManager::GetNowScene();
-        if (scene != nullptr) {
-            scene->Update();
-        }
+    //シーンの更新
+    Scene* scene = SceneManager::GetNowScene();
+    if (scene != nullptr) {
+        scene->Update();
     }
 }
 

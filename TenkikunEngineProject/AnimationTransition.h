@@ -26,4 +26,6 @@ class AnimationTransition : public SceneInfo
 
 		//Condition‚ğì¬
 		void AddCondition(std::string name, float value, AnimationCondition::Mode mode);
+
+		virtual void PreparationLibrate() override;
 };

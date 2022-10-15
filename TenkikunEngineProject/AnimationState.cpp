@@ -11,6 +11,13 @@ AnimationTransition* AnimationState::AddTransition(AnimationState* toState)
 	return transition;
 }
 
+void AnimationState::PreparationLibrate()
+{
+	animation = nullptr;
+
+	transitions.clear();
+}
+
 //AnimationState::AnimationState()
 //{
 //}

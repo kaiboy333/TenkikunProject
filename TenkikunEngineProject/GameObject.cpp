@@ -2,6 +2,7 @@
 #include "ImageRenderer.h"
 #include "Animator.h"
 #include "Collider.h"
+#include "ProjectFileManager.h"
 
 GameObject::GameObject()
 {
@@ -42,17 +43,6 @@ void GameObject::Draw()
 	}
 }
 
-void GameObject::SetTreeNodeName(std::string name)
-{
-	//TreeListの名前を変える
-	TreeList* treeList = SceneManager::GetNowScene()->treeList;
-	TreeNode* node = treeList->FindNode(this->GetPath());	//元の名前で探す
-	if (node) {
-		//名前セット
-		node->SetElement(name);
-	}
-}
-
 GameObject* GameObject::Find(std::string name)
 {
 	Scene* scene = SceneManager::GetNowScene();
@@ -70,10 +60,18 @@ void GameObject::SetName(std::string name)
 	std::string newName = name;
 	int no = 1;	//被り防止用番号
 	//被らなくなるまで繰り返す
-	while (GameObject::Find(newName)) {
+	while (scene->Find(newName)) {
 		newName = name + " (" + std::to_string(no++) + ")";	//新しい候補の名前を作成
 	}
-	SetTreeNodeName(newName);	//TreeNodeの名前を変えて
+
+	if (SceneManager::GetNowScene() == scene) {
+		//TreeListの名前を変える
+		TreeNode* node = WindowManager::hierarchyWindow->treeList->FindNode(this->GetPath());	//元の名前で探す
+		if (node) {
+			//名前セット
+			node->SetElement(newName);
+		}
+	}
 	this->name = newName;	//実際に変える
 }
 
@@ -105,4 +103,33 @@ std::string GameObject::GetPath()
 
 	return path;
 
+}
+
+void GameObject::PreparationLibrate()
+{
+	scene = nullptr;
+	transform = nullptr;
+
+	//componentsの削除
+	for (auto& component : components) {
+		//解放準備
+		component->PreparationLibrate();
+		//解放
+		delete(component);
+		component = nullptr;
+	}
+	components.clear();
+
+	//sceneInfosから削除
+	ProjectFileManager::sceneInfos.erase(this->fileID);
+}
+
+void GameObject::SetScene(Scene* scene)
+{
+	this->scene = scene;
+}
+
+Scene* GameObject::GetScene()
+{
+	return scene;
 }

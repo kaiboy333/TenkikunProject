@@ -13,6 +13,7 @@ SceneManager::SceneManager()
 	}
 	//あるなら
 	else {
+		ProjectFileManager::LoadFromFile();	//他のファイルを読み込む
 		//マップの最初のシーンパスを読み込む
 		LoadScene(scenePathes.begin()->first);
 	}
@@ -30,7 +31,6 @@ void SceneManager::LoadScene(std::string sceneName)
 			std::ifstream ifs(scenePath);
 			//開けたら
 			if (ifs) {
-				ProjectFileManager::LoadFromFile();	//他のファイルを読み込む
 				ProjectFileManager::LoadFromSceneFile(scenePath);	//シーンファイルからシーンを再現
 			}
 		}
@@ -45,20 +45,23 @@ Scene* SceneManager::GetNowScene()
 	return nowScene;
 }
 
-void SceneManager::MakeScene(std::filesystem::path parentPath)
+Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 {
 	//親がフォルダーじゃないなら作らない
 	if (ProjectFileManager::GetFileType(parentPath) != ProjectFileManager::FileType::Folder)
-		return;
+		return nullptr;
 
 	//シーンを作成
 	Scene* scene = new Scene();
 
 	//もし、現在のシーンが登録されていなかったら
-	if (nowScene == nullptr) {
-		nowScene = scene;	//登録
+	if (!nowScene) {
+		//登録
+		SetNowScene(scene);
 	}
-	scene->Init();	//初期化
+
+	//名前をセット
+	scene->SetName("Scene");
 
 	//親のフォルダ内の中にシーンファイルを設定
 	std::filesystem::path scenePath(parentPath.string() + "\\" + scene->GetName() + ".scene");
@@ -93,10 +96,33 @@ void SceneManager::MakeScene(std::filesystem::path parentPath)
 
 	//シーンをセーブ
 	SaveScene();
+
+	return scene;
 }
 
 void SceneManager::SetNowScene(Scene* scene)
 {
+	//以前のシーンがあるなら
+	if (nowScene) {
+		//シーンの解放準備
+		nowScene->PreparationLibrate();
+		//解放
+		delete(nowScene);
+		nowScene = nullptr;
+
+		//treeListの解放準備
+		TreeList* treeList = WindowManager::hierarchyWindow->treeList;
+		if (treeList) {
+			treeList->PreparationLibrate();
+			delete(treeList);
+			WindowManager::hierarchyWindow->treeList = nullptr;
+		}
+	}
+
+	//treeListを新しく作る
+	HierarchyWindow* hierarchyWindow = WindowManager::hierarchyWindow;
+	hierarchyWindow->treeList = new TreeList(hierarchyWindow->startX, hierarchyWindow->startY, hierarchyWindow->width, hierarchyWindow->height, true);
+
 	nowScene = scene;
 }
 

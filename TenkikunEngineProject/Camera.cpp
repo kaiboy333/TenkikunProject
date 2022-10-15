@@ -36,4 +36,10 @@ void Camera::Update()
 	 return Vector3((worldPosition.x + parentWindow->width / 2.0f - cameraPos.x + parentWindow->startX) * camera->zoom, -(worldPosition.y + parentWindow->height / 2.0f - cameraPos.y + parentWindow->startY) * camera->zoom, worldPosition.z);
  }
 
+ void Camera::PreparationLibrate()
+ {
+	 //©g‚Ì‰ğ•ú€”õ
+	 Component::PreparationLibrate();
+ }
+
 

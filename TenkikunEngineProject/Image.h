@@ -19,6 +19,8 @@ class Image : public Info
 		void SetAlpha(int alpha);
 		int GetAlpha();
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		int gh = -1;
 

@@ -53,6 +53,14 @@ void AnimationTransition::AddCondition(std::string name, float value, AnimationC
 	conditions.emplace_back(condition);	//ƒŠƒXƒg‚É’Ç‰Á
 }
 
+void AnimationTransition::PreparationLibrate()
+{
+	fromState = nullptr;
+	toState = nullptr;
+
+	conditions.clear();
+}
+
 //void AnimationTransition::ChangeIntCondition(std::string name, int value, int index)
 //{
 //	for (IntCondition* intCondition : intConditions) {

@@ -2,6 +2,7 @@
 #include "ImageManager.h"
 #include "FontManager.h"
 #include "ProjectFileManager.h"
+#include "SceneIcon.h"
 
 FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, std::string imageFileName, std::filesystem::path path) : TriggerRect(startX, startY, 2 * blankWidth + iconWidth, 2 * blankHeight + iconHeight + FontManager::systemFont->GetFontHeight())
 {
@@ -73,6 +74,12 @@ FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight
 
 				//filePrintの表示更新
 				WindowManager::projectWindow->filePrintRect->LoadFoler();
+
+				//ファイルアイコンがシーンアイコンだったら
+				if (typeid(this) == typeid(SceneIcon*)) {
+					//シーンパスリストから削除
+					SceneManager::scenePathes.erase(this->GetFileNameNotExtension());
+				}
 			}
 		}));
 		//WindowManagerにセット

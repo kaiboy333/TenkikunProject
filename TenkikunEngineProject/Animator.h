@@ -21,5 +21,7 @@ class Animator : public Component
 		float count = 0;
 
 		AnimationState* AddState(Animation* animation, std::string stateName);
+
+		virtual void PreparationLibrate() override;
 };
 

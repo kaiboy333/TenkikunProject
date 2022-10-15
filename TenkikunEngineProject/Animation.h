@@ -19,6 +19,8 @@ class Animation : public Info
 		//Animation(std::vector<Image*> images, int framePerChange);
 
 		Animation(std::filesystem::path path);
+
+		virtual void PreparationLibrate() override;
 };
 
 //inline Animation::Animation(std::vector<Image*> images, int framePerChange = 5)

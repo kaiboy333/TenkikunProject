@@ -38,3 +38,9 @@ void RigidBody::AddForce(Vector3 force, ForceMode forceMode)
 			break;
 	}
 }
+
+void RigidBody::PreparationLibrate()
+{
+	//©g‚Ì‰ğ•ú€”õ
+	Component::PreparationLibrate();
+}

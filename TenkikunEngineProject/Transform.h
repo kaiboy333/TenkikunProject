@@ -82,6 +82,8 @@ class Transform : public Component
 
 		static float maxValue;	//ç≈ëÂÇÃíl
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		Vector3 position_t;
 		Vector3 rotation_t;

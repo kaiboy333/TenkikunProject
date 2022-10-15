@@ -19,5 +19,7 @@ class Camera : public Component
         static Vector3 ScreenToWorldPoint(Vector3 screenPosition);  //スクリーン座標からワールド座標に変換する
 
         static Vector3 WorldToScreenPoint(Vector3 worldPosition);   //ワールド座標からスクリーン座標に変換する
+
+        virtual void PreparationLibrate() override;
 };
 

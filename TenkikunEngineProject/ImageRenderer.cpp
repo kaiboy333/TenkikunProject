@@ -32,3 +32,11 @@ void ImageRenderer::Draw()
 		}
 	}
 }
+
+void ImageRenderer::PreparationLibrate()
+{
+	image = nullptr;
+
+	//©g‚Ì‰ğ•ú€”õ
+	DrawComponent::PreparationLibrate();
+}

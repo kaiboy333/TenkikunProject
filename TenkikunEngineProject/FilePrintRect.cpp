@@ -32,7 +32,7 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 		WindowManager::SetMenuList(menuList0);
 
 		MenuNode* menuNode0_0 = menuList0->FindNode("Create");
-		MenuList* menuList1 = new MenuList(menuNode0_0->startX + menuNode0_0->width, menuNode0_0->startY, { "Folder", "C++ Script" });
+		MenuList* menuList1 = new MenuList(menuNode0_0->startX + menuNode0_0->width, menuNode0_0->startY, { "Folder", "C++ Script", "Scene"});
 		MenuNode* menuNode1_0 = menuList1->FindNode("Folder");
 		menuNode1_0->mouseClickDownEvents.insert(menuNode1_0->mouseClickDownEvents.begin(), std::make_pair(menuNode1_0->GetEventNo(), []() {
 			//フォルダを作成
@@ -76,6 +76,16 @@ FilePrintRect::FilePrintRect(float startX, float startY, float width, float heig
 					}
 				}
 			}
+		}));
+		MenuNode* menuNode1_2 = menuList1->FindNode("Scene");
+		menuNode1_2->mouseClickDownEvents.insert(menuNode1_2->mouseClickDownEvents.begin(), std::make_pair(menuNode1_2->GetEventNo(), []() {
+			//シーンを作成
+			Scene* scene = SceneManager::MakeScene(ProjectFileManager::currentPath);
+			//シーンをセーブ
+			ProjectFileManager::WriteToSceneFile(scene);
+			//シーンを解放する
+			scene->PreparationLibrate();
+			delete(scene);
 		}));
 		//メニューノードにメニューリストをセット
 		menuNode0_0->SetChildMenuList(menuList1);

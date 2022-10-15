@@ -31,5 +31,7 @@ class AnimationState : public SceneInfo
 		void Update(Animator* animator);
 
 		AnimationTransition* AddTransition(AnimationState* toState);	//êVÇµÇ¢Transitioní«â¡
+
+		virtual void PreparationLibrate() override;
 };
 

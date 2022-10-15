@@ -28,6 +28,7 @@ HierarchyWindow::HierarchyWindow() : Window(0, 0, 300, 500)
 		menuNode0_0->SetChildMenuList(menuList1);
 
 	}));
+
 }
 
 void HierarchyWindow::Update()
@@ -40,7 +41,9 @@ void HierarchyWindow::Draw()
 	//ƒoƒbƒN‚Ì•`‰æ
 	Window::Draw();
 
-	//TreeList‚Ì•`‰æ
-	SceneManager::GetNowScene()->treeList->Draw();
+	if (treeList) {
+		//TreeList‚Ì•`‰æ
+		treeList->Draw();
+	}
 
 }

@@ -35,3 +35,8 @@ int Image::GetAlpha()
 {
 	return alpha;
 }
+
+void Image::PreparationLibrate()
+{
+
+}

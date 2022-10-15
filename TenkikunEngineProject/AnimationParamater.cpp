@@ -14,3 +14,8 @@ float AnimationParamater::GetValue()
 
 	return 0;
 }
+
+void AnimationParamater::PreparationLibrate()
+{
+
+}

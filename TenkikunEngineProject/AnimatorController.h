@@ -16,14 +16,6 @@ class Animator;
 class AnimatorController : public Info
 {
 	public:
-		//Animator* animator = nullptr;
-		//AnimationState* nowState = nullptr;
-
-		//AnimatorController();
-		//AnimatorController(const AnimatorController& ac);	//コピーコンストラクタ
-
-		//void Update(Animator* animator);
-
 		void AddIntParamater(std::string name, int value);
 		void AddFloatParamater(std::string name, float value);
 		void AddBoolParamater(std::string name, bool value);
@@ -35,5 +27,7 @@ class AnimatorController : public Info
 		AnimatorController(std::filesystem::path path);
 
 		AnimationParamater* GetParamater(std::string name);	//名前からパラメータを取得
+
+		virtual void PreparationLibrate() override;
 };
 
