@@ -28,6 +28,31 @@ void VertexCollider::Draw()
     Collider::Draw();
 }
 
+Rect VertexCollider::GetBoundingBox()
+{
+    Vector3 minPos;
+    Vector3 maxPos;
+
+    auto vertexes = GetVertexes();
+    for (int i = 0, len = (int)vertexes.size(); i < len; i++) {
+        auto& vertex = vertexes[i];
+
+        if (i == 0) {
+            minPos = vertex;
+            maxPos = vertex;
+        }
+        else {
+            minPos.x = std::min<float>(vertex.x, minPos.x);
+            minPos.y = std::min<float>(vertex.y, minPos.y);
+
+            maxPos.x = std::max<float>(vertex.x, maxPos.x);
+            maxPos.y = std::max<float>(vertex.y, maxPos.y);
+        }
+    }
+
+    return Rect(minPos.x, minPos.y, maxPos.x - minPos.x, maxPos.y - minPos.y);
+}
+
 std::vector<Vector2> VertexCollider::GetVertexes(std::vector<Vector2> toVertexVecs)
 {
     std::vector<Vector2> vertexes;

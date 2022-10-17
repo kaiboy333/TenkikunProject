@@ -12,6 +12,8 @@ class VertexCollider : public Collider
 
 		virtual void Draw() override;
 
+		virtual Rect GetBoundingBox() override;	//バウンディングボックスを返す
+
 	protected:
 		std::vector<Vector2> GetVertexes(std::vector<Vector2> toVertexVecs);
 };

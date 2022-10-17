@@ -5,10 +5,11 @@
 #include "ProjectFileManager.h"
 #include "Debug.h"
 #include "Collider.h"
-#include "HitChecker.h"
+#include "HitManager.h"
 #include "RigidBody.h"
 #include "PlayerScript.h"
 #include "GJK.h"
+#include "BoxCollider.h"
 
 //void Scene::Init()
 //{
@@ -19,13 +20,12 @@
 
 Scene::Scene()
 {
-
+	//インスペクターのリセット
+	WindowManager::inspectorWindow->PreparationLibrate();
 }
 
 void Scene::Update()
 {
-	std::vector<Collider*> colliders;
-
 	//GameObjectなどをここで追加、削除する
 	for (auto& addAndRemoveEvent : addAndRemoveEvents) {
 		addAndRemoveEvent();
@@ -39,43 +39,10 @@ void Scene::Update()
 
 	for (GameObject* gameobject : gameobjects) {
 		gameobject->Update();	//ゲームオブジェクトの更新
-
-		std::vector<Collider*> objectColliders = gameobject->GetComponents<Collider>();	//コライダーたちを取得
-		colliders.insert(colliders.end(), objectColliders.begin(), objectColliders.end());	//リストに一気に追加
 	}
 
-	//コライダーが2つ以上あるなら
-	if ((int)colliders.size() >= 2) {
-		for (int i = 0; i < (int)colliders.size(); i++) {
-			for (int j = i + 1; j < (int)colliders.size(); j++) {
-				//同じゲームオブジェクトのコライダーなら
-				if (colliders[i]->gameobject == colliders[j]->gameobject) {
-					//飛ばす
-					continue;
-				}
-				//std::vector<Vector3> crossPoints;
-
-				////当たり判定と衝突応答
-				//if (HitChecker::IsHit(colliders[i], colliders[j], crossPoints)) {
-				//	//Debug::Log("Hit!!");
-				//	//当たった交点をコライダーの交点リストに追加
-				//	colliders[i]->crossPoints.insert(colliders[i]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
-				//	colliders[j]->crossPoints.insert(colliders[j]->crossPoints.end(), crossPoints.begin(), crossPoints.end());
-				//}
-
-				if (GJK::IsHit(colliders[i], colliders[j])) {
-					colliders[i]->isHit = true;
-					colliders[j]->isHit = true;
-				}
-				//if (GJK::IsHit2(colliders[i])) {
-				//	colliders[i]->isHit = true;
-				//}
-				//if (GJK::IsHit2( colliders[j])) {
-				//	colliders[j]->isHit = true;
-				//}
-			}
-		}
-	}
+	//当たり判定のチェック
+	HitManager::HitCheck();
 
 	//Vector2 crossPoint;
 	//Vector2 vec1 = Vector2(-50, -10), vec2 = Vector2(50, -10), vec3 = Vector2::Zero();

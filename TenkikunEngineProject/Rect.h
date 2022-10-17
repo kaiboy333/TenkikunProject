@@ -11,6 +11,7 @@ class Rect : public Librate
 		float width, height;
 
 		Rect(float startX, float startY, float width, float height);
+		Rect();
 
 		virtual void Draw();
 
@@ -22,5 +23,10 @@ class Rect : public Librate
 		static Rect* GetCrossRect(Rect* r1, Rect* r2);
 
 		virtual void PreparationLibrate() override;
+
+		Rect operator +(Rect& other);	//‘«‚µŽZ
+		Rect& operator +=(Rect&& other);	//‘«‚µŽZ‘ã“ü
+
+		static bool IsHit(Rect r1, Rect r2);
 };
 

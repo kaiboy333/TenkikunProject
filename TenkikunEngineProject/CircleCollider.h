@@ -15,6 +15,6 @@ class CircleCollider : public Collider
 
 		float GetActualRadious();
 
-		//void SetRadiousFromImageRenderer(ImageRenderer* imageRenderer);
+		virtual Rect GetBoundingBox() override;	//バウンディングボックスを返す
 };
 

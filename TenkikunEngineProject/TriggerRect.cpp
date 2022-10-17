@@ -39,7 +39,6 @@ void TriggerRect::CheckInput()
 		if (activeRect->IsPointIn2(mousePos.x, mousePos.y)) {
 			//左クリックを押した瞬間なら
 			if (Input::GetMouseButtonDown(Input::Mouse_Left, false)) {
-				AddToActiveEvents(mouseClickDownEvents);
 
 				//時間を測定
 				float nowClickTime = Time::GetTime();
@@ -49,6 +48,8 @@ void TriggerRect::CheckInput()
 					isClicked = false;
 				}
 				else {
+					AddToActiveEvents(mouseClickDownEvents);
+
 					//一度クリックした判定に
 					isClicked = true;
 					//時間を記憶
@@ -140,7 +141,7 @@ void TriggerRect::PreparationLibrate()
 	//WindowManagerから削除
 	WindowManager::RemoveTriggerRect(this);
 
-	//Rectの解放準備
+	//activeRectの解放準備
 	if (activeRect) {
 		activeRect->PreparationLibrate();
 		//解放

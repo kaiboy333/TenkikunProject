@@ -5,6 +5,7 @@
 class Time
 {
 	public:
+		static LARGE_INTEGER timeFreq;
 
 		Time();
 
@@ -18,7 +19,6 @@ class Time
 		static const float MIN_FRAME_TIME;
 		static LARGE_INTEGER beforeTime;
 		static LARGE_INTEGER nowTime;
-		static LARGE_INTEGER timeFreq;
 
 		static int frameCount;
 		static double sumFPS;

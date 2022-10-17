@@ -87,6 +87,12 @@
     <Filter Include="ソース ファイル\pointer">
       <UniqueIdentifier>{420e8ea0-fbd4-4add-a78f-d4cad339be85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\hit">
+      <UniqueIdentifier>{770c8c63-b86a-4831-90a0-dad41329584e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\math\binaryTree">
+      <UniqueIdentifier>{90279c1f-b982-4753-bf83-a88ef1c6052a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -245,9 +251,6 @@
     <ClCompile Include="VertexCollider.cpp">
       <Filter>ソース ファイル\component\collider</Filter>
     </ClCompile>
-    <ClCompile Include="HitChecker.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="DrawComponent.cpp">
       <Filter>ソース ファイル\component</Filter>
     </ClCompile>
@@ -307,6 +310,21 @@
     </ClCompile>
     <ClCompile Include="SceneIcon.cpp">
       <Filter>ソース ファイル\window\project\icon</Filter>
+    </ClCompile>
+    <ClCompile Include="HitChecker.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="HitManager.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="AABBTree.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryNode.cpp">
+      <Filter>ソース ファイル\math\binaryTree</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryTree.cpp">
+      <Filter>ソース ファイル\math\binaryTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,9 +493,6 @@
     <ClInclude Include="VertexCollider.h">
       <Filter>ソース ファイル\component\collider</Filter>
     </ClInclude>
-    <ClInclude Include="HitChecker.h">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="DrawComponent.h">
       <Filter>ソース ファイル\component</Filter>
     </ClInclude>
@@ -534,6 +549,21 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="HitChecker.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="HitManager.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="AABBTree.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryNode.h">
+      <Filter>ソース ファイル\math\binaryTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTree.h">
+      <Filter>ソース ファイル\math\binaryTree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

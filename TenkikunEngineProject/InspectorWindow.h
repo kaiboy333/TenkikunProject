@@ -21,6 +21,8 @@ class InspectorWindow : public Window
 		void SetGameObject(GameObject* gameobject);
 		GameObject* GetGameObject();
 
+		virtual void PreparationLibrate() override;
+
 	private:
 		GameObject* gameobject = nullptr;
 
@@ -29,5 +31,7 @@ class InspectorWindow : public Window
 		vector<ComponentRect*> componentRects;
 
 		void Init();
+
+
 };
 

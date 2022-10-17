@@ -29,4 +29,8 @@ class Collider : public DrawComponent
 
 		//コライダーの中心点を返す
 		Vector3 GetPosition();
+
+		virtual Rect GetBoundingBox() = 0;	//バウンディングボックスを返す
+
+		void DrawBoundingBox();	//バウンディングボックスの描画
 };

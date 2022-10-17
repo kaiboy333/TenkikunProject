@@ -28,6 +28,7 @@ void CircleCollider::Draw()
 	GameWindow* gameWindow = WindowManager::gameWindow;
 	float zoom = SceneManager::GetNowScene()->GetNowCamera()->zoom;
 
+	//‰~‚ð•`‰æ
 	DrawOvalAA(drawPos.x, drawPos.y, GetActualRadious() * zoom, GetActualRadious() * zoom, 30, downColor, FALSE);
 
 	//Œð“_‚Ì•`‰æ
@@ -42,4 +43,14 @@ float CircleCollider::GetActualRadious()
 	float maxScale = std::max<float>(scale.x, scale.y);
 	
 	return radious * maxScale;
+}
+
+Rect CircleCollider::GetBoundingBox()
+{
+	auto actualRadious = GetActualRadious();
+	Vector3 centerPos = gameobject->transform->position;
+
+	Vector3 leftDownPos = centerPos - Vector3(1, 1, 0) * actualRadious;
+
+	return Rect(leftDownPos.x, leftDownPos.y, 2 * actualRadious, 2 * actualRadious);
 }

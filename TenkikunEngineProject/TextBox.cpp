@@ -63,8 +63,6 @@ void TextBox::Draw()
 		, GetColor(200, 200, 200), GetColor(0, 0, 0), GetColor(0, 0, 200), GetColor(100, 100, 0), GetColor(0, 0, 0), GetColor(0, 0, 0)
 	);
 
-	//DrawKeyInputModeString(0, 0);	//“ü—Íƒ‚[ƒh‚Ì•`‰æ
-
 	TCHAR strBuf[MAX_LEN + 1] = "";
 	GetKeyInputString(strBuf, ih);
 	//“ü—Í’†‚Å‚Í‚È‚¢‚È‚ç
@@ -83,7 +81,12 @@ void TextBox::Draw()
 		if (canChange) {
 			DrawBoxAA(startX, startY, startX + FontManager::systemFont->GetFontWidth(strBuf), startY + FontManager::systemFont->GetFontHeight(), GetColor(30, 144, 255), TRUE);
 		}
+		//•`‰æ§ŒÀ
+		SetDrawArea(0, 0, (int)WindowManager::WIDTH, (int)WindowManager::HEIGHT);
+		//DrawKeyInputModeString(0, 0);	//“ü—Íƒ‚[ƒh‚Ì•`‰æ
 		DrawStringFToHandle(startX, startY, strBuf, GetColor(0, 0, 0), FontManager::systemFont->GetFH());	//“ü—Í’†‚Ì•¶Žš—ñ‚Ì•`‰æ
+		//‘O‰ñ‚Ì•`‰æ—Ìˆæ‚É–ß‚·
+		SetDrawArea(beforeDrawRect.left, beforeDrawRect.top, beforeDrawRect.right, beforeDrawRect.bottom);
 	}
 }
 

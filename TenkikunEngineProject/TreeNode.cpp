@@ -14,6 +14,11 @@ TreeNode::TreeNode(std::string e, TreeList* treeList, bool isOpen) : TriggerRect
 		//自身を選択中にする
 		WindowManager::SetSelectedTriggerRect(this);
 	}));
+	//ダブルクリックした瞬間なら
+	mouseDoubleClickEvents.push_back(std::make_pair(GetEventNo(), [this]() {
+		//自身を選択中にする
+		WindowManager::SetSelectedTriggerRect(this);
+	}));
 
 	//右クリックなら
 	mouseRightClickEvents.push_back(std::make_pair(GetEventNo(), [this]() {
