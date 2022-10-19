@@ -33,4 +33,6 @@ class Collider : public DrawComponent
 		virtual Rect GetBoundingBox() = 0;	//バウンディングボックスを返す
 
 		void DrawBoundingBox();	//バウンディングボックスの描画
+
+		virtual float GetI() = 0;	//慣性モーメントを取得
 };

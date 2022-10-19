@@ -161,8 +161,8 @@
     <ClCompile Include="ContactPoint.cpp" />
     <ClCompile Include="CreateBallScript.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
+    <ClCompile Include="EPA.cpp" />
     <ClCompile Include="FolderIcon.cpp" />
-    <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentRect.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -172,7 +172,10 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="GJK.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
+    <ClCompile Include="HitChecker.cpp" />
+    <ClCompile Include="HitInfo.cpp" />
     <ClCompile Include="HitManager.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageIcon.cpp" />
@@ -181,7 +184,6 @@
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InspectorWindow.cpp" />
-    <ClCompile Include="GJK.cpp" />
     <ClCompile Include="KeyState.cpp" />
     <ClCompile Include="Librate.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -207,6 +209,7 @@
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="ScriptIcon.cpp" />
     <ClCompile Include="ScrollRect.cpp" />
+    <ClCompile Include="SupportInfo.cpp" />
     <ClCompile Include="TextRect.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -241,9 +244,9 @@
     <ClInclude Include="ContactPoint.h" />
     <ClInclude Include="CreateBallScript.h" />
     <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="EPA.h" />
     <ClInclude Include="FolderIcon.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="HitChecker.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentRect.h" />
     <ClInclude Include="Debug.h" />
@@ -252,7 +255,10 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="GJK.h" />
     <ClInclude Include="HierarchyWindow.h" />
+    <ClInclude Include="HitChecker.h" />
+    <ClInclude Include="HitInfo.h" />
     <ClInclude Include="HitManager.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageIcon.h" />
@@ -261,7 +267,6 @@
     <ClInclude Include="Info.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InspectorWindow.h" />
-    <ClInclude Include="GJK.h" />
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Librate.h" />
     <ClInclude Include="Matrix.h" />
@@ -287,6 +292,7 @@
     <ClInclude Include="AnimationState.h" />
     <ClInclude Include="ScriptIcon.h" />
     <ClInclude Include="ScrollRect.h" />
+    <ClInclude Include="SupportInfo.h" />
     <ClInclude Include="TextRect.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="Time.h" />

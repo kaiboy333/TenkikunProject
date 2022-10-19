@@ -11,7 +11,7 @@ SceneManager::SceneManager()
 	if (scenePathes.size() == 0) {
 		MakeScene(ProjectFileManager::sceneFilePath);	//シーンを作成
 		//シーンを作成
-		Scene* scene = SceneManager::MakeScene(ProjectFileManager::currentPath);
+		Scene* scene = SceneManager::MakeScene(ProjectFileManager::sceneFilePath);
 		for (int i = 0; i < 100; i++) {
 			GameObject* o = scene->CreateCircle(false);
 			o->transform->position = Vector3(MyMath::RandomRange(-WindowManager::gameWindow->width / 2, WindowManager::gameWindow->width / 2), MyMath::RandomRange(-WindowManager::gameWindow->height / 2, WindowManager::gameWindow->height / 2), 0);

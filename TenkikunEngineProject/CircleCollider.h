@@ -16,5 +16,7 @@ class CircleCollider : public Collider
 		float GetActualRadious();
 
 		virtual Rect GetBoundingBox() override;	//バウンディングボックスを返す
+
+		virtual float GetI();	//慣性モーメントを取得
 };
 

@@ -87,11 +87,11 @@
     <Filter Include="ソース ファイル\pointer">
       <UniqueIdentifier>{420e8ea0-fbd4-4add-a78f-d4cad339be85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\hit">
-      <UniqueIdentifier>{770c8c63-b86a-4831-90a0-dad41329584e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\math\binaryTree">
       <UniqueIdentifier>{90279c1f-b982-4753-bf83-a88ef1c6052a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\hit">
+      <UniqueIdentifier>{b164e8f8-81bf-440d-a219-cc42b7f5b802}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -272,9 +272,6 @@
     <ClCompile Include="Collision.cpp">
       <Filter>ソース ファイル\physic</Filter>
     </ClCompile>
-    <ClCompile Include="GJK.cpp">
-      <Filter>ソース ファイル\math</Filter>
-    </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
@@ -311,20 +308,32 @@
     <ClCompile Include="SceneIcon.cpp">
       <Filter>ソース ファイル\window\project\icon</Filter>
     </ClCompile>
-    <ClCompile Include="HitChecker.cpp">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClCompile>
-    <ClCompile Include="HitManager.cpp">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClCompile>
-    <ClCompile Include="AABBTree.cpp">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClCompile>
     <ClCompile Include="BinaryNode.cpp">
       <Filter>ソース ファイル\math\binaryTree</Filter>
     </ClCompile>
     <ClCompile Include="BinaryTree.cpp">
       <Filter>ソース ファイル\math\binaryTree</Filter>
+    </ClCompile>
+    <ClCompile Include="AABBTree.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="EPA.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="GJK.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="HitChecker.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="HitInfo.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="HitManager.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportInfo.cpp">
+      <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -511,9 +520,6 @@
     <ClInclude Include="Collision.h">
       <Filter>ソース ファイル\physic</Filter>
     </ClInclude>
-    <ClInclude Include="GJK.h">
-      <Filter>ソース ファイル\math</Filter>
-    </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>ソース ファイル\math</Filter>
     </ClInclude>
@@ -550,20 +556,32 @@
     <ClInclude Include="GameObject.h">
       <Filter>ソース ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="HitChecker.h">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClInclude>
-    <ClInclude Include="HitManager.h">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClInclude>
-    <ClInclude Include="AABBTree.h">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClInclude>
     <ClInclude Include="BinaryNode.h">
       <Filter>ソース ファイル\math\binaryTree</Filter>
     </ClInclude>
     <ClInclude Include="BinaryTree.h">
       <Filter>ソース ファイル\math\binaryTree</Filter>
+    </ClInclude>
+    <ClInclude Include="AABBTree.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="EPA.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="GJK.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="HitChecker.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="HitInfo.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="HitManager.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportInfo.h">
+      <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

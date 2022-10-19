@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Collider.h"
+#include "SupportInfo.h"
 
 class HitManager
 {
@@ -10,13 +11,21 @@ class HitManager
 			NONE,
 			AABB_TREE,
 		};
-
 		static BlodeMode blodeMode;
+
+		//Õ“Ë‰“š‚Ì‚ß‚è‚İ‰ğÁ•û–@
+		enum class CollisionResponseType {
+			Penalty,
+			Constraint,
+		};
+		static CollisionResponseType collisionResponseType;
 
 		static void HitCheck();
 
 	private:
 		static std::vector<std::pair<Collider*, Collider*>> BlodePhase(std::vector<Collider*>& colliders);
-		static void NarrawPhase(std::vector<std::pair<Collider*, Collider*>>& hitPairColliders);
+		static std::vector<SupportInfo*> NarrawPhase(std::vector<std::pair<Collider*, Collider*>>& hitPairColliders);
+
+		static void Response(std::vector<SupportInfo*>& supportInfos);
 };
 

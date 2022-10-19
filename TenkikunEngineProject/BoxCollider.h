@@ -13,5 +13,7 @@ class BoxCollider : public VertexCollider
 
 		float GetActualWidth();
 		float GetActualHeight();
+
+		virtual float GetI();	//Šµ«ƒ‚[ƒƒ“ƒg‚ğæ“¾
 };
 

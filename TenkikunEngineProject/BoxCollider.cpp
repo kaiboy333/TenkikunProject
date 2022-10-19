@@ -1,5 +1,6 @@
 #include "BoxCollider.h"
 #include "ImageRenderer.h"
+#include "RigidBody.h"
 
 BoxCollider::BoxCollider(GameObject* gameobject) : VertexCollider(gameobject)
 {
@@ -20,17 +21,15 @@ std::vector<Vector2> BoxCollider::GetVertexes()
 {
 	//中心位置から各頂点までのベクトルを作る
 	std::vector<Vector2> toVertexVecs;
-	//スケール取得
-	Vector3 scale = gameobject->transform->scale;
 
 	//左上の頂点へのベクトル
-	toVertexVecs.push_back(Vector2(-size.x / 2 * scale.x, size.y / 2 * scale.y));
+	toVertexVecs.push_back(Vector2(-GetActualWidth() / 2, GetActualHeight() / 2));
 	//右上の頂点へのベクトル
-	toVertexVecs.push_back(Vector2(size.x / 2 * scale.x, size.y / 2 * scale.y));
+	toVertexVecs.push_back(Vector2(GetActualWidth() / 2, GetActualHeight() / 2));
 	//右下の頂点へのベクトル
-	toVertexVecs.push_back(Vector2(size.x / 2 * scale.x, -size.y / 2 * scale.y));
+	toVertexVecs.push_back(Vector2(GetActualWidth() / 2, -GetActualHeight() / 2));
 	//左下の頂点へのベクトル
-	toVertexVecs.push_back(Vector2(-size.x / 2 * scale.x, -size.y / 2 * scale.y));
+	toVertexVecs.push_back(Vector2(-GetActualWidth() / 2, -GetActualHeight() / 2));
 
 	//頂点を取得、それを返す
 	return VertexCollider::GetVertexes(toVertexVecs);
@@ -50,4 +49,11 @@ float BoxCollider::GetActualHeight()
 	Vector3 scale = gameobject->transform->scale;
 
 	return size.y * scale.y;
+}
+
+float BoxCollider::GetI()
+{
+	auto rb = gameobject->GetComponent<RigidBody>();
+
+	return rb ? 1.0f / 3 * rb->mass * (std::powf(GetActualWidth() / 2, 2) + std::powf(GetActualHeight() / 2, 2)) : FLT_MAX;
 }

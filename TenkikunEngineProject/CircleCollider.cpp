@@ -1,5 +1,6 @@
 #include "CircleCollider.h"
 #include <cmath>
+#include "RigidBody.h"
 
 CircleCollider::CircleCollider(GameObject* gameobject) : Collider(gameobject)
 {
@@ -53,4 +54,11 @@ Rect CircleCollider::GetBoundingBox()
 	Vector3 leftDownPos = centerPos - Vector3(1, 1, 0) * actualRadious;
 
 	return Rect(leftDownPos.x, leftDownPos.y, 2 * actualRadious, 2 * actualRadious);
+}
+
+float CircleCollider::GetI()
+{
+	auto rb = gameobject->GetComponent<RigidBody>();
+
+	return rb ? 0.5f * rb->mass * GetActualRadious() : FLT_MAX;
 }
