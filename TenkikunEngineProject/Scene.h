@@ -31,7 +31,7 @@ class Scene : public SceneInfo
 		GameObject* CreateCircle(bool isLaterAdd = true);	//円の画像のゲームオブジェクトを作成
 		GameObject* CreateCamera(bool isLaterAdd = true);	//カメラゲームオブジェクトを作成
 		GameObject* CreateTenkikun(bool isLaterAdd = true);	//天気くんの画像のゲームオブジェクトを作成
-		GameObject* CreateUnityChan(bool isLaterAdd = true);	//アニメーションがついたUnityちゃんのゲームオブジェクト作成
+		//GameObject* CreateUnityChan(bool isLaterAdd = true);	//アニメーションがついたUnityちゃんのゲームオブジェクト作成
 
 		void Destroy(GameObject* gameobject);	//指定のGameObjectを削除
 

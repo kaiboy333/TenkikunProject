@@ -6,26 +6,24 @@
 class HitManager
 {
 	public:
+		float timeStep;
+		float bias = 0.1f;
+		float slop = 0.001f;
+		int iteration = 10;
+		Vector3 gravity = Vector3(0, -9.8f, 0);
+
 		//ブロードフェーズをする際のやり方
 		enum class BlodeMode {
 			NONE,
 			AABB_TREE,
 		};
-		static BlodeMode blodeMode;
+		BlodeMode blodeMode = BlodeMode::AABB_TREE;
 
-		//衝突応答のめり込み解消方法
-		enum class CollisionResponseType {
-			Penalty,
-			Constraint,
-		};
-		static CollisionResponseType collisionResponseType;
-
-		static void HitCheck();
+		void HitCheck();
 
 	private:
-		static std::vector<std::pair<Collider*, Collider*>> BlodePhase(std::vector<Collider*>& colliders);
-		static std::vector<SupportInfo*> NarrawPhase(std::vector<std::pair<Collider*, Collider*>>& hitPairColliders);
+		std::vector<std::pair<Collider*, Collider*>> BlodePhase(std::vector<Collider*>& colliders);
+		std::vector<SupportInfo*> NarrawPhase(std::vector<std::pair<Collider*, Collider*>>& hitPairColliders);
 
-		static void Response(std::vector<SupportInfo*>& supportInfos);
+		void Response(std::vector<SupportInfo*>& supportInfos);
 };
-

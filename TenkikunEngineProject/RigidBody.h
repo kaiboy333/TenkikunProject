@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "Physics.h"
 
 class RigidBody	: public Component
 {
@@ -20,6 +21,12 @@ class RigidBody	: public Component
 		float gravityScale = 1.0f;
 		//¿—Ê
 		float mass = 1.0f;
+		//”½”­ŒW”
+		float restritution = 0.5f;
+		//–€CŒW”
+		float friction = 0.5f;
+		//S‘©—p‚Ì’l
+		SolverBody solverBody;
 
 		RigidBody(GameObject* gameobject);
 

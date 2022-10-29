@@ -8,6 +8,13 @@ HitInfo* EPA::GetHitInfo(SupportInfo* supportInfo)
     auto c1 = supportInfo->c1;
     auto c2 = supportInfo->c2;
 
+    RigidBody* rb1 = c1->gameobject->GetComponent<RigidBody>();
+    RigidBody* rb2 = c2->gameobject->GetComponent<RigidBody>();
+
+    //どちらも剛体でないなら
+    if (!rb1 && !rb2)
+        return nullptr;
+
     //反時計回り
     int dir = 1;
     //時計回りなら
@@ -41,40 +48,33 @@ HitInfo* EPA::GetHitInfo(SupportInfo* supportInfo)
         vertexes.insert(vertexes.begin() + ((minSideIndex + 1) % (int)vertexes.size()), supportVec);
     }
 
+
+    Contact contact;
+    ContactPoint cp;
+    cp.normal = crossPoint.GetNormalized();
+    cp.distance = crossPoint.GetMagnitude();
+
     //めり込み深度(少し長さを伸ばす)
-    Vector2 sinkVec = crossPoint * 1.001f;
+    auto moveVec = -crossPoint * 1.001f;
 
-    RigidBody* rb1 = c1->gameobject->GetComponent<RigidBody>();
-    RigidBody* rb2 = c2->gameobject->GetComponent<RigidBody>();
+    //c1を動かす
+    c1->gameobject->transform->position += moveVec;
+    //c1の衝突点を求める
+    cp.pointA = GetContactPoint(c1, c2);
+    //c1を戻す
+    c1->gameobject->transform->position -= moveVec;
 
-    //どちらかが剛体なら
-    if (rb1 || rb2) {
-        float mass1 = rb1 ? rb1->mass : 0;
-        float mass2 = rb2 ? rb2->mass : 0;
+    //c2を動かす
+    c2->gameobject->transform->position += -moveVec;
+    //c2の衝突点を求める
+    cp.pointB = GetContactPoint(c1, c2);
+    //c2を戻す
+    c2->gameobject->transform->position -= -moveVec;
 
-        //お互いがぶつからないように移動させる
-        Vector2 moveVec1 = Vector2(), moveVec2 = Vector2();
-        if (rb1 && rb2) {
-            moveVec1 = -sinkVec * (mass2 / (mass1 + mass2));
-            moveVec2 = sinkVec * (mass1 / (mass1 + mass2));
-        }
-        else if (rb1) {
-            moveVec1 = -sinkVec;
-        }
-        else if (rb2) {
-            moveVec2 = sinkVec;
-        }
-        c1->gameobject->transform->position += moveVec1;
-        c2->gameobject->transform->position += moveVec2;
-
-        //位置を戻す
-        c1->gameobject->transform->position -= moveVec1;
-        c2->gameobject->transform->position -= moveVec2;
-
-        return new HitInfo(c1, c2, crossPoint.GetNormalized(), crossPoint.GetMagnitude(), GetContactPoint(c1, c2));
-    }
-
-    return nullptr;
+    contact.contactPoints.push_back(cp);
+    HitInfo* hitInfo = new HitInfo(c1, c2, contact);
+        
+    return hitInfo;
 }
 
 Vector2 EPA::GetContactPoint(Collider* c1, Collider* c2)

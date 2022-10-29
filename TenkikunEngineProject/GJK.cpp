@@ -4,7 +4,6 @@
 #include "Collision.h"
 #include "RigidBody.h"
 #include "HitChecker.h"
-#include "ContactPoint.h"
 
 SupportInfo* GJK::IsHit(Collider* c1, Collider* c2)
 {

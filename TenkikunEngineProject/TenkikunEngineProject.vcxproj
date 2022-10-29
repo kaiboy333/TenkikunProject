@@ -157,8 +157,6 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Constraint.cpp" />
-    <ClCompile Include="ContactPoint.cpp" />
     <ClCompile Include="CreateBallScript.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="EPA.cpp" />
@@ -240,8 +238,6 @@
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="Constraint.h" />
-    <ClInclude Include="ContactPoint.h" />
     <ClInclude Include="CreateBallScript.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="EPA.h" />
@@ -277,6 +273,7 @@
     <ClInclude Include="MyString.h" />
     <ClInclude Include="OnOffButton.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PlayWindow.h" />
     <ClInclude Include="ProjectFileManager.h" />
     <ClInclude Include="ProjectWindow.h" />
@@ -306,7 +303,6 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexCollider.h" />
     <ClInclude Include="Window.h" />
-    <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="WindowButton.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
