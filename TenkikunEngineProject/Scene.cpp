@@ -87,29 +87,28 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 			MenuNode* menuNode0_1 = menuList0->FindNode("Delete");
 			menuNode0_1->mouseClickDownEvents.insert(menuNode0_1->mouseClickDownEvents.begin(), std::make_pair(menuNode0_1->GetEventNo(), [this, gameobject]() {
 				Destroy(gameobject);
-				}));
 			}));
-		node->mouseDoubleClickEvents.push_back(std::make_pair(node->GetEventNo(), [node](void) {
-			GameObject* gameobject = GameObject::Find(node->GetElement());	//このノードの名前からゲームオブジェクト取得
-			//見つかったなら
+		}));
+		node->mouseDoubleClickEvents.push_back(std::make_pair(node->GetEventNo(), [node, gameobject](void) {
 			if (gameobject) {
 				WindowManager::inspectorWindow->SetGameObject(gameobject);	//ゲームオブジェクトの情報をヒエラルキーにセット
 			}
-			}));
-		treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
-	}
+		}));
 
-	if (isLaterAdd) {
-		//あとで追加
-		addAndRemoveEvents.push_back([this, gameobject](void) {
+		if (isLaterAdd) {
+			//あとで追加
+			addAndRemoveEvents.push_back([this, gameobject, treeList, node](void) {
+				gameobject->SetName("GameObject");	//名前変更(初期の名前)
+				gameobjects.emplace_back(gameobject);	//リストに追加
+				treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
+			});
+		}
+		else {
+			//すぐに追加
 			gameobject->SetName("GameObject");	//名前変更(初期の名前)
 			gameobjects.emplace_back(gameobject);	//リストに追加
-			});
-	}
-	else {
-		//すぐに追加
-		gameobject->SetName("GameObject");	//名前変更(初期の名前)
-		gameobjects.emplace_back(gameobject);	//リストに追加
+			treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
+		}
 	}
 
 	return gameobject;

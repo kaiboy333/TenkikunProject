@@ -55,5 +55,5 @@ float BoxCollider::GetI()
 {
 	auto rb = gameobject->GetComponent<RigidBody>();
 
-	return rb ? 1.0f / 3 * rb->mass * (std::powf(GetActualWidth() / 2, 2) + std::powf(GetActualHeight() / 2, 2)) : FLT_MAX;
+	return rb ? (rb->mass * (std::powf(GetActualWidth() / 2, 2) + std::powf(GetActualHeight() / 2, 2))) / 3 : FLT_MAX;
 }

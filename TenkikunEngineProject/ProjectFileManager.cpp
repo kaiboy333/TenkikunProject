@@ -10,6 +10,7 @@
 #include "BoxCollider.h"
 #include "CircleCollider.h"
 #include "MonoBehaviour.h"
+#include "RigidBody.h"
 
 ProjectFileManager::ProjectFileManager()
 {
@@ -421,6 +422,23 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 					//radiousを書き込む
 					ofs << "\tradious: " << circleCollider->radious << std::endl;
 				}
+				//RigidBodyだったら
+				if (type == typeid(RigidBody)) {
+					RigidBody* rigidBody = static_cast<RigidBody*>(component);
+					//velocityを書き込む
+					Vector3 velocity = rigidBody->velocity;
+					ofs << "\tvelocity: {x: " << velocity.x << " ,y: " << velocity.y << " ,z: " << velocity.z << " }" << std::endl;
+
+					//angularVelocityを書き込む
+					Vector3 angularVelocity = rigidBody->angularVelocity;
+					ofs << "\tangularVelocity: {x: " << angularVelocity.x << " ,y: " << angularVelocity.y << " ,z: " << angularVelocity.z << " }" << std::endl;
+
+					//gravityScaleを書き込む
+					ofs << "\tgravityScale: " << rigidBody->gravityScale << std::endl;
+
+					//massを書き込む
+					ofs << "\tmass: " << rigidBody->mass << std::endl;
+				}
 				//MonoBehaviourなら
 				else if (type == typeid(MonoBehaviour)) {
 					MonoBehaviour* mono = static_cast<MonoBehaviour*>(component);
@@ -600,7 +618,7 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
 			//ゲームオブジェクトを取得
 			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
-			//BoxColliderを作成、取得
+			//CircleColliderを作成、取得
 			CircleCollider* circleCollider = gameobject->AddComponent<CircleCollider>();
 
 			//offsetを取得
@@ -611,6 +629,30 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 
 			//radiousをセット
 			circleCollider->radious = std::stof(MyString::Split(lines[row++], " ")[1]);
+		}
+		else if (className == typeid(RigidBody).name()) {
+			//ゲームオブジェクトのファイルIDを取得
+			fileID = std::stoi(MyString::Split(lines[row++], " ")[2]);
+			//ゲームオブジェクトを取得
+			GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
+			//RigidBodyを作成、取得
+			RigidBody* rigidBody = gameobject->AddComponent<RigidBody>();
+
+			//velocityをセット
+			std::vector<std::string> words = MyString::Split(lines[row++], " ");
+			Vector3 velocity = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			rigidBody->velocity = velocity;
+
+			//angularVelocityをセット
+			words = MyString::Split(lines[row++], " ");
+			Vector3 angularVelocity = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
+			rigidBody->angularVelocity = angularVelocity;
+
+			//gravityScaleをセット
+			rigidBody->gravityScale = std::stof(MyString::Split(lines[row++], " ")[1]);
+
+			//massをセット
+			rigidBody->mass = std::stof(MyString::Split(lines[row++], " ")[1]);
 		}
 		else if (className == typeid(MonoBehaviour).name()) {
 		//	//ゲームオブジェクトのファイルIDを取得

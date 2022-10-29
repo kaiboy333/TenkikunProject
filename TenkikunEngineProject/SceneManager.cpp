@@ -10,17 +10,6 @@ SceneManager::SceneManager()
 	//シーンが何もないなら
 	if (scenePathes.size() == 0) {
 		MakeScene(ProjectFileManager::sceneFilePath);	//シーンを作成
-		//シーンを作成
-		Scene* scene = SceneManager::MakeScene(ProjectFileManager::sceneFilePath);
-		for (int i = 0; i < 100; i++) {
-			GameObject* o = scene->CreateCircle(false);
-			o->transform->position = Vector3(MyMath::RandomRange(-WindowManager::gameWindow->width / 2, WindowManager::gameWindow->width / 2), MyMath::RandomRange(-WindowManager::gameWindow->height / 2, WindowManager::gameWindow->height / 2), 0);
-		}
-		//シーンをセーブ
-		ProjectFileManager::WriteToSceneFile(scene);
-		//シーンを解放する
-		scene->PreparationLibrate();
-		delete(scene);
 	}
 	//あるなら
 	else {
@@ -88,22 +77,27 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	scenePathes.insert(std::make_pair(scene->GetName(), scenePath));
 
 	scene->CreateCamera(false);	//カメラ生成
+
 	//scene->CreateTenkikun(false);	//天気くん生成
-	GameObject* square = scene->CreateSquare(false);
-	square->transform->position = Vector3(-50, 0, 0);
-	square->transform->rotation = Vector3(0, 0, 55);
+	//GameObject* square = scene->CreateSquare(false);
+	//square->transform->position = Vector3(-50, 0, 0);
+	//square->transform->rotation = Vector3(0, 0, 55);
 	//square->AddComponent<RigidBody>();
-	GameObject* square2 = scene->CreateSquare(false);
-	square2->transform->position = Vector3(0, -100, 0);
-	square2->transform->scale = Vector3(5, 1, 1);
-	GameObject* circle = scene->CreateCircle(false);
-	circle->transform->position = Vector3(50, 0, 0);
+
+	//GameObject* square2 = scene->CreateSquare(false);
+	//square2->transform->position = Vector3(0, -100, 0);
+	//square2->transform->scale = Vector3(5, 1, 1);
+
+	//GameObject* circle = scene->CreateCircle(false);
+	//circle->transform->position = Vector3(50, 0, 0);
+	//circle->AddComponent<RigidBody>();
+
 	//GameObject* circle2 = scene->CreateCircle(false);
 	//circle2->transform->position = Vector3(50, 0, 0);
 	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
-	//GameObject* o = scene->CreateEmpty(false);
-	//o->AddComponent<CreateBallScript>();
+	GameObject* o = scene->CreateEmpty(false);
+	o->AddComponent<CreateBallScript>();
 
 	//シーンをセーブ
 	SaveScene();
@@ -140,20 +134,20 @@ void SceneManager::SetNowScene(Scene* scene)
 void SceneManager::SaveScene()
 {
 	//編集モードなら
-	if (playMode == PlayMode::EDIT) {
+	//if (playMode == PlayMode::EDIT) {
 		std::unordered_map<SceneInfo*, int> idInfos;
 		//シーン以外の情報をファイルに書き込む
 		ProjectFileManager::WriteToFile();
 		//現在のシーンをセーブ(シーンファイルに書き込む)
 		ProjectFileManager::WriteToSceneFile(nowScene);
 		Debug::Log(nowScene->GetName() + "をセーブしました。");
-	}
-	else {
-		Debug::Log("プレイ中はセーブできません。");
-	}
+	//}
+	//else {
+	//	Debug::Log("プレイ中はセーブできません。");
+	//}
 }
 
 Scene* SceneManager::nowScene = nullptr;	//現在のScene
-SceneManager::PlayMode SceneManager::playMode = PlayMode::EDIT;	//初期は編集モード
+SceneManager::PlayMode SceneManager::playMode = PlayMode::PLAY;	//初期は編集モード
 
 std::map<std::string, std::filesystem::path> SceneManager::scenePathes;

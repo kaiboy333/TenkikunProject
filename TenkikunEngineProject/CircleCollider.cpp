@@ -60,5 +60,5 @@ float CircleCollider::GetI()
 {
 	auto rb = gameobject->GetComponent<RigidBody>();
 
-	return rb ? 0.5f * rb->mass * GetActualRadious() : FLT_MAX;
+	return rb ? (rb->mass * std::powf(GetActualRadious(), 2)) / 2 : FLT_MAX;
 }

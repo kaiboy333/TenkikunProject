@@ -71,7 +71,7 @@ HitInfo* EPA::GetHitInfo(SupportInfo* supportInfo)
         c1->gameobject->transform->position -= moveVec1;
         c2->gameobject->transform->position -= moveVec2;
 
-        return new HitInfo(c1, c2, crossPoint, GetContactPoint(c1, c2));
+        return new HitInfo(c1, c2, crossPoint.GetNormalized(), crossPoint.GetMagnitude(), GetContactPoint(c1, c2));
     }
 
     return nullptr;

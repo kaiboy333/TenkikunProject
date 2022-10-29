@@ -64,7 +64,7 @@ SupportInfo* GJK::IsHit(Collider* c1, Collider* c2)
         }
     }
 
-    return false;
+    return nullptr;
 }
 
 Vector2 GJK::Support(Collider* c1, Collider* c2, Vector2 v)

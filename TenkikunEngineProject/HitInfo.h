@@ -6,8 +6,9 @@ class HitInfo
 		Collider* c1 = nullptr;
 		Collider* c2 = nullptr;
 		Vector3 n;
+		float sink;
 		Vector3 contactPoint;
 
-		HitInfo(Collider* c1, Collider* c2, Vector3 n, Vector3 contactPoint);
+		HitInfo(Collider* c1, Collider* c2, Vector3 n, float sink, Vector3 contactPoint);
 };
 

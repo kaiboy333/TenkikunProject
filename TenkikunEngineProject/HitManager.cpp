@@ -82,7 +82,7 @@ std::vector<SupportInfo*> HitManager::NarrawPhase(std::vector<std::pair<Collider
 	return supportInfos;
 }
 
-void Response(std::vector<SupportInfo*>& supportInfos) {
+void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
 	std::vector<HitInfo*> hitInfos;
 
 	for (auto supportInfo : supportInfos) {
@@ -98,22 +98,28 @@ void Response(std::vector<SupportInfo*>& supportInfos) {
 		auto c1 = hitInfo->c1;
 		auto c2 = hitInfo->c2;
 		auto rb1 = c1->gameobject->GetComponent<RigidBody>();
-		auto rb2 = c1->gameobject->GetComponent<RigidBody>();
+		auto rb2 = c2->gameobject->GetComponent<RigidBody>();
 		auto v1 = rb1 ? rb1->velocity : Vector3::Zero();
 		auto v2 = rb2 ? rb2->velocity : Vector3::Zero();
+		float k = 5;
 
-		float e = 1;	//反発係数
+		float e = 1.0;	//反発係数
 		auto m1Inv = rb1 ? (1 / rb1->mass) : 0;	//質量の逆数
 		auto m2Inv = rb2 ? (1 / rb2->mass) : 0;	//質量の逆数
 		auto r1 = hitInfo->contactPoint - c1->gameobject->transform->position;	//重心から衝突点までのベクトル
 		auto r2 = hitInfo->contactPoint - c2->gameobject->transform->position;	//重心から衝突点までのベクトル
 		auto v12 = v2 - v1;
-		auto i1Inv = rb1 ? c1->GetI() : 0;
-		auto i2Inv = rb2 ? c2->GetI() : 0;
+		auto i1Inv = rb1 ? 1 / c1->GetI() : 0;
+		auto i2Inv = rb2 ? 1 / c2->GetI() : 0;
 		auto n = hitInfo->n;
+		float spring = -k * hitInfo->sink;
 		
-		auto j = ((1 + e) * Vector3::Dot(v12, n)) / (m1Inv + m2Inv + Vector3::Dot(Vector3::Cross(Vector3::Cross(r1, n) * i1Inv, r1) + Vector3::Cross((r2, n) * i2Inv, r2), n));
-		auto f1 = n * j / Time::GetDeltaTime();
+		auto j1 = (1 + e) * Vector3::Dot(v12, n);
+		auto j2 = Vector3::Cross(Vector3::Cross(r1, n) * i1Inv, r1);
+		auto j3 = Vector3::Cross(Vector3::Cross(r2, n) * i2Inv, r2);
+
+		auto j = j1 / (m1Inv + m2Inv + Vector3::Dot(n, j2 + j3));
+		auto f1 = n * (j + spring);
 		auto t1 = Vector3::Cross(r1, f1);
 
 		auto f2 = -f1;

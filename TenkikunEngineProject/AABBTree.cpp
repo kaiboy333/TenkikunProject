@@ -25,8 +25,20 @@ std::vector<std::pair<Collider*, Collider*>> AABBTree::GetHitPairColliders(std::
 			if (Rect::IsHit(r1, r2)) {
 				//コライダーが一つで構成されているのなら
 				if ((int)node->key.second.size() == 1) {
-					//衝突の可能性が高いのでリストに追加
-					hitPairColiiders.push_back(std::make_pair(collider, node->key.second[0]));
+					//入れ替え違いのペアがないか探す
+					bool isFind = false;
+					for (auto& hitPairCollider : hitPairColiiders) {
+						//入れ違いのペアなら
+						if (hitPairCollider.first == node->key.second[0] && hitPairCollider.second == collider) {
+							isFind = true;
+							break;
+						}
+					}
+					//まだ追加していないものなら
+					if (!isFind) {
+						//衝突の可能性が高いのでリストに追加
+						hitPairColiiders.push_back(std::make_pair(collider, node->key.second[0]));
+					}
 				}
 				else {
 					//左右の子ノード追加
