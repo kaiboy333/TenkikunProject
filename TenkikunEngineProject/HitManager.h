@@ -2,6 +2,8 @@
 
 #include "Collider.h"
 #include "SupportInfo.h"
+#include "Physics.h"
+#include "RigidBody.h"
 
 class HitManager
 {
@@ -22,8 +24,14 @@ class HitManager
 		void HitCheck();
 
 	private:
-		std::vector<std::pair<Collider*, Collider*>> BlodePhase(std::vector<Collider*>& colliders);
-		std::vector<SupportInfo*> NarrawPhase(std::vector<std::pair<Collider*, Collider*>>& hitPairColliders);
+		std::vector<RigidBody*> rigidBodies;
+		std::vector<Collider*> colliders;
 
-		void Response(std::vector<SupportInfo*>& supportInfos);
+		std::vector<std::pair<int, int>> colliderPairs;
+		std::vector<SupportInfo*> supportInfos;
+
+		void BlodePhase();
+		void NarrawPhase();
+
+		void Response();
 };

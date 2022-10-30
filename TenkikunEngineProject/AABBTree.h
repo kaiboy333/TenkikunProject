@@ -8,13 +8,13 @@
 class AABBTree
 {
 	public:
-		static std::vector<std::pair<Collider*, Collider*>> GetHitPairColliders(std::vector<Collider*>& colliders);
+		std::vector<std::pair<int, int>> GetHitPairCollidersIndex(std::vector<Collider*>& colliders);
 
 	private:
-		static BinaryNode<std::pair<Rect, std::vector<Collider*>>>* MakeNode(std::vector<Collider*>& colliders);
+		BinaryNode<std::pair<Rect, std::vector<int>>>* MakeNode(std::vector<Collider*>& colliders, std::vector<int>& colliderIndexes);
 
-		static BinaryTree<std::pair<Rect, std::vector<Collider*>>>* MakeTree(std::vector<Collider*>& colliders);
+		BinaryTree<std::pair<Rect, std::vector<int>>>* MakeTree(std::vector<Collider*>& colliders);
 
-		static std::pair<std::vector<Collider*>, std::vector<Collider*>> GetHalfColliders(std::vector<Collider*>& colliders);	//colliders‚ð”¼•ª‚É‚µ‚ÄŽæ“¾
+		std::pair<std::vector<int>, std::vector<int>> GetHalfColliders(std::vector<int>& colliderIndexes);
 };
 

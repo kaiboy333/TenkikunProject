@@ -1,8 +1,8 @@
 #include "HitInfo.h"
 
-HitInfo::HitInfo(Collider* c1, Collider* c2, Contact contact)
+HitInfo::HitInfo(int colliderID1, int colliderID2, Contact contact)
 {
-	this->c1 = c1;
-	this->c2 = c2;
+	this->colliderID1 = colliderID1;
+	this->colliderID2 = colliderID2;
 	this->contact = contact;
 }

@@ -6,15 +6,18 @@
 #include "Debug.h"
 #include "EPA.h"
 #include "RigidBody.h"
-#include "Physics.h"
 
 void HitManager::HitCheck()
 {
-	std::vector<Collider*> colliders;
-
 	for (GameObject* gameobject : SceneManager::GetNowScene()->gameobjects) {
 		std::vector<Collider*> objectColliders = gameobject->GetComponents<Collider>();	//コライダーたちを取得
 		colliders.insert(colliders.end(), objectColliders.begin(), objectColliders.end());	//リストに一気に追加
+
+		//剛体を取得
+		RigidBody* rigidBody = gameobject->GetComponent<RigidBody>();
+		if (rigidBody) {
+			rigidBodies.push_back(rigidBody);
+		}
 	}
 
 	LARGE_INTEGER beforeTime;
@@ -25,12 +28,13 @@ void HitManager::HitCheck()
 
 	if (colliders.size() >= 2) {
 		//バウンディングボックスを使った衝突判定
-		auto hitPairColliders = BlodePhase(colliders);
+		BlodePhase();
 
 		//実際の形状での衝突判定
-		auto supportInfos = NarrawPhase(hitPairColliders);
+		NarrawPhase();
 
-		Response(supportInfos);
+		//衝突応答
+		Response();
 	}
 
 	// 今の時間を取得
@@ -41,55 +45,51 @@ void HitManager::HitCheck()
 	Debug::Log(std::to_string(frameTime));
 }
 
-std::vector<std::pair<Collider*, Collider*>> HitManager::BlodePhase(std::vector<Collider*>& colliders)
+void HitManager::BlodePhase()
 {
-	std::vector<std::pair<Collider*, Collider*>> pairs;
-
 	if (blodeMode == BlodeMode::AABB_TREE) {
-		return AABBTree::GetHitPairColliders(colliders);
+		AABBTree aabbTree = AABBTree();
+		colliderPairs = aabbTree.GetHitPairCollidersIndex(colliders);
 	}
 	else if (blodeMode == BlodeMode::NONE) {
 
-		for (auto& collider1 : colliders) {
-			for (auto& collider2 : colliders) {
-				pairs.push_back(std::make_pair(collider1, collider2));
+		for (int i = 0, len = (int)colliders.size(); i < len; i++) {
+			for (int j = 0; j < len; j++) {
+				colliderPairs.push_back({i, j});
 			}
 		}
 	}
-
-	return pairs;
 }
 
-std::vector<SupportInfo*> HitManager::NarrawPhase(std::vector<std::pair<Collider*, Collider*>>& hitPairColliders)
+void HitManager::NarrawPhase()
 {
-	std::vector<SupportInfo*> supportInfos;
+	for (auto& colliderPair : colliderPairs) {
+		auto c1 = colliders[colliderPair.first];
+		auto c2 = colliders[colliderPair.second];
 
-	for (auto& hitPairCollider : hitPairColliders) {
 		//全く同じコライダーなら飛ばす
-		if (hitPairCollider.first == hitPairCollider.second)
+		if (c1 == c2)
 			continue;
 		//同じゲームオブジェクトのコライダーなら飛ばす
-		if (hitPairCollider.first->gameobject == hitPairCollider.second->gameobject)
+		if (c1->gameobject == c2->gameobject)
 			continue;
 
-		auto supportInfo = GJK::IsHit(hitPairCollider.first, hitPairCollider.second);
+		auto supportInfo = GJK::IsHit(colliders, colliderPair.first, colliderPair.second);
 		if (supportInfo) {
-			hitPairCollider.first->isHit = true;
-			hitPairCollider.second->isHit = true;
+			c1->isHit = true;
+			c2->isHit = true;
 			supportInfos.push_back(supportInfo);
 		}
 	}
-
-	return supportInfos;
 }
 
-void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
+void HitManager::Response() {
 	timeStep = Time::GetDeltaTime();
 
 	std::vector<HitInfo*> hitInfos;
 
-	for (auto supportInfo : supportInfos) {
-		auto hitInfo = EPA::GetHitInfo(supportInfo);
+	for (auto& supportInfo : supportInfos) {
+		auto hitInfo = EPA::GetHitInfo(colliders, supportInfo);
 		//衝突応答を行うなら
 		if (hitInfo) {
 			//リストに追加
@@ -99,42 +99,44 @@ void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
 
 	//ソルバー用プロキシを作成
 	for (auto hitInfo : hitInfos) {
-		std::vector<RigidBody*> rigidBodies = { hitInfo->c1->gameobject->GetComponent<RigidBody>(), hitInfo->c2->gameobject->GetComponent<RigidBody>() };
-		std::vector<SolverBody*> solverBodies = {&rigidBodies[0]->solverBody, &rigidBodies[1]->solverBody};
-		std::vector<Collider*> colliders = {hitInfo->c1, hitInfo->c2};
-
 		for (int i = 0, len = (int)rigidBodies.size(); i < len; i++) {
 			//ソルバーボディにパラメータをセット
-			if (rigidBodies[i]) {
-				solverBodies[i]->massInv = 1 / rigidBodies[i]->mass;
-				solverBodies[i]->inertiaInv = 1 / colliders[i]->GetI();
-			}
-			else {
-				solverBodies[i]->massInv = 0;
-				solverBodies[i]->inertiaInv = 0;
+			RigidBody* rigidBody = rigidBodies[i];
+			if (rigidBody) {
+				if (rigidBody->bodyType == RigidBody::BodyType::Dynamic) {
+					rigidBodies[i]->solverBody->massInv = 1 / rigidBodies[i]->mass;
+					rigidBodies[i]->solverBody->inertiaInv = 1 / colliders[i]->GetI();
+				}
+				else {
+					rigidBodies[i]->solverBody->massInv = 0;
+					rigidBodies[i]->solverBody->inertiaInv = 0;
+				}
 			}
 		}
 	}
 
 	//拘束のセットアップ
 	for (auto hitInfo : hitInfos) {
-		RigidBody* bodyA = hitInfo->c1->gameobject->GetComponent<RigidBody>();
-		SolverBody& solverBodyA = bodyA->solverBody;
+		Collider* c1 = colliders[hitInfo->colliderID1];
+		Collider* c2 = colliders[hitInfo->colliderID2];
 
-		RigidBody* bodyB = hitInfo->c2->gameobject->GetComponent<RigidBody>();
-		SolverBody& solverBodyB = bodyB->solverBody;
+		RigidBody* bodyA = c1->gameobject->GetComponent<RigidBody>();
+		SolverBody* solverBodyA = bodyA ? bodyA->solverBody : new SolverBody();
+
+		RigidBody* bodyB = c2->gameobject->GetComponent<RigidBody>();
+		SolverBody* solverBodyB = bodyB ? bodyB->solverBody : new SolverBody();
 		for (auto& contactPoint : hitInfo->contact.contactPoints) {
 			auto cpA = contactPoint.pointA;
 			auto cpB = contactPoint.pointB;
 
-			auto r1 = cpA - bodyA->gameobject->transform->position;
-			auto r2 = cpB - bodyB->gameobject->transform->position;
+			auto r1 = cpA - c1->gameobject->transform->position;
+			auto r2 = cpB - c2->gameobject->transform->position;
 
 			//いったん衝突法線を3次元ベクトルにする
 			auto normal = contactPoint.normal;
 
-			auto velocityA = bodyA->velocity + Vector3::Cross(Vector3(0, 0, bodyA->angularVelocity.z * MyMath::DEG_TO_RAD), r1);
-			auto velocityB = bodyB->velocity + Vector3::Cross(Vector3(0, 0, bodyB->angularVelocity.z * MyMath::DEG_TO_RAD), r2);
+			auto velocityA = bodyA ? bodyA->velocity + Vector3::Cross(Vector3(0, 0, bodyA->angularVelocity.z * MyMath::DEG_TO_RAD), r1) : Vector3::Zero();
+			auto velocityB = bodyB ? bodyB->velocity + Vector3::Cross(Vector3(0, 0, bodyB->angularVelocity.z * MyMath::DEG_TO_RAD), r2) : Vector3::Zero();
 
 			//2つの物体の相対速度を求める（V1 - V2）
 			auto relativeVelocity = velocityA - velocityB;
@@ -148,9 +150,9 @@ void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
 
 			//rhs = Right Hand Side = 右辺
 			contactPoint.constraints[0].jacDiagInv = 1.0f / (
-				(solverBodyA.massInv + solverBodyB.massInv)
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA.inertiaInv, r1))
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB.inertiaInv, r2))
+				(solverBodyA->massInv + solverBodyB->massInv)
+				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
+				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
 				);
 			contactPoint.constraints[0].rhs = -((1 + restitution) * Vector3::Dot(relativeVelocity, axis));
 			contactPoint.constraints[0].rhs -= (bias * std::max<float>(0.0, contactPoint.distance + slop)) / timeStep; // position error
@@ -161,38 +163,51 @@ void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
 
 			axis = tangent1;
 			contactPoint.constraints[1].jacDiagInv = 1.0f / (
-				(solverBodyA.massInv + solverBodyB.massInv)
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA.inertiaInv, r1))
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB.inertiaInv, r2))
+				(solverBodyA->massInv + solverBodyB->massInv)
+				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
+				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
 				);
 			contactPoint.constraints[1].rhs = -Vector3::Dot(relativeVelocity, axis);
 			contactPoint.constraints[1].rhs *= contactPoint.constraints[1].jacDiagInv;
 			contactPoint.constraints[1].axis = axis;
+		}
+
+		//いらないsolverBodyを解放
+		if (!bodyA) {
+			delete(solverBodyA);
+			solverBodyA = nullptr;
+		}
+		if (!bodyB) {
+			delete(solverBodyB);
+			solverBodyB = nullptr;
 		}
 	}
 
 	//拘束の演算
 	for (int iter = 0; iter < iteration; iter++) {
 		for (auto hitInfo : hitInfos) {
-			RigidBody* bodyA = hitInfo->c1->gameobject->GetComponent<RigidBody>();
-			RigidBody* bodyB = hitInfo->c2->gameobject->GetComponent<RigidBody>();
+			Collider* c1 = colliders[hitInfo->colliderID1];
+			Collider* c2 = colliders[hitInfo->colliderID2];
 
-			SolverBody& solverBodyA = bodyA->solverBody;
-			SolverBody& solverBodyB = bodyB->solverBody;
+			RigidBody* bodyA = c1->gameobject->GetComponent<RigidBody>();
+			SolverBody* solverBodyA = bodyA ? bodyA->solverBody : new SolverBody();
+
+			RigidBody* bodyB = c2->gameobject->GetComponent<RigidBody>();
+			SolverBody* solverBodyB = bodyB ? bodyB->solverBody : new SolverBody();
 
 			for (auto& contactPoint : hitInfo->contact.contactPoints) {
 				auto cpA = contactPoint.pointA;
 				auto cpB = contactPoint.pointB;
 
-				auto r1 = cpA - bodyA->gameobject->transform->position;
-				auto r2 = cpB - bodyB->gameobject->transform->position;
+				auto r1 = cpA - c1->gameobject->transform->position;
+				auto r2 = cpB - c2->gameobject->transform->position;
 
 
 				for (int i = 0; i < 2; i++) {
 					auto constraint = contactPoint.constraints[i];
 					auto deltaImpulse = constraint.rhs;
-					auto deltaVelocityA = solverBodyA.deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyA.deltaAngularVelocity.z), r1);
-					auto deltaVelocityB = solverBodyB.deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyB.deltaAngularVelocity.z), r2);
+					auto deltaVelocityA = solverBodyA->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyA->deltaAngularVelocity.z), r1);
+					auto deltaVelocityB = solverBodyB->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyB->deltaAngularVelocity.z), r2);
 
 					deltaImpulse -= constraint.jacDiagInv * Vector3::Dot(constraint.axis, deltaVelocityA - deltaVelocityB);
 
@@ -200,11 +215,11 @@ void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
 					constraint.accumImpulse = MyMath::Clamp(oldImpulse + deltaImpulse, constraint.lowerLimit, constraint.upperLimit);
 
 					deltaImpulse = constraint.accumImpulse - oldImpulse;
-					solverBodyA.deltaLinearVelocity += constraint.axis * (deltaImpulse * solverBodyA.massInv);
-					solverBodyA.deltaAngularVelocity.z += deltaImpulse * solverBodyA.inertiaInv * Vector2::Cross(r1, constraint.axis);
+					solverBodyA->deltaLinearVelocity += constraint.axis * (deltaImpulse * solverBodyA->massInv);
+					solverBodyA->deltaAngularVelocity.z += deltaImpulse * solverBodyA->inertiaInv * Vector2::Cross(r1, constraint.axis);
 
-					solverBodyB.deltaLinearVelocity -= constraint.axis * (deltaImpulse * solverBodyB.massInv);
-					solverBodyB.deltaAngularVelocity.z -= deltaImpulse * solverBodyB.inertiaInv * Vector2::Cross(r2, constraint.axis);
+					solverBodyB->deltaLinearVelocity -= constraint.axis * (deltaImpulse * solverBodyB->massInv);
+					solverBodyB->deltaAngularVelocity.z -= deltaImpulse * solverBodyB->inertiaInv * Vector2::Cross(r2, constraint.axis);
 
 					if (i == 0) {
 						auto maxFriction = hitInfo->contact.friction * abs(contactPoint.constraints[0].accumImpulse);
@@ -213,24 +228,30 @@ void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
 					}
 				}
 			}
+
+			//いらないsolverBodyを解放
+			if (!bodyA) {
+				delete(solverBodyA);
+				solverBodyA = nullptr;
+			}
+			if (!bodyB) {
+				delete(solverBodyB);
+				solverBodyB = nullptr;
+			}
 		}
 	}
 
-	std::vector<RigidBody*> rbs;
-	for (GameObject* gameobject : SceneManager::GetNowScene()->gameobjects) {
-		RigidBody* rb = gameobject->GetComponent<RigidBody>();	//コライダーたちを取得
-		if (rb) {
-			rbs.push_back(rb);
-		}
-	}
 	//速度を更新
-	for (auto rb : rbs) {
-		if (rb) {
-			rb->velocity += rb->solverBody.deltaLinearVelocity;
-			rb->angularVelocity += rb->solverBody.deltaAngularVelocity * MyMath::RAD_TO_DEG;
+	for (int i = 0, len = (int)rigidBodies.size(); i < len; i++) {
+		RigidBody* rb = rigidBodies[i];
+		SolverBody* sb = rb ? rb->solverBody : nullptr;
 
-			rb->solverBody.deltaLinearVelocity = Vector3::Zero();
-			rb->solverBody.deltaAngularVelocity = Vector3::Zero();
+		if (rb) {
+			rb->velocity += sb->deltaLinearVelocity;
+			rb->angularVelocity += sb->deltaAngularVelocity * MyMath::RAD_TO_DEG;
+
+			sb->deltaLinearVelocity = Vector3::Zero();
+			sb->deltaAngularVelocity = Vector3::Zero();
 		}
 	}
 }

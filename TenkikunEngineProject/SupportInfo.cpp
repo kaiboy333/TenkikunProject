@@ -1,9 +1,9 @@
 
 #include "SupportInfo.h"
 
-SupportInfo::SupportInfo(std::vector<Vector2> supports, Collider* c1, Collider* c2)
+SupportInfo::SupportInfo(std::vector<Vector2> supports, int colliderID1, int colliderID2)
 {
 	this->supports = supports;
-	this->c1 = c1;
-	this->c2 = c2;
+	this->colliderID1 = colliderID1;
+	this->colliderID2 = colliderID2;
 }

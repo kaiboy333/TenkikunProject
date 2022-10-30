@@ -13,6 +13,12 @@ class RigidBody	: public Component
 			VelocityChange,
 		};
 
+		enum class BodyType {
+			Static,
+			Dynamic,
+		};
+		BodyType bodyType = BodyType::Dynamic;
+
 		//‘¬“x
 		Vector3 velocity;
 		//Šp‘¬“x
@@ -26,7 +32,7 @@ class RigidBody	: public Component
 		//–€CŒW”
 		float friction = 0.5f;
 		//S‘©—p‚Ì’l
-		SolverBody solverBody;
+		SolverBody* solverBody = nullptr;
 
 		RigidBody(GameObject* gameobject);
 

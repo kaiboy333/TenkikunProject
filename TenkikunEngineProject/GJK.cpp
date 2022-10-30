@@ -5,8 +5,11 @@
 #include "RigidBody.h"
 #include "HitChecker.h"
 
-SupportInfo* GJK::IsHit(Collider* c1, Collider* c2)
+SupportInfo* GJK::IsHit(std::vector<Collider*> colliders, int colliderID1, int colliderID2)
 {
+    auto c1 = colliders[colliderID1];
+    auto c2 = colliders[colliderID2];
+
     Vector2 v = c1->GetPosition() - c2->GetPosition();
     if (v == Vector2::Zero()) {
         //return true;
@@ -50,7 +53,7 @@ SupportInfo* GJK::IsHit(Collider* c1, Collider* c2)
                 }
                 //原点が3点で作った三角形に含まれているなら
                 if (IsPointInTriangle(Vector2::Zero(), vertexes)) {
-                    return new SupportInfo(vertexes, c1, c2);
+                    return new SupportInfo(vertexes, colliderID1, colliderID2);
                 }
 
                 //原点から三角形への最短距離を求める

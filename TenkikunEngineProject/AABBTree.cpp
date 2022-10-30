@@ -2,15 +2,18 @@
 #include "Rect.h"
 #include "Debug.h"
 
-std::vector<std::pair<Collider*, Collider*>> AABBTree::GetHitPairColliders(std::vector<Collider*>& colliders)
+std::vector<std::pair<int, int>> AABBTree::GetHitPairCollidersIndex(std::vector<Collider*>& colliders)
 {
-	std::vector<std::pair<Collider*, Collider*>> hitPairColiiders;
+	std::vector<std::pair<int, int>> hitPairColliderIndexes;
 
 	//二分木作成
 	auto bTree = MakeTree(colliders);
 
-	for (auto& collider : colliders) {
-		std::vector<BinaryNode<std::pair<Rect, std::vector<Collider*>>>*> nodes = { bTree->GetRoot() };
+	for (int i = 0, len = (int)colliders.size(); i < len; i++) {
+		auto collider = colliders[i];
+
+		std::vector<BinaryNode<std::pair<Rect, std::vector<int>>>*> nodes = { bTree->GetRoot() };
+
 		while ((int)nodes.size() != 0) {
 			auto node = nodes[0];
 			nodes.erase(nodes.begin());
@@ -27,9 +30,9 @@ std::vector<std::pair<Collider*, Collider*>> AABBTree::GetHitPairColliders(std::
 				if ((int)node->key.second.size() == 1) {
 					//入れ替え違いのペアがないか探す
 					bool isFind = false;
-					for (auto& hitPairCollider : hitPairColiiders) {
+					for (auto& hitPair : hitPairColliderIndexes) {
 						//入れ違いのペアなら
-						if (hitPairCollider.first == node->key.second[0] && hitPairCollider.second == collider) {
+						if (hitPair.first == node->key.second[0] && hitPair.second == i) {
 							isFind = true;
 							break;
 						}
@@ -37,7 +40,7 @@ std::vector<std::pair<Collider*, Collider*>> AABBTree::GetHitPairColliders(std::
 					//まだ追加していないものなら
 					if (!isFind) {
 						//衝突の可能性が高いのでリストに追加
-						hitPairColiiders.push_back(std::make_pair(collider, node->key.second[0]));
+						hitPairColliderIndexes.push_back(std::make_pair(i, node->key.second[0]));
 					}
 				}
 				else {
@@ -49,14 +52,14 @@ std::vector<std::pair<Collider*, Collider*>> AABBTree::GetHitPairColliders(std::
 		}
 	}
 
-	return hitPairColiiders;
+	return hitPairColliderIndexes;
 }
 
-BinaryNode<std::pair<Rect, std::vector<Collider*>>>* AABBTree::MakeNode(std::vector<Collider*>& colliders)
+BinaryNode<std::pair<Rect, std::vector<int>>>* AABBTree::MakeNode(std::vector<Collider*>& colliders, std::vector<int>& colliderIndexes)
 {
 	Rect rect = Rect(0, 0, 0, 0);
-	for (int i = 0, len = (int)colliders.size(); i < len; i++) {
-		Collider* collider = colliders[i];
+	for (int i = 0, len = (int)colliderIndexes.size(); i < len; i++) {
+		Collider* collider = colliders[colliderIndexes[i]];
 
 		if (i == 0) {
 			rect = collider->GetBoundingBox();
@@ -66,18 +69,22 @@ BinaryNode<std::pair<Rect, std::vector<Collider*>>>* AABBTree::MakeNode(std::vec
 		}
 	}
 
-	return new BinaryNode(std::make_pair(rect, colliders));
+	return new BinaryNode(std::make_pair(rect, colliderIndexes));
 }
 
-BinaryTree<std::pair<Rect, std::vector<Collider*>>>* AABBTree::MakeTree(std::vector<Collider*>& colliders)
+BinaryTree<std::pair<Rect, std::vector<int>>>* AABBTree::MakeTree(std::vector<Collider*>& colliders)
 {
 	//rootを作る
-	auto root = MakeNode(colliders);
+	std::vector<int> colliderIndexes;
+	for (int i = 0, len = (int)colliders.size(); i < len; i++) {
+		colliderIndexes.push_back(i);
+	}
+	auto root = MakeNode(colliders, colliderIndexes);
 	//binaryTreeに追加
 	auto bTree = new BinaryTree(root);
 
 
-	std::vector<BinaryNode<std::pair<Rect, std::vector<Collider*>>>*> nodes = { root };
+	std::vector<BinaryNode<std::pair<Rect, std::vector<int>>>*> nodes = {root};
 	while ((int)nodes.size() != 0) {
 		auto node = nodes[0];
 		nodes.erase(nodes.begin());
@@ -88,14 +95,14 @@ BinaryTree<std::pair<Rect, std::vector<Collider*>>>* AABBTree::MakeTree(std::vec
 			auto pair = GetHalfColliders(node->key.second);
 
 			//左のノード作成
-			auto left = MakeNode(pair.first);
+			auto left = MakeNode(colliders, pair.first);
 			//ノードの子としてセット
 			node->left = left;
 			//リストに追加
 			nodes.push_back(left);
 
 			//右のノード作成
-			auto right = MakeNode(pair.second);
+			auto right = MakeNode(colliders, pair.second);
 			//ノードの子としてセット
 			node->right = right;
 			//リストに追加
@@ -106,15 +113,15 @@ BinaryTree<std::pair<Rect, std::vector<Collider*>>>* AABBTree::MakeTree(std::vec
 	return bTree;
 }
 
-std::pair<std::vector<Collider*>, std::vector<Collider*>> AABBTree::GetHalfColliders(std::vector<Collider*>& colliders)
+std::pair<std::vector<int>, std::vector<int>> AABBTree::GetHalfColliders(std::vector<int>& colliderIndexes)
 {
-	int len = (int)colliders.size();
+	int len = (int)colliderIndexes.size();
 	int halfLen = len / 2;
 
-	std::vector<Collider*> colliders1, colliders2;
+	std::vector<int> colliders1, colliders2;
 
-	colliders1.insert(colliders1.end(), colliders.begin(), colliders.begin() + halfLen);
-	colliders2.insert(colliders2.end(), colliders.begin() + halfLen, colliders.begin() + len);
+	colliders1.insert(colliders1.end(), colliderIndexes.begin(), colliderIndexes.begin() + halfLen);
+	colliders2.insert(colliders2.end(), colliderIndexes.begin() + halfLen, colliderIndexes.begin() + len);
 
 	return std::make_pair(colliders1, colliders2);
 }

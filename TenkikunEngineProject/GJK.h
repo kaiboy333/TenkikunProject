@@ -10,7 +10,7 @@
 class GJK
 {
 	public:
-		static SupportInfo* IsHit(Collider* c1, Collider* c2);
+		static SupportInfo* IsHit(std::vector<Collider*> colliders, int colliderID1, int colliderID2);
 
 		static Vector2 Support(Collider* c1, Collider* c2, Vector2 v);	//ミコンフスキー差のサポート写像を取得
 

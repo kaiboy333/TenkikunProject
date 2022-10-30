@@ -7,7 +7,7 @@
 class EPA
 {
 	public:
-		static HitInfo* GetHitInfo(SupportInfo* supportInfo);
+		static HitInfo* GetHitInfo(std::vector<Collider*> colliders, SupportInfo* supportInfo);
 
 	private:
 		static Vector2 GetContactPoint(Collider* c1, Collider* c2);	//“ñ‚Â‚Ì}Œ`‚ÌÅ’Z‹——£‚©‚çÕ“Ë“_‚ğ‹‚ßACollision‚É“ü‚ê‚é

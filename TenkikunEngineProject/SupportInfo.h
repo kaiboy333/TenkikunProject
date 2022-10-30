@@ -8,8 +8,8 @@ class SupportInfo
 {
 	public:
 		std::vector<Vector2> supports;
-		Collider* c1 = nullptr;
-		Collider* c2 = nullptr;
+		int colliderID1;
+		int colliderID2;
 
-		SupportInfo(std::vector<Vector2> supports, Collider* c1, Collider* c2);
+		SupportInfo(std::vector<Vector2> supports, int colliderID1, int colliderID2);
 };

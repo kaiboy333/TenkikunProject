@@ -6,19 +6,23 @@
 
 RigidBody::RigidBody(GameObject* gameobject) : Component(gameobject)
 {
-
+	solverBody = new SolverBody();
 }
 
 void RigidBody::Update()
 {
-	//重力の更新
-	AddForce(Vector3::Down() * mass * Physics::g * gravityScale);
+	if (bodyType == BodyType::Dynamic) {
+		//重力の更新
+		AddForce(Vector3::Down() * mass * Physics::g * gravityScale);
+	}
 
-	Transform* transform = gameobject->transform;
-	//位置の更新
-	transform->localPosition += velocity * Time::GetDeltaTime();
-	//角度の更新
-	transform->localRotation += angularVelocity * Time::GetDeltaTime();
+	if (bodyType != BodyType::Static) {
+		Transform* transform = gameobject->transform;
+		//位置の更新
+		transform->localPosition += velocity * Time::GetDeltaTime();
+		//角度の更新
+		transform->localRotation += angularVelocity * Time::GetDeltaTime();
+	}
 }
 
 void RigidBody::AddForce(Vector3 force, ForceMode forceMode)

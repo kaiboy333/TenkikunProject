@@ -2,11 +2,11 @@
 #include "RigidBody.h"
 #include "BoxCollider.h"
 
-HitInfo* EPA::GetHitInfo(SupportInfo* supportInfo)
+HitInfo* EPA::GetHitInfo(std::vector<Collider*> colliders, SupportInfo* supportInfo)
 {
     auto& vertexes = supportInfo->supports;
-    auto c1 = supportInfo->c1;
-    auto c2 = supportInfo->c2;
+    auto c1 = colliders[supportInfo->colliderID1];
+    auto c2 = colliders[supportInfo->colliderID2];
 
     RigidBody* rb1 = c1->gameobject->GetComponent<RigidBody>();
     RigidBody* rb2 = c2->gameobject->GetComponent<RigidBody>();
@@ -73,7 +73,7 @@ HitInfo* EPA::GetHitInfo(SupportInfo* supportInfo)
 
     contact.contactPoints.push_back(cp);
     contact.friction = std::sqrtf((rb1 ? rb1->friction : 0.5f) * (rb2 ? rb2->friction : 0.5f));
-    HitInfo* hitInfo = new HitInfo(c1, c2, contact);
+    HitInfo* hitInfo = new HitInfo(supportInfo->colliderID1, supportInfo->colliderID2, contact);
         
     return hitInfo;
 }
