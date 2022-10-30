@@ -97,7 +97,7 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
 	GameObject* o = scene->CreateEmpty(false);
-	//o->AddComponent<CreateBallScript>();
+	o->AddComponent<CreateBallScript>();
 
 	//シーンをセーブ
 	SaveScene();

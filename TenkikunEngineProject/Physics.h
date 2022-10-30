@@ -14,28 +14,28 @@ class Physics
 struct SolverBody {
 	Vector3 deltaLinearVelocity;
 	Vector3 deltaAngularVelocity;
-	float inertiaInv;
-	float massInv;
+	float inertiaInv = 0;
+	float massInv = 0;
 };
 
 struct Constraint {
 	Vector3 axis;
-	float jacDiagInv;
-	float rhs;
-	float upperLimit;
-	float lowerLimit;
-	float accumImpulse;
+	float jacDiagInv = 0;
+	float rhs = 0;
+	float upperLimit = 0;
+	float lowerLimit = 0;
+	float accumImpulse = 0;
 };
 
 struct ContactPoint {
 	Vector3 pointA;
 	Vector3 pointB;
 	Vector3 normal;
-	float distance;
+	float distance = 0;
 	Constraint constraints[3];
 };
 
 struct Contact {
-	float friction;
+	float friction = 0;
 	std::vector<ContactPoint> contactPoints;
 };

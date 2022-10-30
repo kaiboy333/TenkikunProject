@@ -243,10 +243,10 @@ void HitManager::Response(std::vector<SupportInfo*>& supportInfos) {
 		for (auto rb : rbs) {
 			if (rb) {
 				rb->velocity += rb->solverBody.deltaLinearVelocity;
-				rb->angularVelocity += rb->solverBody.deltaAngularVelocity;
+				rb->angularVelocity += rb->solverBody.deltaAngularVelocity * MyMath::RAD_TO_DEG;
 
 				rb->solverBody.deltaLinearVelocity = Vector3::Zero();
-				rb->angularVelocity += rb->solverBody.deltaAngularVelocity = Vector3::Zero();
+				rb->solverBody.deltaAngularVelocity = Vector3::Zero();
 		}
 	}
 }

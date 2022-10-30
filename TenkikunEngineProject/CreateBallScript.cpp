@@ -22,7 +22,7 @@ void CreateBallScript::MonoUpdate()
 
 		for (int i = 0; i < 2; i++) {
 			//ボール作成
-			GameObject* ball = SceneManager::GetNowScene()->CreateSquare();
+			GameObject* ball = SceneManager::GetNowScene()->CreateCircle();
 			//RigidBody追加
 			RigidBody* rb = ball->AddComponent<RigidBody>();
 			//重力無視
@@ -34,7 +34,7 @@ void CreateBallScript::MonoUpdate()
 			//速度調整
 			rb->velocity = -Vector3(std::cosf(MyMath::EulerToRad(angle)), std::sinf(MyMath::EulerToRad(angle)), 0) * ballSpeed;
 			//サイズ調整
-			float ballSize = 1.0f;
+			float ballSize = 0.3f;
 			ball->transform->scale = (Vector3::One() - Vector3::Forward()) * ballSize;
 			//重さ調整
 			rb->mass = ballSize * ballWeight;
