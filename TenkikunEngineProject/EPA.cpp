@@ -72,6 +72,7 @@ HitInfo* EPA::GetHitInfo(SupportInfo* supportInfo)
     c2->gameobject->transform->position -= -moveVec;
 
     contact.contactPoints.push_back(cp);
+    contact.friction = std::sqrtf((rb1 ? rb1->friction : 0.5f) * (rb2 ? rb2->friction : 0.5f));
     HitInfo* hitInfo = new HitInfo(c1, c2, contact);
         
     return hitInfo;
