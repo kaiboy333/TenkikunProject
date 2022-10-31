@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "Property.h"
 #include "SceneInfo.h"
+#include "Transform.h"
 
 class Scene;
 class Camera;
@@ -69,36 +70,26 @@ inline T* GameObject::AddComponent()
 		}
 	}
 
-	//component->gameobject = this;	//ComponentにGameObjectを紐づける
 	this->components.emplace_back(component);	//末尾に追加
-
+	component->transform = this->GetComponent<Transform>();	//Transformをセット
+	
 	return dynamic_cast<T*>(component);	//インスタンスを返す
 }
 
 template<class T>
 inline T* GameObject::GetComponent()
 {
-	//Component* component = new T();	//Componentの親を生成
 	const std::type_info& type = typeid(T);
 	for (Component* targetComponent : components) {
-		////キャスト変換可能なら
-		//if (dynamic_cast<T*>(component) != nullptr) {
-			//同じ型だったら
+		//同じ型だったら
 		if (type == typeid(*targetComponent)) {
-			//delete(component);	//不要なcomponent解放
-			//component = nullptr;
 			return dynamic_cast<T*>(targetComponent);	//見つかったComponent返す
 		}
 		//別の型だったら(親の型だったら)
 		else if (type == typeid(targetComponent)) {
-			//delete(component);	//不要なcomponent解放
-			//component = nullptr;
 			return dynamic_cast<T*>(targetComponent);	//見つかったComponent返す
 		}
-		//}
 	}
-	//delete(component);	//不要なcomponent解放
-	//component = nullptr;
 	return nullptr;
 }
 
@@ -106,13 +97,10 @@ template<class T>
 inline std::vector<T*> GameObject::GetComponents()
 {
 	std::vector<T*> targetComponents;
-	//Component* component = new T();	//Componentの親を生成
 	const std::type_info& type = typeid(T);
 
 	for (Component* targetComponent : components) {
-		////キャスト変換可能なら
-		//if (dynamic_cast<T*>(component) != nullptr) {
-			//同じ型だったら
+		//同じ型だったら
 		if (type == typeid(*targetComponent)) {
 			targetComponents.push_back(dynamic_cast<T*>(targetComponent));	//見つかったComponent追加
 		}
@@ -120,13 +108,7 @@ inline std::vector<T*> GameObject::GetComponents()
 		else if (dynamic_cast<T*>(targetComponent) != nullptr) {
 			targetComponents.push_back(dynamic_cast<T*>(targetComponent));	//見つかったComponent追加
 		}
-		//else if (type == typeid(targetComponent)) {
-		//	targetComponents.push_back(dynamic_cast<T*>(targetComponent));	//見つかったComponent追加
-		//}
-	//}
 	}
 
-	//delete(component);	//不要なcomponent解放
-	//component = nullptr;
 	return targetComponents;
 }

@@ -125,15 +125,15 @@ void HitManager::Response() {
 
 		RigidBody* bodyB = c2->gameobject->GetComponent<RigidBody>();
 		SolverBody* solverBodyB = bodyB ? bodyB->solverBody : new SolverBody();
-		for (auto& contactPoint : hitInfo->contact.contactPoints) {
-			auto cpA = contactPoint.pointA;
-			auto cpB = contactPoint.pointB;
+		for (auto& contactPoint : hitInfo->contact->contactPoints) {
+			auto cpA = contactPoint->pointA;
+			auto cpB = contactPoint->pointB;
 
 			auto r1 = cpA - c1->gameobject->transform->position;
 			auto r2 = cpB - c2->gameobject->transform->position;
 
 			//いったん衝突法線を3次元ベクトルにする
-			auto normal = contactPoint.normal;
+			auto normal = contactPoint->normal;
 
 			auto velocityA = bodyA ? bodyA->velocity + Vector3::Cross(Vector3(0, 0, bodyA->angularVelocity.z * MyMath::DEG_TO_RAD), r1) : Vector3::Zero();
 			auto velocityB = bodyB ? bodyB->velocity + Vector3::Cross(Vector3(0, 0, bodyB->angularVelocity.z * MyMath::DEG_TO_RAD), r2) : Vector3::Zero();
@@ -149,27 +149,27 @@ void HitManager::Response() {
 			auto axis = normal;
 
 			//rhs = Right Hand Side = 右辺
-			contactPoint.constraints[0].jacDiagInv = 1.0f / (
+			contactPoint->constraints[0].jacDiagInv = 1.0f / (
 				(solverBodyA->massInv + solverBodyB->massInv)
 				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
 				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
 				);
-			contactPoint.constraints[0].rhs = -((1 + restitution) * Vector3::Dot(relativeVelocity, axis));
-			contactPoint.constraints[0].rhs -= (bias * std::max<float>(0.0, contactPoint.distance + slop)) / timeStep; // position error
-			contactPoint.constraints[0].rhs *= contactPoint.constraints[0].jacDiagInv;
-			contactPoint.constraints[0].lowerLimit = -(float)INT_MAX;
-			contactPoint.constraints[0].upperLimit = 0;
-			contactPoint.constraints[0].axis = axis;
+			contactPoint->constraints[0].rhs = -((1 + restitution) * Vector3::Dot(relativeVelocity, axis));
+			contactPoint->constraints[0].rhs -= (bias * std::max<float>(0.0, contactPoint->distance + slop)) / timeStep; // position error
+			contactPoint->constraints[0].rhs *= contactPoint->constraints[0].jacDiagInv;
+			contactPoint->constraints[0].lowerLimit = -(float)INT_MAX;
+			contactPoint->constraints[0].upperLimit = 0;
+			contactPoint->constraints[0].axis = axis;
 
 			axis = tangent1;
-			contactPoint.constraints[1].jacDiagInv = 1.0f / (
+			contactPoint->constraints[1].jacDiagInv = 1.0f / (
 				(solverBodyA->massInv + solverBodyB->massInv)
 				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
 				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
 				);
-			contactPoint.constraints[1].rhs = -Vector3::Dot(relativeVelocity, axis);
-			contactPoint.constraints[1].rhs *= contactPoint.constraints[1].jacDiagInv;
-			contactPoint.constraints[1].axis = axis;
+			contactPoint->constraints[1].rhs = -Vector3::Dot(relativeVelocity, axis);
+			contactPoint->constraints[1].rhs *= contactPoint->constraints[1].jacDiagInv;
+			contactPoint->constraints[1].axis = axis;
 		}
 
 		//いらないsolverBodyを解放
@@ -195,16 +195,16 @@ void HitManager::Response() {
 			RigidBody* bodyB = c2->gameobject->GetComponent<RigidBody>();
 			SolverBody* solverBodyB = bodyB ? bodyB->solverBody : new SolverBody();
 
-			for (auto& contactPoint : hitInfo->contact.contactPoints) {
-				auto cpA = contactPoint.pointA;
-				auto cpB = contactPoint.pointB;
+			for (auto& contactPoint : hitInfo->contact->contactPoints) {
+				auto cpA = contactPoint->pointA;
+				auto cpB = contactPoint->pointB;
 
 				auto r1 = cpA - c1->gameobject->transform->position;
 				auto r2 = cpB - c2->gameobject->transform->position;
 
 
 				for (int i = 0; i < 2; i++) {
-					auto constraint = contactPoint.constraints[i];
+					auto constraint = contactPoint->constraints[i];
 					auto deltaImpulse = constraint.rhs;
 					auto deltaVelocityA = solverBodyA->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyA->deltaAngularVelocity.z), r1);
 					auto deltaVelocityB = solverBodyB->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyB->deltaAngularVelocity.z), r2);
@@ -222,9 +222,9 @@ void HitManager::Response() {
 					solverBodyB->deltaAngularVelocity.z -= deltaImpulse * solverBodyB->inertiaInv * Vector2::Cross(r2, constraint.axis);
 
 					if (i == 0) {
-						auto maxFriction = hitInfo->contact.friction * abs(contactPoint.constraints[0].accumImpulse);
-						contactPoint.constraints[1].lowerLimit = -maxFriction;
-						contactPoint.constraints[1].upperLimit = maxFriction;
+						auto maxFriction = hitInfo->contact->friction * abs(contactPoint->constraints[0].accumImpulse);
+						contactPoint->constraints[1].lowerLimit = -maxFriction;
+						contactPoint->constraints[1].upperLimit = maxFriction;
 					}
 				}
 			}
@@ -240,6 +240,13 @@ void HitManager::Response() {
 			}
 		}
 	}
+
+	//Collisionを追加
+	for (auto hitInfo : hitInfos) {
+		Collision* collision1 = new Collision(colliders[hitInfo->colliderID2], hitInfo->contact);
+		Collision* collision2 = new Collision(colliders[hitInfo->colliderID1], hitInfo->contact);
+	}
+
 
 	//速度を更新
 	for (int i = 0, len = (int)rigidBodies.size(); i < len; i++) {

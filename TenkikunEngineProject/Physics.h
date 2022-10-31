@@ -37,5 +37,5 @@ struct ContactPoint {
 
 struct Contact {
 	float friction = 0;
-	std::vector<ContactPoint> contactPoints;
+	std::vector<ContactPoint*> contactPoints;
 };

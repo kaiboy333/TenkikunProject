@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Component.h"
+#include "Collision.h"
+#include "Collider.h"
 
 class MonoBehaviour : public Component
 {
@@ -17,4 +19,7 @@ class MonoBehaviour : public Component
 		virtual void MonoUpdate() = 0;
 
 		virtual void PreparationLibrate() override;
+
+		virtual void OnColliderStay(Collision* collision) = 0;
+		virtual void OnTriggerStay(Collider* collider) = 0;
 };

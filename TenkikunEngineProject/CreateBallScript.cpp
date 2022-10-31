@@ -30,14 +30,22 @@ void CreateBallScript::MonoUpdate()
 			//角度生成
 			float angle = MyMath::RandomRange(0.0f, 360.0f);
 			//位置調整
-			//ball->transform->position = mouseScreenPos + Vector3(std::cosf(MyMath::EulerToRad(angle)), std::sinf(MyMath::EulerToRad(angle)), 0) * makeDistance;
-			ball->transform->position = mouseScreenPos + (Vector3::Right() * makeDistance) * (i * 2 - 1);
+			ball->transform->position = mouseScreenPos + Vector3(std::cosf(MyMath::EulerToRad(angle)), std::sinf(MyMath::EulerToRad(angle)), 0) * makeDistance;
+			//ball->transform->position = mouseScreenPos + (Vector3::Right() * makeDistance) * (i * 2.0f - 1);
 			//速度調整
-			//rb->velocity = -Vector3(std::cosf(MyMath::EulerToRad(angle)), std::sinf(MyMath::EulerToRad(angle)), 0) * ballSpeed;
-			rb->velocity = Vector3::Left() * ballSpeed * (i * 2 - 1);
+			rb->velocity = -Vector3(std::cosf(MyMath::EulerToRad(angle)), std::sinf(MyMath::EulerToRad(angle)), 0) * ballSpeed;
+			//rb->velocity = Vector3::Left() * ballSpeed * (i * 2.0f - 1);
 			//サイズ調整
 			float ballSize = 1.0f;
 			ball->transform->scale = (Vector3::One() - Vector3::Forward()) * ballSize;
 		}
 	}
+}
+
+void CreateBallScript::OnColliderStay(Collision* collision)
+{
+}
+
+void CreateBallScript::OnTriggerStay(Collider* collider)
+{
 }

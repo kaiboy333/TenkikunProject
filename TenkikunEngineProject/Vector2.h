@@ -12,8 +12,8 @@ public:
 	Vector2();
 	Vector2(float x, float y);
 
-	float GetMagnitude();
-	Vector2 GetNormalized();
+	float GetMagnitude() const;
+	Vector2 GetNormalized() const;
 
 	//void Draw(unsigned int color = GetColor(0, 0, 255), Vector2 startPos = Vector2::Zero());
 	//void DrawPoint(unsigned int color = GetColor(0, 0, 255));
@@ -34,6 +34,8 @@ public:
 	bool operator ==(const Vector2& other) const;
 
 	operator Vector3() const;	//Vector2‚©‚çVector3‚ÖƒLƒƒƒXƒg•ÏŠ·
+
+	bool operator<(const Vector2& other) const;
 
 	const static Vector2 Zero();
 	const static Vector2 One();

@@ -8,7 +8,7 @@
 class HitManager
 {
 	public:
-		float timeStep;
+		float timeStep = 0;
 		float bias = 0.1f;
 		float slop = 0.001f;
 		int iteration = 10;

@@ -11,6 +11,9 @@ class CreateBallScript : public MonoBehaviour
 		virtual void MonoStart() override;
 		virtual void MonoUpdate() override;
 
+		virtual void OnColliderStay(Collision* collision);
+		virtual void OnTriggerStay(Collider* collider);
+
 	private:
 		//std::vector<GameObject*> balls;
 

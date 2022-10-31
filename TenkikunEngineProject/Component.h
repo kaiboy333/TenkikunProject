@@ -7,10 +7,13 @@
 #include "Window.h"
 
 class GameObject;
+class Transform;
 class Component : public SceneInfo
 {
 	public:
 		GameObject* gameobject = nullptr;	//‚±‚ÌComponent‚ğ‚ÂGameObject
+
+		Transform* transform = nullptr;	//Transform
 
 		bool canPutSameComponent = true;	//“¯‚¶Component‚ğ“ü‚ê‚ç‚ê‚é‚©
 

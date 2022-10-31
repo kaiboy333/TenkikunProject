@@ -8,8 +8,8 @@ class HitInfo
 	public:
 		int colliderID1;
 		int colliderID2;
-		Contact contact;
+		Contact* contact = nullptr;
 
-		HitInfo(int colliderID1, int colliderID2, Contact contact);
+		HitInfo(int colliderID1, int colliderID2, Contact* contact);
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Collider.h"
+#include "Physics.h"
 
 class Collision
 {
@@ -9,8 +10,10 @@ class Collision
 
 		Collider* collider = nullptr;
 
-		Vector2 contactPoint;
+		Transform* transform = nullptr;
 
-		Collision(Collider* collider);
+		Contact* contact = nullptr;
+
+		Collision(Collider* collider, Contact* contact);
 };
 

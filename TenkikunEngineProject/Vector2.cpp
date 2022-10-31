@@ -14,13 +14,13 @@ Vector2::Vector2(float x, float y)
     this->y = y;
 }
 
-float Vector2::GetMagnitude()
+float Vector2::GetMagnitude() const
 {
     //O•½•û‚Ì’è—‚Å’·‚³‚ğ•Ô‚·
     return std::sqrtf(std::powf(x, 2) + std::powf(y, 2));
 }
 
-Vector2 Vector2::GetNormalized()
+Vector2 Vector2::GetNormalized() const
 {
     //’·‚³‚ğæ“¾‚µ‚Ä
     float length = GetMagnitude();
@@ -133,6 +133,11 @@ Vector2::operator Vector3() const
     vec.z = 0;
 
     return vec;
+}
+
+bool Vector2::operator<(const Vector2& other) const
+{
+    return this->GetMagnitude() < other.GetMagnitude();
 }
 
 const Vector2 Vector2::Zero()
