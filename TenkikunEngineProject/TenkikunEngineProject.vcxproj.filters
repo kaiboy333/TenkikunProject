@@ -317,7 +317,7 @@
     <ClCompile Include="SupportInfo.cpp">
       <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
-    <ClCompile Include="CreateBallScript.cpp">
+    <ClCompile Include="CreateShapeScript.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="PlayerScript.cpp">
@@ -559,7 +559,7 @@
     <ClInclude Include="SupportInfo.h">
       <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
-    <ClInclude Include="CreateBallScript.h">
+    <ClInclude Include="CreateShapeScript.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="PlayerScript.h">

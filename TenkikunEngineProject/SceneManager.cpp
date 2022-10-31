@@ -2,8 +2,8 @@
 #include "ProjectFileManager.h"
 #include "MyString.h"
 #include "Debug.h"
-#include "CreateBallScript.h"
 #include "RigidBody.h"
+#include "CreateShapeScript.h"
 
 SceneManager::SceneManager()
 {
@@ -97,7 +97,7 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
 	GameObject* o = scene->CreateEmpty(false);
-	o->AddComponent<CreateBallScript>();
+	o->AddComponent<CreateShapeScript>();
 
 	//シーンをセーブ
 	SaveScene();

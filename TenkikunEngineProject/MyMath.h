@@ -23,8 +23,10 @@ class MyMath
 		//ü•ª‚ÌŒğ·”»’è
 		static bool IsCross(Vector2 vec1, Vector2 vec2, Vector2 vec3, Vector2 vec4, Vector2& crossPos);
 
-		static int RandomRange(int min, int max);
-		static float RandomRange(float min, float max);
+		//minˆÈãmax–¢–
+		static int RandomRange(int minInclusive, int maxExclusive);
+		//minˆÈãmaxˆÈ‰º
+		static float RandomRange(float minInclusive, float maxInclusive);
 
 	private:
 		//ƒ‰ƒ“ƒ_ƒ€¶¬Šú‚Ì‰Šú‰»

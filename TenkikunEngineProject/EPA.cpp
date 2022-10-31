@@ -139,65 +139,54 @@ std::vector<Vector2> EPA::GetContactPoints(Collider* c1, Collider* c2)
 
 std::vector<Vector2> EPA::GetContactPoints(VertexCollider* c1, VertexCollider* c2)
 {
+    std::vector<VertexCollider*> colliders = {c1, c2};
     const float okDistance = 0.1f;
     float minDistance = 0;
     //d•¡‚ğ‹–‚³‚È‚¢
     std::set<Vector2> contactPointsSet;
-    //c1‚Ì“_‚Æc2‚Ì}Œ`‚ÌÅ’Z‹——£
-    for (int i = 0, len = (int)c1->GetVertexes().size(); i < len; i++) {
-        int minSideIndex;
-        Vector2 crossPoint;
-        float distance = GJK::GetShortestDistanceToShape(c1->GetVertexes()[i], c2->GetVertexes(), crossPoint, minSideIndex);
-        //Å‰‚Í
-        if (i == 0) {
-            minDistance = distance;
-            contactPointsSet.insert(crossPoint);
-            contactPointsSet.insert(c1->GetVertexes()[i]);
-        }
-        //‚Ù‚Ú“¯‚¶‚È‚ç
-        else if (std::abs(minDistance - distance) <= okDistance) {
-            //’Ç‰Á
-            contactPointsSet.insert(crossPoint);
-            contactPointsSet.insert(c1->GetVertexes()[i]);
-        }
-        //Å’Z‚È‚ç
-        else if (minDistance > distance) {
-            minDistance = distance;
-            //ŒÃ‚¢‚Ì‚ğ‚·‚×‚Äíœ
-            contactPointsSet.clear();
-            //’Ç‰Á
-            contactPointsSet.insert(crossPoint);
-            contactPointsSet.insert(c1->GetVertexes()[i]);
-        }
-    }
-    //c1‚Ì“_‚Æc2‚Ì}Œ`‚ÌÅ’Z‹——£
-    for (int i = 0, len = (int)c2->GetVertexes().size(); i < len; i++) {
-        int minSideIndex;
-        Vector2 crossPoint;
-        float distance = GJK::GetShortestDistanceToShape(c2->GetVertexes()[i], c1->GetVertexes(), crossPoint, minSideIndex);
-        //‚Ù‚Ú“¯‚¶‚È‚ç
-        if (std::abs(minDistance - distance) <= okDistance) {
-            //’Ç‰Á
-            contactPointsSet.insert(crossPoint);
-            contactPointsSet.insert(c2->GetVertexes()[i]);
-        }
-        //Å’Z‚È‚ç
-        else if (minDistance > distance) {
-            minDistance = distance;
-            //ŒÃ‚¢‚Ì‚ğ‚·‚×‚Äíœ
-            contactPointsSet.clear();
-            //’Ç‰Á
-            contactPointsSet.insert(crossPoint);
-            contactPointsSet.insert(c2->GetVertexes()[i]);
+    //c1‚Æc2‚Ì}Œ`‚ÌÅ’Z‹——£
+    for (int i = 0, len = (int)colliders.size(); i < len; i++) {
+        VertexCollider* cA = colliders[i];
+        VertexCollider* cB = colliders[std::abs(i - (len - 1))];
+
+        //cA‚Ì’¸“_‚©‚çcB‚Ö‚ÌÅ’Z‹——£‚ğ‹‚ß‚é
+        for (int j = 0, len2 = (int)cA->GetVertexes().size(); j < len2; j++) {
+            int minSideIndex;
+            Vector2 crossPoint;
+            float distance = GJK::GetShortestDistanceToShape(cA->GetVertexes()[j], cB->GetVertexes(), crossPoint, minSideIndex);
+            //Å‰‚Í
+            if (i == 0 && j == 0) {
+                minDistance = distance;
+                contactPointsSet.insert(crossPoint);
+                contactPointsSet.insert(cA->GetVertexes()[j]);
+            }
+            //‚Ù‚Ú“¯‚¶‚È‚ç
+            else if (std::abs(minDistance - distance) <= okDistance) {
+                //’Ç‰Á
+                contactPointsSet.insert(crossPoint);
+                contactPointsSet.insert(cA->GetVertexes()[j]);
+            }
+            //Å’Z‚È‚ç
+            else if (minDistance > distance) {
+                minDistance = distance;
+                //ŒÃ‚¢‚Ì‚ğ‚·‚×‚Äíœ
+                contactPointsSet.clear();
+                //’Ç‰Á
+                contactPointsSet.insert(crossPoint);
+                contactPointsSet.insert(cA->GetVertexes()[j]);
+            }
         }
     }
+
     std::vector<Vector2> contactPoints = std::vector<Vector2>(contactPointsSet.begin(), contactPointsSet.end());
     //4‚Â‚ ‚Á‚½‚ç
     if ((int)contactPoints.size() == 4) {
+        //2‚Â‚ÌÕ“Ë“_‚ğæ‚èo‚·(‘¼‚Ì‚à—‚½‚æ‚¤‚È’l‚Ì‚½‚ß)
         return { contactPoints[0], contactPoints[2] };
     }
     //2‚Â‚È‚ç
     else {
+        //1‚Â‚ÌÕ“Ë“_‚ğæ‚èo‚·(‘¼‚Ì‚à—‚½‚æ‚¤‚È’l‚Ì‚½‚ß)
         return { contactPoints[0] };
     }
 }

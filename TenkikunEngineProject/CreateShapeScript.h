@@ -2,10 +2,10 @@
 
 #include "MonoBehaviour.h"
 
-class CreateBallScript : public MonoBehaviour
+class CreateShapeScript : public MonoBehaviour
 {
 	public:
-		CreateBallScript(GameObject* gameobject);
+		CreateShapeScript(GameObject* gameobject);
 
 	protected:
 		virtual void MonoStart() override;
