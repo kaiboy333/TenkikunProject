@@ -4,7 +4,7 @@
 #include "ProjectFileManager.h"
 #include "SceneIcon.h"
 
-FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, std::string imageFileName, std::filesystem::path path) : TriggerRect(startX, startY, 2 * blankWidth + iconWidth, 2 * blankHeight + iconHeight + FontManager::systemFont->GetFontHeight())
+FileIcon::FileIcon(float startX, float startY, float iconWidth, float iconHeight, float blankWidth, float blankHeight, std::string imageFileName, std::filesystem::path path) : TriggerRect(startX, startY, 2 * blankWidth + iconWidth, 2 * blankHeight + iconHeight + FontManager::systemFont->GetFontHeight(), 1)
 {
 	iconGH = ImageManager::LoadAndGetImage(imageFileName);	//‰æ‘œ‚ðŽæ“¾
 	this->iconWidth = iconWidth;

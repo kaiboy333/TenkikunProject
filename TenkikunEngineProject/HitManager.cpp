@@ -48,8 +48,7 @@ void HitManager::HitCheck()
 void HitManager::BlodePhase()
 {
 	if (blodeMode == BlodeMode::AABB_TREE) {
-		AABBTree aabbTree = AABBTree();
-		colliderPairs = aabbTree.GetHitPairCollidersIndex(colliders);
+		colliderPairs = AABBTree::GetHitPairCollidersIndex(colliders);
 	}
 	else if (blodeMode == BlodeMode::NONE) {
 
@@ -148,12 +147,22 @@ void HitManager::Response() {
 
 			auto axis = normal;
 
+			//if (bodyA ? (bodyA->bodyType == RigidBody::BodyType::Static) : false) {
+			//	Debug::Log("");
+			//}
+			//if (bodyB ? (bodyB->bodyType == RigidBody::BodyType::Static) : false) {
+			//	Debug::Log("");
+			//}
+
 			//rhs = Right Hand Side = ‰E•Ó
-			contactPoint->constraints[0].jacDiagInv = 1.0f / (
-				(solverBodyA->massInv + solverBodyB->massInv)
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
+			auto sumMassInv = solverBodyA->massInv + solverBodyB->massInv;
+			if (sumMassInv != 0) {
+				contactPoint->constraints[0].jacDiagInv = 1.0f / (
+					sumMassInv
+					+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
+					+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
 				);
+			}
 			contactPoint->constraints[0].rhs = -((1 + restitution) * Vector3::Dot(relativeVelocity, axis));
 			contactPoint->constraints[0].rhs -= (bias * std::max<float>(0.0, contactPoint->distance + slop)) / timeStep; // position error
 			contactPoint->constraints[0].rhs *= contactPoint->constraints[0].jacDiagInv;
@@ -162,11 +171,13 @@ void HitManager::Response() {
 			contactPoint->constraints[0].axis = axis;
 
 			axis = tangent1;
-			contactPoint->constraints[1].jacDiagInv = 1.0f / (
-				(solverBodyA->massInv + solverBodyB->massInv)
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
-				+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
+			if (sumMassInv != 0) {
+				contactPoint->constraints[1].jacDiagInv = 1.0f / (
+					sumMassInv
+					+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA->inertiaInv, r1))
+					+ Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB->inertiaInv, r2))
 				);
+			}
 			contactPoint->constraints[1].rhs = -Vector3::Dot(relativeVelocity, axis);
 			contactPoint->constraints[1].rhs *= contactPoint->constraints[1].jacDiagInv;
 			contactPoint->constraints[1].axis = axis;
@@ -206,6 +217,12 @@ void HitManager::Response() {
 				for (int i = 0; i < 2; i++) {
 					auto constraint = contactPoint->constraints[i];
 					auto deltaImpulse = constraint.rhs;
+					//if (bodyA ? (bodyA->bodyType == RigidBody::BodyType::Static) : false) {
+					//	Debug::Log("");
+					//}
+					//if (bodyB ? (bodyB->bodyType == RigidBody::BodyType::Static) : false) {
+					//	Debug::Log("");
+					//}
 					auto deltaVelocityA = solverBodyA->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyA->deltaAngularVelocity.z), r1);
 					auto deltaVelocityB = solverBodyB->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyB->deltaAngularVelocity.z), r2);
 
@@ -254,6 +271,9 @@ void HitManager::Response() {
 		SolverBody* sb = rb ? rb->solverBody : nullptr;
 
 		if (rb) {
+			if (rb->bodyType == RigidBody::BodyType::Static) {
+				Debug::Log("");
+			}
 			rb->velocity += sb->deltaLinearVelocity;
 			rb->angularVelocity += sb->deltaAngularVelocity * MyMath::RAD_TO_DEG;
 

@@ -1,5 +1,7 @@
 #include "InspectorWindow.h"
 #include "TransformRect.h"
+#include "RigidBody.h"
+#include "RigidBodyRect.h"
 
 InspectorWindow::InspectorWindow() : Window(1000, 0, 300, 800)
 {
@@ -78,9 +80,15 @@ void InspectorWindow::Init()
 			const std::type_info& type = typeid(*component);
 
 			ComponentRect* componentRect = nullptr;
+			//TransformÇ»ÇÁ
 			if (type == typeid(Transform)) {
 				componentRect = new TransformRect(startX, startRectY, component);
 				componentRects.insert(componentRects.begin(), componentRect);	//êÊì™Ç…í«â¡
+			}
+			//RigidBodyÇ»ÇÁ
+			else if (type == typeid(RigidBody)) {
+				componentRect = new RigidBodyRect(startX, startRectY, component);
+				componentRects.insert(componentRects.begin(), componentRect);	//å„ÇÎÇ…í«â¡
 			}
 
 			if (componentRect) {

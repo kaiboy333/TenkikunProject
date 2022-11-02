@@ -199,6 +199,7 @@
     <ClCompile Include="ProjectWindow.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="RigidBodyRect.cpp" />
     <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneIcon.cpp" />
@@ -208,6 +209,7 @@
     <ClCompile Include="ScriptIcon.cpp" />
     <ClCompile Include="ScrollRect.cpp" />
     <ClCompile Include="SupportInfo.cpp" />
+    <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TextRect.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -281,6 +283,7 @@
     <ClInclude Include="Rect.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="RigidBodyRect.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneIcon.h" />
@@ -290,6 +293,7 @@
     <ClInclude Include="ScriptIcon.h" />
     <ClInclude Include="ScrollRect.h" />
     <ClInclude Include="SupportInfo.h" />
+    <ClInclude Include="TextButton.h" />
     <ClInclude Include="TextRect.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="Time.h" />

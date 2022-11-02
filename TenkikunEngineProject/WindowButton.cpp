@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "MyMath.h"
 
-WindowButton::WindowButton(float startX, float startY, float width, float height, Image* image) : TriggerRect(startX, startY, width, height)
+WindowButton::WindowButton(float startX, float startY, float width, float height, Image* image) : TriggerRect(startX, startY, width, height, 1)
 {
 	this->image = image;
 }

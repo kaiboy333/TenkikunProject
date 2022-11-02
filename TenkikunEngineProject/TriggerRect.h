@@ -23,7 +23,7 @@ class TriggerRect : public Rect
 
 		bool isClicking = false;	//ƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚©
 
-		TriggerRect(float startX, float startY, float width, float height, int eventNo = 1);
+		TriggerRect(float startX, float startY, float width, float height, int eventNo);
 
 		void CheckInput();
 

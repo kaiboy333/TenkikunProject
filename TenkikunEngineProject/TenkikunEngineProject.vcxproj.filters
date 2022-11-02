@@ -75,9 +75,6 @@
     <Filter Include="ソース ファイル\component\collider">
       <UniqueIdentifier>{aa5879d4-68b2-4485-bbea-43ed93ad34ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\physic">
-      <UniqueIdentifier>{6d88deea-ea5e-40e0-ab01-5dfea66dda15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\window\menuList">
       <UniqueIdentifier>{30ac303d-1bdb-45cb-80b0-b4b31adc81cc}</UniqueIdentifier>
     </Filter>
@@ -248,17 +245,11 @@
     <ClCompile Include="Time.cpp">
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
-    <ClCompile Include="Physics.cpp">
-      <Filter>ソース ファイル\physic</Filter>
-    </ClCompile>
     <ClCompile Include="RigidBody.cpp">
       <Filter>ソース ファイル\component</Filter>
     </ClCompile>
     <ClCompile Include="MonoBehaviour.cpp">
       <Filter>ソース ファイル\component</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>ソース ファイル\physic</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>ソース ファイル\math</Filter>
@@ -296,7 +287,25 @@
     <ClCompile Include="BinaryTree.cpp">
       <Filter>ソース ファイル\math\binaryTree</Filter>
     </ClCompile>
+    <ClCompile Include="CreateShapeScript.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotate.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyRect.cpp">
+      <Filter>ソース ファイル\window\inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="TextButton.cpp">
+      <Filter>ソース ファイル\window\button</Filter>
+    </ClCompile>
     <ClCompile Include="AABBTree.cpp">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
       <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
     <ClCompile Include="EPA.cpp">
@@ -314,17 +323,11 @@
     <ClCompile Include="HitManager.cpp">
       <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
-    <ClCompile Include="SupportInfo.cpp">
+    <ClCompile Include="Physics.cpp">
       <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
-    <ClCompile Include="CreateShapeScript.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Rotate.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="SupportInfo.cpp">
+      <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,14 +496,8 @@
     <ClInclude Include="Time.h">
       <Filter>ソース ファイル\math</Filter>
     </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>ソース ファイル\physic</Filter>
-    </ClInclude>
     <ClInclude Include="RigidBody.h">
       <Filter>ソース ファイル\component</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>ソース ファイル\physic</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>ソース ファイル\math</Filter>
@@ -538,7 +535,25 @@
     <ClInclude Include="BinaryTree.h">
       <Filter>ソース ファイル\math\binaryTree</Filter>
     </ClInclude>
+    <ClInclude Include="CreateShapeScript.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Rotate.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyRect.h">
+      <Filter>ソース ファイル\window\inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="TextButton.h">
+      <Filter>ソース ファイル\window\button</Filter>
+    </ClInclude>
     <ClInclude Include="AABBTree.h">
+      <Filter>ソース ファイル\hit</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
       <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
     <ClInclude Include="EPA.h">
@@ -556,17 +571,11 @@
     <ClInclude Include="HitManager.h">
       <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
-    <ClInclude Include="SupportInfo.h">
+    <ClInclude Include="Physics.h">
       <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
-    <ClInclude Include="CreateShapeScript.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerScript.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Rotate.h">
-      <Filter>ソース ファイル</Filter>
+    <ClInclude Include="SupportInfo.h">
+      <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
