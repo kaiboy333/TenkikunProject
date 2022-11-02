@@ -7,12 +7,18 @@ class CreateShapeScript : public MonoBehaviour
 	public:
 		CreateShapeScript(GameObject* gameobject);
 
+		virtual void OnColliderEnter(Collision* collision) override;
+		virtual void OnTriggerEnter(Collider* collider) override;
+
+		virtual void OnColliderStay(Collision* collision) override;
+		virtual void OnTriggerStay(Collider* collider) override;
+
+		virtual void OnColliderExit(Collision* collision) override;
+		virtual void OnTriggerExit(Collider* collider) override;
+
 	protected:
 		virtual void MonoStart() override;
 		virtual void MonoUpdate() override;
-
-		virtual void OnColliderStay(Collision* collision);
-		virtual void OnTriggerStay(Collider* collider);
 
 	private:
 		//std::vector<GameObject*> balls;

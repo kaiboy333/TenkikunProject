@@ -35,4 +35,13 @@ class Collider : public DrawComponent
 		void DrawBoundingBox();	//バウンディングボックスの描画
 
 		virtual float GetI() = 0;	//慣性モーメントを取得
+
+		int GetNo() const;	//番号取得
+
+		bool operator==(const Collider& other) const;
+		bool operator<(const Collider& other) const;
+
+	private:
+		int no = 0;
+		static int newNo;
 };

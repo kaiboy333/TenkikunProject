@@ -2,12 +2,14 @@
 
 Collider::Collider(GameObject* gameobject) : DrawComponent(gameobject)
 {
+    //番号をつける
+    no = Collider::newNo++;
 }
 
 void Collider::Update()
 {
-    //交点リセット
-    crossPoints.clear();
+    ////交点リセット
+    //crossPoints.clear();
     //当たり判定リセット
     isHit = false;
 }
@@ -39,3 +41,20 @@ void Collider::DrawBoundingBox()
     //青で描画
     DrawBoxAA(leftDownDrawPos.x, leftDownDrawPos.y, rightUpDrawPos.x, rightUpDrawPos.y, GetColor(0, 0, 255), FALSE);
 }
+
+int Collider::GetNo() const
+{
+    return no;
+}
+
+bool Collider::operator==(const Collider& other) const
+{
+    return this->GetNo() == other.GetNo();
+}
+
+bool Collider::operator<(const Collider& other) const
+{
+    return false;
+}
+
+int Collider::newNo = 0;

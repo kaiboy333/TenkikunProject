@@ -6,9 +6,15 @@
 #include "Debug.h"
 #include "EPA.h"
 #include "RigidBody.h"
+#include "MonoBehaviour.h"
 
 void HitManager::HitCheck()
 {
+	rigidBodies.clear();
+	colliderPairs.clear();
+	colliders.clear();
+	supportInfos.clear();
+
 	for (GameObject* gameobject : SceneManager::GetNowScene()->gameobjects) {
 		std::vector<Collider*> objectColliders = gameobject->GetComponents<Collider>();	//コライダーたちを取得
 		colliders.insert(colliders.end(), objectColliders.begin(), objectColliders.end());	//リストに一気に追加
@@ -36,6 +42,9 @@ void HitManager::HitCheck()
 		//衝突応答
 		Response();
 	}
+
+	//衝突時の関数を呼ぶ
+	CallHitFunction();
 
 	// 今の時間を取得
 	QueryPerformanceCounter(&nowTime);
@@ -77,7 +86,20 @@ void HitManager::NarrawPhase()
 		if (supportInfo) {
 			c1->isHit = true;
 			c2->isHit = true;
-			supportInfos.push_back(supportInfo);
+			//すり抜けないなら
+			if (!c1->isTrigger && !c2->isTrigger) {
+				//リストに追加
+				supportInfos.push_back(supportInfo);
+			}
+			else {
+				//onTriggersに追加
+				if (c1 < c2) {
+					onTriggers.insert(std::make_pair(c1, c2));
+				}
+				else {
+					onTriggers.insert(std::make_pair(c2, c1));
+				}
+			}
 		}
 	}
 }
@@ -147,13 +169,6 @@ void HitManager::Response() {
 
 			auto axis = normal;
 
-			//if (bodyA ? (bodyA->bodyType == RigidBody::BodyType::Static) : false) {
-			//	Debug::Log("");
-			//}
-			//if (bodyB ? (bodyB->bodyType == RigidBody::BodyType::Static) : false) {
-			//	Debug::Log("");
-			//}
-
 			//rhs = Right Hand Side = 右辺
 			auto sumMassInv = solverBodyA->massInv + solverBodyB->massInv;
 			if (sumMassInv != 0) {
@@ -217,12 +232,6 @@ void HitManager::Response() {
 				for (int i = 0; i < 2; i++) {
 					auto constraint = contactPoint->constraints[i];
 					auto deltaImpulse = constraint.rhs;
-					//if (bodyA ? (bodyA->bodyType == RigidBody::BodyType::Static) : false) {
-					//	Debug::Log("");
-					//}
-					//if (bodyB ? (bodyB->bodyType == RigidBody::BodyType::Static) : false) {
-					//	Debug::Log("");
-					//}
 					auto deltaVelocityA = solverBodyA->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyA->deltaAngularVelocity.z), r1);
 					auto deltaVelocityB = solverBodyB->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyB->deltaAngularVelocity.z), r2);
 
@@ -262,6 +271,14 @@ void HitManager::Response() {
 	for (auto hitInfo : hitInfos) {
 		Collision* collision1 = new Collision(colliders[hitInfo->colliderID2], hitInfo->contact);
 		Collision* collision2 = new Collision(colliders[hitInfo->colliderID1], hitInfo->contact);
+
+		//左の方が番号が若くなるようにする
+		if (collision1->collider->GetNo() < collision2->collider->GetNo()) {
+			onCollisions.insert(std::make_pair(collision1, collision2));
+		}
+		else {
+			onCollisions.insert(std::make_pair(collision2, collision1));
+		}
 	}
 
 
@@ -282,3 +299,110 @@ void HitManager::Response() {
 		}
 	}
 }
+
+void HitManager::CallHitFunction()
+{
+	//onCollision
+	for (auto& onCollision : onCollisions) {
+		auto iter = std::find(beforeOnCollisions->begin(), beforeOnCollisions->end(), onCollision);
+		//見つかったら
+		if (*iter == onCollision) {
+			//前にも衝突している(Stay)
+			//first
+			for (auto mono : onCollision.first->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnColliderEnter(onCollision.second);
+			}
+			//second
+			for (auto mono : onCollision.second->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnColliderEnter(onCollision.first);
+			}
+			//前のリストから削除
+			beforeOnCollisions->erase(iter);
+		}
+		//見つからなかったら
+		else {
+			//初めて衝突している(Enter)
+			//first
+			for (auto mono : onCollision.first->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnColliderEnter(onCollision.second);
+			}
+			//second
+			for (auto mono : onCollision.second->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnColliderEnter(onCollision.first);
+			}
+		}
+	}
+	//残っている前の衝突情報は
+	for (auto& beforeOnCollision : *beforeOnCollisions) {
+		//今回衝突しなくなった(Exit)
+					//first
+		for (auto mono : beforeOnCollision.first->gameobject->GetComponents<MonoBehaviour>()) {
+			mono->OnColliderEnter(beforeOnCollision.second);
+		}
+		//second
+		for (auto mono : beforeOnCollision.second->gameobject->GetComponents<MonoBehaviour>()) {
+			mono->OnColliderEnter(beforeOnCollision.first);
+		}
+	}
+
+	//onTrigger
+	for (auto& onTrigger : onTriggers) {
+		auto iter = std::find(beforeOnTriggers->begin(), beforeOnTriggers->end(), onTrigger);
+		//見つかったら
+		if (*iter == onTrigger) {
+			//前にも衝突している(Stay)
+			//first
+			for (auto mono : onTrigger.first->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnTriggerStay(onTrigger.second);
+			}
+			//second
+			for (auto mono : onTrigger.second->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnTriggerStay(onTrigger.first);
+			}
+			//前のリストから削除
+			beforeOnTriggers->erase(iter);
+		}
+		//見つからなかったら
+		else {
+			//初めて衝突している(Enter)
+			//first
+			for (auto mono : onTrigger.first->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnTriggerEnter(onTrigger.second);
+			}
+			//second
+			for (auto mono : onTrigger.second->gameobject->GetComponents<MonoBehaviour>()) {
+				mono->OnTriggerEnter(onTrigger.first);
+			}
+		}
+	}
+	//残っている前の衝突情報は
+	for (auto& beforeOnTrigger : *beforeOnTriggers) {
+		//今回衝突しなくなった(Exit)
+		//first
+		for (auto mono : beforeOnTrigger.first->gameobject->GetComponents<MonoBehaviour>()) {
+			mono->OnTriggerExit(beforeOnTrigger.second);
+		}
+		//second
+		for (auto mono : beforeOnTrigger.second->gameobject->GetComponents<MonoBehaviour>()) {
+			mono->OnTriggerExit(beforeOnTrigger.first);
+		}
+	}
+}
+
+float HitManager::timeStep = 0;
+const float HitManager::bias = 0.1f;
+const float HitManager::slop = 0.001f;
+const int HitManager::iteration = 10;
+
+std::vector<RigidBody*> HitManager::rigidBodies;
+std::vector<Collider*> HitManager::colliders;
+
+std::vector<std::pair<int, int>> HitManager::colliderPairs;
+std::vector<SupportInfo*> HitManager::supportInfos;
+
+std::set<std::pair<Collision*, Collision*>> HitManager::onCollisions;
+std::set<std::pair<Collision*, Collision*>>* HitManager::beforeOnCollisions = nullptr;
+std::set<std::pair<Collider*, Collider*>> HitManager::onTriggers;
+std::set<std::pair<Collider*, Collider*>>* HitManager::beforeOnTriggers = nullptr;
+
+HitManager::BlodeMode HitManager::blodeMode = HitManager::BlodeMode::AABB_TREE;

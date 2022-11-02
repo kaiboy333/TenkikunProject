@@ -9,6 +9,14 @@ CreateShapeScript::CreateShapeScript(GameObject* gameobject) : MonoBehaviour(gam
 
 }
 
+void CreateShapeScript::OnColliderEnter(Collision* collision)
+{
+}
+
+void CreateShapeScript::OnTriggerEnter(Collider* collider)
+{
+}
+
 void CreateShapeScript::MonoStart()
 {
 }
@@ -56,5 +64,13 @@ void CreateShapeScript::OnColliderStay(Collision* collision)
 }
 
 void CreateShapeScript::OnTriggerStay(Collider* collider)
+{
+}
+
+void CreateShapeScript::OnColliderExit(Collision* collision)
+{
+}
+
+void CreateShapeScript::OnTriggerExit(Collider* collider)
 {
 }

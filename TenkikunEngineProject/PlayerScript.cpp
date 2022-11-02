@@ -9,6 +9,30 @@ PlayerScript::PlayerScript(GameObject* gameobject) : MonoBehaviour(gameobject)
 
 }
 
+void PlayerScript::OnColliderEnter(Collision* collision)
+{
+}
+
+void PlayerScript::OnTriggerEnter(Collider* collider)
+{
+}
+
+void PlayerScript::OnColliderStay(Collision* collision)
+{
+}
+
+void PlayerScript::OnTriggerStay(Collider* collider)
+{
+}
+
+void PlayerScript::OnColliderExit(Collision* collision)
+{
+}
+
+void PlayerScript::OnTriggerExit(Collider* collider)
+{
+}
+
 void PlayerScript::MonoStart()
 {
 	rb = gameobject->GetComponent<RigidBody>();

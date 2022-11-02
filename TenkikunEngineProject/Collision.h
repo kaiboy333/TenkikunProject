@@ -15,5 +15,8 @@ class Collision
 		Contact* contact = nullptr;
 
 		Collision(Collider* collider, Contact* contact);
+
+		bool operator==(const Collision& other) const;
+		bool operator<(const Collision& other) const;
 };
 

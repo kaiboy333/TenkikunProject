@@ -4,34 +4,42 @@
 #include "SupportInfo.h"
 #include "Physics.h"
 #include "RigidBody.h"
+#include "Collision.h"
+#include <set>
 
 class HitManager
 {
 	public:
-		float timeStep = 0;
-		float bias = 0.1f;
-		float slop = 0.001f;
-		int iteration = 10;
-		Vector3 gravity = Vector3(0, -9.8f, 0);
+		static float timeStep;
+		static const float bias;
+		static const float slop;
+		static const int iteration;
 
 		//ブロードフェーズをする際のやり方
 		enum class BlodeMode {
 			NONE,
 			AABB_TREE,
 		};
-		BlodeMode blodeMode = BlodeMode::AABB_TREE;
+		static BlodeMode blodeMode;
 
-		void HitCheck();
+		static void HitCheck();
 
 	private:
-		std::vector<RigidBody*> rigidBodies;
-		std::vector<Collider*> colliders;
+		static std::vector<RigidBody*> rigidBodies;
+		static std::vector<Collider*> colliders;
 
-		std::vector<std::pair<int, int>> colliderPairs;
-		std::vector<SupportInfo*> supportInfos;
+		static std::vector<std::pair<int, int>> colliderPairs;
+		static std::vector<SupportInfo*> supportInfos;
 
-		void BlodePhase();
-		void NarrawPhase();
+		static std::set<std::pair<Collision*, Collision*>> onCollisions;
+		static std::set<std::pair<Collision*, Collision*>>* beforeOnCollisions;
+		static std::set<std::pair<Collider*, Collider*>> onTriggers;
+		static std::set<std::pair<Collider*, Collider*>>* beforeOnTriggers;
 
-		void Response();
+		static void BlodePhase();
+		static void NarrawPhase();
+
+		static void Response();
+
+		static void CallHitFunction();
 };

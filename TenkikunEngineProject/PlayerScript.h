@@ -17,6 +17,15 @@ class PlayerScript : public MonoBehaviour {
 	public:
 		PlayerScript(GameObject* gameobject);
 
+		virtual void OnColliderEnter(Collision* collision) override;
+		virtual void OnTriggerEnter(Collider* collider) override;
+
+		virtual void OnColliderStay(Collision* collision) override;
+		virtual void OnTriggerStay(Collider* collider) override;
+
+		virtual void OnColliderExit(Collision* collision) override;
+		virtual void OnTriggerExit(Collider* collider) override;
+
 	protected:
 		void MonoStart() override;
 
