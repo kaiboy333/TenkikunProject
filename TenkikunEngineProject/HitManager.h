@@ -10,36 +10,33 @@
 class HitManager
 {
 	public:
-		static float timeStep;
-		static const float bias;
-		static const float slop;
-		static const int iteration;
+		float timeStep = 0;
+		const float bias = 0.1f;
+		const float slop = 0.001f;
+		const int iteration = 10;
 
 		//ブロードフェーズをする際のやり方
 		enum class BlodeMode {
 			NONE,
 			AABB_TREE,
 		};
-		static BlodeMode blodeMode;
+		BlodeMode blodeMode = BlodeMode::AABB_TREE;
 
-		static void HitCheck();
+		void HitCheck();
+		void CallHitFunction(std::set<std::pair<Collision*, Collision*>>& beforeOnCollisions, std::set<std::pair<Collider*, Collider*>>& beforeOnTriggers);
 
 	private:
-		static std::vector<RigidBody*> rigidBodies;
-		static std::vector<Collider*> colliders;
+		std::vector<RigidBody*> rigidBodies;
+		std::vector<Collider*> colliders;
 
-		static std::vector<std::pair<int, int>> colliderPairs;
-		static std::vector<SupportInfo*> supportInfos;
+		std::vector<std::pair<int, int>> colliderPairs;
+		std::vector<SupportInfo*> supportInfos;
 
-		static std::set<std::pair<Collision*, Collision*>> onCollisions;
-		static std::set<std::pair<Collision*, Collision*>>* beforeOnCollisions;
-		static std::set<std::pair<Collider*, Collider*>> onTriggers;
-		static std::set<std::pair<Collider*, Collider*>>* beforeOnTriggers;
+		std::set<std::pair<Collision*, Collision*>> onCollisions;
+		std::set<std::pair<Collider*, Collider*>> onTriggers;
 
-		static void BlodePhase();
-		static void NarrawPhase();
+		void BlodePhase();
+		void NarrawPhase();
 
-		static void Response();
-
-		static void CallHitFunction();
+		void Response();
 };

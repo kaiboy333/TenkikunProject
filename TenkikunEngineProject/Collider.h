@@ -19,8 +19,6 @@ class Collider : public DrawComponent
 
 		unsigned int downColor = GetColor(0, 255, 0);
 
-		std::vector<Vector3> crossPoints;
-
 		Collider(GameObject* gameobject);
 
 		virtual void Update() override;
@@ -39,7 +37,9 @@ class Collider : public DrawComponent
 		int GetNo() const;	//”Ô†æ“¾
 
 		bool operator==(const Collider& other) const;
+		bool operator!=(const Collider& other) const;
 		bool operator<(const Collider& other) const;
+		bool operator>(const Collider& other) const;
 
 	private:
 		int no = 0;

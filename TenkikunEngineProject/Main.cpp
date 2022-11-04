@@ -8,7 +8,6 @@
 #include <string>
 #include "PlayerScript.h"
 #include "Input.h"
-#include "Rotate.h"
 #include "ImageManager.h"
 #include "resource.h"
 #include "ProjectFileManager.h"

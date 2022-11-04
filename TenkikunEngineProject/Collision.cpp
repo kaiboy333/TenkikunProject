@@ -13,7 +13,17 @@ bool Collision::operator==(const Collision& other) const
 	return this->collider == other.collider;
 }
 
+bool Collision::operator!=(const Collision& other) const
+{
+	return !(*this == other);
+}
+
 bool Collision::operator<(const Collision& other) const
 {
 	return this->collider < other.collider;
+}
+
+bool Collision::operator>(const Collision& other) const
+{
+	return !(*this < other);
 }

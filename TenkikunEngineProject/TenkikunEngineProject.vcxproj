@@ -200,7 +200,6 @@
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="RigidBodyRect.cpp" />
-    <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneIcon.cpp" />
     <ClCompile Include="SceneInfo.cpp" />
@@ -284,7 +283,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="RigidBodyRect.h" />
-    <ClInclude Include="Rotate.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneIcon.h" />
     <ClInclude Include="SceneInfo.h" />

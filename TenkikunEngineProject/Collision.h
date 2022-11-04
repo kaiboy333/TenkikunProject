@@ -3,6 +3,7 @@
 #include "Collider.h"
 #include "Physics.h"
 
+class Collider;
 class Collision
 {
 	public:
@@ -17,6 +18,8 @@ class Collision
 		Collision(Collider* collider, Contact* contact);
 
 		bool operator==(const Collision& other) const;
+		bool operator!=(const Collision& other) const;
 		bool operator<(const Collision& other) const;
+		bool operator>(const Collision& other) const;
 };
 

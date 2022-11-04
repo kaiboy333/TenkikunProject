@@ -7,8 +7,12 @@
 #include "ImageRenderer.h"
 #include "WindowManager.h"
 #include "Window.h"
+#include "Collision.h"
+#include "Collider.h"
+#include <set>
 
 class TreeList;
+class Collision;
 class Scene : public SceneInfo
 {
 	public:
@@ -19,6 +23,9 @@ class Scene : public SceneInfo
 		std::filesystem::path scenePath;
 
 		std::vector<function<void()>> addAndRemoveEvents;	//’Ç‰ÁAíœ‚ÌŠÖ”‚ğ‚¢‚ê‚é
+
+		std::set<std::pair<Collision*, Collision*>> beforeOnCollisions;	//‘O‰ñ‚ÌOnCollisionî•ñ
+		std::set<std::pair<Collider*, Collider*>> beforeOnTriggers;	//‘O‰ñ‚ÌOnTriggerî•ñ
 
 		Scene();
 

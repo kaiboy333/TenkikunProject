@@ -64,7 +64,7 @@ float Time::GetDeltaTime() {
 float Time::time = 0;
 float Time::deltaTime = 0;
 
-const int Time::FPS = 60;
+const int Time::FPS = 30;
 const float Time::MIN_FRAME_TIME = 1.0f / FPS;
 LARGE_INTEGER Time::beforeTime;
 LARGE_INTEGER Time::nowTime;

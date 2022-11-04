@@ -16,12 +16,6 @@ void Collider::Update()
 
 void Collider::Draw()
 {
-    //for (Vector3 crossPoint : crossPoints) {
-    //    //交点の描画
-    //    Vector3 drawPos = DrawComponent::GetDrawPos(crossPoint);
-    //    DrawCircleAA(drawPos.x, drawPos.y, 3, 30, GetColor(0, 255, 0), TRUE);
-    //}
-
     //バウンディングボックスの描画
     DrawBoundingBox();
 }
@@ -52,9 +46,19 @@ bool Collider::operator==(const Collider& other) const
     return this->GetNo() == other.GetNo();
 }
 
+bool Collider::operator!=(const Collider& other) const
+{
+    return !(*this == other);
+}
+
 bool Collider::operator<(const Collider& other) const
 {
-    return false;
+    return this->GetNo() < other.GetNo();
+}
+
+bool Collider::operator>(const Collider& other) const
+{
+    return !(*this < other);
 }
 
 int Collider::newNo = 0;

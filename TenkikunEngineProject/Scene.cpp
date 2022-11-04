@@ -44,15 +44,7 @@ void Scene::Update()
 	//当たり判定のチェック
 	HitManager hitManager = HitManager();
 	hitManager.HitCheck();
-
-	//Vector2 crossPoint;
-	//Vector2 vec1 = Vector2(-50, -10), vec2 = Vector2(50, -10), vec3 = Vector2::Zero();
-	//Vector2::GetMinDistance(vec1, vec2, vec3, crossPoint);
-	//vec1.DrawPoint();
-	//vec2.DrawPoint();
-	//vec3.DrawPoint();
-	//crossPoint.DrawPoint(GetColor(255, 0, 0));
-	//ScreenFlip();
+	hitManager.CallHitFunction(beforeOnCollisions, beforeOnTriggers);
 }
 
 void Scene::Draw()

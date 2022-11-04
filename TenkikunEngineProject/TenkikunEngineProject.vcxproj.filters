@@ -293,9 +293,6 @@
     <ClCompile Include="PlayerScript.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Rotate.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="RigidBodyRect.cpp">
       <Filter>ソース ファイル\window\inspector</Filter>
     </ClCompile>
@@ -539,9 +536,6 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="PlayerScript.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Rotate.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="RigidBodyRect.h">

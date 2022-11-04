@@ -26,11 +26,11 @@ void HitManager::HitCheck()
 		}
 	}
 
-	LARGE_INTEGER beforeTime;
-	LARGE_INTEGER nowTime;
+	//LARGE_INTEGER beforeTime;
+	//LARGE_INTEGER nowTime;
 
-	//開始時刻を記録
-	QueryPerformanceCounter(&beforeTime);
+	////開始時刻を記録
+	//QueryPerformanceCounter(&beforeTime);
 
 	if (colliders.size() >= 2) {
 		//バウンディングボックスを使った衝突判定
@@ -43,15 +43,12 @@ void HitManager::HitCheck()
 		Response();
 	}
 
-	//衝突時の関数を呼ぶ
-	CallHitFunction();
+	//// 今の時間を取得
+	//QueryPerformanceCounter(&nowTime);
+	//// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
+	//double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
 
-	// 今の時間を取得
-	QueryPerformanceCounter(&nowTime);
-	// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
-	double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
-
-	Debug::Log(std::to_string(frameTime));
+	//Debug::Log(std::to_string(frameTime));
 }
 
 void HitManager::BlodePhase()
@@ -93,7 +90,7 @@ void HitManager::NarrawPhase()
 			}
 			else {
 				//onTriggersに追加
-				if (c1 < c2) {
+				if (*c1 < *c2) {
 					onTriggers.insert(std::make_pair(c1, c2));
 				}
 				else {
@@ -273,7 +270,7 @@ void HitManager::Response() {
 		Collision* collision2 = new Collision(colliders[hitInfo->colliderID1], hitInfo->contact);
 
 		//左の方が番号が若くなるようにする
-		if (collision1->collider->GetNo() < collision2->collider->GetNo()) {
+		if (*collision1 < *collision2) {
 			onCollisions.insert(std::make_pair(collision1, collision2));
 		}
 		else {
@@ -300,24 +297,36 @@ void HitManager::Response() {
 	}
 }
 
-void HitManager::CallHitFunction()
+void HitManager::CallHitFunction(std::set<std::pair<Collision*, Collision*>>& beforeOnCollisions, std::set<std::pair<Collider*, Collider*>>& beforeOnTriggers)
 {
 	//onCollision
 	for (auto& onCollision : onCollisions) {
-		auto iter = std::find(beforeOnCollisions->begin(), beforeOnCollisions->end(), onCollision);
+		bool isFind = false;
+		auto iter = beforeOnCollisions.begin();
+		for (auto& beforeCollision : beforeOnCollisions) {
+			//一致したら
+			if (*beforeCollision.first == *onCollision.first && *beforeCollision.second == *onCollision.second) {
+				isFind = true;
+				break;
+			}
+			iter++;
+		}
+		//auto iter = std::find(beforeOnCollisions.begin(), beforeOnCollisions.end(), onCollision);
 		//見つかったら
-		if (*iter == onCollision) {
+		if (isFind) {
 			//前にも衝突している(Stay)
 			//first
 			for (auto mono : onCollision.first->gameobject->GetComponents<MonoBehaviour>()) {
-				mono->OnColliderEnter(onCollision.second);
+				mono->OnColliderStay(onCollision.second);
 			}
 			//second
 			for (auto mono : onCollision.second->gameobject->GetComponents<MonoBehaviour>()) {
-				mono->OnColliderEnter(onCollision.first);
+				mono->OnColliderStay(onCollision.first);
 			}
 			//前のリストから削除
-			beforeOnCollisions->erase(iter);
+			beforeOnCollisions.erase(iter);
+
+			Debug::Log("OnCollisionStay");
 		}
 		//見つからなかったら
 		else {
@@ -330,26 +339,40 @@ void HitManager::CallHitFunction()
 			for (auto mono : onCollision.second->gameobject->GetComponents<MonoBehaviour>()) {
 				mono->OnColliderEnter(onCollision.first);
 			}
+
+			Debug::Log("OnCollisionEnter");
 		}
 	}
 	//残っている前の衝突情報は
-	for (auto& beforeOnCollision : *beforeOnCollisions) {
+	for (auto& beforeOnCollision : beforeOnCollisions) {
 		//今回衝突しなくなった(Exit)
-					//first
+		//first
 		for (auto mono : beforeOnCollision.first->gameobject->GetComponents<MonoBehaviour>()) {
-			mono->OnColliderEnter(beforeOnCollision.second);
+			mono->OnColliderExit(beforeOnCollision.second);
 		}
 		//second
 		for (auto mono : beforeOnCollision.second->gameobject->GetComponents<MonoBehaviour>()) {
-			mono->OnColliderEnter(beforeOnCollision.first);
+			mono->OnColliderExit(beforeOnCollision.first);
 		}
+
+		Debug::Log("OnCollisionExit");
 	}
 
 	//onTrigger
 	for (auto& onTrigger : onTriggers) {
-		auto iter = std::find(beforeOnTriggers->begin(), beforeOnTriggers->end(), onTrigger);
+		bool isFind = false;
+		auto iter = beforeOnTriggers.begin();
+		for (auto& beforeOnTrigger : beforeOnTriggers) {
+			//一致したら
+			if (*beforeOnTrigger.first == *onTrigger.first && *beforeOnTrigger.second == *onTrigger.second) {
+				isFind = true;
+				break;
+			}
+			iter++;
+		}
+		//auto iter = std::find(beforeOnTriggers.begin(), beforeOnTriggers.end(), onTrigger);
 		//見つかったら
-		if (*iter == onTrigger) {
+		if (isFind) {
 			//前にも衝突している(Stay)
 			//first
 			for (auto mono : onTrigger.first->gameobject->GetComponents<MonoBehaviour>()) {
@@ -360,7 +383,9 @@ void HitManager::CallHitFunction()
 				mono->OnTriggerStay(onTrigger.first);
 			}
 			//前のリストから削除
-			beforeOnTriggers->erase(iter);
+			beforeOnTriggers.erase(iter);
+
+			Debug::Log("OnTriggerStay");
 		}
 		//見つからなかったら
 		else {
@@ -374,9 +399,11 @@ void HitManager::CallHitFunction()
 				mono->OnTriggerEnter(onTrigger.first);
 			}
 		}
+
+		Debug::Log("OnTriggerEnter");
 	}
 	//残っている前の衝突情報は
-	for (auto& beforeOnTrigger : *beforeOnTriggers) {
+	for (auto& beforeOnTrigger : beforeOnTriggers) {
 		//今回衝突しなくなった(Exit)
 		//first
 		for (auto mono : beforeOnTrigger.first->gameobject->GetComponents<MonoBehaviour>()) {
@@ -386,23 +413,10 @@ void HitManager::CallHitFunction()
 		for (auto mono : beforeOnTrigger.second->gameobject->GetComponents<MonoBehaviour>()) {
 			mono->OnTriggerExit(beforeOnTrigger.first);
 		}
+
+		Debug::Log("OnTriggerExit");
 	}
+
+	beforeOnCollisions = std::set<std::pair<Collision*, Collision*>>(onCollisions);
+	beforeOnTriggers = std::set<std::pair<Collider*, Collider*>>(onTriggers);
 }
-
-float HitManager::timeStep = 0;
-const float HitManager::bias = 0.1f;
-const float HitManager::slop = 0.001f;
-const int HitManager::iteration = 10;
-
-std::vector<RigidBody*> HitManager::rigidBodies;
-std::vector<Collider*> HitManager::colliders;
-
-std::vector<std::pair<int, int>> HitManager::colliderPairs;
-std::vector<SupportInfo*> HitManager::supportInfos;
-
-std::set<std::pair<Collision*, Collision*>> HitManager::onCollisions;
-std::set<std::pair<Collision*, Collision*>>* HitManager::beforeOnCollisions = nullptr;
-std::set<std::pair<Collider*, Collider*>> HitManager::onTriggers;
-std::set<std::pair<Collider*, Collider*>>* HitManager::beforeOnTriggers = nullptr;
-
-HitManager::BlodeMode HitManager::blodeMode = HitManager::BlodeMode::AABB_TREE;
