@@ -3,7 +3,6 @@
 #include "Debug.h"
 #include "Collision.h"
 #include "RigidBody.h"
-#include "HitChecker.h"
 
 SupportInfo* GJK::IsHit(std::vector<Collider*> colliders, int colliderID1, int colliderID2)
 {

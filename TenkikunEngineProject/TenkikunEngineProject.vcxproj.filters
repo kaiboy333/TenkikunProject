@@ -57,9 +57,6 @@
     <Filter Include="ソース ファイル\window\rect">
       <UniqueIdentifier>{9ce1022c-822f-476b-a39f-20818cc384c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\window\rect\textBox">
-      <UniqueIdentifier>{0c9516c2-4ff5-4530-b5f5-35da0e47c491}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\window\button">
       <UniqueIdentifier>{c73c154d-65d2-4344-9dba-463b7792fb47}</UniqueIdentifier>
     </Filter>
@@ -169,9 +166,6 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="TextBox.cpp">
-      <Filter>ソース ファイル\window\rect\textBox</Filter>
     </ClCompile>
     <ClCompile Include="ProjectWindow.cpp">
       <Filter>ソース ファイル\window\project</Filter>
@@ -305,9 +299,6 @@
     <ClCompile Include="GJK.cpp">
       <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
-    <ClCompile Include="HitChecker.cpp">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClCompile>
     <ClCompile Include="HitInfo.cpp">
       <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
@@ -331,6 +322,18 @@
     </ClCompile>
     <ClCompile Include="CameraRect.cpp">
       <Filter>ソース ファイル\window\inspector\componentRect</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckButton.cpp">
+      <Filter>ソース ファイル\window\button</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>ソース ファイル\window\text</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectRect.cpp">
+      <Filter>ソース ファイル\window\text</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateStage.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -417,9 +420,6 @@
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="TextBox.h">
-      <Filter>ソース ファイル\window\rect\textBox</Filter>
     </ClInclude>
     <ClInclude Include="ProjectWindow.h">
       <Filter>ソース ファイル\window\project</Filter>
@@ -553,9 +553,6 @@
     <ClInclude Include="GJK.h">
       <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
-    <ClInclude Include="HitChecker.h">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClInclude>
     <ClInclude Include="HitInfo.h">
       <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
@@ -579,6 +576,18 @@
     </ClInclude>
     <ClInclude Include="CameraRect.h">
       <Filter>ソース ファイル\window\inspector\componentRect</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckButton.h">
+      <Filter>ソース ファイル\window\button</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBox.h">
+      <Filter>ソース ファイル\window\text</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectRect.h">
+      <Filter>ソース ファイル\window\text</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateStage.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

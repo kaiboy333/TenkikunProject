@@ -23,13 +23,21 @@ void ComponentRect::Draw()
 
 	nameRect->Draw();	//コンポーネントの名前描画
 
-		//テキスト描画
+	//テキスト描画
 	for (TextRect* textRect : textRects) {
 		textRect->Draw();
 	}
 	//テキストボックス描画
 	for (TextBox* textBox : textBoxes) {
 		textBox->Draw();
+	}
+	//SelectRect
+	for (SelectRect* selectRect : selectRects) {
+		selectRect->Draw();
+	}
+	//CheckButton
+	for (CheckButton* checkButton : checkButtons) {
+		checkButton->Draw();
 	}
 }
 
@@ -60,6 +68,26 @@ void ComponentRect::PreparationLibrate()
 		textRect = nullptr;
 	}
 	textRects.clear();
+
+	//SelectRect
+	for (SelectRect* selectRect : selectRects) {
+		//SelectRectの解放準備
+		selectRect->PreparationLibrate();
+		//解放
+		delete(selectRect);
+		selectRect = nullptr;
+	}
+	selectRects.clear();
+
+	//CheckButton
+	for (CheckButton* checkButton : checkButtons) {
+		//CheckButtonの解放準備
+		checkButton->PreparationLibrate();
+		//解放
+		delete(checkButton);
+		checkButton = nullptr;
+	}
+	checkButtons.clear();
 
 	//自身の解放準備
 	Rect::PreparationLibrate();

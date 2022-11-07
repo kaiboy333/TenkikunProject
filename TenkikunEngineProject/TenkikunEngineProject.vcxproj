@@ -155,10 +155,12 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraRect.cpp" />
+    <ClCompile Include="CheckButton.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CreateShapeScript.cpp" />
+    <ClCompile Include="CreateStage.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="EPA.cpp" />
     <ClCompile Include="FolderIcon.cpp" />
@@ -173,7 +175,6 @@
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GJK.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
-    <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="HitInfo.cpp" />
     <ClCompile Include="HitManager.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -208,6 +209,7 @@
     <ClCompile Include="AnimationState.cpp" />
     <ClCompile Include="ScriptIcon.cpp" />
     <ClCompile Include="ScrollRect.cpp" />
+    <ClCompile Include="SelectRect.cpp" />
     <ClCompile Include="SupportInfo.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TextRect.cpp" />
@@ -238,10 +240,12 @@
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraRect.h" />
+    <ClInclude Include="CheckButton.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CreateShapeScript.h" />
+    <ClInclude Include="CreateStage.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="EPA.h" />
     <ClInclude Include="FolderIcon.h" />
@@ -256,7 +260,6 @@
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GJK.h" />
     <ClInclude Include="HierarchyWindow.h" />
-    <ClInclude Include="HitChecker.h" />
     <ClInclude Include="HitInfo.h" />
     <ClInclude Include="HitManager.h" />
     <ClInclude Include="Image.h" />
@@ -292,6 +295,7 @@
     <ClInclude Include="AnimationState.h" />
     <ClInclude Include="ScriptIcon.h" />
     <ClInclude Include="ScrollRect.h" />
+    <ClInclude Include="SelectRect.h" />
     <ClInclude Include="SupportInfo.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="TextRect.h" />

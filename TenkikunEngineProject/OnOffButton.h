@@ -5,17 +5,17 @@
 class OnOffButton : public WindowButton
 {
 	public:
-		OnOffButton(float startX, float startY, float width, float height, Image* image, std::vector<function<void()>> buttonFunc, unsigned int downColor = GetColor(30, 144, 255));
-
-		virtual void PreparationLibrate() override;
+		OnOffButton(float startX, float startY, float width, float height, Image* image, std::vector<function<void()>> buttonFunc);
 
 		bool isDown = false;	//ƒ{ƒ^ƒ“‚ª‚Ö‚±‚ñ‚Å‚¢‚éó‘Ô‚©
 
+		Image* image;	//‰æ‘œ
+
+		virtual void PreparationLibrate() override;
+
 		virtual void Draw() override;
 
-	private:
+	protected:
 		std::vector<function<void()>> buttonFunc;
-
-		unsigned int downColor;
 };
 

@@ -227,7 +227,7 @@ void HitManager::Response() {
 
 
 				for (int i = 0; i < 2; i++) {
-					auto constraint = contactPoint->constraints[i];
+					auto& constraint = contactPoint->constraints[i];
 					auto deltaImpulse = constraint.rhs;
 					auto deltaVelocityA = solverBodyA->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyA->deltaAngularVelocity.z), r1);
 					auto deltaVelocityB = solverBodyB->deltaLinearVelocity + Vector3::Cross(Vector3(0, 0, solverBodyB->deltaAngularVelocity.z), r2);
@@ -238,11 +238,34 @@ void HitManager::Response() {
 					constraint.accumImpulse = MyMath::Clamp(oldImpulse + deltaImpulse, constraint.lowerLimit, constraint.upperLimit);
 
 					deltaImpulse = constraint.accumImpulse - oldImpulse;
+
 					solverBodyA->deltaLinearVelocity += constraint.axis * (deltaImpulse * solverBodyA->massInv);
 					solverBodyA->deltaAngularVelocity.z += deltaImpulse * solverBodyA->inertiaInv * Vector2::Cross(r1, constraint.axis);
+					if (bodyA) {
+						if (bodyA->constraints.freezePosition.x) {
+							solverBodyA->deltaLinearVelocity.x = 0;
+						}
+						if (bodyA->constraints.freezePosition.y) {
+							solverBodyA->deltaLinearVelocity.y = 0;
+						}
+						if (bodyA->constraints.freezeRotation.z) {
+							solverBodyA->deltaAngularVelocity.z = 0;
+						}
+					}
 
 					solverBodyB->deltaLinearVelocity -= constraint.axis * (deltaImpulse * solverBodyB->massInv);
 					solverBodyB->deltaAngularVelocity.z -= deltaImpulse * solverBodyB->inertiaInv * Vector2::Cross(r2, constraint.axis);
+					if (bodyB) {
+						if (bodyB->constraints.freezePosition.x) {
+							solverBodyB->deltaLinearVelocity.x = 0;
+						}
+						if (bodyB->constraints.freezePosition.y) {
+							solverBodyB->deltaLinearVelocity.y = 0;
+						}
+						if (bodyB->constraints.freezeRotation.z) {
+							solverBodyB->deltaAngularVelocity.z = 0;
+						}
+					}
 
 					if (i == 0) {
 						auto maxFriction = hitInfo->contact->friction * abs(contactPoint->constraints[0].accumImpulse);

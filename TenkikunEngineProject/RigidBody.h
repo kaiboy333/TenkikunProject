@@ -34,6 +34,21 @@ class RigidBody	: public Component
 		//çSë©ópÇÃíl
 		SolverBody* solverBody = nullptr;
 
+
+		struct FreezePosition {
+			bool x = false;
+			bool y = false;
+		};
+		struct FreezeRotation {
+			bool z = false;
+		};
+		//êßå¿
+		struct Constraints {
+			FreezePosition freezePosition;
+			FreezeRotation freezeRotation;
+		};
+		Constraints constraints;
+
 		RigidBody(GameObject* gameobject);
 
 		virtual void Update() override;

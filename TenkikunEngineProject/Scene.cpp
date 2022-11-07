@@ -279,7 +279,8 @@ GameObject* Scene::CreateUnityChan(bool isLaterAdd)
 
 	gameobject->AddComponent<BoxCollider>();	//BoxColliderì¬
 
-	gameobject->AddComponent<RigidBody>();	//RigidBodyì¬
+	auto rb = gameobject->AddComponent<RigidBody>();	//RigidBodyì¬
+	rb->constraints.freezeRotation.z = true;
 
 	gameobject->AddComponent<PlayerScript>();	//Scriptì¬
 

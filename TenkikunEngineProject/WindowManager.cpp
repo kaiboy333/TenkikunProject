@@ -21,10 +21,6 @@ void WindowManager::Draw()
 
 void WindowManager::Update()
 {
-	for (Window* parentWindow : GetWindows()) {
-		parentWindow->Update();
-	}
-
 	//クリックしたとき
 	if (Input::GetMouseButtonDown(Input::MouseCode::Mouse_Left, false)) {
 		//ひとまず選択を解除
@@ -49,6 +45,10 @@ void WindowManager::Update()
 	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL, false) && Input::GetKeyDown(Input::KeyCode::S, false)) {
 		//シーンをセーブ
 		SceneManager::SaveScene();
+	}
+
+	for (Window* parentWindow : GetWindows()) {
+		parentWindow->Update();
 	}
 }
 

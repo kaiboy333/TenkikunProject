@@ -1,12 +1,13 @@
 #include "RigidBodyRect.h"
 #include "RigidBody.h"
 #include "Debug.h"
+#include "ProjectFileManager.h"
 
-RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) : ComponentRect(startX, startY, component, 7)
+RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) : ComponentRect(startX, startY, component, 9)
 {
 	//bodyType
 	textRects.push_back(new TextRect(startX, startDrawY, "BodyType"));
-	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Enum, { "Dynamic", "Static" }));
+	selectRects.push_back(new SelectRect(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), { "Dynamic", "Static" }));
 
 	StartNewLine();	//改行
 
@@ -56,33 +57,42 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 	textRects.push_back(new TextRect(GetRightRectX(textBoxes.back()), startDrawY, "z:"));
 	textBoxes.push_back(new TextBox(GetRightRectX(textRects.back()), startDrawY, textBoxWidth, FontManager::systemFont->GetFontHeight(), true, "", TextBox::InputType::Number));
 
+	StartNewLine();	//改行
+
+	//FreezePosition
+	textRects.push_back(new TextRect(startX, startDrawY, "FreezePosition"));
+
+	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "x:"));
+	checkButtons.push_back(new CheckButton(GetRightRectX(textRects.back()), startDrawY, textBoxHeight, textBoxHeight, { static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\NotCheck.png"]), static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\Check.png"]) }));
+	textRects.push_back(new TextRect(GetRightRectX(checkButtons.back()), startDrawY, "y:"));
+	checkButtons.push_back(new CheckButton(GetRightRectX(textRects.back()), startDrawY, textBoxHeight, textBoxHeight, { static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\NotCheck.png"]), static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\Check.png"]) }));
+
+	StartNewLine();	//改行
+
+	//FreezeRotation
+	textRects.push_back(new TextRect(startX, startDrawY, "FreezePosition"));
+
+	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "z:"));
+	checkButtons.push_back(new CheckButton(GetRightRectX(textRects.back()), startDrawY, textBoxHeight, textBoxHeight, { static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\NotCheck.png"]), static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\Check.png"]) }));
+
 
 	RigidBody* rigidBody = static_cast<RigidBody*>(component);
 
+	//bodyType
+	selectRects[0]->mouseClickDownEvents.push_back(std::make_pair(selectRects[0]->GetEventNo(), [this, rigidBody]() {
+		for (auto choice : selectRects[0]->choices) {
+			//マウスをクリックしたら
+			choice->mouseClickDownEvents.push_back(std::make_pair(choice->GetEventNo(), [this, rigidBody]() {
+				rigidBody->bodyType = static_cast<RigidBody::BodyType>(selectRects[0]->GetNo());
+			}));
+		}
+	}));
+
 	int i = 0;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < 4; i++) {
 
 		switch (i) {
 			case 0:
-				//bodyTypeのenumChoices
-				for (int j = 0, len = (int)textBoxes[i]->enumChoices.size(); j < len; j++) {
-					auto enumChoice = textBoxes[i]->enumChoices[j];
-					//choiceへマウスをクリックしたら
-					enumChoice->mouseClickDownEvents.push_back(std::make_pair(enumChoice->GetEventNo(), [enumChoice, this, i, rigidBody]() {
-						try {
-							auto text = textBoxes[i]->GetText();
-							//何番目かを取得
-							int index = stoi(text);
-							//セット
-							rigidBody->bodyType = static_cast<RigidBody::BodyType>(index);
-						}
-						catch (const std::invalid_argument& e) {
-							//Debug::Log("数字ではありません。");
-						}
-					}));
-				}
-				break;
-			case 1:
 				//gravityScale
 				textBoxes[i]->pushEnterEvents.push_back(std::make_pair(textBoxes[i]->GetEventNo(), [this, rigidBody, i]() {
 					//textが変わったなら
@@ -96,7 +106,7 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 					}
 				}));
 				break;
-			case 2:
+			case 1:
 				//mass
 				textBoxes[i]->pushEnterEvents.push_back(std::make_pair(textBoxes[i]->GetEventNo(), [this, rigidBody, i]() {
 					//textが変わったなら
@@ -110,7 +120,7 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 					}
 				}));
 				break;
-			case 3:
+			case 2:
 				//restritution
 				textBoxes[i]->pushEnterEvents.push_back(std::make_pair(textBoxes[i]->GetEventNo(), [this, rigidBody, i]() {
 					//textが変わったなら
@@ -124,7 +134,7 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 					}
 				}));
 				break;
-			case 4:
+			case 3:
 				//friction
 				textBoxes[i]->pushEnterEvents.push_back(std::make_pair(textBoxes[i]->GetEventNo(), [this, rigidBody, i]() {
 					//textが変わったなら
@@ -147,6 +157,28 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 		//変えられないようにする
 		textBoxes[k]->canChange = false;
 	}
+
+	for (int i = 0; i < 3; i++) {
+		switch (i) {
+			case 0:
+				checkButtons[i]->onClickEvents.push_back(std::make_pair(checkButtons[i]->GetEventNo(), [this, i, rigidBody]() {
+					rigidBody->constraints.freezePosition.x = checkButtons[i]->GetIsChecked();
+				}));
+				break;
+			case 1:
+				checkButtons[i]->onClickEvents.push_back(std::make_pair(checkButtons[i]->GetEventNo(), [this, i, rigidBody]() {
+					rigidBody->constraints.freezePosition.y = checkButtons[i]->GetIsChecked();
+				}));
+				break;
+			case 2:
+				checkButtons[i]->onClickEvents.push_back(std::make_pair(checkButtons[i]->GetEventNo(), [this, i, rigidBody]() {
+					rigidBody->constraints.freezeRotation.z = checkButtons[i]->GetIsChecked();
+				}));
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void RigidBodyRect::Update()
@@ -155,25 +187,35 @@ void RigidBodyRect::Update()
 
 	stringstream ss;
 
-	float value[11] = {};
-	value[0] = static_cast<float>(rigidBody->bodyType);
-	value[1] = rigidBody->gravityScale;
-	value[2] = rigidBody->mass;
-	value[3] = rigidBody->restritution;
-	value[4] = rigidBody->friction;
+	float values[10] = {};
+	values[0] = rigidBody->gravityScale;
+	values[1] = rigidBody->mass;
+	values[2] = rigidBody->restritution;
+	values[3] = rigidBody->friction;
 	Vector3 velocity = rigidBody->velocity;
-	value[5] = velocity.x;
-	value[6] = velocity.y;
-	value[7] = velocity.z;
+	values[4] = velocity.x;
+	values[5] = velocity.y;
+	values[6] = velocity.z;
 	Vector3 angularVelocity = rigidBody->angularVelocity;
-	value[8] = angularVelocity.x;
-	value[9] = angularVelocity.y;
-	value[10] = angularVelocity.z;
+	values[7] = angularVelocity.x;
+	values[8] = angularVelocity.y;
+	values[9] = angularVelocity.z;
 
-	for (int i = 0; i < 11; i++) {
+	for (int i = 0; i < 10; i++) {
 		stringstream ss;
-		ss << std::fixed << std::setprecision(2) << value[i];
+		ss << std::fixed << std::setprecision(2) << values[i];
 		textBoxes[i]->SetText(ss.str());
+	}
+
+	bool values2[3] = {};
+	auto constraints = rigidBody->constraints;
+	values2[0] = constraints.freezePosition.x;
+	values2[1] = constraints.freezePosition.y;
+	values2[2] = constraints.freezeRotation.z;
+
+	for (int i = 0; i < 3; i++) {
+		stringstream ss;
+		checkButtons[i]->SetIsChecked(values2[i]);
 	}
 }
 

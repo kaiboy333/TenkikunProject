@@ -1,9 +1,9 @@
 #include "OnOffButton.h"
 
-OnOffButton::OnOffButton(float startX, float startY, float width, float height, Image* image, std::vector<function<void()>> buttonFunc, unsigned int downColor) : WindowButton(startX, startY, width, height, image)
+OnOffButton::OnOffButton(float startX, float startY, float width, float height, Image* image, std::vector<function<void()>> buttonFunc) : WindowButton(startX, startY, width, height, image)
 {
 	this->buttonFunc = buttonFunc;
-	this->downColor = downColor;
+	this->image = image;
 
 	//ŠÖ”‚ª2ŒÂ‚È‚ç
 	if (buttonFunc.size() == 2) {
@@ -30,13 +30,20 @@ void OnOffButton::PreparationLibrate()
 
 void OnOffButton::Draw()
 {
-	//lŠp‚Ì•`‰æ
-	unsigned int drawColor = isDown ? downColor : GetColor(255, 255, 255);
-	DrawBoxAA(startX, startY, startX + width, startY + height, drawColor, TRUE);
+	////lŠp‚Ì•`‰æ
+	//unsigned int drawColor = isDown ? downColor : GetColor(255, 255, 255);
+	//DrawBoxAA(startX, startY, startX + width, startY + height, drawColor, TRUE);
+
+	//ƒ}ƒEƒX‚ªæ‚Á‚Ä‚¢‚½‚ç
+	if (GetIsTopOn()) {
+		//lŠp‚Ì•`‰æ
+		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
+	}
 
 	//‰æ‘œ‚Ì•`‰æ
 	WindowButton::Draw();
 
 	//˜g‚Ì•`‰æ
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);
+
 }

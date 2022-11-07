@@ -17,7 +17,7 @@ void Collider::Update()
 void Collider::Draw()
 {
     //バウンディングボックスの描画
-    DrawBoundingBox();
+    //DrawBoundingBox();
 }
 
 Vector3 Collider::GetPosition()

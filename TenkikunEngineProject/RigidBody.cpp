@@ -16,6 +16,16 @@ void RigidBody::Update()
 		AddForce(Vector3::Down() * mass * Physics::g * gravityScale);
 	}
 
+	if (constraints.freezePosition.x) {
+		velocity.x = 0;
+	}
+	if (constraints.freezePosition.y) {
+		velocity.y = 0;
+	}
+	if (constraints.freezeRotation.z) {
+		angularVelocity.z = 0;
+	}
+
 	if (bodyType != BodyType::Static) {
 		Transform* transform = gameobject->transform;
 		//ˆÊ’u‚ÌXV

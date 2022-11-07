@@ -11,16 +11,13 @@ class TextBox : public TriggerRect
 		enum class InputType {
 			String,
 			Number,
-			Enum,
 		};
 
 		InputType inputType;
 
 		bool canChange = true;	//•ÏX‰Â”\‚©
 
-		std::vector<TextButton*> enumChoices;	//enum‚Ì‘I‘ğˆ‚½‚¿
-
-		TextBox(float startX, float startY, float width, float height, bool canChange, string text = "", InputType inputType = InputType::String, std::vector<std::string> enumStrs = {});
+		TextBox(float startX, float startY, float width, float height, bool canChange, string text = "", InputType inputType = InputType::String);
 
 		virtual void Draw();	//•`‰æ
 

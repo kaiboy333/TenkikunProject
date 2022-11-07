@@ -5,6 +5,8 @@
 #include "DxLib.h"
 #include "WindowManager.h"
 #include "FontManager.h"
+#include "CheckButton.h"
+#include "SelectRect.h"
 
 class TextRect;
 class ComponentRect : public Rect
@@ -35,10 +37,13 @@ class ComponentRect : public Rect
 
 		float startDrawY;	//描画開始位置Y
 
-		vector<TextBox*> textBoxes;
-		vector<TextRect*> textRects;
+		vector<TextBox*> textBoxes;		//入力テキストボックス
+		vector<TextRect*> textRects;	//文字列表示ボックス
+		vector<CheckButton*> checkButtons;	//チェックボックス
+		vector<SelectRect*> selectRects;	//選択肢ボックス
 
 		const float textBoxWidth = 40;
+		const float textBoxHeight = FontManager::systemFont->GetFontHeight();
 
 		void StartNewLine();	//改行するときに呼ぶ
 		float GetRightRectX(Rect* rect);	//Rectの右端のXを取得
