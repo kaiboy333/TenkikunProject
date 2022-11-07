@@ -22,6 +22,15 @@ void ComponentRect::Draw()
 	DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(0, 0, 0), FALSE);	//枠の描画
 
 	nameRect->Draw();	//コンポーネントの名前描画
+
+		//テキスト描画
+	for (TextRect* textRect : textRects) {
+		textRect->Draw();
+	}
+	//テキストボックス描画
+	for (TextBox* textBox : textBoxes) {
+		textBox->Draw();
+	}
 }
 
 void ComponentRect::PreparationLibrate()
@@ -31,6 +40,26 @@ void ComponentRect::PreparationLibrate()
 	//解放
 	delete(nameRect);
 	nameRect = nullptr;
+
+	//テキストボックス
+	for (TextBox* textBox : textBoxes) {
+		//テキストボックスの解放準備
+		textBox->PreparationLibrate();
+		//解放
+		delete(textBox);
+		textBox = nullptr;
+	}
+	textBoxes.clear();
+
+	//TextRect
+	for (TextRect* textRect : textRects) {
+		//TextRectの解放準備
+		textRect->PreparationLibrate();
+		//解放
+		delete(textRect);
+		textRect = nullptr;
+	}
+	textRects.clear();
 
 	//自身の解放準備
 	Rect::PreparationLibrate();

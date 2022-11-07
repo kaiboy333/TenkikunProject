@@ -11,16 +11,6 @@ class TransformRect : public ComponentRect
 
 		virtual void Update() override;
 
-		virtual void Draw() override;
-
-		//virtual void RemoveAllTriggerRect() override;
-
 		virtual void PreparationLibrate() override;
-
-	private:
-		vector<TextBox*> textBoxes;
-		vector<TextRect*> textRects;
-
-		const float textBoxWidth = 40;
 };
 

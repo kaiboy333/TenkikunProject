@@ -32,7 +32,7 @@ class PlayerScript : public MonoBehaviour {
 		void MonoUpdate() override;
 
 	private:
-		float speed = 3.0f;
+		float speed = 30.0f;
 
 		RigidBody* rb = nullptr;
 };

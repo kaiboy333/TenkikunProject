@@ -36,8 +36,7 @@ void PlayerScript::OnTriggerExit(Collider* collider)
 void PlayerScript::MonoStart()
 {
 	rb = gameobject->GetComponent<RigidBody>();
-	rb->gravityScale = 0;
-	rb->velocity = Vector3::Down() * 50;
+	rb->gravityScale = 1;
 }
 
 void PlayerScript::MonoUpdate()
@@ -47,19 +46,19 @@ void PlayerScript::MonoUpdate()
 	Animator* animator = gameobject->GetComponent<Animator>();
 	AnimatorController* ac = animator->ac;
 
-	//if (Input::GetKey(Input::KeyCode::D)) {
-	//	rb->AddForce(Vector3::Right() * speed);
-	//	ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
-	//	imageRenderer->isFlipX = false;
-	//}
-	//else if (Input::GetKey(Input::KeyCode::A)) {
-	//	rb->AddForce(Vector3::Left() * speed);
-	//	ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
-	//	imageRenderer->isFlipX = true;
-	//}
-	//else {
-	//	ac->AddFloatParamater("isSpeed", 0.0f);
-	//}
+	if (Input::GetKey(Input::KeyCode::D)) {
+		//rb->velocity.x = speed;
+		//imageRenderer->isFlipX = false;
+	}
+	else if (Input::GetKey(Input::KeyCode::A)) {
+		//rb->velocity.x = -speed;
+		//imageRenderer->isFlipX = true;
+	}
+	else {
+		//rb->velocity.x = 0;
+	}
+
+	ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
 
 	//if (Input::GetKey(Input::R) && Input::GetKey(Input::LEFT_SHIFT)) {
 	//	gameobject->transform->rotation += Vector3::Back() * 1.0f;

@@ -114,42 +114,8 @@ void TransformRect::Update()
 	}
 }
 
-void TransformRect::Draw()
-{
-	ComponentRect::Draw();	//最初に名前描画
-
-	//テキスト描画
-	for (TextRect* textRect : textRects) {
-		textRect->Draw();
-	}
-	//テキストボックス描画
-	for (TextBox* textBox : textBoxes) {
-		textBox->Draw();
-	}
-}
-
 void TransformRect::PreparationLibrate()
 {
-	//テキストボックス
-	for (TextBox* textBox : textBoxes) {
-		//テキストボックスの解放準備
-		textBox->PreparationLibrate();
-		//解放
-		delete(textBox);
-		textBox = nullptr;
-	}
-	textBoxes.clear();
-
-	//TextRect
-	for (TextRect* textRect : textRects) {
-		//TextRectの解放準備
-		textRect->PreparationLibrate();
-		//解放
-		delete(textRect);
-		textRect = nullptr;
-	}
-	textRects.clear();
-
 	//自身の解放準備
 	ComponentRect::PreparationLibrate();
 }

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "ComponentRect.h"
+#include "Camera.h"
 
-class RigidBodyRect : public ComponentRect
+class CameraRect : public ComponentRect
 {
 public:
-	RigidBodyRect(float startX, float startY, Component* component);
+	CameraRect(float startX, float startY, Component* component);
 
 	virtual void Update() override;
 

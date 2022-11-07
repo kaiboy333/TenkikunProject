@@ -95,7 +95,8 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 
 	//GameObject* circle2 = scene->CreateCircle(false);
 	//circle2->transform->position = Vector3(50, 0, 0);
-	//scene->CreateUnityChan(false);	//Unity‚¿‚á‚ñ¶¬
+	
+	scene->CreateUnityChan(false);	//Unity‚¿‚á‚ñ¶¬
 
 	//GameObject* o = scene->CreateEmpty(false);
 	//o->AddComponent<CreateShapeScript>();

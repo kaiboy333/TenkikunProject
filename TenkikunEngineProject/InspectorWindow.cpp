@@ -2,6 +2,7 @@
 #include "TransformRect.h"
 #include "RigidBody.h"
 #include "RigidBodyRect.h"
+#include "CameraRect.h"
 
 InspectorWindow::InspectorWindow() : Window(1000, 0, 300, 800)
 {
@@ -88,7 +89,12 @@ void InspectorWindow::Init()
 			//RigidBody‚È‚ç
 			else if (type == typeid(RigidBody)) {
 				componentRect = new RigidBodyRect(startX, startRectY, component);
-				componentRects.insert(componentRects.begin(), componentRect);	//Œã‚ë‚É’Ç‰Á
+				componentRects.push_back(componentRect);	//Œã‚ë‚É’Ç‰Á
+			}
+			//Camera‚È‚ç
+			else if (type == typeid(Camera)) {
+				componentRect = new CameraRect(startX, startRectY, component);
+				componentRects.push_back(componentRect);	//Œã‚ë‚É’Ç‰Á
 			}
 
 			if (componentRect) {

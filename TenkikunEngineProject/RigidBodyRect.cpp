@@ -144,37 +144,6 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 	}
 
 	for (int k = i; k < 6 + i; k++) {
-		//int j = (k - i) / 3;
-		//switch (j) {
-		//case 0:
-		//	//velocity
-		//	textBoxes[k]->pushEnterEvents.push_back(std::make_pair(textBoxes[k]->GetEventNo(), [this, rigidBody, j]() {
-		//		if(textBoxes[k]->)
-		//		try {
-		//			Vector3 velocity = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
-		//			rigidBody->velocity = velocity;
-		//		}
-		//		catch (const std::invalid_argument& e) {
-		//			Debug::Log("数字ではありません。");
-		//		}
-		//	}));
-		//	break;
-		//case 1:
-		//	//angularVelocity
-		//	textBoxes[k]->pushEnterEvents.push_back(std::make_pair(textBoxes[k]->GetEventNo(), [this, rigidBody, j]() {
-		//		try {
-		//			Vector3 angularVelocity = Vector3(stof(textBoxes[3 * j]->GetText()), stof(textBoxes[3 * j + 1]->GetText()), stof(textBoxes[3 * j + 2]->GetText()));
-		//			rigidBody->angularVelocity = angularVelocity;
-		//		}
-		//		catch (const std::invalid_argument& e) {
-		//			Debug::Log("数字ではありません。");
-		//		}
-		//	}));
-		//	break;
-		//default:
-		//	break;
-		//}
-
 		//変えられないようにする
 		textBoxes[k]->canChange = false;
 	}
@@ -208,42 +177,8 @@ void RigidBodyRect::Update()
 	}
 }
 
-void RigidBodyRect::Draw()
-{
-	ComponentRect::Draw();	//最初に名前描画
-
-//テキスト描画
-	for (TextRect* textRect : textRects) {
-		textRect->Draw();
-	}
-	//テキストボックス描画
-	for (TextBox* textBox : textBoxes) {
-		textBox->Draw();
-	}
-}
-
 void RigidBodyRect::PreparationLibrate()
 {
-	//テキストボックス
-	for (TextBox* textBox : textBoxes) {
-		//テキストボックスの解放準備
-		textBox->PreparationLibrate();
-		//解放
-		delete(textBox);
-		textBox = nullptr;
-	}
-	textBoxes.clear();
-
-	//TextRect
-	for (TextRect* textRect : textRects) {
-		//TextRectの解放準備
-		textRect->PreparationLibrate();
-		//解放
-		delete(textRect);
-		textRect = nullptr;
-	}
-	textRects.clear();
-
 	//自身の解放準備
 	ComponentRect::PreparationLibrate();
 }

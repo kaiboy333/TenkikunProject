@@ -215,76 +215,76 @@ GameObject* Scene::CreateTenkikun(bool isLaterAdd)
 	return gameobject;
 }
 
-//GameObject* Scene::CreateUnityChan(bool isLaterAdd)
-//{
-//	GameObject* gameobject = CreateEmpty(isLaterAdd);	//空のGameObjectを作成
-//	if (isLaterAdd) {
-//		//あとで
-//		addAndRemoveEvents.push_back([this, gameobject](void) {
-//			gameobject->SetName("UnityChan");	//名前変更
-//		});
-//	}
-//	else {
-//		//すぐに
-//		gameobject->SetName("UnityChan");	//名前変更
-//	}
-//
-//	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
-//	Animator* animator = gameobject->AddComponent<Animator>();	//Animatorコンポーネント作成
-//
-//	//アニメーションコントローラーの作成
-//	std::filesystem::path acPath = ProjectFileManager::currentPath.string() + "\\" + "PlayerAnimatorController" + ".animctr";
-//	AnimatorController* ac = new AnimatorController(acPath);
-//
-//	animator->ac = ac;	//Animatorにacをセット
-//	ac->AddFloatParamater("isSpeed", 0.0f);	//パラメーターをセット
-//
-//	//待機アニメーションのセット
-//	//待機アニメーションの作成
-//	std::filesystem::path idleAnimPath = ProjectFileManager::currentPath.string() + "\\" + "IdleAnimation" + ".anim";
-//	Animation* idleAnim = new Animation(idleAnimPath);
-//
-//	//待機画像の作成
-//	std::vector<Image*> idleImages;
-//	for (int i = 0; i < 3; i++) {
-//		idleImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Idle" + std::to_string(i) + ".png"]));
-//	}
-//	//アニメーションキーとして追加
-//	idleAnim->AddAnimationKey(idleImages, 10);
-//	//acにアニメーションをセットしてStateを取得
-//	AnimationState* idleState = animator->AddState(idleAnim, "Idle");
-//
-//	//走るアニメーションのセット
-//	//待機アニメーションの作成
-//	std::filesystem::path runAnimPath = ProjectFileManager::currentPath.string() + "\\" + "RunAnimation" + ".anim";
-//	Animation* runAnim = new Animation(runAnimPath);
-//	
-//	//走る画像の作成
-//	std::vector<Image*> runImages;
-//	for (int i = 0; i < 8; i++) {
-//		runImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Run" + std::to_string(i) + ".png"]));
-//	}
-//	//アニメーションキーとして追加
-//	runAnim->AddAnimationKey(runImages, 7);
-//	//acにアニメーションをセットしてStateを取得
-//	AnimationState* runState = animator->AddState(runAnim, "Run");
-//
-//	//Transition作成
-//	//待機StateのTransition追加
-//	AnimationTransition* idleToRun = idleState->AddTransition(runState);
-//	idleToRun->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Greater);
-//	//走るStateのTransition追加
-//	AnimationTransition* runToIdle = runState->AddTransition(idleState);
-//	runToIdle->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Less);
-//
-//	gameobject->AddComponent<BoxCollider>();	//BoxCollider作成
-//
-//	gameobject->AddComponent<RigidBody>();	//RigidBody作成
-//
-//	gameobject->AddComponent<PlayerScript>();	//Script作成
-//
-//	return gameobject;
-//}
+GameObject* Scene::CreateUnityChan(bool isLaterAdd)
+{
+	GameObject* gameobject = CreateEmpty(isLaterAdd);	//空のGameObjectを作成
+	if (isLaterAdd) {
+		//あとで
+		addAndRemoveEvents.push_back([this, gameobject](void) {
+			gameobject->SetName("UnityChan");	//名前変更
+		});
+	}
+	else {
+		//すぐに
+		gameobject->SetName("UnityChan");	//名前変更
+	}
+
+	ImageRenderer* imageRenderer = gameobject->AddComponent<ImageRenderer>();	//ImageRendererコンポーネント作成
+	Animator* animator = gameobject->AddComponent<Animator>();	//Animatorコンポーネント作成
+
+	//アニメーションコントローラーの作成
+	std::filesystem::path acPath = ProjectFileManager::currentPath.string() + "\\" + "PlayerAnimatorController" + ".animctr";
+	AnimatorController* ac = new AnimatorController(acPath);
+
+	animator->ac = ac;	//Animatorにacをセット
+	ac->AddFloatParamater("isSpeed", 0.0f);	//パラメーターをセット
+
+	//待機アニメーションのセット
+	//待機アニメーションの作成
+	std::filesystem::path idleAnimPath = ProjectFileManager::currentPath.string() + "\\" + "IdleAnimation" + ".anim";
+	Animation* idleAnim = new Animation(idleAnimPath);
+
+	//待機画像の作成
+	std::vector<Image*> idleImages;
+	for (int i = 0; i < 3; i++) {
+		idleImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Idle" + std::to_string(i) + ".png"]));
+	}
+	//アニメーションキーとして追加
+	idleAnim->AddAnimationKey(idleImages, 10);
+	//acにアニメーションをセットしてStateを取得
+	AnimationState* idleState = animator->AddState(idleAnim, "Idle");
+
+	//走るアニメーションのセット
+	//待機アニメーションの作成
+	std::filesystem::path runAnimPath = ProjectFileManager::currentPath.string() + "\\" + "RunAnimation" + ".anim";
+	Animation* runAnim = new Animation(runAnimPath);
+	
+	//走る画像の作成
+	std::vector<Image*> runImages;
+	for (int i = 0; i < 8; i++) {
+		runImages.push_back(static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\UnityChan_Run" + std::to_string(i) + ".png"]));
+	}
+	//アニメーションキーとして追加
+	runAnim->AddAnimationKey(runImages, 7);
+	//acにアニメーションをセットしてStateを取得
+	AnimationState* runState = animator->AddState(runAnim, "Run");
+
+	//Transition作成
+	//待機StateのTransition追加
+	AnimationTransition* idleToRun = idleState->AddTransition(runState);
+	idleToRun->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Greater);
+	//走るStateのTransition追加
+	AnimationTransition* runToIdle = runState->AddTransition(idleState);
+	runToIdle->AddCondition("isSpeed", 1.0, AnimationCondition::Mode::Less);
+
+	gameobject->AddComponent<BoxCollider>();	//BoxCollider作成
+
+	gameobject->AddComponent<RigidBody>();	//RigidBody作成
+
+	gameobject->AddComponent<PlayerScript>();	//Script作成
+
+	return gameobject;
+}
 
 void Scene::Destroy(GameObject* gameobject)
 {

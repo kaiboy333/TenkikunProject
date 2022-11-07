@@ -23,6 +23,10 @@ void RigidBody::Update()
 		//Šp“x‚ÌXV
 		transform->localRotation += angularVelocity * Time::GetDeltaTime();
 	}
+	else {
+		velocity = Vector3::Zero();
+		angularVelocity = Vector3::Zero();
+	}
 }
 
 void RigidBody::AddForce(Vector3 force, ForceMode forceMode)

@@ -5,8 +5,8 @@
 
 Camera::Camera(GameObject* gameobject) : Component(gameobject)
 {
-	this->width = 700;
-	this->height = 500;
+	this->width = WindowManager::gameWindow->width;
+	this->height = WindowManager::gameWindow->height;
 }
 
 void Camera::Update()
@@ -23,7 +23,7 @@ void Camera::Update()
 	 GameWindow* parentWindow = WindowManager::gameWindow;
 	 Vector3 cameraPos = camera->gameobject->transform->position;
 
-	 return Vector3(screenPosition.x / camera->zoom - parentWindow->width / 2.0f + cameraPos.x - parentWindow->startX, -(screenPosition.y / camera->zoom - parentWindow->height / 2.0f + cameraPos.y - parentWindow->startY), screenPosition.z);
+	 return Vector3((screenPosition.x - parentWindow->width / 2.0f - parentWindow->startX) / camera->zoom + cameraPos.x , -(screenPosition.y - parentWindow->height / 2.0f - parentWindow->startY) / camera->zoom + cameraPos.y, screenPosition.z);
  }
 
  Vector3 Camera::WorldToScreenPoint(Vector3 worldPosition)
@@ -33,7 +33,7 @@ void Camera::Update()
 	 GameWindow* parentWindow = WindowManager::gameWindow;
 	 Vector3 cameraPos = camera->gameobject->transform->position;
 
-	 return Vector3((worldPosition.x + parentWindow->width / 2.0f - cameraPos.x + parentWindow->startX) * camera->zoom, -(worldPosition.y + parentWindow->height / 2.0f - cameraPos.y + parentWindow->startY) * camera->zoom, worldPosition.z);
+	 return Vector3((worldPosition.x - cameraPos.x) * camera->zoom + parentWindow->width / 2.0f + parentWindow->startX, -(worldPosition.y - cameraPos.y) * camera->zoom + parentWindow->height / 2.0f + parentWindow->startY, worldPosition.z);
  }
 
  void Camera::PreparationLibrate()

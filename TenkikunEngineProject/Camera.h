@@ -8,7 +8,7 @@
 class Camera : public Component
 {
     public:
-        int width = 700,  height = 500;
+        int width = 0,  height = 0;
         float zoom = 1.0f;
         //float zoomSpeed = 0.1f;
 

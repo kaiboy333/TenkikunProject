@@ -35,6 +35,11 @@ class ComponentRect : public Rect
 
 		float startDrawY;	//描画開始位置Y
 
+		vector<TextBox*> textBoxes;
+		vector<TextRect*> textRects;
+
+		const float textBoxWidth = 40;
+
 		void StartNewLine();	//改行するときに呼ぶ
 		float GetRightRectX(Rect* rect);	//Rectの右端のXを取得
 };
