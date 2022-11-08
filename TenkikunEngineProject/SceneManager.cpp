@@ -85,14 +85,14 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	//square->transform->rotation = Vector3(0, 0, 55);
 	//square->AddComponent<RigidBody>();
 
-	//GameObject* square2 = scene->CreateSquare(false);
-	//square2->transform->position = Vector3(0, -100, 0);
-	//square2->transform->scale = Vector3(5, 1, 1);
-	//square2->AddComponent<RigidBody>()->bodyType = RigidBody::BodyType::Static;
+	GameObject* square2 = scene->CreateSquare(false);
+	square2->transform->position = Vector3(0, -100, 0);
+	square2->transform->scale = Vector3(5, 1, 1);
+	square2->AddComponent<RigidBody>()->bodyType = RigidBody::BodyType::Static;
 
-	//GameObject* circle = scene->CreateCircle(false);
-	//circle->transform->position = Vector3(50, 0, 0);
-	//circle->AddComponent<RigidBody>();
+	GameObject* circle = scene->CreateCircle(false);
+	circle->transform->position = Vector3(50, 0, 0);
+	circle->AddComponent<RigidBody>();
 
 	//GameObject* circle2 = scene->CreateCircle(false);
 	//circle2->transform->position = Vector3(50, 0, 0);
@@ -100,8 +100,8 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
 	GameObject* o = scene->CreateEmpty(false);
-	o->AddComponent<CreateStage>();
-	//o->AddComponent<CreateShapeScript>();
+	//o->AddComponent<CreateStage>();
+	o->AddComponent<CreateShapeScript>();
 
 	//シーンをセーブ
 	SaveScene();

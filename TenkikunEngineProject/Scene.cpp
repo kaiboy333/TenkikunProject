@@ -80,6 +80,8 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 			MenuNode* menuNode0_1 = menuList0->FindNode("Delete");
 			menuNode0_1->mouseClickDownEvents.insert(menuNode0_1->mouseClickDownEvents.begin(), std::make_pair(menuNode0_1->GetEventNo(), [this, gameobject]() {
 				Destroy(gameobject);
+				//Window
+				WindowManager::inspectorWindow->SetGameObject(nullptr);
 			}));
 		}));
 		node->mouseDoubleClickEvents.push_back(std::make_pair(node->GetEventNo(), [node, gameobject](void) {
@@ -91,16 +93,16 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 		if (isLaterAdd) {
 			//あとで追加
 			addAndRemoveEvents.push_back([this, gameobject, treeList, node](void) {
-				gameobject->SetName("GameObject");	//名前変更(初期の名前)
-				gameobjects.emplace_back(gameobject);	//リストに追加
 				treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
+				gameobjects.emplace_back(gameobject);	//リストに追加
+				gameobject->SetName("GameObject");	//名前変更(初期の名前)
 			});
 		}
 		else {
 			//すぐに追加
-			gameobject->SetName("GameObject");	//名前変更(初期の名前)
-			gameobjects.emplace_back(gameobject);	//リストに追加
 			treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
+			gameobjects.emplace_back(gameobject);	//リストに追加
+			gameobject->SetName("GameObject");	//名前変更(初期の名前)
 		}
 	}
 

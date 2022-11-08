@@ -17,7 +17,7 @@ class Camera;
 class GameObject : public SceneInfo
 {
 private:
-	std::string name = "GameObject";
+	std::string name = "";
 
 	Scene* scene = nullptr;
 
