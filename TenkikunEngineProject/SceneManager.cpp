@@ -80,10 +80,11 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	scene->CreateCamera(false);	//カメラ生成
 
 	//scene->CreateTenkikun(false);	//天気くん生成
-	//GameObject* square = scene->CreateSquare(false);
-	//square->transform->position = Vector3(-50, 0, 0);
-	//square->transform->rotation = Vector3(0, 0, 55);
-	//square->AddComponent<RigidBody>();
+	
+	GameObject* square = scene->CreateSquare(false);
+	square->transform->position = Vector3(-50, 0, 0);
+	square->transform->rotation = Vector3(0, 0, 55);
+	square->AddComponent<RigidBody>();
 
 	GameObject* square2 = scene->CreateSquare(false);
 	square2->transform->position = Vector3(0, -100, 0);
@@ -99,9 +100,9 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	
 	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
-	GameObject* o = scene->CreateEmpty(false);
+	//GameObject* o = scene->CreateEmpty(false);
 	//o->AddComponent<CreateStage>();
-	o->AddComponent<CreateShapeScript>();
+	//o->AddComponent<CreateShapeScript>();
 
 	//シーンをセーブ
 	SaveScene();

@@ -1,8 +1,10 @@
 #include "SelectRect.h"
 #include "WindowManager.h"
 
-SelectRect::SelectRect(float startX, float startY, float width, float height, std::vector<std::string> strs) : TriggerRect(startX, startY, width, height, 1)
+SelectRect::SelectRect(float startX, float startY, float width, float height, std::vector<std::string> strs, int nowNo) : TriggerRect(startX, startY, width, height, 1)
 {
+	this->nowNo = nowNo;
+
 	//strsセットしてTextButton作成
 	SetStrs(strs);
 
@@ -87,9 +89,17 @@ void SelectRect::SetStrs(std::vector<std::string> strs)
 		//リストに追加
 		choices.push_back(choice);
 	}
+
+	//noリセット
+	nowNo = 0;
 }
 
-int SelectRect::GetNo()
+int SelectRect::GetNowNo()
 {
 	return nowNo;
+}
+
+void SelectRect::SetNowNo(int nowNo)
+{
+	this->nowNo = nowNo;
 }

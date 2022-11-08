@@ -8,7 +8,7 @@ class SelectRect : public TriggerRect
 	public:
 		std::vector<TextButton*> choices;	//ëIëéàÇΩÇø
 
-		SelectRect(float startX, float startY, float width, float height, std::vector<std::string> strs);
+		SelectRect(float startX, float startY, float width, float height, std::vector<std::string> strs, int nowNo = 0);
 
 		void Draw() override;
 
@@ -16,7 +16,8 @@ class SelectRect : public TriggerRect
 
 		void SetStrs(std::vector<std::string> strs);
 
-		int GetNo();
+		int GetNowNo();
+		void SetNowNo(int nowNo);
 
 	private:
 		int nowNo = 0;	//åªç›ëIÇÒÇ≈Ç¢ÇÈNo

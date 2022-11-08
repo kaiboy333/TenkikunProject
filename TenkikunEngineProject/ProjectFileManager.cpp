@@ -358,7 +358,10 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 				}
 				//Cameraなら
 				else if (type == typeid(Camera)) {
+					Camera* camera = static_cast<Camera*>(component);
 
+					//zoomを書き込む
+					ofs << "\tzoom: " << camera->zoom << std::endl;
 				}
 				//ImageRendererなら
 				else if (type == typeid(ImageRenderer)) {
@@ -403,6 +406,9 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 				else if (type == typeid(BoxCollider)) {
 					BoxCollider* boxCollider = static_cast<BoxCollider*>(component);
 
+					//isTriggerを書き込む
+					ofs << "\tisTrigger: " << (int)boxCollider->isTrigger << std::endl;
+
 					//offsetを書き込む
 					Vector3 offset = boxCollider->offset;
 					ofs << "\toffset: {x: " << offset.x << " ,y: " << offset.y << " ,z: " << offset.z << " }" << std::endl;
@@ -415,6 +421,9 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 				else if (type == typeid(CircleCollider)) {
 					CircleCollider* circleCollider = static_cast<CircleCollider*>(component);
 
+					//isTriggerを書き込む
+					ofs << "\tisTrigger: " << (int)circleCollider->isTrigger << std::endl;
+
 					//offsetを書き込む
 					Vector3 offset = circleCollider->offset;
 					ofs << "\toffset: {x: " << offset.x << " ,y: " << offset.y << " ,z: " << offset.z << " }" << std::endl;
@@ -425,6 +434,10 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 				//RigidBodyだったら
 				if (type == typeid(RigidBody)) {
 					RigidBody* rigidBody = static_cast<RigidBody*>(component);
+
+					//bodyTypeを書き込む
+					ofs << "\tbodyType: " << static_cast<int>(rigidBody->bodyType) << std::endl;
+
 					//velocityを書き込む
 					Vector3 velocity = rigidBody->velocity;
 					ofs << "\tvelocity: {x: " << velocity.x << " ,y: " << velocity.y << " ,z: " << velocity.z << " }" << std::endl;
@@ -438,6 +451,12 @@ void ProjectFileManager::WriteToSceneFile(Scene* scene)
 
 					//massを書き込む
 					ofs << "\tmass: " << rigidBody->mass << std::endl;
+
+					//freezePositionを書き込む
+					ofs << "\tfreezePosition: {x: " << rigidBody->constraints.freezePosition.x << " ,y: " << rigidBody->constraints.freezePosition.y << " }" << std::endl;
+
+					//freezeRotationを書き込む
+					ofs << "\tfreezeRotation: {x: " << rigidBody->constraints.freezeRotation.z << " }" << std::endl;
 				}
 				//MonoBehaviourなら
 				else if (type == typeid(MonoBehaviour)) {
@@ -541,6 +560,9 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 
 			//シーンにカメラを追加、設定
 			scene->SetNowCamera(camera);
+
+			//zoomをセット
+			camera->zoom =std::stof(MyString::Split(lines[row++], " ")[1]);
 		}
 		//ImageRendererなら
 		else if (className == typeid(ImageRenderer).name()) {
@@ -601,6 +623,9 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			//BoxColliderを作成、取得
 			BoxCollider* boxCollider = gameobject->AddComponent<BoxCollider>();
 
+			//isTriggerをセット
+			boxCollider->isTrigger = (bool)std::stoi(MyString::Split(lines[row++], " ")[1]);
+
 			//offsetを取得
 			std::vector<std::string> words = MyString::Split(lines[row++], " ");
 			Vector3 offset = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
@@ -621,6 +646,9 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			//CircleColliderを作成、取得
 			CircleCollider* circleCollider = gameobject->AddComponent<CircleCollider>();
 
+			//isTriggerをセット
+			circleCollider->isTrigger = (bool)std::stoi(MyString::Split(lines[row++], " ")[1]);
+
 			//offsetを取得
 			std::vector<std::string> words = MyString::Split(lines[row++], " ");
 			Vector3 offset = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
@@ -638,6 +666,9 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			//RigidBodyを作成、取得
 			RigidBody* rigidBody = gameobject->AddComponent<RigidBody>();
 
+			//bodyTypeをセット
+			rigidBody->bodyType = static_cast<RigidBody::BodyType>(std::stoi(MyString::Split(lines[row++], " ")[1]));
+
 			//velocityをセット
 			std::vector<std::string> words = MyString::Split(lines[row++], " ");
 			Vector3 velocity = Vector3(std::stof(words[2]), std::stof(words[4]), std::stof(words[6]));
@@ -653,6 +684,16 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 
 			//massをセット
 			rigidBody->mass = std::stof(MyString::Split(lines[row++], " ")[1]);
+
+			//freezePositionをセット
+			words = MyString::Split(lines[row++], " ");
+			rigidBody->constraints.freezePosition.x = (bool)std::stoi(words[2]);
+			rigidBody->constraints.freezePosition.y = (bool)std::stoi(words[4]);
+
+			//freezeRotationをセット
+			words = MyString::Split(lines[row++], " ");
+			rigidBody->constraints.freezeRotation.z = (bool)std::stoi(words[2]);
+
 		}
 		else if (className == typeid(MonoBehaviour).name()) {
 		//	//ゲームオブジェクトのファイルIDを取得

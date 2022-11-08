@@ -83,7 +83,7 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 		for (auto choice : selectRects[0]->choices) {
 			//マウスをクリックしたら
 			choice->mouseClickDownEvents.push_back(std::make_pair(choice->GetEventNo(), [this, rigidBody]() {
-				rigidBody->bodyType = static_cast<RigidBody::BodyType>(selectRects[0]->GetNo());
+				rigidBody->bodyType = static_cast<RigidBody::BodyType>(selectRects[0]->GetNowNo());
 			}));
 		}
 	}));
@@ -185,37 +185,40 @@ void RigidBodyRect::Update()
 {
 	RigidBody* rigidBody = static_cast<RigidBody*>(component);	//キャスト変換
 
-	stringstream ss;
+	int value1 = static_cast<int>(rigidBody->bodyType);
 
-	float values[10] = {};
-	values[0] = rigidBody->gravityScale;
-	values[1] = rigidBody->mass;
-	values[2] = rigidBody->restritution;
-	values[3] = rigidBody->friction;
+	stringstream ss;
+	selectRects[0]->SetNowNo(value1);
+
+	float values2[10] = {};
+	values2[0] = rigidBody->gravityScale;
+	values2[1] = rigidBody->mass;
+	values2[2] = rigidBody->restritution;
+	values2[3] = rigidBody->friction;
 	Vector3 velocity = rigidBody->velocity;
-	values[4] = velocity.x;
-	values[5] = velocity.y;
-	values[6] = velocity.z;
+	values2[4] = velocity.x;
+	values2[5] = velocity.y;
+	values2[6] = velocity.z;
 	Vector3 angularVelocity = rigidBody->angularVelocity;
-	values[7] = angularVelocity.x;
-	values[8] = angularVelocity.y;
-	values[9] = angularVelocity.z;
+	values2[7] = angularVelocity.x;
+	values2[8] = angularVelocity.y;
+	values2[9] = angularVelocity.z;
 
 	for (int i = 0; i < 10; i++) {
 		stringstream ss;
-		ss << std::fixed << std::setprecision(2) << values[i];
+		ss << std::fixed << std::setprecision(2) << values2[i];
 		textBoxes[i]->SetText(ss.str());
 	}
 
-	bool values2[3] = {};
+	bool values3[3] = {};
 	auto constraints = rigidBody->constraints;
-	values2[0] = constraints.freezePosition.x;
-	values2[1] = constraints.freezePosition.y;
-	values2[2] = constraints.freezeRotation.z;
+	values3[0] = constraints.freezePosition.x;
+	values3[1] = constraints.freezePosition.y;
+	values3[2] = constraints.freezeRotation.z;
 
 	for (int i = 0; i < 3; i++) {
 		stringstream ss;
-		checkButtons[i]->SetIsChecked(values2[i]);
+		checkButtons[i]->SetIsChecked(values3[i]);
 	}
 }
 
