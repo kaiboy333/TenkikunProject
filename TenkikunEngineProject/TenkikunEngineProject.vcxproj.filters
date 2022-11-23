@@ -87,6 +87,9 @@
     <Filter Include="ソース ファイル\window\inspector\componentRect">
       <UniqueIdentifier>{ecd476e4-c174-47a3-ae11-f74e523b0744}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\hit\blodePhase">
+      <UniqueIdentifier>{78551b81-005b-4d5b-bd8b-c9d8c753e748}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Transform.cpp">
@@ -287,9 +290,6 @@
     <ClCompile Include="TextButton.cpp">
       <Filter>ソース ファイル\window\button</Filter>
     </ClCompile>
-    <ClCompile Include="AABBTree.cpp">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>ソース ファイル\hit</Filter>
     </ClCompile>
@@ -334,6 +334,18 @@
     </ClCompile>
     <ClCompile Include="CreateStage.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sort.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="AABBTree.cpp">
+      <Filter>ソース ファイル\hit\blodePhase</Filter>
+    </ClCompile>
+    <ClCompile Include="BlodePhase.cpp">
+      <Filter>ソース ファイル\hit\blodePhase</Filter>
+    </ClCompile>
+    <ClCompile Include="SweepAndPrune.cpp">
+      <Filter>ソース ファイル\hit\blodePhase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -541,9 +553,6 @@
     <ClInclude Include="TextButton.h">
       <Filter>ソース ファイル\window\button</Filter>
     </ClInclude>
-    <ClInclude Include="AABBTree.h">
-      <Filter>ソース ファイル\hit</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>ソース ファイル\hit</Filter>
     </ClInclude>
@@ -588,6 +597,18 @@
     </ClInclude>
     <ClInclude Include="CreateStage.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sort.h">
+      <Filter>ソース ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="AABBTree.h">
+      <Filter>ソース ファイル\hit\blodePhase</Filter>
+    </ClInclude>
+    <ClInclude Include="BlodePhase.h">
+      <Filter>ソース ファイル\hit\blodePhase</Filter>
+    </ClInclude>
+    <ClInclude Include="SweepAndPrune.h">
+      <Filter>ソース ファイル\hit\blodePhase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

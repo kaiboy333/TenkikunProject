@@ -19,8 +19,9 @@ class HitManager
 		enum class BlodeMode {
 			NONE,
 			AABB_TREE,
+			SWEEP_AND_PRUNE,
 		};
-		BlodeMode blodeMode = BlodeMode::AABB_TREE;
+		BlodeMode blodeMode = BlodeMode::SWEEP_AND_PRUNE;
 
 		void HitCheck();
 		void CallHitFunction(std::set<std::pair<Collision*, Collision*>>& beforeOnCollisions, std::set<std::pair<Collider*, Collider*>>& beforeOnTriggers);

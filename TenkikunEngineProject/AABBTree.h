@@ -1,20 +1,24 @@
 #pragma once
 
-#include <vector>
-#include "Collider.h"
-#include "BinaryTree.h"
+#include "BlodePhase.h"
 #include "BinaryTree.h"
 
-class AABBTree
+class AABBTree : public BlodePhase
 {
 	public:
-		static std::vector<std::pair<int, int>> GetHitPairCollidersIndex(std::vector<Collider*>& colliders);
+		AABBTree(std::vector<Collider*>& colliders);
+
+		std::vector<std::pair<int, int>> GetHitPairCollidersIndex() override;
+
 
 	private:
-		static BinaryNode<std::pair<Rect, std::vector<int>>>* MakeNode(std::vector<Collider*>& colliders, std::vector<int>& colliderIndexes);
 
-		static BinaryTree<std::pair<Rect, std::vector<int>>>* MakeTree(std::vector<Collider*>& colliders);
+		BinaryNode<std::pair<Rect, std::vector<int>>>* MakeNode(std::vector<int>& rectIndexes);
 
-		static std::pair<std::vector<int>, std::vector<int>> GetHalfColliders(std::vector<int>& colliderIndexes);
+		BinaryTree<std::pair<Rect, std::vector<int>>>* MakeTree();
+
+		std::pair<std::vector<int>, std::vector<int>> GetHalfColliders(std::vector<int>& colliderIndexes);
+
+		std::vector<std::pair<Rect, std::vector<int>>> SortRect(std::vector<Collider*>& colliders);
 };
 

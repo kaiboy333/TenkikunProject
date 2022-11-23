@@ -144,7 +144,7 @@ Rect Rect::operator+(Rect& other)
 	return Rect(minPos.x, minPos.y, maxPos.x - minPos.x, maxPos.y - minPos.y);
 }
 
-Rect& Rect::operator+=(Rect&& other)
+Rect Rect::operator+=(Rect& other)
 {
 	*this = *this + other;
 

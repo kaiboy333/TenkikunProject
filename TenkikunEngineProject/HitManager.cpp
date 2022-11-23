@@ -7,6 +7,7 @@
 #include "EPA.h"
 #include "RigidBody.h"
 #include "MonoBehaviour.h"
+#include "SweepAndPrune.h"
 
 void HitManager::HitCheck()
 {
@@ -26,11 +27,11 @@ void HitManager::HitCheck()
 		}
 	}
 
-	//LARGE_INTEGER beforeTime;
-	//LARGE_INTEGER nowTime;
+	LARGE_INTEGER beforeTime;
+	LARGE_INTEGER nowTime;
 
-	////開始時刻を記録
-	//QueryPerformanceCounter(&beforeTime);
+	//開始時刻を記録
+	QueryPerformanceCounter(&beforeTime);
 
 	if (colliders.size() >= 2) {
 		//バウンディングボックスを使った衝突判定
@@ -43,18 +44,23 @@ void HitManager::HitCheck()
 		Response();
 	}
 
-	//// 今の時間を取得
-	//QueryPerformanceCounter(&nowTime);
-	//// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
-	//double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
+	// 今の時間を取得
+	QueryPerformanceCounter(&nowTime);
+	// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
+	double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
 
-	//Debug::Log(std::to_string(frameTime));
+	Debug::Log(std::to_string(frameTime));
 }
 
 void HitManager::BlodePhase()
 {
 	if (blodeMode == BlodeMode::AABB_TREE) {
-		colliderPairs = AABBTree::GetHitPairCollidersIndex(colliders);
+		auto aabbTree = AABBTree(colliders);
+		colliderPairs = aabbTree.GetHitPairCollidersIndex();
+	}
+	else if (blodeMode == BlodeMode::SWEEP_AND_PRUNE) {
+		auto sweepAndPrune = SweepAndPrune(colliders);
+		colliderPairs = sweepAndPrune.GetHitPairCollidersIndex();
 	}
 	else if (blodeMode == BlodeMode::NONE) {
 
@@ -308,9 +314,6 @@ void HitManager::Response() {
 		SolverBody* sb = rb ? rb->solverBody : nullptr;
 
 		if (rb) {
-			if (rb->bodyType == RigidBody::BodyType::Static) {
-				Debug::Log("");
-			}
 			rb->velocity += sb->deltaLinearVelocity;
 			rb->angularVelocity += sb->deltaAngularVelocity * MyMath::RAD_TO_DEG;
 
@@ -349,7 +352,7 @@ void HitManager::CallHitFunction(std::set<std::pair<Collision*, Collision*>>& be
 			//前のリストから削除
 			beforeOnCollisions.erase(iter);
 
-			Debug::Log("OnCollisionStay");
+			//Debug::Log("OnCollisionStay");
 		}
 		//見つからなかったら
 		else {
@@ -363,7 +366,7 @@ void HitManager::CallHitFunction(std::set<std::pair<Collision*, Collision*>>& be
 				mono->OnColliderEnter(onCollision.first);
 			}
 
-			Debug::Log("OnCollisionEnter");
+			//Debug::Log("OnCollisionEnter");
 		}
 	}
 	//残っている前の衝突情報は
@@ -378,7 +381,7 @@ void HitManager::CallHitFunction(std::set<std::pair<Collision*, Collision*>>& be
 			mono->OnColliderExit(beforeOnCollision.first);
 		}
 
-		Debug::Log("OnCollisionExit");
+		//Debug::Log("OnCollisionExit");
 	}
 
 	//onTrigger
@@ -408,7 +411,7 @@ void HitManager::CallHitFunction(std::set<std::pair<Collision*, Collision*>>& be
 			//前のリストから削除
 			beforeOnTriggers.erase(iter);
 
-			Debug::Log("OnTriggerStay");
+			//Debug::Log("OnTriggerStay");
 		}
 		//見つからなかったら
 		else {
@@ -423,7 +426,7 @@ void HitManager::CallHitFunction(std::set<std::pair<Collision*, Collision*>>& be
 			}
 		}
 
-		Debug::Log("OnTriggerEnter");
+		//Debug::Log("OnTriggerEnter");
 	}
 	//残っている前の衝突情報は
 	for (auto& beforeOnTrigger : beforeOnTriggers) {
@@ -437,7 +440,7 @@ void HitManager::CallHitFunction(std::set<std::pair<Collision*, Collision*>>& be
 			mono->OnTriggerExit(beforeOnTrigger.first);
 		}
 
-		Debug::Log("OnTriggerExit");
+		//Debug::Log("OnTriggerExit");
 	}
 
 	beforeOnCollisions = std::set<std::pair<Collision*, Collision*>>(onCollisions);

@@ -70,7 +70,7 @@ RigidBodyRect::RigidBodyRect(float startX, float startY, Component* component) :
 	StartNewLine();	//â¸çs
 
 	//FreezeRotation
-	textRects.push_back(new TextRect(startX, startDrawY, "FreezePosition"));
+	textRects.push_back(new TextRect(startX, startDrawY, "FreezeRotation"));
 
 	textRects.push_back(new TextRect(rightStartDrawX, startDrawY, "z:"));
 	checkButtons.push_back(new CheckButton(GetRightRectX(textRects.back()), startDrawY, textBoxHeight, textBoxHeight, { static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\NotCheck.png"]), static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\Check.png"]) }));

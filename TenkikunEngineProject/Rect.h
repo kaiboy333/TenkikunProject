@@ -25,7 +25,7 @@ class Rect : public Librate
 		virtual void PreparationLibrate() override;
 
 		Rect operator +(Rect& other);	//‘«‚µŽZ
-		Rect& operator +=(Rect&& other);	//‘«‚µŽZ‘ã“ü
+		Rect operator +=(Rect& other);	//‘«‚µŽZ‘ã“ü
 
 		static bool IsHit(Rect r1, Rect r2);
 };

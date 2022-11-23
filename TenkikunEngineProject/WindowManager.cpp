@@ -167,7 +167,7 @@ PlayWindow* WindowManager::playWindow = nullptr;
 
 //Window* WindowManager::activeWindow = nullptr;	//‰Šú‚ÍƒQ[ƒ€‰æ–Ê
 
-bool WindowManager::canUseGameWnd = false;	//ƒQ[ƒ€‰æ–Ê‚ğ‘€ì’†‚©
+bool WindowManager::canUseGameWnd = true;	//ƒQ[ƒ€‰æ–Ê‚ğ‘€ì’†‚©
 
 const float WindowManager::WIDTH = 1300;
 const float WindowManager::HEIGHT = 800;

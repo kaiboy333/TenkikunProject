@@ -152,6 +152,7 @@
     <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
+    <ClCompile Include="BlodePhase.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraRect.cpp" />
@@ -210,7 +211,9 @@
     <ClCompile Include="ScriptIcon.cpp" />
     <ClCompile Include="ScrollRect.cpp" />
     <ClCompile Include="SelectRect.cpp" />
+    <ClCompile Include="Sort.cpp" />
     <ClCompile Include="SupportInfo.cpp" />
+    <ClCompile Include="SweepAndPrune.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TextRect.cpp" />
     <ClCompile Include="TextBox.cpp" />
@@ -237,6 +240,7 @@
     <ClInclude Include="AnimationCondition.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryTree.h" />
+    <ClInclude Include="BlodePhase.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraRect.h" />
@@ -296,7 +300,9 @@
     <ClInclude Include="ScriptIcon.h" />
     <ClInclude Include="ScrollRect.h" />
     <ClInclude Include="SelectRect.h" />
+    <ClInclude Include="Sort.h" />
     <ClInclude Include="SupportInfo.h" />
+    <ClInclude Include="SweepAndPrune.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="TextRect.h" />
     <ClInclude Include="TextBox.h" />

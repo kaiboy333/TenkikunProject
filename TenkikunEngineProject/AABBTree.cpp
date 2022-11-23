@@ -2,16 +2,18 @@
 #include "Rect.h"
 #include "Debug.h"
 
-std::vector<std::pair<int, int>> AABBTree::GetHitPairCollidersIndex(std::vector<Collider*>& colliders)
+AABBTree::AABBTree(std::vector<Collider*>& colliders) : BlodePhase(colliders)
+{
+}
+
+std::vector<std::pair<int, int>> AABBTree::GetHitPairCollidersIndex()
 {
 	std::vector<std::pair<int, int>> hitPairColliderIndexes;
 
 	//二分木作成
-	auto bTree = MakeTree(colliders);
+	auto bTree = MakeTree();
 
-	for (int i = 0, len = (int)colliders.size(); i < len; i++) {
-		auto collider = colliders[i];
-
+	for (int i = 0, len = (int)rects.size(); i < len; i++) {
 		std::vector<BinaryNode<std::pair<Rect, std::vector<int>>>*> nodes = { bTree->GetRoot() };
 
 		while ((int)nodes.size() != 0) {
@@ -23,8 +25,8 @@ std::vector<std::pair<int, int>> AABBTree::GetHitPairCollidersIndex(std::vector<
 				continue;
 
 			//コライダーのバウンディングボックスとノードのバウンディングボックスが当たるなら
-			Rect r1 = collider->GetBoundingBox();
-			Rect r2 = node->key.first;
+			Rect& r1 = rects[i];
+			Rect& r2 = node->key.first;
 			if (Rect::IsHit(r1, r2)) {
 				//コライダーが一つで構成されているのなら
 				if ((int)node->key.second.size() == 1) {
@@ -55,31 +57,30 @@ std::vector<std::pair<int, int>> AABBTree::GetHitPairCollidersIndex(std::vector<
 	return hitPairColliderIndexes;
 }
 
-BinaryNode<std::pair<Rect, std::vector<int>>>* AABBTree::MakeNode(std::vector<Collider*>& colliders, std::vector<int>& colliderIndexes)
+BinaryNode<std::pair<Rect, std::vector<int>>>* AABBTree::MakeNode(std::vector<int>& rectIndexes)
 {
 	Rect rect = Rect(0, 0, 0, 0);
-	for (int i = 0, len = (int)colliderIndexes.size(); i < len; i++) {
-		Collider* collider = colliders[colliderIndexes[i]];
-
+	for (int i = 0, len = (int)rectIndexes.size(); i < len; i++) {
+		Rect nowRect = rects[rectIndexes[i]];
 		if (i == 0) {
-			rect = collider->GetBoundingBox();
+			rect = nowRect;
 		}
 		else {
-			rect += collider->GetBoundingBox();
+			rect += nowRect;
 		}
 	}
 
-	return new BinaryNode(std::make_pair(rect, colliderIndexes));
+	return new BinaryNode(std::make_pair(rect, rectIndexes));
 }
 
-BinaryTree<std::pair<Rect, std::vector<int>>>* AABBTree::MakeTree(std::vector<Collider*>& colliders)
+BinaryTree<std::pair<Rect, std::vector<int>>>* AABBTree::MakeTree()
 {
 	//rootを作る
-	std::vector<int> colliderIndexes;
-	for (int i = 0, len = (int)colliders.size(); i < len; i++) {
-		colliderIndexes.push_back(i);
+	std::vector<int> rectIndexes;
+	for (int i = 0, len = (int)rects.size(); i < len; i++) {
+		rectIndexes.push_back(i);
 	}
-	auto root = MakeNode(colliders, colliderIndexes);
+	auto root = MakeNode(rectIndexes);
 	//binaryTreeに追加
 	auto bTree = new BinaryTree(root);
 
@@ -95,14 +96,14 @@ BinaryTree<std::pair<Rect, std::vector<int>>>* AABBTree::MakeTree(std::vector<Co
 			auto pair = GetHalfColliders(node->key.second);
 
 			//左のノード作成
-			auto left = MakeNode(colliders, pair.first);
+			auto left = MakeNode(pair.first);
 			//ノードの子としてセット
 			node->left = left;
 			//リストに追加
 			nodes.push_back(left);
 
 			//右のノード作成
-			auto right = MakeNode(colliders, pair.second);
+			auto right = MakeNode(pair.second);
 			//ノードの子としてセット
 			node->right = right;
 			//リストに追加
@@ -113,15 +114,20 @@ BinaryTree<std::pair<Rect, std::vector<int>>>* AABBTree::MakeTree(std::vector<Co
 	return bTree;
 }
 
-std::pair<std::vector<int>, std::vector<int>> AABBTree::GetHalfColliders(std::vector<int>& colliderIndexes)
+std::pair<std::vector<int>, std::vector<int>> AABBTree::GetHalfColliders(std::vector<int>& rectIndexes)
 {
-	int len = (int)colliderIndexes.size();
+	int len = (int)rectIndexes.size();
 	int halfLen = len / 2;
 
 	std::vector<int> colliders1, colliders2;
 
-	colliders1.insert(colliders1.end(), colliderIndexes.begin(), colliderIndexes.begin() + halfLen);
-	colliders2.insert(colliders2.end(), colliderIndexes.begin() + halfLen, colliderIndexes.begin() + len);
+	colliders1.insert(colliders1.end(), rectIndexes.begin(), rectIndexes.begin() + halfLen);
+	colliders2.insert(colliders2.end(), rectIndexes.begin() + halfLen, rectIndexes.begin() + len);
 
 	return std::make_pair(colliders1, colliders2);
+}
+
+std::vector<std::pair<Rect, std::vector<int>>> AABBTree::SortRect(std::vector<Collider*>& colliders)
+{
+	return std::vector<std::pair<Rect, std::vector<int>>>();
 }

@@ -44,7 +44,9 @@ void Scene::Update()
 	//当たり判定のチェック
 	HitManager hitManager = HitManager();
 	hitManager.HitCheck();
-	hitManager.CallHitFunction(beforeOnCollisions, beforeOnTriggers);
+	//hitManager.CallHitFunction(beforeOnCollisions, beforeOnTriggers);
+
+	Debug::Log(std::to_string((int)gameobjects.size()));
 }
 
 void Scene::Draw()
