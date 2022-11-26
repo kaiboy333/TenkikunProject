@@ -18,8 +18,6 @@ class Scene : public SceneInfo
 	public:
 		std::vector<GameObject*> gameobjects;	//GameObject‚½‚¿
 
-		//TreeList* treeList = nullptr;
-
 		std::filesystem::path scenePath;
 
 		std::vector<function<void()>> addAndRemoveEvents;	//’Ç‰ÁAíœ‚ÌŠÖ”‚ğ‚¢‚ê‚é

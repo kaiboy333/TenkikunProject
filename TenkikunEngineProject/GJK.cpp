@@ -4,7 +4,7 @@
 #include "Collision.h"
 #include "RigidBody.h"
 
-SupportInfo* GJK::IsHit(std::vector<Collider*> colliders, int colliderID1, int colliderID2)
+SupportInfo* GJK::IsHit(std::vector<Collider*>& colliders, int colliderID1, int colliderID2)
 {
     auto c1 = colliders[colliderID1];
     auto c2 = colliders[colliderID2];
@@ -16,6 +16,7 @@ SupportInfo* GJK::IsHit(std::vector<Collider*> colliders, int colliderID1, int c
     }
 
     std::vector<Vector2> vertexes;
+    vertexes.reserve(4);
     for (int i = 0; i < 30; i++) {
 
         //サポート写像を求める
@@ -38,12 +39,6 @@ SupportInfo* GJK::IsHit(std::vector<Collider*> colliders, int colliderID1, int c
                 if (Vector2::Dot(v, vertexes[0]) < 0) {
                     v = -v;
                 }
-                //Vector2::GetMinDistance(vertexes[0], vertexes[1], originPos, crossPoint);
-                ////垂線ではないのなら
-                //if (crossPoint == vertexes[0] || crossPoint == vertexes[1]) {
-                //    return false;
-                //}
-                //v = -crossPoint;
                 break;
             case 3:
                 //新しくできた頂点が他二点と被るなら(収束したなら)
@@ -68,12 +63,12 @@ SupportInfo* GJK::IsHit(std::vector<Collider*> colliders, int colliderID1, int c
     return nullptr;
 }
 
-Vector2 GJK::Support(Collider* c1, Collider* c2, Vector2 v)
+Vector2 GJK::Support(Collider* c1, Collider* c2, const Vector2& v)
 {
     return Support(c1, v) - Support(c2, -v);
 }
 
-Vector2 GJK::Support(Collider* c, Vector2 d)
+Vector2 GJK::Support(Collider* c, const Vector2& d)
 {
     auto& type = typeid(*c);
 
@@ -90,20 +85,18 @@ Vector2 GJK::Support(Collider* c, Vector2 d)
     return Vector2();
 }
 
-Vector2 GJK::Support(VertexCollider* c, Vector2 d)
+Vector2 GJK::Support(const VertexCollider* c, const Vector2& d)
 {
-    std::vector<Vector2> vertexes = c->GetVertexes();
+    auto vertexes = c->GetVertexes();
     //最大内積
     float maxDot = 0;
     //最大内積の時の頂点座標
     Vector2 supportVec;
     //最大内積の時の長さ(距離)
     float maxDistance = 0;
-    ////サポートベクトルリスト
-    //std::vector<Vector2> supportVecs;
 
     for (int i = 0, len = (int)vertexes.size(); i < len; i++) {
-        Vector2 vertex = vertexes[i];
+        Vector2& vertex = vertexes[i];
         float dot = Vector2::Dot(vertex, d);
         float distance = vertex.GetMagnitude();
         if (i == 0) {
@@ -117,7 +110,6 @@ Vector2 GJK::Support(VertexCollider* c, Vector2 d)
             maxDot = dot;
             //その時の頂点を記憶
             supportVec = vertex;
-            //supportVecs.push_back(vertex);
             //長さを記憶
             maxDistance = distance;
         }
@@ -130,23 +122,13 @@ Vector2 GJK::Support(VertexCollider* c, Vector2 d)
                 //長さを記憶
                 maxDistance = distance;
             }
-            //supportVecs.push_back(vertex);
         }
     }
-
-    ////二つある時は
-    //if (supportVecs.size() == 2) {
-    //    //真ん中をとる
-    //    return supportVecs[0] + ((supportVecs[1] - supportVecs[0]) / 2);
-    //}
-    //else {
-    //    return supportVecs[0];
-    //}
 
     return supportVec;
 }
 
-Vector2 GJK::Support(CircleCollider* c, Vector2 d)
+Vector2 GJK::Support(const CircleCollider* c, const Vector2& d)
 {
     //中心の座標を取得
     Vector2 centerPos = c->GetPosition();
@@ -156,7 +138,7 @@ Vector2 GJK::Support(CircleCollider* c, Vector2 d)
     return supportVec;
 }
 
-bool GJK::IsPointInTriangle(Vector2 point, std::vector<Vector2> vertexes)
+bool GJK::IsPointInTriangle(const Vector2& point, const std::vector<Vector2>& vertexes)
 {
     //頂点が3つではないなら終わり
     if (vertexes.size() != 3) {
@@ -186,12 +168,13 @@ bool GJK::IsPointInTriangle(Vector2 point, std::vector<Vector2> vertexes)
     return true;
 }
 
-float GJK::GetShortestDistanceToShape(Vector2 targetPoint, std::vector<Vector2> vertexes, Vector2& crossPoint, int& minSideIndex)
+float GJK::GetShortestDistanceToShape(const Vector2& targetPoint, const std::vector<Vector2>& vertexes, Vector2& crossPoint, int& minSideIndex)
 {
     float minDistance = 0;
+
     for (int i = 0, len = (int)vertexes.size(); i < len; i++) {
-        Vector2 vert1 = vertexes[i % len];
-        Vector2 vert2 = vertexes[(i + 1) % len];
+        const Vector2& vert1 = vertexes[i % len];
+        const Vector2& vert2 = vertexes[(i + 1) % len];
 
         Vector2 crossPoint2;
         float distance = Vector2::GetMinDistance(vert1, vert2, targetPoint, crossPoint2);
@@ -211,69 +194,3 @@ float GJK::GetShortestDistanceToShape(Vector2 targetPoint, std::vector<Vector2> 
 
     return minDistance;
 }
-
-//void GJK::CollisionResponce(ContactPoint* contactPoint)
-//{
-//    Collider* c1 = contactPoint->thisCollider;
-//    Collider* c2 = contactPoint->otherCollider;
-//    RigidBody* rb1 = c1->gameobject->GetComponent<RigidBody>();
-//    RigidBody* rb2 = c2->gameobject->GetComponent<RigidBody>();
-//
-//    Vector3 cp = contactPoint->point;
-//    Vector3 dp = contactPoint->depthPoint;
-//
-//    Vector3 r1 = cp - c1->GetPosition();
-//    Vector3 r2 = cp - c2->GetPosition();
-//
-//    //いったん衝突法線を3次元ベクトルにする
-//    Vector3 normal = dp.GetNormalized();
-//
-//    Vector3 velocityA = rb1 ? rb1->velocity : Vector3::Zero() + Vector3::Cross((rb1 ? rb1->angularVelocity : Vector3::Zero()) * MyMath::DEG_TO_RAD, r1);
-//    Vector3 velocityB = rb2 ? rb2->velocity : Vector3::Zero() + Vector3::Cross((rb2 ? rb2->angularVelocity : Vector3::Zero()) * MyMath::DEG_TO_RAD, r2);
-//
-//    //2つの物体の相対速度を求める（V1 - V2）
-//    Vector3 relativeVelocity = velocityA - velocityB;
-//
-//    //接線ベクトルを求める
-//    Vector3 tangent1 = Matrix::GetMRoteZ(90) * normal;
-//
-//    //反発係数
-//    float restitution = 1.0;
-//
-//    // 衝突法線方向の計算
-//    {
-//        Vector3 axis = normal;
-//
-//        //rhs = Right Hand Side = 右辺
-//        float jacDiagInv = 1.0 / (
-//            ((rb1 ? 1.0 / rb1->mass : 0) + (rb1 ? 1.0 / rb2->mass : 0))
-//            + Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r1, axis) * solverBodyA.inertiaInv, r1)
-//            + Vector3::Dot(axis, Vector3::Cross(Vector3::Cross(r2, axis) * solverBodyB.inertiaInv, r2)
-//            );
-//        float rhs = -((1 + restitution) * Vector3::Dot(relativeVelocity, axis));
-//        rhs -= (bias * std::max<float>(0.0f, contact.distance + slop)) / timeStep; // position error
-//        rhs *= jacDiagInv;
-//        Constraint constraint1 = Constraint(jacDiagInv, rhs, -FLT_MAX, 0.0f, axis);
-//        contactPoint->constraints.push_back(constraint1);
-//    }
-//
-//    //Tangent1
-//    {
-//        var axis = tangent1;
-//        contact.constraints[1].jacDiagInv = 1.0 / (
-//            (solverBodyA.massInv + solverBodyB.massInv)
-//            + vec3.dot(axis, vec3.cross(vec3.multiplyScalar(vec3.cross(r1, axis), solverBodyA.inertiaInv), r1))
-//            + vec3.dot(axis, vec3.cross(vec3.multiplyScalar(vec3.cross(r2, axis), solverBodyB.inertiaInv), r2))
-//            );
-//        contact.constraints[1].rhs = -vec3.dot(relativeVelocity, axis);
-//        contact.constraints[1].rhs *= contact.constraints[1].jacDiagInv;
-//        contact.constraints[1].lowerLimit = 0.0;
-//        contact.constraints[1].upperLimit = 0.0;
-//        contact.constraints[1].axis = axis;
-//    }
-//
-//    //Warm starting
-//    {
-//        //あとで
-//    }
-//}

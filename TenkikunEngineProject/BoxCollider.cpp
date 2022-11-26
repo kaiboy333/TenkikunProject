@@ -17,7 +17,7 @@ BoxCollider::BoxCollider(GameObject* gameobject) : VertexCollider(gameobject)
 	}
 }
 
-std::vector<Vector2> BoxCollider::GetVertexes()
+std::vector<Vector2> BoxCollider::GetVertexes() const
 {
 	//中心位置から各頂点までのベクトルを作る
 	std::vector<Vector2> toVertexVecs;
@@ -35,7 +35,7 @@ std::vector<Vector2> BoxCollider::GetVertexes()
 	return VertexCollider::GetVertexes(toVertexVecs);
 }
 
-float BoxCollider::GetActualWidth()
+float BoxCollider::GetActualWidth() const
 {
 	//スケール取得
 	Vector3 scale = gameobject->transform->scale;
@@ -43,7 +43,7 @@ float BoxCollider::GetActualWidth()
 	return size.x * scale.x;
 }
 
-float BoxCollider::GetActualHeight()
+float BoxCollider::GetActualHeight() const
 {
 	//スケール取得
 	Vector3 scale = gameobject->transform->scale;
@@ -51,7 +51,7 @@ float BoxCollider::GetActualHeight()
 	return size.y * scale.y;
 }
 
-float BoxCollider::GetI()
+float BoxCollider::GetI() const
 {
 	auto rb = gameobject->GetComponent<RigidBody>();
 

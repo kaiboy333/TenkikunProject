@@ -5,7 +5,7 @@
 class SweepAndPrune : BlodePhase
 {
 	public:
-		SweepAndPrune(std::vector<Collider*> colliders);
+		SweepAndPrune(const std::vector<Collider*>& colliders);
 
 		std::vector<std::pair<int, int>> GetHitPairCollidersIndex() override;
 };

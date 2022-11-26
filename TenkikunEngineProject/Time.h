@@ -17,13 +17,14 @@ class Time
 	private:
 		static const int FPS;
 		static const float MIN_FRAME_TIME;
+		static LARGE_INTEGER startTime;
 		static LARGE_INTEGER beforeTime;
 		static LARGE_INTEGER nowTime;
 
 		static int frameCount;
 		static double sumFPS;
 
-		static float time;
+		//static float time;
 		static float deltaTime;
 };
 

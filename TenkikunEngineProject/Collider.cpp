@@ -17,15 +17,15 @@ void Collider::Update()
 void Collider::Draw()
 {
     //バウンディングボックスの描画
-    //DrawBoundingBox();
+    DrawBoundingBox();
 }
 
-Vector3 Collider::GetPosition()
+Vector3 Collider::GetPosition() const
 {
     return gameobject->transform->position + offset;
 }
 
-void Collider::DrawBoundingBox()
+void Collider::DrawBoundingBox() const
 {
     Rect bb = GetBoundingBox();
 

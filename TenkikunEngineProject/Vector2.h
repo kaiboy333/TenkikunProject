@@ -45,13 +45,13 @@ public:
 	const static Vector2 Up();
 	const static Vector2 Down();
 
-	static float Distance(Vector2 vec1, Vector2 vec2);
+	static float Distance(const Vector2& vec1, const Vector2& vec2);
 
-	static float Cross(Vector2 vec1, Vector2 vec2);
-	static float Dot(Vector2 vec1, Vector2 vec2);
+	static float Cross(const Vector2& vec1, const Vector2& vec2);
+	static float Dot(const Vector2& vec1, const Vector2& vec2);
 
-	static bool IsCross(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2& crossPoint);
+	static bool IsCross(const Vector2& p1, const Vector2& p2, const Vector2& p3, const Vector2& p4, Vector2& crossPoint);
 
-	static float GetMinDistance(Vector2 p1, Vector2 p2, Vector2 targetPoint, Vector2& crossPoint);
+	static float GetMinDistance(const Vector2& p1, const Vector2& p2, const Vector2& targetPoint, Vector2& crossPoint);
 };
 

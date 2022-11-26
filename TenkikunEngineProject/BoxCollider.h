@@ -9,11 +9,11 @@ class BoxCollider : public VertexCollider
 
 		BoxCollider(GameObject* gameobject);
 
-		virtual std::vector<Vector2> GetVertexes() override;
+		virtual std::vector<Vector2> GetVertexes() const override;
 
-		float GetActualWidth();
-		float GetActualHeight();
+		float GetActualWidth() const;
+		float GetActualHeight() const;
 
-		virtual float GetI();	//慣性モーメントを取得
+		virtual float GetI() const override;	//慣性モーメントを取得
 };
 

@@ -28,7 +28,7 @@ void VertexCollider::Draw()
     Collider::Draw();
 }
 
-Rect VertexCollider::GetBoundingBox()
+Rect VertexCollider::GetBoundingBox() const
 {
     Vector3 minPos;
     Vector3 maxPos;
@@ -53,7 +53,7 @@ Rect VertexCollider::GetBoundingBox()
     return Rect(minPos.x, minPos.y, maxPos.x - minPos.x, maxPos.y - minPos.y);
 }
 
-std::vector<Vector2> VertexCollider::GetVertexes(std::vector<Vector2> toVertexVecs)
+std::vector<Vector2> VertexCollider::GetVertexes(std::vector<Vector2> toVertexVecs) const
 {
     std::vector<Vector2> vertexes;
 

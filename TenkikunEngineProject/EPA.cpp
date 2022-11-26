@@ -4,11 +4,11 @@
 #include "Debug.h"
 #include <set>
 
-HitInfo* EPA::GetHitInfo(std::vector<Collider*> colliders, SupportInfo* supportInfo)
+HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* supportInfo)
 {
     auto& vertexes = supportInfo->supports;
-    auto c1 = colliders[supportInfo->colliderID1];
-    auto c2 = colliders[supportInfo->colliderID2];
+    auto* c1 = colliders[supportInfo->colliderID1];
+    auto* c2 = colliders[supportInfo->colliderID2];
 
     RigidBody* rb1 = c1->gameobject->GetComponent<RigidBody>();
     RigidBody* rb2 = c2->gameobject->GetComponent<RigidBody>();
@@ -32,7 +32,7 @@ HitInfo* EPA::GetHitInfo(std::vector<Collider*> colliders, SupportInfo* supportI
     int minSideIndex;
     Vector2 v;
 
-    for (int j = 0; j < 30; j++) {
+    for (int j = 0; j < 100; j++) {
         //Œ´“_‚©‚ç“Ê•ï‚Ö‚ÌÅ’Z‹——£‚ð‹‚ß‚é
         GJK::GetShortestDistanceToShape(Vector2::Zero(), vertexes, crossPoint, minSideIndex);
         //Å’Z‹——£‚Æ‚È‚é•Ó‚É‚’¼‚ÈƒxƒNƒgƒ‹‚ðŽæ“¾(dir‚ðŠ|‚¯‚Ä}Œ`‚Ì•Ó•ûŒü‚ÉŒü‚¯‚é)

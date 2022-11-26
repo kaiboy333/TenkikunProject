@@ -10,6 +10,7 @@ Time::Time()
 
 	//開始時刻を記録
 	QueryPerformanceCounter(&beforeTime);
+	QueryPerformanceCounter(&startTime);
 }
 
 void Time::Update()
@@ -37,7 +38,7 @@ void Time::Update()
 	double fps = 1 / elapsedTime;
 
 	deltaTime = static_cast<float>(elapsedTime);
-	time += deltaTime;
+	//time += deltaTime;
 
 	//前回のUpdateからどのくらい経ったか計算する
 
@@ -54,18 +55,24 @@ void Time::Update()
 }
 
 float Time::GetTime() {
-	return time;
+	// 今の時間を取得
+	LARGE_INTEGER nowTime_t;
+	QueryPerformanceCounter(&nowTime_t);
+	//経過時間を求める
+	double elapsedTime = static_cast<double>(nowTime_t.QuadPart - startTime.QuadPart) / static_cast<double>(timeFreq.QuadPart);
+	return static_cast<float>(elapsedTime);
 }
 
 float Time::GetDeltaTime() {
 	return deltaTime;
 }
 
-float Time::time = 0;
+//float Time::time = 0;
 float Time::deltaTime = 0;
 
 const int Time::FPS = 30;
 const float Time::MIN_FRAME_TIME = 1.0f / FPS;
+LARGE_INTEGER Time::startTime;
 LARGE_INTEGER Time::beforeTime;
 LARGE_INTEGER Time::nowTime;
 LARGE_INTEGER Time::timeFreq;

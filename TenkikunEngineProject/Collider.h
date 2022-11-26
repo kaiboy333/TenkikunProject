@@ -26,13 +26,13 @@ class Collider : public DrawComponent
 		virtual void Draw() override;
 
 		//コライダーの中心点を返す
-		Vector3 GetPosition();
+		Vector3 GetPosition() const;
 
-		virtual Rect GetBoundingBox() = 0;	//バウンディングボックスを返す
+		virtual Rect GetBoundingBox() const = 0;	//バウンディングボックスを返す
 
-		void DrawBoundingBox();	//バウンディングボックスの描画
+		void DrawBoundingBox() const;	//バウンディングボックスの描画
 
-		virtual float GetI() = 0;	//慣性モーメントを取得
+		virtual float GetI() const = 0;	//慣性モーメントを取得
 
 		int GetNo() const;	//番号取得
 

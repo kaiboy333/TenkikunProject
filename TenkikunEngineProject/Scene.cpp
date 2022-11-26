@@ -10,6 +10,7 @@
 #include "PlayerScript.h"
 #include "GJK.h"
 #include "BoxCollider.h"
+#include "Time.h"
 
 //void Scene::Init()
 //{
@@ -27,8 +28,24 @@ Scene::Scene()
 void Scene::Update()
 {
 	//GameObjectなどをここで追加、削除する
+	int i = 0;
 	for (auto& addAndRemoveEvent : addAndRemoveEvents) {
+		LARGE_INTEGER beforeTime;
+		LARGE_INTEGER nowTime;
+
+		//開始時刻を記録
+		QueryPerformanceCounter(&beforeTime);
+
 		addAndRemoveEvent();
+		//Debug::Log(std::to_string(i));
+		//i++;
+
+		//今の時間を取得
+		QueryPerformanceCounter(&nowTime);
+		// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
+		double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
+
+		Debug::Log(std::to_string(frameTime));
 	}
 	//リセット
 	addAndRemoveEvents.clear();
@@ -46,7 +63,7 @@ void Scene::Update()
 	hitManager.HitCheck();
 	//hitManager.CallHitFunction(beforeOnCollisions, beforeOnTriggers);
 
-	Debug::Log(std::to_string((int)gameobjects.size()));
+	//Debug::Log(std::to_string((int)gameobjects.size()));
 }
 
 void Scene::Draw()
@@ -95,9 +112,11 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 		if (isLaterAdd) {
 			//あとで追加
 			addAndRemoveEvents.push_back([this, gameobject, treeList, node](void) {
+
 				treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
 				gameobjects.emplace_back(gameobject);	//リストに追加
 				gameobject->SetName("GameObject");	//名前変更(初期の名前)
+
 			});
 		}
 		else {
@@ -304,13 +323,13 @@ void Scene::Destroy(GameObject* gameobject)
 
 		if (transform->parent) {
 			//親にある自身を削除
-			std::vector<Transform*>* children = &transform->parent->children;
-			//children->erase(std::remove(children->begin(), children->end(), transform));
+			std::vector<Transform*>& children = transform->parent->children;
+			children.erase(std::remove(children.begin(), children.end(), transform));
 		}
 
 		//シーンから自身を削除
-		std::vector<GameObject*>* gameobjects = &SceneManager::GetNowScene()->gameobjects;
-		gameobjects->erase(std::remove(gameobjects->begin(), gameobjects->end(), gameobject));
+		auto& gameobjects = SceneManager::GetNowScene()->gameobjects;
+		gameobjects.erase(std::remove(gameobjects.begin(), gameobjects.end(), gameobject));
 
 		//子らを追加
 		transforms.insert(transforms.end(), transform->children.begin(), transform->children.end());

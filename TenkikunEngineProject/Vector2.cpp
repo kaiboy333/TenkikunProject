@@ -24,8 +24,14 @@ Vector2 Vector2::GetNormalized() const
 {
     //長さを取得して
     float length = GetMagnitude();
-    //それぞれのベクトルを長さで割る
-    return Vector2(x / length, y / length);
+    //長さが0ではないなら
+    if (length != 0) {
+        //それぞれのベクトルを長さで割る
+        return Vector2(x / length, y / length);
+    }
+    else {
+        return Vector2();
+    }
 }
 
 //void Vector2::Draw(unsigned int color, Vector2 startPos)
@@ -170,22 +176,22 @@ const Vector2 Vector2::Down()
     return Vector2(0, -1);
 }
 
-float Vector2::Distance(Vector2 vec1, Vector2 vec2)
+float Vector2::Distance(const Vector2& vec1, const Vector2& vec2)
 {
     return (vec2 - vec1).GetMagnitude();
 }
 
-float Vector2::Cross(Vector2 vec1, Vector2 vec2)
+float Vector2::Cross(const Vector2& vec1, const Vector2& vec2)
 {
     return vec1.x * vec2.y - vec1.y * vec2.x;
 }
 
-float Vector2::Dot(Vector2 vec1, Vector2 vec2)
+float Vector2::Dot(const Vector2& vec1, const Vector2& vec2)
 {
     return vec1.x * vec2.x + vec1.y * vec2.y;
 }
 
-bool Vector2::IsCross(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2& crossPoint)
+bool Vector2::IsCross(const Vector2& p1, const Vector2& p2, const Vector2& p3, const Vector2& p4, Vector2& crossPoint)
 {
     float det = Cross(p2 - p1, p4 - p3);
 
@@ -206,7 +212,7 @@ bool Vector2::IsCross(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, Vector2& c
     return false;
 }
 
-float Vector2::GetMinDistance(Vector2 p1, Vector2 p2, Vector2 targetPoint, Vector2& crossPoint)
+float Vector2::GetMinDistance(const Vector2& p1, const Vector2& p2, const Vector2& targetPoint, Vector2& crossPoint)
 {
     Vector2 p12 = p2 - p1;
     float a = std::powf(p12.GetMagnitude(), 2);

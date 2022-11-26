@@ -13,10 +13,10 @@ class CircleCollider : public Collider
 
 		virtual void Draw() override;
 
-		float GetActualRadious();
+		float GetActualRadious() const;
 
-		virtual Rect GetBoundingBox() override;	//バウンディングボックスを返す
+		virtual Rect GetBoundingBox() const override;	//バウンディングボックスを返す
 
-		virtual float GetI();	//慣性モーメントを取得
+		virtual float GetI() const override;	//慣性モーメントを取得
 };
 

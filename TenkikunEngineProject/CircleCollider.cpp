@@ -36,7 +36,7 @@ void CircleCollider::Draw()
 	Collider::Draw();
 }
 
-float CircleCollider::GetActualRadious()
+float CircleCollider::GetActualRadious() const
 {
 	//‘å‚«‚³Žæ“¾
 	Vector3 scale = this->gameobject->transform->scale;
@@ -46,7 +46,7 @@ float CircleCollider::GetActualRadious()
 	return radious * maxScale;
 }
 
-Rect CircleCollider::GetBoundingBox()
+Rect CircleCollider::GetBoundingBox() const
 {
 	auto actualRadious = GetActualRadious();
 	Vector3 centerPos = gameobject->transform->position;
@@ -56,7 +56,7 @@ Rect CircleCollider::GetBoundingBox()
 	return Rect(leftDownPos.x, leftDownPos.y, 2 * actualRadious, 2 * actualRadious);
 }
 
-float CircleCollider::GetI()
+float CircleCollider::GetI() const
 {
 	auto rb = gameobject->GetComponent<RigidBody>();
 

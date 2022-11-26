@@ -6,7 +6,7 @@
 class BlodePhase
 {
 	public:
-		BlodePhase(std::vector<Collider*>& colliders);
+		BlodePhase(const std::vector<Collider*>& colliders);
 
 		virtual std::vector<std::pair<int, int>> GetHitPairCollidersIndex() = 0;
 

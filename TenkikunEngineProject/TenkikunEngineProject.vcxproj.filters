@@ -164,9 +164,6 @@
     <ClCompile Include="WindowButton.cpp">
       <Filter>ソース ファイル\window\button</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
@@ -347,6 +344,9 @@
     <ClCompile Include="SweepAndPrune.cpp">
       <Filter>ソース ファイル\hit\blodePhase</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -426,9 +426,6 @@
     </ClInclude>
     <ClInclude Include="WindowButton.h">
       <Filter>ソース ファイル\window\button</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>ソース ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\scene</Filter>
@@ -609,6 +606,9 @@
     </ClInclude>
     <ClInclude Include="SweepAndPrune.h">
       <Filter>ソース ファイル\hit\blodePhase</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -27,29 +27,40 @@ void HitManager::HitCheck()
 		}
 	}
 
-	LARGE_INTEGER beforeTime;
-	LARGE_INTEGER nowTime;
+	//LARGE_INTEGER beforeTime;
+	//LARGE_INTEGER nowTime;
 
-	//開始時刻を記録
-	QueryPerformanceCounter(&beforeTime);
+	////開始時刻を記録
+	//QueryPerformanceCounter(&beforeTime);
 
 	if (colliders.size() >= 2) {
+		float time0 = Time::GetTime();
+
 		//バウンディングボックスを使った衝突判定
 		BlodePhase();
+
+		float time1 = Time::GetTime();
 
 		//実際の形状での衝突判定
 		NarrawPhase();
 
+		float time2 = Time::GetTime();
+
 		//衝突応答
 		Response();
+
+		float time3 = Time::GetTime();
+		Debug::Log("blodephase" + std::to_string(time1 - time0));
+		Debug::Log("narrowphase" + std::to_string(time2 - time1));
+		Debug::Log("response" + std::to_string(time3 - time2));
 	}
 
-	// 今の時間を取得
-	QueryPerformanceCounter(&nowTime);
-	// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
-	double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
+	//// 今の時間を取得
+	//QueryPerformanceCounter(&nowTime);
+	//// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
+	//double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
 
-	Debug::Log(std::to_string(frameTime));
+	//Debug::Log(std::to_string(frameTime));
 }
 
 void HitManager::BlodePhase()
