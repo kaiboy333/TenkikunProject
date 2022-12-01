@@ -59,7 +59,7 @@ std::vector<Vector2> VertexCollider::GetVertexes(std::vector<Vector2> toVertexVe
 
     Vector3 position = GetPosition();
 
-    for (Vector2 toVertexVec : toVertexVecs) {
+    for (Vector2& toVertexVec : toVertexVecs) {
         //’¸“_‚ðŽæ“¾
         Vector2 vertex = position + toVertexVec;
         //zŽ²‰ñ“]‚Ì’l•ª’¸“_‚ð‰ñ“](ˆÚ“®)

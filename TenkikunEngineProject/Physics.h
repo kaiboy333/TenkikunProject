@@ -9,13 +9,6 @@ class Physics
 		static const float g;	//èdóÕâ¡ë¨ìx
 };
 
-struct SolverBody {
-	Vector3 deltaLinearVelocity;
-	Vector3 deltaAngularVelocity;
-	float inertiaInv = 0;
-	float massInv = 0;
-};
-
 struct Constraint {
 	Vector3 axis;
 	float jacDiagInv = 0;
@@ -36,4 +29,23 @@ struct ContactPoint {
 struct Contact {
 	float friction = 0;
 	std::vector<ContactPoint*> contactPoints;
+};
+
+struct SupportInfo {
+	std::vector<Vector2> supports;
+	int colliderID1;
+	int colliderID2;
+};
+
+struct HitInfo {
+	int colliderID1;
+	int colliderID2;
+	Contact* contact = nullptr;
+};
+
+struct SolverBody {
+	Vector3 deltaLinearVelocity;
+	Vector3 deltaAngularVelocity;
+	float inertiaInv = 0;
+	float massInv = 0;
 };

@@ -54,7 +54,7 @@ Matrix Matrix::GetMRoteX(float angleX)
 	return matrix;
 }
 
-Matrix Matrix::GetMRoteX(Vector3 centerPoint, float angleX)
+Matrix Matrix::GetMRoteX(const Vector3& centerPoint, float angleX)
 {
 	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
 	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
@@ -80,7 +80,7 @@ Matrix Matrix::GetMRoteY(float angleY)
 	return matrix;
 }
 
-Matrix Matrix::GetMRoteY(Vector3 centerPoint, float angleY)
+Matrix Matrix::GetMRoteY(const Vector3& centerPoint, float angleY)
 {
 	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
 	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
@@ -106,7 +106,7 @@ Matrix Matrix::GetMRoteZ(float angleZ)
 	return matrix;
 }
 
-Matrix Matrix::GetMRoteZ(Vector3 centerPoint, float angleZ)
+Matrix Matrix::GetMRoteZ(const Vector3& centerPoint, float angleZ)
 {
 	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
 	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
@@ -115,12 +115,12 @@ Matrix Matrix::GetMRoteZ(Vector3 centerPoint, float angleZ)
 	return mTransBack * mRotateZ * mTrans;
 }
 
-Matrix Matrix::GetMRote(Vector3 angleVec)
+Matrix Matrix::GetMRote(const Vector3& angleVec)
 {
 	return GetMRoteY(angleVec.y) * GetMRoteX(angleVec.x) * GetMRoteZ(angleVec.z);
 }
 
-Matrix Matrix::GetMRote(Vector3 centerPoint, Vector3 angleVec)
+Matrix Matrix::GetMRote(const Vector3& centerPoint, const Vector3& angleVec)
 {
 	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
 	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
@@ -129,7 +129,7 @@ Matrix Matrix::GetMRote(Vector3 centerPoint, Vector3 angleVec)
 	return mTransBack * mRotate * mTrans;
 }
 
-Matrix Matrix::GetMScale(Vector3 scaleVec)
+Matrix Matrix::GetMScale(const Vector3& scaleVec)
 {
 	Matrix matrix = Matrix();
 
@@ -141,7 +141,7 @@ Matrix Matrix::GetMScale(Vector3 scaleVec)
 	return matrix;
 }
 
-Matrix Matrix::GetMScale(Vector3 centerPoint, Vector3 scaleVec)
+Matrix Matrix::GetMScale(const Vector3& centerPoint, const Vector3& scaleVec)
 {
 	Matrix mTrans = Matrix::GetMTrans(-centerPoint);	//原点に移動
 	Matrix mTransBack = Matrix::GetMTrans(centerPoint);	//元に戻す
@@ -150,12 +150,12 @@ Matrix Matrix::GetMScale(Vector3 centerPoint, Vector3 scaleVec)
 	return mTransBack * mScale * mTrans;
 }
 
-Matrix Matrix::GetMMatrix(Vector3 transVec, Vector3 roteVec, Vector3 scaleVec)
+Matrix Matrix::GetMMatrix(const Vector3& transVec, const Vector3& roteVec, const Vector3& scaleVec)
 {
 	return Matrix::GetMTrans(transVec) * Matrix::GetMRote(roteVec) * Matrix::GetMScale(scaleVec);
 }
 
-Matrix Matrix::GetMTrans(Vector3 transVec)
+Matrix Matrix::GetMTrans(const Vector3& transVec)
 {
 	Matrix matrix = Matrix::GetUnit();
 

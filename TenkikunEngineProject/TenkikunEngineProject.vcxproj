@@ -176,7 +176,6 @@
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GJK.cpp" />
     <ClCompile Include="HierarchyWindow.cpp" />
-    <ClCompile Include="HitInfo.cpp" />
     <ClCompile Include="HitManager.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageIcon.cpp" />
@@ -212,7 +211,6 @@
     <ClCompile Include="ScrollRect.cpp" />
     <ClCompile Include="SelectRect.cpp" />
     <ClCompile Include="Sort.cpp" />
-    <ClCompile Include="SupportInfo.cpp" />
     <ClCompile Include="SweepAndPrune.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TextRect.cpp" />
@@ -264,7 +262,6 @@
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GJK.h" />
     <ClInclude Include="HierarchyWindow.h" />
-    <ClInclude Include="HitInfo.h" />
     <ClInclude Include="HitManager.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageIcon.h" />
@@ -301,7 +298,6 @@
     <ClInclude Include="ScrollRect.h" />
     <ClInclude Include="SelectRect.h" />
     <ClInclude Include="Sort.h" />
-    <ClInclude Include="SupportInfo.h" />
     <ClInclude Include="SweepAndPrune.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="TextRect.h" />

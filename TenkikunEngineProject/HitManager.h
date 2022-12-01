@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Collider.h"
-#include "SupportInfo.h"
 #include "Physics.h"
 #include "RigidBody.h"
 #include "Collision.h"

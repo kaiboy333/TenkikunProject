@@ -1,7 +1,5 @@
 #pragma once
 #include <vector>
-#include "HitInfo.h"
-#include "SupportInfo.h"
 #include "GJK.h"
 
 class EPA

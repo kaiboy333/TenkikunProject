@@ -27,11 +27,7 @@ void HitManager::HitCheck()
 		}
 	}
 
-	//LARGE_INTEGER beforeTime;
-	//LARGE_INTEGER nowTime;
-
-	////開始時刻を記録
-	//QueryPerformanceCounter(&beforeTime);
+	float timeAll1 = Time::GetTime();
 
 	if (colliders.size() >= 2) {
 		float time0 = Time::GetTime();
@@ -49,18 +45,15 @@ void HitManager::HitCheck()
 		//衝突応答
 		Response();
 
-		float time3 = Time::GetTime();
+		float time5 = Time::GetTime();
 		Debug::Log("blodephase" + std::to_string(time1 - time0));
 		Debug::Log("narrowphase" + std::to_string(time2 - time1));
-		Debug::Log("response" + std::to_string(time3 - time2));
+		Debug::Log("response" + std::to_string(time5 - time2));
 	}
 
-	//// 今の時間を取得
-	//QueryPerformanceCounter(&nowTime);
-	//// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
-	//double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
+	float timeAll2 = Time::GetTime();
 
-	//Debug::Log(std::to_string(frameTime));
+	Debug::Log("HIt:" + std::to_string(timeAll2 - timeAll1));
 }
 
 void HitManager::BlodePhase()
@@ -121,16 +114,26 @@ void HitManager::NarrawPhase()
 void HitManager::Response() {
 	timeStep = Time::GetDeltaTime();
 
-	std::vector<HitInfo*> hitInfos;
+	std::list<HitInfo*> hitInfos;
 
-	for (auto& supportInfo : supportInfos) {
+	float time3 = Time::GetTime();
+
+	for (auto supportInfo : supportInfos) {
+		float time5 = Time::GetTime();
+
 		auto hitInfo = EPA::GetHitInfo(colliders, supportInfo);
 		//衝突応答を行うなら
 		if (hitInfo) {
 			//リストに追加
-			hitInfos.push_back(hitInfo);
+			hitInfos.emplace_back(hitInfo);
 		}
+
+		float time6 = Time::GetTime();
+		Debug::Log("EPA8:" + std::to_string(time6 - time5));
 	}
+
+	float time4 = Time::GetTime();
+	Debug::Log("EPA:" + std::to_string(time4 - time3));
 
 	//ソルバー用プロキシを作成
 	for (auto hitInfo : hitInfos) {
@@ -303,6 +306,9 @@ void HitManager::Response() {
 			}
 		}
 	}
+
+	float time5 = Time::GetTime();
+	Debug::Log("Kousoku:" + std::to_string(time5 - time4));
 
 	//Collisionを追加
 	for (auto hitInfo : hitInfos) {

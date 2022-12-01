@@ -13,22 +13,22 @@ class Matrix
 		static Matrix GetUnit();	//単位行列を返す
 
 		static Matrix GetMRoteX(float angleX);
-		static Matrix GetMRoteX(Vector3 centerPoint, float angleX);
+		static Matrix GetMRoteX(const Vector3& centerPoint, float angleX);
 		static Matrix GetMRoteY(float angleY);
-		static Matrix GetMRoteY(Vector3 centerPoint, float angleY);
+		static Matrix GetMRoteY(const Vector3& centerPoint, float angleY);
 		static Matrix GetMRoteZ(float angleZ);
-		static Matrix GetMRoteZ(Vector3 centerPoint, float angleZ);
+		static Matrix GetMRoteZ(const Vector3& centerPoint, float angleZ);
 
-		static Matrix GetMRote(Vector3 angleVec);	//原点を中心に自身を回転した行列
+		static Matrix GetMRote(const Vector3& angleVec);	//原点を中心に自身を回転した行列
 
-		static Matrix GetMScale(Vector3 scaleVec);	//原点を中心に自身を拡大した行列
+		static Matrix GetMScale(const Vector3& scaleVec);	//原点を中心に自身を拡大した行列
 
-		static Matrix GetMTrans(Vector3 transVec);	//自身を移動した行列
+		static Matrix GetMTrans(const Vector3& transVec);	//自身を移動した行列
 
-		static Matrix GetMMatrix(Vector3 transVec, Vector3 roteVec, Vector3 scaleVec);
+		static Matrix GetMMatrix(const Vector3& transVec, const Vector3& roteVec, const Vector3& scaleVec);
 
-		static Matrix GetMRote(Vector3 centerPoint, Vector3 angleVec);	//pointを中心に自身を回転した行列
+		static Matrix GetMRote(const Vector3& centerPoint, const Vector3& angleVec);	//pointを中心に自身を回転した行列
 
-		static Matrix GetMScale(Vector3 centerPoint, Vector3 angleVec);	//pointを中心に自身を拡大した行列
+		static Matrix GetMScale(const Vector3& centerPoint, const Vector3& angleVec);	//pointを中心に自身を拡大した行列
 };
 

@@ -3,6 +3,7 @@
 #include "BoxCollider.h"
 #include "Debug.h"
 #include <set>
+#include "Time.h"
 
 HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* supportInfo)
 {
@@ -25,18 +26,31 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         dir = -1;
     }
 
+    float time[9] = {};
+
+    time[0] = Time::GetTime();
+
     //許せる誤差
     float okDistance = 0.1f;
     Vector2 beforeSupportVec = vertexes[2];
     Vector2 crossPoint;
     int minSideIndex;
     Vector2 v;
+    float minDistance = 0.001f;
 
     for (int j = 0; j < 100; j++) {
+        //float time_t[4] = {};
+        //time_t[0] = Time::GetTime();
+
         //原点から凸包への最短距離を求める
         GJK::GetShortestDistanceToShape(Vector2::Zero(), vertexes, crossPoint, minSideIndex);
+
+        //time_t[1] = Time::GetTime();
+
         //最短距離となる辺に垂直なベクトルを取得(dirを掛けて図形の辺方向に向ける)
-        v = Matrix::GetMRoteZ(Vector2::Zero(), 90) * (vertexes[(minSideIndex + 1) % (int)vertexes.size()] - vertexes[minSideIndex]) * (float)dir;
+        auto& vertex1 = vertexes[(minSideIndex + 1) % (int)vertexes.size()];
+        auto& vertex2 = vertexes[minSideIndex];
+        v = (Matrix::GetMRoteZ(Vector2::Zero(), 90) * (vertex1 - vertex2) * (float)dir).GetNormalized();
         //サポート写像を求める
         Vector2 supportVec = GJK::Support(c1, c2, v);
         //前回のサポート写像と今回のサポート写像の距離が一定以下なら
@@ -46,20 +60,37 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         }
         //今回のを記憶
         beforeSupportVec = supportVec;
+
+        //time_t[2] = Time::GetTime();
+
         //サポート写像を追加(最短距離となる辺の番号+1の頂点に)
         vertexes.insert(vertexes.begin() + ((minSideIndex + 1) % (int)vertexes.size()), supportVec);
+
+        //time_t[3] = Time::GetTime();
+        //Debug::Log("Shape1:" + std::to_string(time_t[1] - time_t[0]));
+        //Debug::Log("Shape2:" + std::to_string(time_t[2] - time_t[1]));
+        //Debug::Log("Shape3:" + std::to_string(time_t[3] - time_t[2]));
     }
 
+    time[1] = Time::GetTime();
 
     Contact* contact = new Contact();
 
     //めり込み深度(少し長さを伸ばす)
     auto moveVec = -crossPoint * 1.001f;
 
+    time[2] = Time::GetTime();
+
     //c1を動かす
     c1->gameobject->transform->position += moveVec;
+
+    time[3] = Time::GetTime();
+
     //c1の衝突点を求める
     auto pointsA = GetContactPoints(c1, c2);
+
+    time[4] = Time::GetTime();
+
     for (auto& pointA : pointsA) {
         //新しいContactPoint追加
         ContactPoint* cp = new ContactPoint();
@@ -72,13 +103,20 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         //ContactPoint追加
         contact->contactPoints.push_back(cp);
     }
+
     //c1を戻す
     c1->gameobject->transform->position -= moveVec;
 
     //c2を動かす
     c2->gameobject->transform->position += -moveVec;
+
+    time[5] = Time::GetTime();
+
     //c2の衝突点を求める
     auto pointsB = GetContactPoints(c2, c1);
+
+    time[6] = Time::GetTime();
+
     //許せる距離の差
     okDistance = 0.1f;
     //pointsBをpointsAに対応した点にする
@@ -101,9 +139,19 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
     //c2を戻す
     c2->gameobject->transform->position -= -moveVec;
 
+    time[7] = Time::GetTime();
+
     //摩擦セット
     contact->friction = std::sqrtf((rb1 ? rb1->friction : 0.5f) * (rb2 ? rb2->friction : 0.5f));
-    HitInfo* hitInfo = new HitInfo(supportInfo->colliderID1, supportInfo->colliderID2, contact);
+
+    HitInfo* hitInfo = new HitInfo();
+    hitInfo->colliderID1 = supportInfo->colliderID1;
+    hitInfo->colliderID2 = supportInfo->colliderID2;
+    hitInfo->contact = contact;
+
+    for (auto i = 0; i < 7; i++) {
+        Debug::Log("EPA" + std::to_string(i) + ":" + std::to_string(time[i + 1] - time[i]));
+    }
         
     return hitInfo;
 }
@@ -116,22 +164,20 @@ std::vector<Vector2> EPA::GetContactPoints(Collider* c1, Collider* c2)
     auto& typeCC = typeid(CircleCollider);
     auto& typeBC = typeid(BoxCollider);
 
-    if (true) {
-        //円と円の衝突点
-        if (type1 == typeCC && type2 == typeCC) {
-            return GetContactPoints(static_cast<CircleCollider*>(c1), static_cast<CircleCollider*>(c2));
-        }
-        //矩形と矩形の衝突点
-        if (type1 == typeBC && type2 == typeBC) {
-            return GetContactPoints(static_cast<BoxCollider*>(c1), static_cast<BoxCollider*>(c2));
-        }
-        //円と矩形の衝突点
-        else if (type1 == typeCC && type2 == typeBC) {
-            return GetContactPoints(static_cast<CircleCollider*>(c1), static_cast<BoxCollider*>(c2));
-        }
-        else if (type1 == typeBC && type2 == typeCC) {
-            return GetContactPoints(static_cast<CircleCollider*>(c2), static_cast<BoxCollider*>(c1));
-        }
+    //円と円の衝突点
+    if (type1 == typeCC && type2 == typeCC) {
+        return GetContactPoints(static_cast<CircleCollider*>(c1), static_cast<CircleCollider*>(c2));
+    }
+    //矩形と矩形の衝突点
+    else if (type1 == typeBC && type2 == typeBC) {
+        return GetContactPoints(static_cast<BoxCollider*>(c1), static_cast<BoxCollider*>(c2));
+    }
+    //円と矩形の衝突点
+    else if (type1 == typeCC && type2 == typeBC) {
+        return GetContactPoints(static_cast<CircleCollider*>(c1), static_cast<BoxCollider*>(c2));
+    }
+    else if (type1 == typeBC && type2 == typeCC) {
+        return GetContactPoints(static_cast<CircleCollider*>(c2), static_cast<BoxCollider*>(c1));
     }
 
     return std::vector<Vector2>();

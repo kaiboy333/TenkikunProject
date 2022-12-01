@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include "Collision.h"
 #include "RigidBody.h"
+#include "Time.h"
 
 SupportInfo* GJK::IsHit(std::vector<Collider*>& colliders, int colliderID1, int colliderID2)
 {
@@ -47,7 +48,11 @@ SupportInfo* GJK::IsHit(std::vector<Collider*>& colliders, int colliderID1, int 
                 }
                 //原点が3点で作った三角形に含まれているなら
                 if (IsPointInTriangle(Vector2::Zero(), vertexes)) {
-                    return new SupportInfo(vertexes, colliderID1, colliderID2);
+                    auto supportInfo = new SupportInfo();
+                    supportInfo->supports = vertexes;
+                    supportInfo->colliderID1 = colliderID1;
+                    supportInfo->colliderID2 = colliderID2;
+                    return supportInfo;
                 }
 
                 //原点から三角形への最短距離を求める
@@ -138,7 +143,7 @@ Vector2 GJK::Support(const CircleCollider* c, const Vector2& d)
     return supportVec;
 }
 
-bool GJK::IsPointInTriangle(const Vector2& point, const std::vector<Vector2>& vertexes)
+bool GJK::IsPointInTriangle(const Vector2& point, std::vector<Vector2>& vertexes)
 {
     //頂点が3つではないなら終わり
     if (vertexes.size() != 3) {
@@ -154,8 +159,8 @@ bool GJK::IsPointInTriangle(const Vector2& point, const std::vector<Vector2>& ve
     }
 
     for (int i = 0, len = (int)vertexes.size(); i < len; i++) {
-        Vector2 vert1 = vertexes[i % len];
-        Vector2 vert2 = vertexes[(i + 1) % len];
+        Vector2& vert1 = vertexes[i % len];
+        Vector2& vert2 = vertexes[(i + 1) % len];
 
         //図形の一辺に対して点が外側にあるなら
         if (Vector2::Cross(vert2 - vert1, point - vert1) * dir > 0) {

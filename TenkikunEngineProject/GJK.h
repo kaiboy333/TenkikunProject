@@ -5,7 +5,6 @@
 #include "VertexCollider.h"
 #include "CircleCollider.h"
 #include "Collision.h"
-#include "SupportInfo.h"
 
 class GJK
 {
@@ -22,6 +21,6 @@ class GJK
 
 	private:
 
-		static bool IsPointInTriangle(const Vector2& point, const std::vector<Vector2>& vertexes);	//三角形の中に点があるか
+		static bool IsPointInTriangle(const Vector2& point, std::vector<Vector2>& vertexes);	//三角形の中に点があるか
 };
 
