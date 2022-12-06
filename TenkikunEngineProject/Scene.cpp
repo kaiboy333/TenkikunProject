@@ -33,19 +33,7 @@ void Scene::Update()
 		LARGE_INTEGER beforeTime;
 		LARGE_INTEGER nowTime;
 
-		//開始時刻を記録
-		QueryPerformanceCounter(&beforeTime);
-
 		addAndRemoveEvent();
-		//Debug::Log(std::to_string(i));
-		//i++;
-
-		//今の時間を取得
-		QueryPerformanceCounter(&nowTime);
-		// (今の時間 - 前フレームの時間) / 周波数 = 経過時間(秒単位)
-		double frameTime = static_cast<double>(nowTime.QuadPart - beforeTime.QuadPart) / static_cast<double>(Time::timeFreq.QuadPart);
-
-		Debug::Log(std::to_string(frameTime));
 	}
 	//リセット
 	addAndRemoveEvents.clear();

@@ -26,9 +26,9 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         dir = -1;
     }
 
-    float time[9] = {};
+    //float time[9] = {};
 
-    time[0] = Time::GetTime();
+    //time[0] = Time::GetTime();
 
     //許せる誤差
     float okDistance = 0.1f;
@@ -39,7 +39,7 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
     float minDistance = 0.001f;
 
     for (int j = 0; j < 100; j++) {
-        //float time_t[4] = {};
+        //float time_t[6] = {};
         //time_t[0] = Time::GetTime();
 
         //原点から凸包への最短距離を求める
@@ -52,8 +52,14 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         auto& vertex1 = vertexes[(minSideIndex + 1) % (int)vertexes.size()];
         auto& vertex2 = vertexes[minSideIndex];
         v = (Matrix::GetMRoteZ(Vector2::Zero(), 90) * (vertex1 - vertex2) * (float)dir).GetNormalized();
+
+        //time_t[2] = Time::GetTime();
+
         //サポート写像を求める
         Vector2 supportVec = gjk.Support(c1, c2, v);
+
+        //time_t[3] = Time::GetTime();
+
         //前回のサポート写像と今回のサポート写像の距離が一定以下なら
         if (Vector2::Distance(beforeSupportVec, supportVec) <= okDistance) {
             //終わり(それがめり込み深度)
@@ -62,35 +68,35 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         //今回のを記憶
         beforeSupportVec = supportVec;
 
-        //time_t[2] = Time::GetTime();
+        //time_t[4] = Time::GetTime();
 
         //サポート写像を追加(最短距離となる辺の番号+1の頂点に)
         vertexes.insert(vertexes.begin() + ((minSideIndex + 1) % (int)vertexes.size()), supportVec);
 
-        //time_t[3] = Time::GetTime();
-        //Debug::Log("Shape1:" + std::to_string(time_t[1] - time_t[0]));
-        //Debug::Log("Shape2:" + std::to_string(time_t[2] - time_t[1]));
-        //Debug::Log("Shape3:" + std::to_string(time_t[3] - time_t[2]));
+        //time_t[5] = Time::GetTime();
+        //for (int i = 0; i < 5; i++) {
+        //    Debug::Log("Shape" + std::to_string(i) + ":" + std::to_string(time_t[i + 1] - time_t[i]));
+        //}
     }
 
-    time[1] = Time::GetTime();
+    //time[1] = Time::GetTime();
 
     Contact* contact = new Contact();
 
     //めり込み深度(少し長さを伸ばす)
     auto moveVec = -crossPoint * 1.001f;
 
-    time[2] = Time::GetTime();
+    //time[2] = Time::GetTime();
 
     //c1を動かす
     c1->gameobject->transform->position += moveVec;
 
-    time[3] = Time::GetTime();
+    //time[3] = Time::GetTime();
 
     //c1の衝突点を求める
     auto pointsA = GetContactPoints(c1, c2);
 
-    time[4] = Time::GetTime();
+    //time[4] = Time::GetTime();
 
     for (auto& pointA : pointsA) {
         //新しいContactPoint追加
@@ -111,12 +117,12 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
     //c2を動かす
     c2->gameobject->transform->position += -moveVec;
 
-    time[5] = Time::GetTime();
+    //time[5] = Time::GetTime();
 
     //c2の衝突点を求める
     auto pointsB = GetContactPoints(c2, c1);
 
-    time[6] = Time::GetTime();
+    //time[6] = Time::GetTime();
 
     //許せる距離の差
     okDistance = 0.1f;
@@ -135,12 +141,12 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         }
     }
     else {
-        Debug::Log("pointsAとpointsBの数が合わないよ");
+        //Debug::Log("pointsAとpointsBの数が合わないよ");
     }
     //c2を戻す
     c2->gameobject->transform->position -= -moveVec;
 
-    time[7] = Time::GetTime();
+    //time[7] = Time::GetTime();
 
     //摩擦セット
     contact->friction = std::sqrtf((rb1 ? rb1->friction : 0.5f) * (rb2 ? rb2->friction : 0.5f));
@@ -150,9 +156,9 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
     hitInfo->colliderID2 = supportInfo->colliderID2;
     hitInfo->contact = contact;
 
-    for (auto i = 0; i < 7; i++) {
-        Debug::Log("EPA" + std::to_string(i) + ":" + std::to_string(time[i + 1] - time[i]));
-    }
+    //for (auto i = 0; i < 7; i++) {
+    //    Debug::Log("EPA" + std::to_string(i) + ":" + std::to_string(time[i + 1] - time[i]));
+    //}
         
     return hitInfo;
 }

@@ -9,7 +9,7 @@ class Debug
 	public:
 		static void Log(std::string string);
 
-		static void DrawLine(Vector2 startPos, Vector2 endPos, unsigned int downColor);
-		static void DrawPoint(Vector2 point, unsigned int downColor, float radious = 5);
+		static void DrawLine(const Vector2& startPos, const Vector2& endPos, const unsigned int downColor);
+		static void DrawPoint(const Vector2& point, const unsigned int downColor, const float radious);
 };
 

@@ -27,33 +27,33 @@ void HitManager::HitCheck()
 		}
 	}
 
-	float timeAll1 = Time::GetTime();
+	//float timeAll1 = Time::GetTime();
 
 	if (colliders.size() >= 2) {
-		float time0 = Time::GetTime();
+		//float time0 = Time::GetTime();
 
 		//バウンディングボックスを使った衝突判定
 		BlodePhase();
 
-		float time1 = Time::GetTime();
+		//float time1 = Time::GetTime();
 
 		//実際の形状での衝突判定
 		NarrawPhase();
 
-		float time2 = Time::GetTime();
+		//float time2 = Time::GetTime();
 
 		//衝突応答
 		Response();
 
-		float time5 = Time::GetTime();
-		Debug::Log("blodephase" + std::to_string(time1 - time0));
-		Debug::Log("narrowphase" + std::to_string(time2 - time1));
-		Debug::Log("response" + std::to_string(time5 - time2));
+		//float time5 = Time::GetTime();
+		//Debug::Log("blodephase" + std::to_string(time1 - time0));
+		//Debug::Log("narrowphase" + std::to_string(time2 - time1));
+		//Debug::Log("response" + std::to_string(time5 - time2));
 	}
 
-	float timeAll2 = Time::GetTime();
+	//float timeAll2 = Time::GetTime();
 
-	Debug::Log("HIt:" + std::to_string(timeAll2 - timeAll1));
+	//Debug::Log("HIt:" + std::to_string(timeAll2 - timeAll1));
 }
 
 void HitManager::BlodePhase()
@@ -116,10 +116,10 @@ void HitManager::Response() {
 
 	std::list<HitInfo*> hitInfos;
 
-	float time3 = Time::GetTime();
+	//float time3 = Time::GetTime();
 
 	for (auto supportInfo : supportInfos) {
-		float time5 = Time::GetTime();
+		//float time5 = Time::GetTime();
 
 		auto hitInfo = EPA::GetHitInfo(colliders, supportInfo);
 		//衝突応答を行うなら
@@ -129,11 +129,11 @@ void HitManager::Response() {
 		}
 
 		float time6 = Time::GetTime();
-		Debug::Log("EPA8:" + std::to_string(time6 - time5));
+		//Debug::Log("EPA8:" + std::to_string(time6 - time5));
 	}
 
-	float time4 = Time::GetTime();
-	Debug::Log("EPA:" + std::to_string(time4 - time3));
+	//float time4 = Time::GetTime();
+	//Debug::Log("EPA:" + std::to_string(time4 - time3));
 
 	//ソルバー用プロキシを作成
 	for (auto hitInfo : hitInfos) {
@@ -307,8 +307,8 @@ void HitManager::Response() {
 		}
 	}
 
-	float time5 = Time::GetTime();
-	Debug::Log("Kousoku:" + std::to_string(time5 - time4));
+	//float time5 = Time::GetTime();
+	//Debug::Log("Kousoku:" + std::to_string(time5 - time4));
 
 	//Collisionを追加
 	for (auto hitInfo : hitInfos) {

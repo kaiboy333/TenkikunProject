@@ -69,16 +69,16 @@ void CreateStage::MonoStart()
 	//rb4->restritution = 1;
 	rb4->bodyType = RigidBody::BodyType::Static;
 
-	//‹…‚Ìì¬
-	for (int i = 0; i < 10; i++) {
-		auto ball = scene->CreateCircle();
-		ball->transform->scale = Vector3(0.1f, 0.1f, 1);
-		auto rb5 = ball->AddComponent<RigidBody>();
-		rb5->gravityScale = 10;
-		//rb5->friction = 0;
-		//rb5->restritution = 1;
-		//rb5->AddForce((Vector3(1, 3, 0)).GetNormalized() * 500);
-	}
+	////‹…‚Ìì¬
+	//for (int i = 0; i < 10; i++) {
+	//	auto ball = scene->CreateSquare();
+	//	ball->transform->scale = Vector3(0.4f, 0.4f, 1);
+	//	auto rb5 = ball->AddComponent<RigidBody>();
+	//	rb5->gravityScale = 10;
+	//	//rb5->friction = 0;
+	//	//rb5->restritution = 1;
+	//	//rb5->AddForce((Vector3(1, 3, 0)).GetNormalized() * 500);
+	//}
 
 	//ƒvƒŒƒCƒ„[‚Ìì¬
 	//player = scene->CreateSquare();
@@ -97,9 +97,9 @@ void CreateStage::MonoUpdate()
 
 		//‹…‚Ìì¬
 		for (int i = 0; i < 10; i++) {
-			auto ball = scene->CreateCircle();
+			auto ball = scene->CreateSquare();
 			ball->transform->position = mouseScreenPos;
-			ball->transform->scale = Vector3(0.1f, 0.1f, 1);
+			ball->transform->scale = Vector3(0.4f, 0.4f, 1);
 			auto rb5 = ball->AddComponent<RigidBody>();
 			rb5->gravityScale = 10;
 		}

@@ -92,22 +92,26 @@ Vector2 GJK::Support(Collider* c, const Vector2& d)
 
 Vector2 GJK::Support(const VertexCollider* c, const Vector2& d)
 {
+    //float times[2] = {};
+
+    //times[0] = Time::GetTime();
+
     auto vertexes = c->GetVertexes();
     //最大内積
-    float maxDot = 0;
+    float maxDot;
     //最大内積の時の頂点座標
     Vector2 supportVec;
-    //最大内積の時の長さ(距離)
-    float maxDistance = 0;
+    ////最大内積の時の長さ(距離)
+    //float maxDistance;
 
     for (int i = 0, len = (int)vertexes.size(); i < len; i++) {
         Vector2& vertex = vertexes[i];
         float dot = Vector2::Dot(vertex, d);
-        float distance = vertex.GetMagnitude();
+        //float distance = vertex.GetMagnitude();
         if (i == 0) {
             maxDot = dot;
             supportVec = vertex;
-            maxDistance = distance;
+            //maxDistance = distance;
         }
         //内積が今までで最大なら
         else if (dot > maxDot) {
@@ -115,30 +119,42 @@ Vector2 GJK::Support(const VertexCollider* c, const Vector2& d)
             maxDot = dot;
             //その時の頂点を記憶
             supportVec = vertex;
-            //長さを記憶
-            maxDistance = distance;
+            ////長さを記憶
+            //maxDistance = distance;
         }
-        //内積が同じ最大なら
-        else if (dot == maxDot) {
-            //今回のほうが長いなら更新
-            if (maxDistance < distance) {
-                //その時の頂点を記憶
-                supportVec = vertex;
-                //長さを記憶
-                maxDistance = distance;
-            }
-        }
+        ////内積が同じ最大なら
+        //else if (dot == maxDot) {
+        //    //今回のほうが長いなら更新
+        //    if (maxDistance < distance) {
+        //        //その時の頂点を記憶
+        //        supportVec = vertex;
+        //        //長さを記憶
+        //        maxDistance = distance;
+        //    }
+        //}
     }
+
+    //times[1] = Time::GetTime();
+
+    //Debug::Log("supportVert:" + std::to_string(times[1] - times[0]));
 
     return supportVec;
 }
 
 Vector2 GJK::Support(const CircleCollider* c, const Vector2& d)
 {
+    //float times[2] = {};
+
+    //times[0] = Time::GetTime();
+
     //中心の座標を取得
     Vector2 centerPos = c->GetPosition();
     //中心からdの方向に伸ばした時の円との交点がサポート写像
     Vector2 supportVec = centerPos + d.GetNormalized() * c->GetActualRadious();
+
+    //times[1] = Time::GetTime();
+
+    //Debug::Log("supportCircle:" + std::to_string(times[1] - times[0]));
 
     return supportVec;
 }
