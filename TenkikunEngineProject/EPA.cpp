@@ -43,7 +43,8 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         //time_t[0] = Time::GetTime();
 
         //原点から凸包への最短距離を求める
-        GJK::GetShortestDistanceToShape(Vector2::Zero(), vertexes, crossPoint, minSideIndex);
+        auto gjk = GJK();
+        gjk.GetShortestDistanceToShape(Vector2::Zero(), vertexes, crossPoint, minSideIndex);
 
         //time_t[1] = Time::GetTime();
 
@@ -52,7 +53,7 @@ HitInfo* EPA::GetHitInfo(const std::vector<Collider*>& colliders, SupportInfo* s
         auto& vertex2 = vertexes[minSideIndex];
         v = (Matrix::GetMRoteZ(Vector2::Zero(), 90) * (vertex1 - vertex2) * (float)dir).GetNormalized();
         //サポート写像を求める
-        Vector2 supportVec = GJK::Support(c1, c2, v);
+        Vector2 supportVec = gjk.Support(c1, c2, v);
         //前回のサポート写像と今回のサポート写像の距離が一定以下なら
         if (Vector2::Distance(beforeSupportVec, supportVec) <= okDistance) {
             //終わり(それがめり込み深度)
@@ -199,7 +200,8 @@ std::vector<Vector2> EPA::GetContactPoints(VertexCollider* c1, VertexCollider* c
         for (int j = 0, len2 = (int)cA->GetVertexes().size(); j < len2; j++) {
             int minSideIndex;
             Vector2 crossPoint;
-            float distance = GJK::GetShortestDistanceToShape(cA->GetVertexes()[j], cB->GetVertexes(), crossPoint, minSideIndex);
+            auto gjk = GJK();
+            float distance = gjk.GetShortestDistanceToShape(cA->GetVertexes()[j], cB->GetVertexes(), crossPoint, minSideIndex);
             //最初は
             if (i == 0 && j == 0) {
                 minDistance = distance;
@@ -242,7 +244,8 @@ std::vector<Vector2> EPA::GetContactPoints(CircleCollider* c1, VertexCollider* c
     //c1の中心点とc2の図形の最短距離
     int minSideIndex;
     Vector2 contactPoint;
-    GJK::GetShortestDistanceToShape(c1->GetPosition(), c2->GetVertexes(), contactPoint, minSideIndex);
+    auto gjk = GJK();
+    gjk.GetShortestDistanceToShape(c1->GetPosition(), c2->GetVertexes(), contactPoint, minSideIndex);
     //最短の交点が衝突点
     return { contactPoint };
 }
@@ -250,6 +253,7 @@ std::vector<Vector2> EPA::GetContactPoints(CircleCollider* c1, VertexCollider* c
 std::vector<Vector2> EPA::GetContactPoints(CircleCollider* c1, CircleCollider* c2)
 {
     //円から円のベクトルのサポート写像が衝突点
-    return { GJK::Support(c1, c2->GetPosition() - c1->GetPosition()) };
+    auto gjk = GJK();
+    return { gjk.Support(c1, c2->GetPosition() - c1->GetPosition()) };
 }
 
