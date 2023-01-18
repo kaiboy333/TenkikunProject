@@ -1,5 +1,6 @@
 #include "Time.h"
 #include "WindowManager.h"
+#include "Debug.h"
 
 Time::Time()
 {
@@ -47,10 +48,11 @@ void Time::Update()
 	sumFPS += fps;
 	frameCount++;
 	if (frameCount % FPS == 0) {
-		fps = sumFPS / FPS;
+		actualFPS = static_cast<float>(sumFPS / FPS);
 		sumFPS = 0;
 		frameCount = 0;
-		WindowManager::gameWindow->frameText->SetText("FPS : " + std::to_string(fps));	//FPS‚ð•\Ž¦
+		WindowManager::gameWindow->frameText->SetText("FPS : " + std::to_string(actualFPS));	//FPS‚ð•\Ž¦
+		Debug::Log("fps:" + std::to_string(actualFPS));
 	}
 }
 
@@ -67,6 +69,10 @@ float Time::GetDeltaTime() {
 	return deltaTime;
 }
 
+float Time::GetFPS() {
+	return actualFPS;
+}
+
 //float Time::time = 0;
 float Time::deltaTime = 0;
 
@@ -79,4 +85,5 @@ LARGE_INTEGER Time::timeFreq;
 
 int Time::frameCount = 0;
 double Time::sumFPS = 0;
+float Time::actualFPS = 0;
 

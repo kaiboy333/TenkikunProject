@@ -14,6 +14,7 @@ class Time
 		static float GetTime();
 		static float GetDeltaTime();
 
+		static float GetFPS();
 	private:
 		static const int FPS;
 		static const float MIN_FRAME_TIME;
@@ -26,5 +27,7 @@ class Time
 
 		//static float time;
 		static float deltaTime;
+
+		static float actualFPS;
 };
 

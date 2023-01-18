@@ -695,13 +695,18 @@ void ProjectFileManager::LoadFromSceneFile(std::filesystem::path scenePath)
 			rigidBody->constraints.freezeRotation.z = (bool)std::stoi(words[2]);
 
 		}
-		else if (className == typeid(MonoBehaviour).name()) {
+		//else if (className == typeid(MonoBehaviour).name()) {
 		//	//ゲームオブジェクトのファイルIDを取得
 		//	fileID = std::stoi(MyString::Split(lines[row++], ' ')[2]);
 		//	//ゲームオブジェクトを取得
 		//	GameObject* gameobject = static_cast<GameObject*>(sceneInfos[fileID]);
 		//	//MonoBehaviourを作成、取得
 		//	MonoBehaviour* mono = gameobject->AddComponent<>();
+		//}
+		//MonoBehaviourまたは想定していないクラスなら
+		else {
+			//ゲームオブジェクトのファイルIDを飛ばす
+			row++;
 		}
 	}
 }

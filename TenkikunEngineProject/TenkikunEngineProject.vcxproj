@@ -228,6 +228,7 @@
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowButton.cpp" />
     <ClCompile Include="WindowManager.cpp" />
+    <ClCompile Include="WriteFPSDataScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABBTree.h" />
@@ -315,6 +316,7 @@
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowButton.h" />
     <ClInclude Include="WindowManager.h" />
+    <ClInclude Include="WriteFPSDataScript.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="tenkikun.ico" />
