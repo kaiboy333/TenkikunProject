@@ -32,7 +32,7 @@ class SceneManager
 
 		static Scene* MakeScene(std::filesystem::path parentPath);	//シーンを作成
 
-		static void SaveScene();	//現在のシーンをセーブ
+		static void SaveScene(Scene* scene);	//現在のシーンをセーブ
 
 	private:
 		static Scene* nowScene;	//現在のScene

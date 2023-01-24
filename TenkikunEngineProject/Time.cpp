@@ -52,7 +52,7 @@ void Time::Update()
 		sumFPS = 0;
 		frameCount = 0;
 		WindowManager::gameWindow->frameText->SetText("FPS : " + std::to_string(actualFPS));	//FPS‚ð•\Ž¦
-		Debug::Log("fps:" + std::to_string(actualFPS));
+		//Debug::Log("fps:" + std::to_string(actualFPS));
 	}
 }
 

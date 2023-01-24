@@ -69,9 +69,10 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 	GameObject* gameobject = new GameObject();	//GameObjectを作成
 	gameobject->SetScene(this);	//シーンをセット
 	gameobject->transform = gameobject->AddComponent<Transform>();	//Transformをついか
+
+	TreeNode* node = new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen);
 	//シーンが同じなら
 	if (SceneManager::GetNowScene() == this) {
-		TreeNode* node = new TreeNode(gameobject->GetName(), treeList, treeList->isFirstOpen);
 		//右クリックを押したら
 		node->mouseRightClickEvents.push_back(std::make_pair(node->GetEventNo(), [node, this, gameobject](void) {
 			Vector3 mousePos = Input::GetMousePosition();
@@ -96,23 +97,23 @@ GameObject* Scene::CreateEmpty(bool isLaterAdd)
 				WindowManager::inspectorWindow->SetGameObject(gameobject);	//ゲームオブジェクトの情報をヒエラルキーにセット
 			}
 		}));
+	}
 
-		if (isLaterAdd) {
-			//あとで追加
-			addAndRemoveEvents.push_back([this, gameobject, treeList, node](void) {
+	if (isLaterAdd) {
+		//あとで追加
+		addAndRemoveEvents.push_back([this, gameobject, treeList, node](void) {
 
-				treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
-				gameobjects.emplace_back(gameobject);	//リストに追加
-				gameobject->SetName("GameObject");	//名前変更(初期の名前)
-
-			});
-		}
-		else {
-			//すぐに追加
 			treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
 			gameobjects.emplace_back(gameobject);	//リストに追加
 			gameobject->SetName("GameObject");	//名前変更(初期の名前)
-		}
+
+			});
+	}
+	else {
+		//すぐに追加
+		treeList->Add(node, treeList->GetRoot());	//TreeListにも追加
+		gameobjects.emplace_back(gameobject);	//リストに追加
+		gameobject->SetName("GameObject");	//名前変更(初期の名前)
 	}
 
 	return gameobject;

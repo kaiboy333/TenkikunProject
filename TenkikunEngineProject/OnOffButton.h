@@ -17,5 +17,7 @@ class OnOffButton : public WindowButton
 
 	protected:
 		std::vector<function<void()>> buttonFunc;
+
+		unsigned int downColor = GetColor(100, 100, 100);
 };
 

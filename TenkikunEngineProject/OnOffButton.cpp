@@ -30,12 +30,12 @@ void OnOffButton::PreparationLibrate()
 
 void OnOffButton::Draw()
 {
-	////四角の描画
-	//unsigned int drawColor = isDown ? downColor : GetColor(255, 255, 255);
-	//DrawBoxAA(startX, startY, startX + width, startY + height, drawColor, TRUE);
+	//四角の描画
+	unsigned int drawColor = isDown ? downColor : GetColor(255, 255, 255);
+	DrawBoxAA(startX, startY, startX + width, startY + height, drawColor, TRUE);
 
-	//マウスが乗っていたら
-	if (GetIsTopOn()) {
+	//マウスが乗っていてボタンが押されていなかったら
+	if (GetIsTopOn() && !isDown) {
 		//四角の描画
 		DrawBoxAA(startX, startY, startX + width, startY + height, GetColor(200, 200, 200), TRUE);
 	}

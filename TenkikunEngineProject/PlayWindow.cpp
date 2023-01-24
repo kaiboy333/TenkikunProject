@@ -1,5 +1,6 @@
 #include "PlayWindow.h"
 #include "ProjectFileManager.h"
+#include "Debug.h"
 
 PlayWindow::PlayWindow() : Window(300, 0, 700, 50)
 {
@@ -12,11 +13,13 @@ PlayWindow::PlayWindow() : Window(300, 0, 700, 50)
 		[]() {
 			if (SceneManager::playMode == SceneManager::PlayMode::PLAY) {
 				SceneManager::playMode = SceneManager::PlayMode::STOP;
+				Debug::Log("Stop");
 			}
 		},
 		[this]() {
 			if (playButton->isDown) {
 				SceneManager::playMode = SceneManager::PlayMode::PLAY;
+				Debug::Log("Play");
 			}
 		},
 	};
@@ -26,15 +29,18 @@ PlayWindow::PlayWindow() : Window(300, 0, 700, 50)
 		[this]() {
 			if (stopButton->isDown) {
 				SceneManager::playMode = SceneManager::PlayMode::STOP;
+				Debug::Log("Stop");
 			}
 			else {
 				SceneManager::playMode = SceneManager::PlayMode::PLAY;
+				Debug::Log("Play");
 			}
 			SceneManager::LoadScene(SceneManager::GetNowScene()->GetName());
 		},
 		[]() {
 			SceneManager::playMode = SceneManager::PlayMode::EDIT;
 			SceneManager::LoadScene(SceneManager::GetNowScene()->GetName());
+			Debug::Log("Edit");
 		},
 	};
 	playButton = new OnOffButton(centerX - buttonWidth, centerY - buttonHeight / 2, buttonWidth, buttonHeight, static_cast<Image*>(ProjectFileManager::pathAndInfo[ProjectFileManager::resourceFilePath.string() + "\\RightArrow.png"]), playButtonFunc);

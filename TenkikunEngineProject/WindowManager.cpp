@@ -44,7 +44,7 @@ void WindowManager::Update()
 	//Ctrl + Sを押したら
 	if (Input::GetKey(Input::KeyCode::LEFT_CONTROL, false) && Input::GetKeyDown(Input::KeyCode::S, false)) {
 		//シーンをセーブ
-		SceneManager::SaveScene();
+		SceneManager::SaveScene(SceneManager::GetNowScene());
 	}
 
 	for (Window* parentWindow : GetWindows()) {
