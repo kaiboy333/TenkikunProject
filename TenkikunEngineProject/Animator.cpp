@@ -17,30 +17,38 @@ void Animator::Update()
 			Animation* animation = nowState->animation;
 			//要素があるなら
 			if ((int)animation->animationKeys.size() != 0) {
-				auto iter = animation->animationKeys.find((int)count);
-				//見つかったら
-				if (iter != animation->animationKeys.end()) {
-					Image* image = iter->second;
-					int gh = image->GetGH();
-					ir->image = image;	//新しい画像をセット
+				auto iter = animation->animationKeys.begin();
+				for (int i = 0; i < index; i++) {
+					iter++;
 				}
-				//無かったら
-				else {
-					iter--;	//最後の要素を見る
-					//もし、今見ているのが最後の場所だったら(最後のフレームを過ぎていたら)
-					int lastCount;
-					if ((lastCount = iter->first) <= (int)count) {
+				//カウントが指定のカウントより超えているなら
+				if ((*iter).first <= (int)count) {
+					//最後の要素なら
+					if ((int)animation->animationKeys.size() - 1 == index) {
 						//繰り返しアニメーションを動かすなら
 						if (animation->isLoop) {
 							count = 0;	//カウンタリセット
-							return;
+							index = 0;
 						}
 						else {
-							count = (float)lastCount;	//最後のカウントにする
+							count = (float)((*iter).first);	//最後のカウントにする
 						}
+						return;
 					}
+					Image* image = iter->second;
+					int gh = image->GetGH();
+					ir->image = image;	//新しい画像をセット
+					index++;	//次の要素へ
 				}
-				count += 1 * nowState->speed;			//時間の更新
+				////無かったら
+				//else {
+				//	iter--;	//最後の要素を見る
+				//	//もし、今見ているのが最後の場所だったら(最後のフレームを過ぎていたら)
+				//	int lastCount;
+				//	if ((lastCount = iter->first) <= (int)count) {
+				//	}
+				//}
+				count += nowState->speed;			//時間の更新
 			}
 		}
 
@@ -50,6 +58,7 @@ void Animator::Update()
 			if (transition->canTransition(this)) {
 				nowState = transition->toState;	//AnimationControllerのnowStateを次のさすStateにする
 				count = 0;	//カウンタリセット
+				index = 0;
 				break;	//終わり(他のは見ない)
 			}
 		}

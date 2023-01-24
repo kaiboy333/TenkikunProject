@@ -95,12 +95,12 @@ void CreateStage::MonoUpdate()
 
 		auto scene = SceneManager::GetNowScene();
 
-		//‹…‚Ìì¬
-		for (int i = 0; i < 3; i++) {
-			auto ball = scene->CreateSquare();
-			ball->transform->position = mouseScreenPos;
-			ball->transform->scale = Vector3(0.4f, 0.4f, 1);
-			auto rb5 = ball->AddComponent<RigidBody>();
+		//}Œ`‚Ìì¬
+		for (int i = 0; i < 10; i++) {
+			auto shape = scene->CreateCircle();
+			shape->transform->position = mouseScreenPos;
+			shape->transform->scale = Vector3(0.1f, 0.1f, 1);
+			auto rb5 = shape->AddComponent<RigidBody>();
 			rb5->gravityScale = 20;
 		}
 	}
