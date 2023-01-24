@@ -265,6 +265,8 @@ GameObject* Scene::CreateUnityChan(bool isLaterAdd)
 	idleAnim->AddAnimationKey(idleImages, 10);
 	//acにアニメーションをセットしてStateを取得
 	AnimationState* idleState = animator->AddState(idleAnim, "Idle");
+	//スピードセット
+	idleState->speed = 3.0f;
 
 	//走るアニメーションのセット
 	//待機アニメーションの作成
@@ -280,6 +282,8 @@ GameObject* Scene::CreateUnityChan(bool isLaterAdd)
 	runAnim->AddAnimationKey(runImages, 7);
 	//acにアニメーションをセットしてStateを取得
 	AnimationState* runState = animator->AddState(runAnim, "Run");
+	//スピードセット
+	runState->speed = 3.0f;
 
 	//Transition作成
 	//待機StateのTransition追加

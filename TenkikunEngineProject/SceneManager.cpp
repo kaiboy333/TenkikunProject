@@ -101,8 +101,8 @@ Scene* SceneManager::MakeScene(std::filesystem::path parentPath)
 	
 	//scene->CreateUnityChan(false);	//Unityちゃん生成
 
-	//GameObject* o = scene->CreateEmpty(false);
-	//o->AddComponent<CreateStage>();
+	GameObject* o = scene->CreateEmpty(false);
+	o->AddComponent<CreateStage>();
 	//o->AddComponent<WriteFPSDataScript>();
 	//o->AddComponent<CreateShapeScript>();
 
@@ -140,21 +140,21 @@ void SceneManager::SetNowScene(Scene* scene)
 
 void SceneManager::SaveScene(Scene* scene)
 {
-	//編集モードなら
-	if (playMode == PlayMode::EDIT) {
+	////編集モードなら
+	//if (playMode == PlayMode::EDIT) {
 		std::unordered_map<SceneInfo*, int> idInfos;
 		//シーン以外の情報をファイルに書き込む
 		ProjectFileManager::WriteToFile();
 		//シーンをセーブ(シーンファイルに書き込む)
 		ProjectFileManager::WriteToSceneFile(scene);
 		Debug::Log(scene->GetName() + "をセーブしました。");
-	}
-	else {
-		Debug::Log("プレイ中はセーブできません。");
-	}
+	//}
+	//else {
+	//	Debug::Log("プレイ中はセーブできません。");
+	//}
 }
 
 Scene* SceneManager::nowScene = nullptr;	//現在のScene
-SceneManager::PlayMode SceneManager::playMode = PlayMode::EDIT;	//初期は編集モード
+SceneManager::PlayMode SceneManager::playMode = PlayMode::PLAY;	//初期はプレイモード
 
 std::map<std::string, std::filesystem::path> SceneManager::scenePathes;

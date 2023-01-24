@@ -19,6 +19,7 @@ class Animator : public Component
 		AnimationState* nowState = nullptr;
 
 		float count = 0;
+		int index = 0;
 
 		AnimationState* AddState(Animation* animation, std::string stateName);
 

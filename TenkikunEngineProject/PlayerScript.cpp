@@ -36,7 +36,7 @@ void PlayerScript::OnTriggerExit(Collider* collider)
 void PlayerScript::MonoStart()
 {
 	rb = gameobject->GetComponent<RigidBody>();
-	rb->gravityScale = 1;
+	rb->gravityScale = 10;
 }
 
 void PlayerScript::MonoUpdate()
@@ -47,15 +47,15 @@ void PlayerScript::MonoUpdate()
 	AnimatorController* ac = animator->ac;
 
 	if (Input::GetKey(Input::KeyCode::D)) {
-		//rb->velocity.x = speed;
-		//imageRenderer->isFlipX = false;
+		rb->velocity.x = speed;
+		imageRenderer->isFlipX = false;
 	}
 	else if (Input::GetKey(Input::KeyCode::A)) {
-		//rb->velocity.x = -speed;
-		//imageRenderer->isFlipX = true;
+		rb->velocity.x = -speed;
+		imageRenderer->isFlipX = true;
 	}
 	else {
-		//rb->velocity.x = 0;
+		rb->velocity.x = 0;
 	}
 
 	ac->AddFloatParamater("isSpeed", std::abs(rb->velocity.x));
@@ -67,18 +67,18 @@ void PlayerScript::MonoUpdate()
 	//	gameobject->transform->rotation += Vector3::Forward() * 1.0f;
 	//}
 
-	if (Input::GetKey(Input::KeyCode::RIGHT)) {
-		gameobject->transform->scale += Vector3::Right() * 0.01f;
-	}
-	else if (Input::GetKey(Input::KeyCode::LEFT)) {
-		gameobject->transform->scale += Vector3::Left() * 0.01f;
-	}
-	else if (Input::GetKey(Input::KeyCode::UP)) {
-		gameobject->transform->scale += Vector3::Up() * 0.01f;
-	}
-	else if (Input::GetKey(Input::KeyCode::DOWN)) {
-		gameobject->transform->scale += Vector3::Down() * 0.01f;
-	}
+	//if (Input::GetKey(Input::KeyCode::RIGHT)) {
+	//	gameobject->transform->scale += Vector3::Right() * 0.01f;
+	//}
+	//else if (Input::GetKey(Input::KeyCode::LEFT)) {
+	//	gameobject->transform->scale += Vector3::Left() * 0.01f;
+	//}
+	//else if (Input::GetKey(Input::KeyCode::UP)) {
+	//	gameobject->transform->scale += Vector3::Up() * 0.01f;
+	//}
+	//else if (Input::GetKey(Input::KeyCode::DOWN)) {
+	//	gameobject->transform->scale += Vector3::Down() * 0.01f;
+	//}
 
 	//if (Input::GetKey(Input::Q) && !Input::GetKey(Input::LEFT_SHIFT)) {
 	//	SceneManager::GetNowScene()->Destroy(gameobject);
@@ -87,10 +87,10 @@ void PlayerScript::MonoUpdate()
 	//	SceneManager::GetNowScene()->Destroy(gameobject->transform->children[0]->gameobject);
 	//}
 
-	if (Input::GetMouseButton(Input::Mouse_Left)) {
-		Vector3 mousePos = Input::GetMousePosition();
-		gameobject->transform->position = Camera::ScreenToWorldPoint(mousePos);
-	}
+	//if (Input::GetMouseButton(Input::Mouse_Left)) {
+	//	Vector3 mousePos = Input::GetMousePosition();
+	//	gameobject->transform->position = Camera::ScreenToWorldPoint(mousePos);
+	//}
 
 	//if (Input::GetKeyDown(Input::KeyCode::P)) {
 	//	//Žq‚ª‚¢‚é‚È‚ç
